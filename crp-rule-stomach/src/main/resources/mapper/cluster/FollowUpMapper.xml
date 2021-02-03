@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.FollowUpMapper">
+<select id="findFollowUpByUniqueId"  resultType="com.clinical.model.cluster.FollowUp">
+       SELECT * FROM follow_up WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveFollowUp"  parameterType="com.clinical.model.cluster.FollowUp">
+  insert into follow_up(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       follow_method,
+       followup_time,
+       tumour_sta,
+       followup_status,
+       cause_of_death,
+       date_of_death,
+       last_contact_date,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{followMethod},
+       #{followupTime},
+       #{tumourSta},
+       #{followupStatus},
+       #{causeOfDeath},
+       #{dateOfDeath},
+       #{lastContactDate},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteFollowUp">
+   delete * from follow_up where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateFollowUp"  parameterType="com.clinical.model.cluster.FollowUp">
+      update   follow_up
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    follow_method = #{followMethod},  
+    followup_time = #{followupTime},  
+    tumour_sta = #{tumourSta},  
+    followup_status = #{followupStatus},  
+    cause_of_death = #{causeOfDeath},  
+    date_of_death = #{dateOfDeath},  
+    last_contact_date = #{lastContactDate},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

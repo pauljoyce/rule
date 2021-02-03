@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.master.ZjFamilyHistoryMapper">
+<select id="findZjFamilyHistoryByUniqueId"  resultType="com.clinical.model.master.FAMILY_HISTORY">
+       SELECT * FROM FAMILY_HISTORY WHERE unique_id_lv2 = #{unique_id_lv2}
+</select>
+
+<select id="findZjFamilyHistoryByIncr"  resultType="java.lang.String">
+       select distinct(unique_id_lv2) FROM FAMILY_HISTORY where date(record_time) = date_sub(curdate(),interval 1 day) 
+</select>
+
+
+</mapper>

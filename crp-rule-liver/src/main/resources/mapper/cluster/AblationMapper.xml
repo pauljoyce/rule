@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.AblationMapper">
+<select id="findAblationByUniqueId"  resultType="com.clinical.model.cluster.Ablation">
+       SELECT * FROM ablation WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveAblation"  parameterType="com.clinical.model.cluster.Ablation">
+  insert into ablation(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       ablation,
+       ablation_start_date,
+       ablation_end_date,
+       ablation_pathway,
+       ablation_methods,
+       therapy,
+       therapy_start_date,
+       therapy_end_date,
+       therapy_methods,
+       embolic,
+       drug,
+       site,
+       number,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{ablation},
+       #{ablationStartDate},
+       #{ablationEndDate},
+       #{ablationPathway},
+       #{ablationMethods},
+       #{therapy},
+       #{therapyStartDate},
+       #{therapyEndDate},
+       #{therapyMethods},
+       #{embolic},
+       #{drug},
+       #{site},
+       #{number},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateAblation"  parameterType="com.clinical.model.cluster.Ablation">
+      update   ablation
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    ablation = #{ablation},  
+    ablation_start_date = #{ablationStartDate},  
+    ablation_end_date = #{ablationEndDate},  
+    ablation_pathway = #{ablationPathway},  
+    ablation_methods = #{ablationMethods},  
+    therapy = #{therapy},  
+    therapy_start_date = #{therapyStartDate},  
+    therapy_end_date = #{therapyEndDate},  
+    therapy_methods = #{therapyMethods},  
+    embolic = #{embolic},  
+    drug = #{drug},  
+    site = #{site},  
+    number = #{number},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

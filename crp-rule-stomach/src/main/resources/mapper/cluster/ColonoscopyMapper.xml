@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.ColonoscopyMapper">
+<select id="findColonoscopyByUniqueId"  resultType="com.clinical.model.cluster.Colonoscopy">
+       SELECT * FROM colonoscopy WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveColonoscopy"  parameterType="com.clinical.model.cluster.Colonoscopy">
+  insert into colonoscopy(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       exam_no,
+       exam_name,
+       structure,
+       sub_structure,
+       focus_size,
+       focus_count,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{examNo},
+       #{examName},
+       #{structure},
+       #{subStructure},
+       #{focusSize},
+       #{focusCount},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteColonoscopy">
+   delete * from colonoscopy where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateColonoscopy"  parameterType="com.clinical.model.cluster.Colonoscopy">
+      update   colonoscopy
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    exam_no = #{examNo},  
+    exam_name = #{examName},  
+    structure = #{structure},  
+    sub_structure = #{subStructure},  
+    focus_size = #{focusSize},  
+    focus_count = #{focusCount},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.ExamMasterStdMapper">
+<select id="findExamMasterStdByUniqueId"  resultType="com.clinical.model.cluster.ExamMasterStd">
+       SELECT * FROM exam_master_std WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveExamMasterStd"  parameterType="com.clinical.model.cluster.ExamMasterStd">
+  insert into exam_master_std(       person_id,
+       unique_id,
+       unique_id_lv3,
+       p900,
+       patient_id,
+       visit_id,
+       exam_no,
+       exam_class_std,
+       exam_mode_std,
+       structure_std,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{uniqueIdLv3},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{examNo},
+       #{examClassStd},
+       #{examModeStd},
+       #{structureStd},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateExamMasterStd"  parameterType="com.clinical.model.cluster.ExamMasterStd">
+      update   exam_master_std
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    unique_id_lv3 = #{uniqueIdLv3},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    exam_no = #{examNo},  
+    exam_class_std = #{examClassStd},  
+    exam_mode_std = #{examModeStd},  
+    structure_std = #{structureStd},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.PostoperativeRecoveryMapper">
+<select id="findPostoperativeRecoveryByUniqueId"  resultType="com.clinical.model.cluster.PostoperativeRecovery">
+       SELECT * FROM postoperative_recovery WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="savePostoperativeRecovery"  parameterType="com.clinical.model.cluster.PostoperativeRecovery">
+  insert into postoperative_recovery(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       to_icu,
+       to_icu_reason,
+       to_icu_date,
+       off_icu_date,
+       admission_date_time,
+       discharge_date_time,
+       in_days_total,
+       vline_days,
+       pre_discharge_weight,
+       first_bed_away_date,
+       intestinal_recovery_date,
+       liquid_diets_recovery_date,
+       half_diets_recovery_date,
+       is_gastric_intubation,
+       gastric_out_date,
+       is_shunt_intubation,
+       shunt_count,
+       last_shunt_out_date,
+       transfusion,
+       blood_transfusion_volume,
+       blood_component,
+       outcomes,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{toIcu},
+       #{toIcuReason},
+       #{toIcuDate},
+       #{offIcuDate},
+       #{admissionDateTime},
+       #{dischargeDateTime},
+       #{inDaysTotal},
+       #{vlineDays},
+       #{preDischargeWeight},
+       #{firstBedAwayDate},
+       #{intestinalRecoveryDate},
+       #{liquidDietsRecoveryDate},
+       #{halfDietsRecoveryDate},
+       #{isGastricIntubation},
+       #{gastricOutDate},
+       #{isShuntIntubation},
+       #{shuntCount},
+       #{lastShuntOutDate},
+       #{transfusion},
+       #{bloodTransfusionVolume},
+       #{bloodComponent},
+       #{outcomes},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deletePostoperativeRecovery">
+   delete * from postoperative_recovery where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updatePostoperativeRecovery"  parameterType="com.clinical.model.cluster.PostoperativeRecovery">
+      update   postoperative_recovery
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    to_icu = #{toIcu},  
+    to_icu_reason = #{toIcuReason},  
+    to_icu_date = #{toIcuDate},  
+    off_icu_date = #{offIcuDate},  
+    admission_date_time = #{admissionDateTime},  
+    discharge_date_time = #{dischargeDateTime},  
+    in_days_total = #{inDaysTotal},  
+    vline_days = #{vlineDays},  
+    pre_discharge_weight = #{preDischargeWeight},  
+    first_bed_away_date = #{firstBedAwayDate},  
+    intestinal_recovery_date = #{intestinalRecoveryDate},  
+    liquid_diets_recovery_date = #{liquidDietsRecoveryDate},  
+    half_diets_recovery_date = #{halfDietsRecoveryDate},  
+    is_gastric_intubation = #{isGastricIntubation},  
+    gastric_out_date = #{gastricOutDate},  
+    is_shunt_intubation = #{isShuntIntubation},  
+    shunt_count = #{shuntCount},  
+    last_shunt_out_date = #{lastShuntOutDate},  
+    transfusion = #{transfusion},  
+    blood_transfusion_volume = #{bloodTransfusionVolume},  
+    blood_component = #{bloodComponent},  
+    outcomes = #{outcomes},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

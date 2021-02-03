@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.ExamDescriptionMapper">
+<select id="findExamDescriptionByUniqueId"  resultType="com.clinical.model.cluster.ExamDescription">
+       SELECT * FROM exam_description WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveExamDescription"  parameterType="com.clinical.model.cluster.ExamDescription">
+  insert into exam_description(       person_id,
+       unique_id,
+       unique_id_lv3,
+       p900,
+       patient_id,
+       visit_id,
+       find_site,
+       find_number,
+       find_size,
+       find_birads,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{uniqueIdLv3},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{findSite},
+       #{findNumber},
+       #{findSize},
+       #{findBirads},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateExamDescription"  parameterType="com.clinical.model.cluster.ExamDescription">
+      update   exam_description
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    unique_id_lv3 = #{uniqueIdLv3},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    find_site = #{findSite},  
+    find_number = #{findNumber},  
+    find_size = #{findSize},  
+    find_birads = #{findBirads},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

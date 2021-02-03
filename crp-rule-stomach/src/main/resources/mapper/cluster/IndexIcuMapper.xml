@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.IndexIcuMapper">
+<select id="findIndexIcuByUniqueId"  resultType="com.clinical.model.cluster.IndexIcu">
+       SELECT * FROM index_icu WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveIndexIcu"  parameterType="com.clinical.model.cluster.IndexIcu">
+  insert into index_icu(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       p6911,
+       p6912,
+       p6913,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{p6911},
+       #{p6912},
+       #{p6913},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteIndexIcu">
+   delete * from index_icu where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateIndexIcu"  parameterType="com.clinical.model.cluster.IndexIcu">
+      update   index_icu
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    p6911 = #{p6911},  
+    p6912 = #{p6912},  
+    p6913 = #{p6913},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

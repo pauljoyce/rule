@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.DiagnosisMapper">
+<select id="findDiagnosisByUniqueId"  resultType="com.clinical.model.cluster.Diagnosis">
+       SELECT * FROM diagnosis WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveDiagnosis"  parameterType="com.clinical.model.cluster.Diagnosis">
+  insert into diagnosis(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       diagnosis_date,
+       diagnosis_name,
+       diagnosis_type,
+       if_transfer,
+       transfer_position,
+       if_recrudescence,
+       recrudescence_type,
+       recrudescence_date,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{diagnosisDate},
+       #{diagnosisName},
+       #{diagnosisType},
+       #{ifTransfer},
+       #{transferPosition},
+       #{ifRecrudescence},
+       #{recrudescenceType},
+       #{recrudescenceDate},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteDiagnosis">
+   delete * from diagnosis where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateDiagnosis"  parameterType="com.clinical.model.cluster.Diagnosis">
+      update   diagnosis
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    diagnosis_date = #{diagnosisDate},  
+    diagnosis_name = #{diagnosisName},  
+    diagnosis_type = #{diagnosisType},  
+    if_transfer = #{ifTransfer},  
+    transfer_position = #{transferPosition},  
+    if_recrudescence = #{ifRecrudescence},  
+    recrudescence_type = #{recrudescenceType},  
+    recrudescence_date = #{recrudescenceDate},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

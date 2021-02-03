@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.AbdominalCtMapper">
+<select id="findAbdominalCtByUniqueId"  resultType="com.clinical.model.cluster.AbdominalCt">
+       SELECT * FROM abdominal_ct WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveAbdominalCt"  parameterType="com.clinical.model.cluster.AbdominalCt">
+  insert into abdominal_ct(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       exam_no,
+       exam_name,
+       tumor,
+       tumor_count,
+       tumor_size,
+       recrudescence,
+       transfer,
+       transfer_site,
+       transfer_count,
+       transfer_size,
+       ascites,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{examNo},
+       #{examName},
+       #{tumor},
+       #{tumorCount},
+       #{tumorSize},
+       #{recrudescence},
+       #{transfer},
+       #{transferSite},
+       #{transferCount},
+       #{transferSize},
+       #{ascites},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteAbdominalCt">
+   delete * from abdominal_ct where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateAbdominalCt"  parameterType="com.clinical.model.cluster.AbdominalCt">
+      update   abdominal_ct
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    exam_no = #{examNo},  
+    exam_name = #{examName},  
+    tumor = #{tumor},  
+    tumor_count = #{tumorCount},  
+    tumor_size = #{tumorSize},  
+    recrudescence = #{recrudescence},  
+    transfer = #{transfer},  
+    transfer_site = #{transferSite},  
+    transfer_count = #{transferCount},  
+    transfer_size = #{transferSize},  
+    ascites = #{ascites},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

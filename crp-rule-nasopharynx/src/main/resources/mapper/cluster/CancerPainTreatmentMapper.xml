@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.CancerPainTreatmentMapper">
+<select id="findCancerPainTreatmentByUniqueId"  resultType="com.clinical.model.cluster.CancerPainTreatment">
+       SELECT * FROM cancer_pain_treatment WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveCancerPainTreatment"  parameterType="com.clinical.model.cluster.CancerPainTreatment">
+  insert into cancer_pain_treatment(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       cause_pain,
+       adm_pain_status,
+       pain_type,
+       main_drug_date,
+       main_drug_name,
+       main_drug_dose,
+       main_drug_route,
+       breakthrough_pain_time,
+       breakthrough_pain_drug,
+       breakthrough_pain_route,
+       breakthrough_pain_dose,
+       breakthrough_pain_score,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{causePain},
+       #{admPainStatus},
+       #{painType},
+       #{mainDrugDate},
+       #{mainDrugName},
+       #{mainDrugDose},
+       #{mainDrugRoute},
+       #{breakthroughPainTime},
+       #{breakthroughPainDrug},
+       #{breakthroughPainRoute},
+       #{breakthroughPainDose},
+       #{breakthroughPainScore},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateCancerPainTreatment"  parameterType="com.clinical.model.cluster.CancerPainTreatment">
+      update   cancer_pain_treatment
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    cause_pain = #{causePain},  
+    adm_pain_status = #{admPainStatus},  
+    pain_type = #{painType},  
+    main_drug_date = #{mainDrugDate},  
+    main_drug_name = #{mainDrugName},  
+    main_drug_dose = #{mainDrugDose},  
+    main_drug_route = #{mainDrugRoute},  
+    breakthrough_pain_time = #{breakthroughPainTime},  
+    breakthrough_pain_drug = #{breakthroughPainDrug},  
+    breakthrough_pain_route = #{breakthroughPainRoute},  
+    breakthrough_pain_dose = #{breakthroughPainDose},  
+    breakthrough_pain_score = #{breakthroughPainScore},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

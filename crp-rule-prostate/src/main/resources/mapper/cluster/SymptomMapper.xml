@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.SymptomMapper">
+<select id="findSymptomByUniqueId"  resultType="com.clinical.model.cluster.Symptom">
+       SELECT * FROM symptom WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveSymptom"  parameterType="com.clinical.model.cluster.Symptom">
+  insert into symptom(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       heart_failure,
+       prostate_symptoms,
+       metastatic_symptoms,
+       prostate_texture,
+       prostate_border,
+       prostate_tenderness,
+       prostate_activity,
+       Prostate_size,
+       prostate_nodule,
+       prostate_nodule_texture,
+       prostate_nodule_size,
+       prostate_nodule_location,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{heartFailure},
+       #{prostateSymptoms},
+       #{metastaticSymptoms},
+       #{prostateTexture},
+       #{prostateBorder},
+       #{prostateTenderness},
+       #{prostateActivity},
+       #{prostateSize},
+       #{prostateNodule},
+       #{prostateNoduleTexture},
+       #{prostateNoduleSize},
+       #{prostateNoduleLocation},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateSymptom"  parameterType="com.clinical.model.cluster.Symptom">
+      update   symptom
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    heart_failure = #{heartFailure},  
+    prostate_symptoms = #{prostateSymptoms},  
+    metastatic_symptoms = #{metastaticSymptoms},  
+    prostate_texture = #{prostateTexture},  
+    prostate_border = #{prostateBorder},  
+    prostate_tenderness = #{prostateTenderness},  
+    prostate_activity = #{prostateActivity},  
+    Prostate_size = #{prostateSize},  
+    prostate_nodule = #{prostateNodule},  
+    prostate_nodule_texture = #{prostateNoduleTexture},  
+    prostate_nodule_size = #{prostateNoduleSize},  
+    prostate_nodule_location = #{prostateNoduleLocation},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

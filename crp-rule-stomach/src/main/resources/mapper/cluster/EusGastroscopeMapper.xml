@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.EusGastroscopeMapper">
+<select id="findEusGastroscopeByUniqueId"  resultType="com.clinical.model.cluster.EusGastroscope">
+       SELECT * FROM eus_gastroscope WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveEusGastroscope"  parameterType="com.clinical.model.cluster.EusGastroscope">
+  insert into eus_gastroscope(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       exam_no,
+       exam_name,
+       structure,
+       focus_size,
+       focus_count,
+       sub_structure,
+       st_type,
+       pit_type,
+       jnet_type,
+       exam_para_hp,
+       perigastric_enlarged_lymph,
+       ascites,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{examNo},
+       #{examName},
+       #{structure},
+       #{focusSize},
+       #{focusCount},
+       #{subStructure},
+       #{stType},
+       #{pitType},
+       #{jnetType},
+       #{examParaHp},
+       #{perigastricEnlargedLymph},
+       #{ascites},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteEusGastroscope">
+   delete * from eus_gastroscope where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateEusGastroscope"  parameterType="com.clinical.model.cluster.EusGastroscope">
+      update   eus_gastroscope
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    exam_no = #{examNo},  
+    exam_name = #{examName},  
+    structure = #{structure},  
+    focus_size = #{focusSize},  
+    focus_count = #{focusCount},  
+    sub_structure = #{subStructure},  
+    st_type = #{stType},  
+    pit_type = #{pitType},  
+    jnet_type = #{jnetType},  
+    exam_para_hp = #{examParaHp},  
+    perigastric_enlarged_lymph = #{perigastricEnlargedLymph},  
+    ascites = #{ascites},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

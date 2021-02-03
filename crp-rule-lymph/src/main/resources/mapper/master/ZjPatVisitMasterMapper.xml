@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.master.ZjPatVisitMasterMapper">
+<select id="findZjPatVisitMasterByUniqueId"  resultType="com.clinical.model.master.PAT_VISIT_MASTER">
+       SELECT * FROM PAT_VISIT_MASTER WHERE unique_id_lv1 = #{unique_id_lv2}
+</select>
+
+</mapper>

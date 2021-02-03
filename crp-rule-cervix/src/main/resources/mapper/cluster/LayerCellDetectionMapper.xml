@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.LayerCellDetectionMapper">
+<select id="findLayerCellDetectionByUniqueId"  resultType="com.clinical.model.cluster.LayerCellDetection">
+       SELECT * FROM layer_cell_detection WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveLayerCellDetection"  parameterType="com.clinical.model.cluster.LayerCellDetection">
+  insert into layer_cell_detection(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       inspection_date,
+       report_date,
+       tbs_diagnosis,
+       smear,
+       papillomavirus,
+       simplex_virus,
+       haemophilus,
+       actinobacteria,
+       trichomonas,
+       mycotic,
+       chlamydia,
+       mould,
+       trichomonad,
+       estrogen,
+       pasteurization,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{inspectionDate},
+       #{reportDate},
+       #{tbsDiagnosis},
+       #{smear},
+       #{papillomavirus},
+       #{simplexVirus},
+       #{haemophilus},
+       #{actinobacteria},
+       #{trichomonas},
+       #{mycotic},
+       #{chlamydia},
+       #{mould},
+       #{trichomonad},
+       #{estrogen},
+       #{pasteurization},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateLayerCellDetection"  parameterType="com.clinical.model.cluster.LayerCellDetection">
+      update   layer_cell_detection
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    inspection_date = #{inspectionDate},  
+    report_date = #{reportDate},  
+    tbs_diagnosis = #{tbsDiagnosis},  
+    smear = #{smear},  
+    papillomavirus = #{papillomavirus},  
+    simplex_virus = #{simplexVirus},  
+    haemophilus = #{haemophilus},  
+    actinobacteria = #{actinobacteria},  
+    trichomonas = #{trichomonas},  
+    mycotic = #{mycotic},  
+    chlamydia = #{chlamydia},  
+    mould = #{mould},  
+    trichomonad = #{trichomonad},  
+    estrogen = #{estrogen},  
+    pasteurization = #{pasteurization},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

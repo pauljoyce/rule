@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.ChestCtMapper">
+<select id="findChestCtByUniqueId"  resultType="com.clinical.model.cluster.ChestCt">
+       SELECT * FROM chest_ct WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveChestCt"  parameterType="com.clinical.model.cluster.ChestCt">
+  insert into chest_ct(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       exam_no,
+       exam_name,
+       transfer,
+       des_transfer_site,
+       des_transfer_count,
+       des_transfer_size,
+       res_transfer_site,
+       res_transfer_count,
+       res_transfer_size,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{examNo},
+       #{examName},
+       #{transfer},
+       #{desTransferSite},
+       #{desTransferCount},
+       #{desTransferSize},
+       #{resTransferSite},
+       #{resTransferCount},
+       #{resTransferSize},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteChestCt">
+   delete * from chest_ct where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateChestCt"  parameterType="com.clinical.model.cluster.ChestCt">
+      update   chest_ct
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    exam_no = #{examNo},  
+    exam_name = #{examName},  
+    transfer = #{transfer},  
+    des_transfer_site = #{desTransferSite},  
+    des_transfer_count = #{desTransferCount},  
+    des_transfer_size = #{desTransferSize},  
+    res_transfer_site = #{resTransferSite},  
+    res_transfer_count = #{resTransferCount},  
+    res_transfer_size = #{resTransferSize},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

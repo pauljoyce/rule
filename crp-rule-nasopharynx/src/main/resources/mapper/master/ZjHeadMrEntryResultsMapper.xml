@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.master.ZjHeadMrEntryResultsMapper">
+<select id="findZjHeadMrEntryResultsByUniqueId"  resultType="com.clinical.model.master.HEAD_MR_ENTRY_RESULTS">
+       SELECT * FROM HEAD_MR_ENTRY_RESULTS WHERE unique_id_lv2 = #{unique_id_lv2}
+</select>
+
+</mapper>

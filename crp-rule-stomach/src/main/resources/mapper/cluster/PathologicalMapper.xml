@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.PathologicalMapper">
+<select id="findPathologicalByUniqueId"  resultType="com.clinical.model.cluster.Pathological">
+       SELECT * FROM pathological WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="savePathological"  parameterType="com.clinical.model.cluster.Pathological">
+  insert into pathological(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       case_number,
+       specimen_name,
+       inspect_time,
+       receive_time,
+       reprot_time,
+       visible,
+       mirror,
+       path_diag,
+       path_diag_code,
+       early_type,
+       adv_type,
+       carcinoma_situ,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{caseNumber},
+       #{specimenName},
+       #{inspectTime},
+       #{receiveTime},
+       #{reprotTime},
+       #{visible},
+       #{mirror},
+       #{pathDiag},
+       #{pathDiagCode},
+       #{earlyType},
+       #{advType},
+       #{carcinomaSitu},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deletePathological">
+   delete * from pathological where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updatePathological"  parameterType="com.clinical.model.cluster.Pathological">
+      update   pathological
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    case_number = #{caseNumber},  
+    specimen_name = #{specimenName},  
+    inspect_time = #{inspectTime},  
+    receive_time = #{receiveTime},  
+    reprot_time = #{reprotTime},  
+    visible = #{visible},  
+    mirror = #{mirror},  
+    path_diag = #{pathDiag},  
+    path_diag_code = #{pathDiagCode},  
+    early_type = #{earlyType},  
+    adv_type = #{advType},  
+    carcinoma_situ = #{carcinomaSitu},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

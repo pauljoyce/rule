@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.ExamMasterMapper">
+<select id="findExamMasterByUniqueId"  resultType="com.clinical.model.cluster.ExamMaster">
+       SELECT * FROM exam_master WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveExamMaster"  parameterType="com.clinical.model.cluster.ExamMaster">
+  insert into exam_master(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       exam_no,
+       exam_class,
+       exam_position,
+       exam_name,
+       exam_para,
+       exam_date_time,
+       report_date_time,
+       description,
+       entry_results,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{examNo},
+       #{examClass},
+       #{examPosition},
+       #{examName},
+       #{examPara},
+       #{examDateTime},
+       #{reportDateTime},
+       #{description},
+       #{entryResults},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteExamMaster">
+   delete * from exam_master where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateExamMaster"  parameterType="com.clinical.model.cluster.ExamMaster">
+      update   exam_master
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    exam_no = #{examNo},  
+    exam_class = #{examClass},  
+    exam_position = #{examPosition},  
+    exam_name = #{examName},  
+    exam_para = #{examPara},  
+    exam_date_time = #{examDateTime},  
+    report_date_time = #{reportDateTime},  
+    description = #{description},  
+    entry_results = #{entryResults},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

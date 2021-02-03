@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.SurgeryProcMapper">
+<select id="findSurgeryProcByUniqueId"  resultType="com.clinical.model.cluster.SurgeryProc">
+       SELECT * FROM surgery_proc WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveSurgeryProc"  parameterType="com.clinical.model.cluster.SurgeryProc">
+  insert into surgery_proc(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       surgical_approach,
+       lymphadenectomy,
+       bleeding_volume,
+       adhesion,
+       adhesion_site,
+       resection_mode,
+       reconstruction_main,
+       reconstruction_detail,
+       sub_structure,
+       d2_plus,
+       cut_size,
+       cut_location,
+       combined_cut,
+       combined__cut_organ,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{surgicalApproach},
+       #{lymphadenectomy},
+       #{bleedingVolume},
+       #{adhesion},
+       #{adhesionSite},
+       #{resectionMode},
+       #{reconstructionMain},
+       #{reconstructionDetail},
+       #{subStructure},
+       #{d2Plus},
+       #{cutSize},
+       #{cutLocation},
+       #{combinedCut},
+       #{combined_cutOrgan},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteSurgeryProc">
+   delete * from surgery_proc where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateSurgeryProc"  parameterType="com.clinical.model.cluster.SurgeryProc">
+      update   surgery_proc
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    surgical_approach = #{surgicalApproach},  
+    lymphadenectomy = #{lymphadenectomy},  
+    bleeding_volume = #{bleedingVolume},  
+    adhesion = #{adhesion},  
+    adhesion_site = #{adhesionSite},  
+    resection_mode = #{resectionMode},  
+    reconstruction_main = #{reconstructionMain},  
+    reconstruction_detail = #{reconstructionDetail},  
+    sub_structure = #{subStructure},  
+    d2_plus = #{d2Plus},  
+    cut_size = #{cutSize},  
+    cut_location = #{cutLocation},  
+    combined_cut = #{combinedCut},  
+    combined__cut_organ = #{combined_cutOrgan},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

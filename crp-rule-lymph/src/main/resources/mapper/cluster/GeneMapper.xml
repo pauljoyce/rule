@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.GeneMapper">
+<select id="findGeneByUniqueId"  resultType="com.clinical.model.cluster.Gene">
+       SELECT * FROM gene WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveGene"  parameterType="com.clinical.model.cluster.Gene">
+  insert into gene(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       gene_name,
+       gene_qualitative,
+       gene_quantify,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{geneName},
+       #{geneQualitative},
+       #{geneQuantify},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateGene"  parameterType="com.clinical.model.cluster.Gene">
+      update   gene
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    gene_name = #{geneName},  
+    gene_qualitative = #{geneQualitative},  
+    gene_quantify = #{geneQuantify},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

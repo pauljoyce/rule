@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.IndexOperationMapper">
+<select id="findIndexOperationByUniqueId"  resultType="com.clinical.model.cluster.IndexOperation">
+       SELECT * FROM index_operation WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveIndexOperation"  parameterType="com.clinical.model.cluster.IndexOperation">
+  insert into index_operation(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       p490,
+       p491,
+       p820,
+       p492,
+       p493,
+       p494,
+       p495,
+       p496,
+       p497,
+       p498,
+       p4981,
+       p499,
+       p4910,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{p490},
+       #{p491},
+       #{p820},
+       #{p492},
+       #{p493},
+       #{p494},
+       #{p495},
+       #{p496},
+       #{p497},
+       #{p498},
+       #{p4981},
+       #{p499},
+       #{p4910},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateIndexOperation"  parameterType="com.clinical.model.cluster.IndexOperation">
+      update   index_operation
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    p490 = #{p490},  
+    p491 = #{p491},  
+    p820 = #{p820},  
+    p492 = #{p492},  
+    p493 = #{p493},  
+    p494 = #{p494},  
+    p495 = #{p495},  
+    p496 = #{p496},  
+    p497 = #{p497},  
+    p498 = #{p498},  
+    p4981 = #{p4981},  
+    p499 = #{p499},  
+    p4910 = #{p4910},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

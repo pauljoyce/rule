@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.PathologicalStdMapper">
+<select id="findPathologicalStdByUniqueId"  resultType="com.clinical.model.cluster.PathologicalStd">
+       SELECT * FROM pathological_std WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="savePathologicalStd"  parameterType="com.clinical.model.cluster.PathologicalStd">
+  insert into pathological_std(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       tumor_site,
+       tumor_size,
+       pathologicaltype,
+       depth_infiltration,
+       lauren_classification,
+       differentiation_degree,
+       vascular_invasion,
+       lymphatic_invasion,
+       nerve_invasion,
+       invasion_organs,
+       proximal_margin,
+       distance_cut,
+       distal_margin,
+       distance_far_cut,
+       total_nodes,
+       lymph_node_metastasis,
+       lymph_node_number,
+       location_lymph_node,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{tumorSite},
+       #{tumorSize},
+       #{pathologicaltype},
+       #{depthInfiltration},
+       #{laurenClassification},
+       #{differentiationDegree},
+       #{vascularInvasion},
+       #{lymphaticInvasion},
+       #{nerveInvasion},
+       #{invasionOrgans},
+       #{proximalMargin},
+       #{distanceCut},
+       #{distalMargin},
+       #{distanceFarCut},
+       #{totalNodes},
+       #{lymphNodeMetastasis},
+       #{lymphNodeNumber},
+       #{locationLymphNode},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deletePathologicalStd">
+   delete * from pathological_std where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updatePathologicalStd"  parameterType="com.clinical.model.cluster.PathologicalStd">
+      update   pathological_std
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    tumor_site = #{tumorSite},  
+    tumor_size = #{tumorSize},  
+    pathologicaltype = #{pathologicaltype},  
+    depth_infiltration = #{depthInfiltration},  
+    lauren_classification = #{laurenClassification},  
+    differentiation_degree = #{differentiationDegree},  
+    vascular_invasion = #{vascularInvasion},  
+    lymphatic_invasion = #{lymphaticInvasion},  
+    nerve_invasion = #{nerveInvasion},  
+    invasion_organs = #{invasionOrgans},  
+    proximal_margin = #{proximalMargin},  
+    distance_cut = #{distanceCut},  
+    distal_margin = #{distalMargin},  
+    distance_far_cut = #{distanceFarCut},  
+    total_nodes = #{totalNodes},  
+    lymph_node_metastasis = #{lymphNodeMetastasis},  
+    lymph_node_number = #{lymphNodeNumber},  
+    location_lymph_node = #{locationLymphNode},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

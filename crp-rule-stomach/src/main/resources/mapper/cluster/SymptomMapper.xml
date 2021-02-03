@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.SymptomMapper">
+<select id="findSymptomByUniqueId"  resultType="com.clinical.model.cluster.Symptom">
+       SELECT * FROM symptom WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveSymptom"  parameterType="com.clinical.model.cluster.Symptom">
+  insert into symptom(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       symptoms,
+       abdominal_tenderness,
+       abdominal_tenderness_site,
+       muscular_resistance,
+       abdominal_tumour,
+       abdominal_tumour_site,
+       abdominal_tumour_size,
+       gastric_type,
+       vibration_water,
+       mobile_voiced,
+       digital_rectal_exam,
+       tubercle_pelvic,
+       blood_fingering,
+       lymphadenopathy,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{symptoms},
+       #{abdominalTenderness},
+       #{abdominalTendernessSite},
+       #{muscularResistance},
+       #{abdominalTumour},
+       #{abdominalTumourSite},
+       #{abdominalTumourSize},
+       #{gastricType},
+       #{vibrationWater},
+       #{mobileVoiced},
+       #{digitalRectalExam},
+       #{tuberclePelvic},
+       #{bloodFingering},
+       #{lymphadenopathy},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteSymptom">
+   delete * from symptom where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateSymptom"  parameterType="com.clinical.model.cluster.Symptom">
+      update   symptom
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    symptoms = #{symptoms},  
+    abdominal_tenderness = #{abdominalTenderness},  
+    abdominal_tenderness_site = #{abdominalTendernessSite},  
+    muscular_resistance = #{muscularResistance},  
+    abdominal_tumour = #{abdominalTumour},  
+    abdominal_tumour_site = #{abdominalTumourSite},  
+    abdominal_tumour_size = #{abdominalTumourSize},  
+    gastric_type = #{gastricType},  
+    vibration_water = #{vibrationWater},  
+    mobile_voiced = #{mobileVoiced},  
+    digital_rectal_exam = #{digitalRectalExam},  
+    tubercle_pelvic = #{tuberclePelvic},  
+    blood_fingering = #{bloodFingering},  
+    lymphadenopathy = #{lymphadenopathy},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

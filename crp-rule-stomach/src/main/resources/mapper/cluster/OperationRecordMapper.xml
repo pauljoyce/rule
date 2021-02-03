@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.OperationRecordMapper">
+<select id="findOperationRecordByUniqueId"  resultType="com.clinical.model.cluster.OperationRecord">
+       SELECT * FROM operation_record WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveOperationRecord"  parameterType="com.clinical.model.cluster.OperationRecord">
+  insert into operation_record(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       rcpt_name,
+       surgical_process,
+       name_of_surgeon,
+       name_1,
+       name_2,
+       anesthesia_method,
+       anesthesiologist,
+       item_begin_date,
+       item_end_date,
+       blood_transfusion,
+       blood_transfusion_volume,
+       input_components,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{rcptName},
+       #{surgicalProcess},
+       #{nameOfSurgeon},
+       #{name1},
+       #{name2},
+       #{anesthesiaMethod},
+       #{anesthesiologist},
+       #{itemBeginDate},
+       #{itemEndDate},
+       #{bloodTransfusion},
+       #{bloodTransfusionVolume},
+       #{inputComponents},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteOperationRecord">
+   delete * from operation_record where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateOperationRecord"  parameterType="com.clinical.model.cluster.OperationRecord">
+      update   operation_record
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    rcpt_name = #{rcptName},  
+    surgical_process = #{surgicalProcess},  
+    name_of_surgeon = #{nameOfSurgeon},  
+    name_1 = #{name1},  
+    name_2 = #{name2},  
+    anesthesia_method = #{anesthesiaMethod},  
+    anesthesiologist = #{anesthesiologist},  
+    item_begin_date = #{itemBeginDate},  
+    item_end_date = #{itemEndDate},  
+    blood_transfusion = #{bloodTransfusion},  
+    blood_transfusion_volume = #{bloodTransfusionVolume},  
+    input_components = #{inputComponents},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

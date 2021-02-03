@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.RadiotherapyMapper">
+<select id="findRadiotherapyByUniqueId"  resultType="com.clinical.model.cluster.Radiotherapy">
+       SELECT * FROM radiotherapy WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveRadiotherapy"  parameterType="com.clinical.model.cluster.Radiotherapy">
+  insert into radiotherapy(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       radio_begin_time,
+       radio_end_time,
+       radio_source,
+       radio_style,
+       radio_ray_energy,
+       radio_site_and_dose,
+       radio_level,
+       radio_doctor,
+       efficacy_evaluation,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{radioBeginTime},
+       #{radioEndTime},
+       #{radioSource},
+       #{radioStyle},
+       #{radioRayEnergy},
+       #{radioSiteAndDose},
+       #{radioLevel},
+       #{radioDoctor},
+       #{efficacyEvaluation},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateRadiotherapy"  parameterType="com.clinical.model.cluster.Radiotherapy">
+      update   radiotherapy
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    radio_begin_time = #{radioBeginTime},  
+    radio_end_time = #{radioEndTime},  
+    radio_source = #{radioSource},  
+    radio_style = #{radioStyle},  
+    radio_ray_energy = #{radioRayEnergy},  
+    radio_site_and_dose = #{radioSiteAndDose},  
+    radio_level = #{radioLevel},  
+    radio_doctor = #{radioDoctor},  
+    efficacy_evaluation = #{efficacyEvaluation},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

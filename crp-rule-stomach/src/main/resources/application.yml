@@ -1,0 +1,31 @@
+server:
+  port: 8012
+spring:
+  application:
+    name: crp-rule-stomach
+
+  datasource:
+    # mysql 8.0 以下
+    # url: jdbc:mysql://localhost:3306/test?useSSL=false&characterEncoding=utf8&autoReconnect=true
+    # driver-class-name: com.mysql.jdbc.Driver
+    # mysql 8.0 以上使用
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.20.25.100:3306/dmp_sd_stomachca?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    username: root
+    password: 123456
+
+    url2: jdbc:mysql://172.20.25.100:3306/zbk?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    username2: root
+    password2: 123456
+
+    #type: com.alibaba.druid.pool.DruidDataSource
+    #driverClassName: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://192.168.129.3:3306/dmp_sdt_stomach??useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    #username: dmp_etl
+    #password: DcHealth@2020
+
+    #url2: jdbc:mysql://192.168.129.3:3306/dm_zbk_lung?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    #username2: dmp_etl
+    #password2: DcHealth@2020
+

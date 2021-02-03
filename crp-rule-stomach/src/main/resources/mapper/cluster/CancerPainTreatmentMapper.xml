@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.CancerPainTreatmentMapper">
+<select id="findCancerPainTreatmentByUniqueId"  resultType="com.clinical.model.cluster.CancerPainTreatment">
+       SELECT * FROM cancer_pain_treatment WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveCancerPainTreatment"  parameterType="com.clinical.model.cluster.CancerPainTreatment">
+  insert into cancer_pain_treatment(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       drug_name,
+       administration,
+       dosage,
+       enter_date_time,
+       stop_order_date_time,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{drugName},
+       #{administration},
+       #{dosage},
+       #{enterDateTime},
+       #{stopOrderDateTime},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteCancerPainTreatment">
+   delete * from cancer_pain_treatment where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateCancerPainTreatment"  parameterType="com.clinical.model.cluster.CancerPainTreatment">
+      update   cancer_pain_treatment
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    drug_name = #{drugName},  
+    administration = #{administration},  
+    dosage = #{dosage},  
+    enter_date_time = #{enterDateTime},  
+    stop_order_date_time = #{stopOrderDateTime},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

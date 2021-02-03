@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.DnaMapper">
+<select id="findDnaByUniqueId"  resultType="com.clinical.model.cluster.Dna">
+       SELECT * FROM dna WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveDna"  parameterType="com.clinical.model.cluster.Dna">
+  insert into dna(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       dna_methylation,
+       test_name,
+       inspection_date,
+       report_date,
+       org_name,
+       test_method,
+       gene_name,
+       percent,
+       abnormal,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{dnaMethylation},
+       #{testName},
+       #{inspectionDate},
+       #{reportDate},
+       #{orgName},
+       #{testMethod},
+       #{geneName},
+       #{percent},
+       #{abnormal},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateDna"  parameterType="com.clinical.model.cluster.Dna">
+      update   dna
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    dna_methylation = #{dnaMethylation},  
+    test_name = #{testName},  
+    inspection_date = #{inspectionDate},  
+    report_date = #{reportDate},  
+    org_name = #{orgName},  
+    test_method = #{testMethod},  
+    gene_name = #{geneName},  
+    percent = #{percent},  
+    abnormal = #{abnormal},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

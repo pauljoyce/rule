@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.EncephlogramMapper">
+<select id="findEncephlogramByUniqueId"  resultType="com.clinical.model.cluster.Encephlogram">
+       SELECT * FROM encephlogram WHERE unique_id=#{unique_id}
+</select>
+
+<!-- <insert id="saveEncephlogram"  parameterType="com.clinical.model.cluster.Encephlogram">-->
+<!--  insert into encephlogram(       unique_id,-->
+<!--       unique_id_lv1,-->
+<!--       unique_id_lv2,-->
+<!--       p900,-->
+<!--       patient_id,-->
+<!--       visit_id,-->
+<!--       exam_no,-->
+<!--       exam_name,-->
+<!--       description,-->
+<!--       entry_results,-->
+<!--       data_version,-->
+<!--       data_db_source,-->
+<!--       data_table_source,-->
+<!--       data_field_source,-->
+<!--       created_at,-->
+<!--       creator,-->
+<!--(       #{uniqueId},-->
+<!--       #{uniqueIdLv1},-->
+<!--       #{uniqueIdLv2},-->
+<!--       #{p900},-->
+<!--       #{patientId},-->
+<!--       #{visitId},-->
+<!--       #{examNo},-->
+<!--       #{examName},-->
+<!--       #{description},-->
+<!--       #{entryResults},-->
+<!--       #{dataVersion},-->
+<!--       #{dataDbSource},-->
+<!--       #{dataTableSource},-->
+<!--       #{dataFieldSource},-->
+<!--       #{createdAt},-->
+<!--       #{creator},-->
+<!-- <update id="updateEncephlogram"  parameterType="com.clinical.model.cluster.Encephlogram">-->
+<!--      update   encephlogram-->
+<!-- set-->
+<!--    unique_id = #{uniqueId},  -->
+<!--    unique_id_lv1 = #{uniqueIdLv1},  -->
+<!--    unique_id_lv2 = #{uniqueIdLv2},  -->
+<!--    p900 = #{p900},  -->
+<!--    patient_id = #{patientId},  -->
+<!--    visit_id = #{visitId},  -->
+<!--    exam_no = #{examNo},  -->
+<!--    exam_name = #{examName},  -->
+<!--    description = #{description},  -->
+<!--    entry_results = #{entryResults},  -->
+<!--    data_version = #{dataVersion},  -->
+<!--    data_db_source = #{dataDbSource},  -->
+<!--    data_table_source = #{dataTableSource},  -->
+<!--    data_field_source = #{dataFieldSource},  -->
+<!--    created_at = #{createdAt},  -->
+<!--    creator = #{creator},  -->
+</mapper>

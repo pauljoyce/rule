@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.OutpAdmissionStatusMapper">
+<select id="findOutpAdmissionStatusByUniqueId"  resultType="com.clinical.model.cluster.OutpAdmissionStatus">
+       SELECT * FROM outp_admission_status WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveOutpAdmissionStatus"  parameterType="com.clinical.model.cluster.OutpAdmissionStatus">
+  insert into outp_admission_status(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       admission_date_time,
+       tzy_days,
+       cop_status,
+       tzl_process,
+       discharge_status,
+       discharge_date_time,
+       admission_diagnosis,
+       discharge_diagnosis,
+       treatment_effect,
+       discharge_order,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{admissionDateTime},
+       #{tzyDays},
+       #{copStatus},
+       #{tzlProcess},
+       #{dischargeStatus},
+       #{dischargeDateTime},
+       #{admissionDiagnosis},
+       #{dischargeDiagnosis},
+       #{treatmentEffect},
+       #{dischargeOrder},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteOutpAdmissionStatus">
+   delete * from outp_admission_status where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateOutpAdmissionStatus"  parameterType="com.clinical.model.cluster.OutpAdmissionStatus">
+      update   outp_admission_status
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    admission_date_time = #{admissionDateTime},  
+    tzy_days = #{tzyDays},  
+    cop_status = #{copStatus},  
+    tzl_process = #{tzlProcess},  
+    discharge_status = #{dischargeStatus},  
+    discharge_date_time = #{dischargeDateTime},  
+    admission_diagnosis = #{admissionDiagnosis},  
+    discharge_diagnosis = #{dischargeDiagnosis},  
+    treatment_effect = #{treatmentEffect},  
+    discharge_order = #{dischargeOrder},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.FollowUpMapper">
+<select id="findFollowUpByUniqueId"  resultType="com.clinical.model.cluster.FollowUp">
+       SELECT * FROM follow_up WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveFollowUp"  parameterType="com.clinical.model.cluster.FollowUp">
+  insert into follow_up(       person_id,
+       unique_id,
+       unique_id_lv3,
+       p900,
+       patient_id,
+       visit_id,
+       follow_up_type,
+       follow_up_date,
+       follow_up_state,
+       situation,
+       if_medicine,
+       medicine_name,
+       medicine_dose,
+       medicine_Duration,
+       death_cause ,
+       death_date,
+       last_date,
+       follow_item,
+       efficacy_evaluation,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{uniqueIdLv3},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{followUpType},
+       #{followUpDate},
+       #{followUpState},
+       #{situation},
+       #{ifMedicine},
+       #{medicineName},
+       #{medicineDose},
+       #{medicineDuration},
+       #{deathCause },
+       #{deathDate},
+       #{lastDate},
+       #{followItem},
+       #{efficacyEvaluation},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateFollowUp"  parameterType="com.clinical.model.cluster.FollowUp">
+      update   follow_up
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    unique_id_lv3 = #{uniqueIdLv3},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    follow_up_type = #{followUpType},  
+    follow_up_date = #{followUpDate},  
+    follow_up_state = #{followUpState},  
+    situation = #{situation},  
+    if_medicine = #{ifMedicine},  
+    medicine_name = #{medicineName},  
+    medicine_dose = #{medicineDose},  
+    medicine_Duration = #{medicineDuration},  
+    death_cause  = #{deathCause },  
+    death_date = #{deathDate},  
+    last_date = #{lastDate},  
+    follow_item = #{followItem},  
+    efficacy_evaluation = #{efficacyEvaluation},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

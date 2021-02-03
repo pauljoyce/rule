@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.TreatmentMapper">
+<select id="findTreatmentByUniqueId"  resultType="com.clinical.model.cluster.Treatment">
+       SELECT * FROM treatment WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveTreatment"  parameterType="com.clinical.model.cluster.Treatment">
+  insert into treatment(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       drug_type,
+       drug_name,
+       channel,
+       dose,
+       unit,
+       start_date,
+       end_date,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{drugType},
+       #{drugName},
+       #{channel},
+       #{dose},
+       #{unit},
+       #{startDate},
+       #{endDate},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateTreatment"  parameterType="com.clinical.model.cluster.Treatment">
+      update   treatment
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    drug_type = #{drugType},  
+    drug_name = #{drugName},  
+    channel = #{channel},  
+    dose = #{dose},  
+    unit = #{unit},  
+    start_date = #{startDate},  
+    end_date = #{endDate},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

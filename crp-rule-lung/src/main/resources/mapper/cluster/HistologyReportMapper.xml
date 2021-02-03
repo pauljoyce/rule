@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.HistologyReportMapper">
+<select id="findHistologyReportByUniqueId"  resultType="com.clinical.model.cluster.HistologyReport">
+       SELECT * FROM histology_report WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveHistologyReport"  parameterType="com.clinical.model.cluster.HistologyReport">
+  insert into histology_report(       person_id,
+       unique_id,
+       unique_id_lv3,
+       p900,
+       patient_id,
+       visit_id,
+       pathology_no,
+       inspection_hospital,
+       inspection_department,
+       inspection_physician,
+       inspection_time,
+       inspection_site,
+       clinical_diagnosis,
+       name,
+       specimen_receiving_time,
+       report_time,
+       review_time,
+       path_eye,
+       path_microscope,
+       path_diag,
+       path_diag_code,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{uniqueIdLv3},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{pathologyNo},
+       #{inspectionHospital},
+       #{inspectionDepartment},
+       #{inspectionPhysician},
+       #{inspectionTime},
+       #{inspectionSite},
+       #{clinicalDiagnosis},
+       #{name},
+       #{specimenReceivingTime},
+       #{reportTime},
+       #{reviewTime},
+       #{pathEye},
+       #{pathMicroscope},
+       #{pathDiag},
+       #{pathDiagCode},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateHistologyReport"  parameterType="com.clinical.model.cluster.HistologyReport">
+      update   histology_report
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    unique_id_lv3 = #{uniqueIdLv3},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    pathology_no = #{pathologyNo},  
+    inspection_hospital = #{inspectionHospital},  
+    inspection_department = #{inspectionDepartment},  
+    inspection_physician = #{inspectionPhysician},  
+    inspection_time = #{inspectionTime},  
+    inspection_site = #{inspectionSite},  
+    clinical_diagnosis = #{clinicalDiagnosis},  
+    name = #{name},  
+    specimen_receiving_time = #{specimenReceivingTime},  
+    report_time = #{reportTime},  
+    review_time = #{reviewTime},  
+    path_eye = #{pathEye},  
+    path_microscope = #{pathMicroscope},  
+    path_diag = #{pathDiag},  
+    path_diag_code = #{pathDiagCode},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

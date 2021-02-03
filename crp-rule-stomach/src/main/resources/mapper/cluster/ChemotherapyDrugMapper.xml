@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.ChemotherapyDrugMapper">
+<select id="findChemotherapyDrugByUniqueId"  resultType="com.clinical.model.cluster.ChemotherapyDrug">
+       SELECT * FROM chemotherapy_drug WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveChemotherapyDrug"  parameterType="com.clinical.model.cluster.ChemotherapyDrug">
+  insert into chemotherapy_drug(       person_id,
+       unique_id,
+       p900,
+       patient_id,
+       visit_id,
+       drug_name,
+       channel,
+       frequency,
+       dose,
+       unit,
+       start_date,
+       end_date,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{personId},
+       #{uniqueId},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{drugName},
+       #{channel},
+       #{frequency},
+       #{dose},
+       #{unit},
+       #{startDate},
+       #{endDate},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deleteChemotherapyDrug">
+   delete * from chemotherapy_drug where unique_id=#{unique_id}
+  </delete>
+
+ <update id="updateChemotherapyDrug"  parameterType="com.clinical.model.cluster.ChemotherapyDrug">
+      update   chemotherapy_drug
+ set
+    person_id = #{personId},  
+    unique_id = #{uniqueId},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    drug_name = #{drugName},  
+    channel = #{channel},  
+    frequency = #{frequency},  
+    dose = #{dose},  
+    unit = #{unit},  
+    start_date = #{startDate},  
+    end_date = #{endDate},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.PrimaryDiagnosisMapper">
+<select id="findPrimaryDiagnosisByUniqueId"  resultType="com.clinical.model.cluster.PrimaryDiagnosis">
+       SELECT * FROM primary_diagnosis WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="savePrimaryDiagnosis"  parameterType="com.clinical.model.cluster.PrimaryDiagnosis">
+  insert into primary_diagnosis(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       diagnosis_name,
+       diagnosis_date,
+       diagnosis_name_icd,
+       diagnosis_type,
+       if_transfer,
+       transfer_position,
+       if_recrudescence,
+       recrudescence_type,
+       recrudescence_date,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{diagnosisName},
+       #{diagnosisDate},
+       #{diagnosisNameIcd},
+       #{diagnosisType},
+       #{ifTransfer},
+       #{transferPosition},
+       #{ifRecrudescence},
+       #{recrudescenceType},
+       #{recrudescenceDate},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updatePrimaryDiagnosis"  parameterType="com.clinical.model.cluster.PrimaryDiagnosis">
+      update   primary_diagnosis
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    diagnosis_name = #{diagnosisName},  
+    diagnosis_date = #{diagnosisDate},  
+    diagnosis_name_icd = #{diagnosisNameIcd},  
+    diagnosis_type = #{diagnosisType},  
+    if_transfer = #{ifTransfer},  
+    transfer_position = #{transferPosition},  
+    if_recrudescence = #{ifRecrudescence},  
+    recrudescence_type = #{recrudescenceType},  
+    recrudescence_date = #{recrudescenceDate},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>
