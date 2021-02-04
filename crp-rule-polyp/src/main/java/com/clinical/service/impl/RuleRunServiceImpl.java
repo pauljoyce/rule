@@ -72,6 +72,7 @@ import com.clinical.model.master.BASY_DIAG_STD;
 import com.clinical.model.master.BASY_NSTD;
 import com.clinical.model.master.BASY_OP_STD;
 import com.clinical.model.master.FAMILY_HISTORY;
+import com.clinical.model.master.INP_DIAGNOSIS;
 import com.clinical.model.master.NURSING_RECORD;
 import com.clinical.model.master.PAT_VISIT_MASTER;
 import com.clinical.model.master.PRIOR_DISEASE_AND_SURGERY;
@@ -450,6 +451,9 @@ public class RuleRunServiceImpl implements RuleRunService {
     @Autowired
     ZjClinicalDiagMapper    zjClinicalDiagMapper;
 
+    @Autowired
+    ZjBasyNstdMapper zjBasyNstdMapper;
+
 //    @Autowired
 //    ZjSpecialityExamMapper zjSpecialityExamMapper;
 
@@ -465,7 +469,7 @@ public class RuleRunServiceImpl implements RuleRunService {
 
         for(TEM_PAT_MASTER_INDEX index: zj_TEM_PAT_MASTER_INDEX) {
             //保存患者--------------------------------------------------
-            //savePerson(index);
+            savePerson(index);
 
             //患者就诊列表
             List<PAT_VISIT_MASTER> zj_PAT_VISIT_MASTER = zjPatVisitMasterMapper.findZjPatVisitMasterByUniqueId(index.getUNIQUE_ID());
@@ -473,40 +477,40 @@ public class RuleRunServiceImpl implements RuleRunService {
             for (PAT_VISIT_MASTER master : zj_PAT_VISIT_MASTER) {
 
                 //保存就诊----------------------------------------------------
-                //saveVisitRecord(master);
+                saveVisitRecord(master);
 
                 String uniqueId = master.getUNIQUE_ID();
 
                 Date visitdate=master.getADMISSION_DATE_TIME();
-//                //病案首页
-//                List<BASY_NSTD> zj_BASY_NSTDs=zjBasyNstdMapper.findZjBasyNstdsByUniqueId(uniqueId);
-//                BASY_NSTD zj_BASY_NSTD;
-//                if (zj_BASY_NSTDs.size()==1){
-//                    zj_BASY_NSTD = zj_BASY_NSTDs.get(0);
-//                }else {
-//                    zj_BASY_NSTD=  zjBasyNstdMapper.findZjBasyNstdByUniqueId(uniqueId);
-//                }
-//
-//                List<BASY_OP_STD> zj_BASY_OP_STDs=zjBasyOpStdMapper.findZjBasyOpStdsByUniqueId(uniqueId);
-//                BASY_OP_STD zj_BASY_OP_STD;
-//                if (zj_BASY_OP_STDs.size()==1){
-//                    zj_BASY_OP_STD = zj_BASY_OP_STDs.get(0);
-//                }else {
-//                    zj_BASY_OP_STD = zjBasyOpStdMapper.findZjBasyOpStdByUniqueId(uniqueId);
-//                }
-//
-//                List<BASY_DIAG_STD> zj_BASY_DIAG_STDs=zjBasyDiagStdMapper.findZjBasyDiagStdsByUniqueId(uniqueId);
-//                BASY_DIAG_STD  zj_BASY_DIAG_STD;
-//                if (zj_BASY_DIAG_STDs.size()==1){
-//                    zj_BASY_DIAG_STD = zj_BASY_DIAG_STDs.get(0);
-//                }else {
-//                    zj_BASY_DIAG_STD =  zjBasyDiagStdMapper.findZjBasyDiagStdByUniqueId(uniqueId);
-//                }
+                //病案首页
+                List<BASY_NSTD> zj_BASY_NSTDs=zjBasyNstdMapper.findZjBasyNstdsByUniqueId(uniqueId);
+                BASY_NSTD zj_BASY_NSTD;
+                if (zj_BASY_NSTDs.size()==1){
+                    zj_BASY_NSTD = zj_BASY_NSTDs.get(0);
+                }else {
+                    zj_BASY_NSTD=  zjBasyNstdMapper.findZjBasyNstdByUniqueId(uniqueId);
+                }
+
+                List<BASY_OP_STD> zj_BASY_OP_STDs=zjBasyOpStdMapper.findZjBasyOpStdsByUniqueId(uniqueId);
+                BASY_OP_STD zj_BASY_OP_STD;
+                if (zj_BASY_OP_STDs.size()==1){
+                    zj_BASY_OP_STD = zj_BASY_OP_STDs.get(0);
+                }else {
+                    zj_BASY_OP_STD = zjBasyOpStdMapper.findZjBasyOpStdByUniqueId(uniqueId);
+                }
+
+                List<BASY_DIAG_STD> zj_BASY_DIAG_STDs=zjBasyDiagStdMapper.findZjBasyDiagStdsByUniqueId(uniqueId);
+                BASY_DIAG_STD  zj_BASY_DIAG_STD;
+                if (zj_BASY_DIAG_STDs.size()==1){
+                    zj_BASY_DIAG_STD = zj_BASY_DIAG_STDs.get(0);
+                }else {
+                    zj_BASY_DIAG_STD =  zjBasyDiagStdMapper.findZjBasyDiagStdByUniqueId(uniqueId);
+                }
 
 
 
 
-//                List<INP_DIAGNOSIS>  zj_INP_DIAGNOSIS =  zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
+                List<INP_DIAGNOSIS>  zj_INP_DIAGNOSIS =  zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
 //                List<LIS_RECORD>  zj_LIS_RECORD =  zjLisRecordMapper.findZjLisRecordByUniqueId(uniqueId);
 //                List<EXAM_MASTER>  zj_EXAM_MASTER =  zjExamMasterMapper.findZjExamMasterByUniqueId(uniqueId);
 //                List<HISTOLOGY_REPORT>  zj_HISTOLOGY_REPORT =  zjHistologyReportMapper.findZjHistologyReportByUniqueId(uniqueId);
@@ -517,7 +521,7 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                List<FOLLOW_UP>  zj_FOLLOW_UP =  zjFollowUpMapper.findZjFollowUpByUniqueId(uniqueId);
 //                List<VITAL_RECORD>  zj_VITAL_RECORD =  zjVitalRecordMapper.findZjVitalRecordByUniqueId(uniqueId);
 //                List<DRUG_ORDER>  zj_DRUG_ORDER =  zjDrugOrderMapper.findZjDrugOrderByUniqueId(uniqueId);
-//                List<TEM_INP_ADMISSION_STATUS>  zj_TEM_INP_ADMISSION_STATUS =  zjTemInpAdmissionStatusMapper.findZjTemInpAdmissionStatusByUniqueId(uniqueId);
+                List<TEM_INP_ADMISSION_STATUS>  zj_TEM_INP_ADMISSION_STATUS =  zjTemInpAdmissionStatusMapper.findZjTemInpAdmissionStatusByUniqueId(uniqueId);
 //                List<TEM_OUTP_DISCHARGE_STATUS>  zj_TEM_OUTP_DISCHARGE_STATUS =  zjTemOutpDischargeStatusMapper.findZjTemOutpDischargeStatusByUniqueId(uniqueId);
 //                List<TEM_24H_IN_OUT>  zj_TEM_24H_IN_OUT =  zjTem24hInOutMapper.findZjTem24hInOutByUniqueId(uniqueId);
 //                List<OUTP_RECORD>  zj_OUTP_RECORD =  zjOutpRecordMapper.findZjOutpRecordByUniqueId(uniqueId);
@@ -558,49 +562,49 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                List<SPECIALITY_EXAM> zj_SPECICALITY_EXAM= zjSpecialityExamMapper.findZjSpecialityExamByUniqueId(uniqueId);
 
 
-//                if(zj_BASY_NSTD!=null){
-//                    saveIndexPerson(zj_BASY_NSTD,zj_BASY_DIAG_STD);
-//                    saveIndexIcu(zj_BASY_NSTD);
-//                }
-//                if(zj_BASY_DIAG_STD!=null){
-//
-//                    Date admitdate=null;
-//                    Date maindate=null;
-//                    Date clinicdate=null;
-//                    Date pathdate=null;
-//                    for(INP_DIAGNOSIS diagnosis: zj_INP_DIAGNOSIS){
-//                        if(diagnosis.getDIAGNOSIS_TYPE()!=null){
-//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("出院主要诊断")){
-//                                maindate=diagnosis.getDIAGNOSIS_DATE();
-//                            }
-//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("门诊诊断")){
-//                                clinicdate=diagnosis.getDIAGNOSIS_DATE();
-//                            }
-//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("入院初诊")){
-//                                admitdate=diagnosis.getDIAGNOSIS_DATE();
-//                            }
-//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("病理诊断")){
-//                                pathdate=diagnosis.getDIAGNOSIS_DATE();
-//                            }
-//                        }
-//
-//                    }
-//
-//                    if (zj_BASY_NSTD==null){
-//                        zj_BASY_NSTD = new BASY_NSTD();
-//                        zj_BASY_NSTD.setDOP3("");
-//                    }
-//                    saveIndexDiagnosisAdmit(zj_BASY_DIAG_STD,visitdate,admitdate,zj_BASY_NSTD);
-//                    saveIndexDiagnosisClinic(zj_BASY_DIAG_STD,visitdate,clinicdate,zj_BASY_NSTD);
-//                    saveIndexDiagnosisMain(zj_BASY_DIAG_STD,visitdate,maindate,zj_BASY_NSTD);
-//                    saveIndexDiagnosisOther(zj_BASY_DIAG_STD,visitdate,maindate,zj_BASY_NSTD);
-//                    saveIndexInjury(zj_BASY_DIAG_STD,zj_BASY_NSTD);
-//                    saveIndexPathology(zj_BASY_DIAG_STD,visitdate,pathdate,zj_BASY_NSTD);
-//                }
-//
-//                if(zj_BASY_OP_STD!=null){
-//                    saveIndexOperation(zj_BASY_OP_STD,zj_BASY_NSTD);
-//                }
+                if(zj_BASY_NSTD!=null){
+                    saveIndexPerson(zj_BASY_NSTD,zj_BASY_DIAG_STD);
+                    saveIndexIcu(zj_BASY_NSTD);
+                }
+                if(zj_BASY_DIAG_STD!=null){
+
+                    Date admitdate=null;
+                    Date maindate=null;
+                    Date clinicdate=null;
+                    Date pathdate=null;
+                    for(INP_DIAGNOSIS diagnosis: zj_INP_DIAGNOSIS){
+                        if(diagnosis.getDIAGNOSIS_TYPE()!=null){
+                            if(diagnosis.getDIAGNOSIS_TYPE().contains("出院主要诊断")){
+                                maindate=diagnosis.getDIAGNOSIS_DATE();
+                            }
+                            if(diagnosis.getDIAGNOSIS_TYPE().contains("门诊诊断")){
+                                clinicdate=diagnosis.getDIAGNOSIS_DATE();
+                            }
+                            if(diagnosis.getDIAGNOSIS_TYPE().contains("入院初诊")){
+                                admitdate=diagnosis.getDIAGNOSIS_DATE();
+                            }
+                            if(diagnosis.getDIAGNOSIS_TYPE().contains("病理诊断")){
+                                pathdate=diagnosis.getDIAGNOSIS_DATE();
+                            }
+                        }
+
+                    }
+
+                    if (zj_BASY_NSTD==null){
+                        zj_BASY_NSTD = new BASY_NSTD();
+                        zj_BASY_NSTD.setDOP3("");
+                    }
+                    saveIndexDiagnosisAdmit(zj_BASY_DIAG_STD,visitdate,admitdate,zj_BASY_NSTD);
+                    saveIndexDiagnosisClinic(zj_BASY_DIAG_STD,visitdate,clinicdate,zj_BASY_NSTD);
+                    saveIndexDiagnosisMain(zj_BASY_DIAG_STD,visitdate,maindate,zj_BASY_NSTD);
+                    saveIndexDiagnosisOther(zj_BASY_DIAG_STD,visitdate,maindate,zj_BASY_NSTD);
+                    saveIndexInjury(zj_BASY_DIAG_STD,zj_BASY_NSTD);
+                    saveIndexPathology(zj_BASY_DIAG_STD,visitdate,pathdate,zj_BASY_NSTD);
+                }
+
+                if(zj_BASY_OP_STD!=null){
+                    saveIndexOperation(zj_BASY_OP_STD,zj_BASY_NSTD);
+                }
 
 
 //                if(zj_NURSING_RECORD!=null&&zj_NURSING_RECORD.size()>0){
@@ -614,12 +618,12 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                   saveHisMarriage(zj_TEM_INP_ADMISSION_STATUS);
 //               }
 
-//                if(zj_TEM_INP_ADMISSION_STATUS!=null&&zj_TEM_INP_ADMISSION_STATUS.size()>0){
-//                    for(TEM_INP_ADMISSION_STATUS tem_inp_admission_status:zj_TEM_INP_ADMISSION_STATUS){
-//                        saveInpAdmissionStatus(tem_inp_admission_status);
-//                    }
-//
-//                }
+                if(zj_TEM_INP_ADMISSION_STATUS!=null&&zj_TEM_INP_ADMISSION_STATUS.size()>0){
+                    for(TEM_INP_ADMISSION_STATUS tem_inp_admission_status:zj_TEM_INP_ADMISSION_STATUS){
+                        saveInpAdmissionStatus(tem_inp_admission_status);
+                    }
+
+                }
 //                if (zj_SYMPTOMS!=null&&zj_SYMPTOMS.size()!=0){
 //                    saveSymptom(zj_SYMPTOMS, zj_SPECICALITY_EXAM);
 //                }

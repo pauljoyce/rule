@@ -22,9 +22,9 @@ public class JSONUtils {
 
     /**
      * 解析json中的标化字段，返回指定标化字段的values list
-     * @param text
-     * @param arrayField
-     * @param stdField
+     * @param text json原文
+     * @param arrayField  json array字段名
+     * @param stdField 标化字段 比如有type1_std,type2_std两个字段 -> 传type_std即可
      * @return
      */
     public static List<String> getList(String text, String arrayField, String stdField){

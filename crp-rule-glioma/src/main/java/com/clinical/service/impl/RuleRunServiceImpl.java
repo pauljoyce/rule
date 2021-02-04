@@ -6638,25 +6638,6 @@ public class RuleRunServiceImpl implements RuleRunService {
             //住院号
             hisFamily.setVisitId(zj_FAMILY_HISTORY.get(0).getvisit_id());
 
-//            if ((family_history.getneg()==null||family_history.getneg().equals(""))&&(family_history.getdiag()!=null)&&
-//                    (family_history.getdiag().contains("肿瘤")||family_history.getdiag().contains("癌")||
-//                            family_history.getdiag().contains("淋巴瘤")||family_history.getdiag().contains("白血病"))){
-//                hisFamily.setFamilyTumour("是");
-//                hisFamily.setTumourRelative(family_history.getrelation());
-//                hisFamily.setRelativeTumourName(family_history.getdiag());
-//            }else {
-//                hisFamily.setFamilyTumour("否");
-//            }
-//
-//            if ((family_history.getneg()==null||family_history.getneg().equals(""))&&(family_history.getdiag()!=null)&&
-//                    (family_history.getdiag().contains("循环")||family_history.getdiag().contains("脑卒中")||
-//                            family_history.getdiag().contains("冠心病")||family_history.getdiag().contains("高血压"))){
-//                hisFamily.setFamilyCcvd("是");
-//                hisFamily.setCcvdRelative(family_history.getrelation());
-//                hisFamily.setRelativeCcvdName(family_history.getdiag());
-//            }else {
-//                hisFamily.setFamilyCcvd("否");
-//            }
             if ((family_history.getneg_std()==null||family_history.getneg_std().equals(""))&&(family_history.geticd10_name1()!=null)&&
                     (family_history.geticd10_name1().contains("肿瘤")||family_history.geticd10_name1().contains("癌"))){
                 hisFamily.setFamilyTumour("是");
