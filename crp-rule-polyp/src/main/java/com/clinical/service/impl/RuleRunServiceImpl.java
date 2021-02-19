@@ -464,20 +464,20 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                List<SPECIALITY_EXAM> zj_SPECICALITY_EXAM= zjSpecialityExamMapper.findZjSpecialityExamByUniqueId(uniqueId);
 
                 // 肠镜
-                List<COLON_ES_DESCRIPTION> zj_COLON_ES_DESCRIPTION = zjColonEsDescriptionMapper.findZjColonEsDescriptionByUniqueId(uniqueId);
-                if (zj_COLON_ES_DESCRIPTION != null && zj_COLON_ES_DESCRIPTION.size() > 0) {
-                    saveColonEsDes(zj_COLON_ES_DESCRIPTION);
-                }
+//                List<COLON_ES_DESCRIPTION> zj_COLON_ES_DESCRIPTION = zjColonEsDescriptionMapper.findZjColonEsDescriptionByUniqueId(uniqueId);
+//                if (zj_COLON_ES_DESCRIPTION != null && zj_COLON_ES_DESCRIPTION.size() > 0) {
+//                    saveColonEsDes(zj_COLON_ES_DESCRIPTION);
+//                }
                 // 病理报告原文
-                List<HISTOLOGY_REPORT> zj_HISTOLOGY_REPORT = zjHistologyReportMapper.findZjHistologyReportByUniqueId(uniqueId);
-                if (zj_HISTOLOGY_REPORT != null && zj_HISTOLOGY_REPORT.size() > 0) {
-                    saveHistologyReport(zj_HISTOLOGY_REPORT);
-                }
+//                List<HISTOLOGY_REPORT> zj_HISTOLOGY_REPORT = zjHistologyReportMapper.findZjHistologyReportByUniqueId(uniqueId);
+//                if (zj_HISTOLOGY_REPORT != null && zj_HISTOLOGY_REPORT.size() > 0) {
+//                    saveHistologyReport(zj_HISTOLOGY_REPORT);
+//                }
                 // 病理检查
-                List<PATHOLOGY>  zj_PATHOLOGY = zjPathologyMapper.findZjPathologyByUniqueId(uniqueId);
-                if (zj_PATHOLOGY != null && zj_PATHOLOGY.size() > 0) {
-                    savePathological(zj_PATHOLOGY);
-                }
+//                List<PATHOLOGY>  zj_PATHOLOGY = zjPathologyMapper.findZjPathologyByUniqueId(uniqueId);
+//                if (zj_PATHOLOGY != null && zj_PATHOLOGY.size() > 0) {
+//                    savePathological(zj_PATHOLOGY);
+//                }
                 // 免疫组化标志物
                 List<IHC_MARKER> zj_IHC_MARKER = zjIhcMarkerMapper.findZjIhcMarkerByUniqueId(uniqueId);
                 if (zj_IHC_MARKER != null && zj_IHC_MARKER.size() > 0) {
@@ -588,8 +588,21 @@ public class RuleRunServiceImpl implements RuleRunService {
             // marker_qualitative	免疫组化标志物检测定性结果
             immune.setMarkerQualitative(getIhcMarkerMarkerQualita(ihc_marker.gettest_item_value_std()));
             // marker_quantify	免疫组化标志物检测定量结果
-            immune.setMarkerQuantify(getStandardResultTextById(ihc_marker.gettest_item_value_std(), "afterType1",
-                    "test_item_value_precise_std"));
+            // 质检反馈：这个字段应该转化成百分比而不是小数
+            String markerQuantify = getStandardResultTextById(ihc_marker.gettest_item_value_std(), "afterType1",
+                    "test_item_value_precise_std");
+            String markerQuantifyTransfer = null;
+            if (StringUtils.isEmpty(markerQuantify)) {
+                markerQuantifyTransfer = null;
+            } else {
+                try {
+                    markerQuantifyTransfer = Double.valueOf(markerQuantify) * 100 + "%";
+                } catch (NumberFormatException e) {
+                    markerQuantifyTransfer = markerQuantify;
+                }
+            }
+
+            immune.setMarkerQuantify(markerQuantifyTransfer);
             // data_version	数据版本
             immune.setDataVersion(ihc_marker.getdata_version());
             // data_db_source	数据库来源
