@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.RadiotherapyMapper">
+<select id="findRadiotherapyByUniqueId"  resultType="com.clinical.model.cluster.Radiotherapy">
+       SELECT * FROM radiotherapy WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveRadiotherapy"  parameterType="com.clinical.model.cluster.Radiotherapy" useGeneratedKeys="true" keyProperty="id">
+  insert into radiotherapy(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       radio_begin_time,
+       radio_end_time,
+       purpose,
+       site,
+       site_type,
+       target_site,
+       way,
+       ray_type,
+       total_dose,
+       single_dose,
+       radio_number,
+       prescript_radio_total,
+       prescript_radio_single,
+       prescript_radio_number,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{radioBeginTime},
+       #{radioEndTime},
+       #{purpose},
+       #{site},
+       #{siteType},
+       #{targetSite},
+       #{way},
+       #{rayType},
+       #{totalDose},
+       #{singleDose},
+       #{radioNumber},
+       #{prescriptRadioTotal},
+       #{prescriptRadioSingle},
+       #{prescriptRadioNumber},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateRadiotherapy"  parameterType="com.clinical.model.cluster.Radiotherapy">
+      update   radiotherapy
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    radio_begin_time = #{radioBeginTime},  
+    radio_end_time = #{radioEndTime},  
+    purpose = #{purpose},  
+    site = #{site},  
+    site_type = #{siteType},  
+    target_site = #{targetSite},  
+    way = #{way},  
+    ray_type = #{rayType},  
+    total_dose = #{totalDose},  
+    single_dose = #{singleDose},  
+    radio_number = #{radioNumber},  
+    prescript_radio_total = #{prescriptRadioTotal},  
+    prescript_radio_single = #{prescriptRadioSingle},  
+    prescript_radio_number = #{prescriptRadioNumber},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

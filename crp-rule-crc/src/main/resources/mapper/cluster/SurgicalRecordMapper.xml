@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.SurgicalRecordMapper">
+<select id="findSurgicalRecordByUniqueId"  resultType="com.clinical.model.cluster.SurgicalRecord">
+       SELECT * FROM surgical_record WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveSurgicalRecord"  parameterType="com.clinical.model.cluster.SurgicalRecord" useGeneratedKeys="true" keyProperty="id">
+  insert into surgical_record(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       radical_operation,
+       reconstruction_methods,
+       incision_epigastric,
+       incision_around_navel,
+       incisional_lower_abdomen,
+       incision_length,
+       intraoperative_enteroscopy,
+       intraoperative_lavage,
+       intraoperative_chemotherapy,
+       chemotherapeutic_drugs,
+       indwelling_drainage_tube,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{radicalOperation},
+       #{reconstructionMethods},
+       #{incisionEpigastric},
+       #{incisionAroundNavel},
+       #{incisionalLowerAbdomen},
+       #{incisionLength},
+       #{intraoperativeEnteroscopy},
+       #{intraoperativeLavage},
+       #{intraoperativeChemotherapy},
+       #{chemotherapeuticDrugs},
+       #{indwellingDrainageTube},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateSurgicalRecord"  parameterType="com.clinical.model.cluster.SurgicalRecord">
+      update   surgical_record
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    radical_operation = #{radicalOperation},  
+    reconstruction_methods = #{reconstructionMethods},  
+    incision_epigastric = #{incisionEpigastric},  
+    incision_around_navel = #{incisionAroundNavel},  
+    incisional_lower_abdomen = #{incisionalLowerAbdomen},  
+    incision_length = #{incisionLength},  
+    intraoperative_enteroscopy = #{intraoperativeEnteroscopy},  
+    intraoperative_lavage = #{intraoperativeLavage},  
+    intraoperative_chemotherapy = #{intraoperativeChemotherapy},  
+    chemotherapeutic_drugs = #{chemotherapeuticDrugs},  
+    indwelling_drainage_tube = #{indwellingDrainageTube},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

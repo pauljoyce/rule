@@ -19,6 +19,7 @@
     <module>crp-rule-breast</module>
       <module>crp-rule-glioma</module>
     <module>crp-rule-polyp</module>
+      <module>crp-rule-crc</module>
   </modules>
 
   <name>rule</name>

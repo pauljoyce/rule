@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.PostoperativeRecoveryMapper">
+<select id="findPostoperativeRecoveryByUniqueId"  resultType="com.clinical.model.cluster.PostoperativeRecovery">
+       SELECT * FROM postoperative_recovery WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="savePostoperativeRecovery"  parameterType="com.clinical.model.cluster.PostoperativeRecovery" useGeneratedKeys="true" keyProperty="id">
+  insert into postoperative_recovery(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       time_out_of_bed,
+       first_time_out_of_bed,
+       exhaust_time,
+       first_exhaust_time,
+       defecation_time,
+       first_defecation,
+       half_liquid_time,
+       semi_liquid_food,
+       liquid_time,
+       liquid_food_duration,
+       time_of_drainage_tube_removal,
+       duration_of_drainage_tube,
+       blood_after_operation,
+       transfusion,
+       transfusion_components,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{timeOutOfBed},
+       #{firstTimeOutOfBed},
+       #{exhaustTime},
+       #{firstExhaustTime},
+       #{defecationTime},
+       #{firstDefecation},
+       #{halfLiquidTime},
+       #{semiLiquidFood},
+       #{liquidTime},
+       #{liquidFoodDuration},
+       #{timeOfDrainageTubeRemoval},
+       #{durationOfDrainageTube},
+       #{bloodAfterOperation},
+       #{transfusion},
+       #{transfusionComponents},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updatePostoperativeRecovery"  parameterType="com.clinical.model.cluster.PostoperativeRecovery">
+      update   postoperative_recovery
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    time_out_of_bed = #{timeOutOfBed},  
+    first_time_out_of_bed = #{firstTimeOutOfBed},  
+    exhaust_time = #{exhaustTime},  
+    first_exhaust_time = #{firstExhaustTime},  
+    defecation_time = #{defecationTime},  
+    first_defecation = #{firstDefecation},  
+    half_liquid_time = #{halfLiquidTime},  
+    semi_liquid_food = #{semiLiquidFood},  
+    liquid_time = #{liquidTime},  
+    liquid_food_duration = #{liquidFoodDuration},  
+    time_of_drainage_tube_removal = #{timeOfDrainageTubeRemoval},  
+    duration_of_drainage_tube = #{durationOfDrainageTube},  
+    blood_after_operation = #{bloodAfterOperation},  
+    transfusion = #{transfusion},  
+    transfusion_components = #{transfusionComponents},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>
