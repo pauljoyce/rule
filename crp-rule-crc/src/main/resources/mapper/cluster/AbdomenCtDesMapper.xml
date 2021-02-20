@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.AbdomenCtDesMapper">
+<select id="findAbdomenCtDesByUniqueId"  resultType="com.clinical.model.cluster.AbdomenCtDes">
+       SELECT * FROM abdomen_ct_des WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveAbdomenCtDes"  parameterType="com.clinical.model.cluster.AbdomenCtDes" useGeneratedKeys="true" keyProperty="id">
+  insert into abdomen_ct_des(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       exam_no,
+       exam_name,
+       structure,
+       location,
+       lesion,
+       size,
+       quanity,
+       colorectal_quantity_std,
+       colorectal_size_std,
+       move_quantity_std,
+       move_size_std,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{examNo},
+       #{examName},
+       #{structure},
+       #{location},
+       #{lesion},
+       #{size},
+       #{quanity},
+       #{colorectalQuantityStd},
+       #{colorectalSizeStd},
+       #{moveQuantityStd},
+       #{moveSizeStd},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateAbdomenCtDes"  parameterType="com.clinical.model.cluster.AbdomenCtDes">
+      update   abdomen_ct_des
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    exam_no = #{examNo},  
+    exam_name = #{examName},  
+    structure = #{structure},  
+    location = #{location},  
+    lesion = #{lesion},  
+    size = #{size},  
+    quanity = #{quanity},  
+    colorectal_quantity_std = #{colorectalQuantityStd},  
+    colorectal_size_std = #{colorectalSizeStd},  
+    move_quantity_std = #{moveQuantityStd},  
+    move_size_std = #{moveSizeStd},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

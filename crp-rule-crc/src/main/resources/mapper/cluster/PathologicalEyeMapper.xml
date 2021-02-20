@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.PathologicalEyeMapper">
+<select id="findPathologicalEyeByUniqueId"  resultType="com.clinical.model.cluster.PathologicalEye">
+       SELECT * FROM pathological_eye WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="savePathologicalEye"  parameterType="com.clinical.model.cluster.PathologicalEye" useGeneratedKeys="true" keyProperty="id">
+  insert into pathological_eye(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       case_number,
+       inspect_time,
+       reprot_time,
+       tumor_location,
+       tumor_size,
+       number_of_lesions,
+       lesion_morphology,
+       cutting_edge_distance,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{caseNumber},
+       #{inspectTime},
+       #{reprotTime},
+       #{tumorLocation},
+       #{tumorSize},
+       #{numberOfLesions},
+       #{lesionMorphology},
+       #{incisalMargin},
+       #{cuttingEdgeDistance},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updatePathologicalEye"  parameterType="com.clinical.model.cluster.PathologicalEye">
+      update   pathological_eye
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    case_number = #{caseNumber},  
+    inspect_time = #{inspectTime},  
+    reprot_time = #{reprotTime},  
+    tumor_location = #{tumorLocation},  
+    tumor_size = #{tumorSize},  
+    number_of_lesions = #{numberOfLesions},  
+    lesion_morphology = #{lesionMorphology},
+    cutting_edge_distance = #{cuttingEdgeDistance},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

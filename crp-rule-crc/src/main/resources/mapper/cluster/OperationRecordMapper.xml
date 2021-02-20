@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.OperationRecordMapper">
+<select id="findOperationRecordByUniqueId"  resultType="com.clinical.model.cluster.OperationRecord">
+       SELECT * FROM operation_record WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveOperationRecord"  parameterType="com.clinical.model.cluster.OperationRecord" useGeneratedKeys="true" keyProperty="id">
+  insert into operation_record(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       record,
+       route,
+       robot,
+       resection_rectum,
+       resection_colon,
+       operation_name,
+       lymph_dissection,
+       mabl,
+       start_time,
+       end_time,
+       blood_transfusion,
+       blood_transfusion_volume,
+       composition,
+       colostomy,
+       colostomy_methods,
+       remove_organs,
+       remove_organs_name,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{record},
+       #{route},
+       #{robot},
+       #{resectionRectum},
+       #{resectionColon},
+       #{operationName},
+       #{lymphDissection},
+       #{mabl},
+       #{startTime},
+       #{endTime},
+       #{bloodTransfusion},
+       #{bloodTransfusionVolume},
+       #{composition},
+       #{colostomy},
+       #{colostomyMethods},
+       #{removeOrgans},
+       #{removeOrgansName},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateOperationRecord"  parameterType="com.clinical.model.cluster.OperationRecord">
+      update   operation_record
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    record = #{record},  
+    route = #{route},  
+    robot = #{robot},  
+    resection_rectum = #{resectionRectum},  
+    resection_colon = #{resectionColon},  
+    operation_name = #{operationName},  
+    lymph_dissection = #{lymphDissection},  
+    mabl = #{mabl},  
+    start_time = #{startTime},  
+    end_time = #{endTime},  
+    blood_transfusion = #{bloodTransfusion},  
+    blood_transfusion_volume = #{bloodTransfusionVolume},  
+    composition = #{composition},  
+    colostomy = #{colostomy},  
+    colostomy_methods = #{colostomyMethods},  
+    remove_organs = #{removeOrgans},  
+    remove_organs_name = #{removeOrgansName},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

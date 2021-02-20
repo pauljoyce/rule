@@ -18,15 +18,15 @@ public class PersonGeneral{
     //日期
     private Date recordTime;
     //呼吸
-    private Double breathingFrequency;
+    private Integer breathingFrequency;
     //脉搏
-    private Double heartRate;
+    private Integer heartRate;
     //体温
     private Double bodyTemperature;
     //收缩压
-    private Double systolicBloodPressure;
+    private Integer systolicBloodPressure;
     //舒张压
-    private Double diastolicBloodPressure;
+    private Integer diastolicBloodPressure;
     //数据版本
     private String dataVersion;
     //数据库来源
@@ -90,16 +90,16 @@ public class PersonGeneral{
     public void setRecordTime(Date recordTime) {
          this.recordTime = recordTime;
     } 
-    public Double getBreathingFrequency(){
+    public Integer getBreathingFrequency(){
         return breathingFrequency;
     } 
-    public void setBreathingFrequency(Double breathingFrequency) {
+    public void setBreathingFrequency(Integer breathingFrequency) {
          this.breathingFrequency = breathingFrequency;
     } 
-    public Double getHeartRate(){
+    public Integer getHeartRate(){
         return heartRate;
     } 
-    public void setHeartRate(Double heartRate) {
+    public void setHeartRate(Integer heartRate) {
          this.heartRate = heartRate;
     } 
     public Double getBodyTemperature(){
@@ -108,16 +108,16 @@ public class PersonGeneral{
     public void setBodyTemperature(Double bodyTemperature) {
          this.bodyTemperature = bodyTemperature;
     } 
-    public Double getSystolicBloodPressure(){
+    public Integer getSystolicBloodPressure(){
         return systolicBloodPressure;
     } 
-    public void setSystolicBloodPressure(Double systolicBloodPressure) {
+    public void setSystolicBloodPressure(Integer systolicBloodPressure) {
          this.systolicBloodPressure = systolicBloodPressure;
     } 
-    public Double getDiastolicBloodPressure(){
+    public Integer getDiastolicBloodPressure(){
         return diastolicBloodPressure;
     } 
-    public void setDiastolicBloodPressure(Double diastolicBloodPressure) {
+    public void setDiastolicBloodPressure(Integer diastolicBloodPressure) {
          this.diastolicBloodPressure = diastolicBloodPressure;
     } 
     public String getDataVersion(){

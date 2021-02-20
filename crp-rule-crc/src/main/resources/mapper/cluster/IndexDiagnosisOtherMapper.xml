@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.IndexDiagnosisOtherMapper">
+<select id="findIndexDiagnosisOtherByUniqueId"  resultType="com.clinical.model.cluster.IndexDiagnosisOther">
+       SELECT * FROM index_diagnosis_other WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveIndexDiagnosisOther"  parameterType="com.clinical.model.cluster.IndexDiagnosisOther" useGeneratedKeys="true" keyProperty="id">
+  insert into index_diagnosis_other(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       P324,
+       P325,
+       P806,
+       P326,
+       diagnosis_date,
+       visit_date,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{p324},
+       #{p325},
+       #{p806},
+       #{p326},
+       #{diagnosisDate},
+       #{visitDate},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateIndexDiagnosisOther"  parameterType="com.clinical.model.cluster.IndexDiagnosisOther">
+      update   index_diagnosis_other
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    P324 = #{p324},  
+    P325 = #{p325},  
+    P806 = #{p806},  
+    P326 = #{p326},  
+    diagnosis_date = #{diagnosisDate},  
+    visit_date = #{visitDate},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>
