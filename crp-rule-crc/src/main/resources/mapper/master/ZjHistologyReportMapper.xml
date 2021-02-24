@@ -6,4 +6,7 @@
        SELECT * FROM HISTOLOGY_REPORT WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
+<select id="findZjHistologyReportByUniqueId2"  resultType="com.clinical.model.master.HISTOLOGY_REPORT">
+       SELECT * FROM HISTOLOGY_REPORT WHERE unique_id = #{unique_id}
+</select>
 </mapper>

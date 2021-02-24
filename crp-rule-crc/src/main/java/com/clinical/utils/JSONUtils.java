@@ -2,14 +2,9 @@ package com.clinical.utils;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @Author: mengchao
@@ -18,6 +13,261 @@ import java.util.Set;
 public class JSONUtils {
     public static final int DUPLICATED_VALUE_TRUE = 1;
     public static final int DUPLICATED_VALUE_FALSE = 2;
+
+    public static void main(String[] args) {
+        String json = "{\"afterType1\":[{\"structure_site_std1\":\"18\",\"structure_std1\":\"110\",\"address1\":\"111\"}," +
+                "{\"structure_site_std2\":\"28\",\"structure_std2\":\"210\",\"address2\":\"211\"}," +
+                "{\"address3\":\"38\",\"structure_std3\":\"\",\"structure_site_std3\":\"311\"}]}";
+//        System.out.println(getAllFieldGroupByObj(json, "afterType2", "/", ";"));
+        JSONObject root = JSONObject.parseObject(json);
+        JSONArray jsonArray = findJSONArray(root, "afterType1");
+        String allText = "";
+        String fieldSeparate = "/";
+        String objSeparate = ";";
+        for (Object obj : jsonArray
+                ) {
+            Map<String, String> objMap = (Map<String, String>) obj;
+            Set<String> keySet = objMap.keySet();
+            String objText = "";
+            String structureStd = "";
+            String structureSiteStd = "";
+            for (String key : keySet
+                    ) {
+                String value = objMap.get(key);
+
+                if ("structure_std".equalsIgnoreCase(key.replaceAll("\\d+", ""))) {
+                    structureStd = value;
+                }
+                if ("structure_site_std".equalsIgnoreCase(key.replaceAll("\\d+", ""))) {
+                    structureSiteStd = value;
+                }
+            }
+            if (StringUtils.isNotEmpty(structureStd)) {
+                objText = structureStd;
+            } else {
+                objText = structureSiteStd;
+            }
+
+            if (StringUtils.isNotEmpty(objText)) {
+                allText += objText + objSeparate;
+            }
+
+        }
+        allText = allText.replace(fieldSeparate + objSeparate, objSeparate);
+        allText = allText.substring(0, allText.length()-1);
+        System.out.println(allText);
+    }
+
+    /**
+     * 大肠息肉-肠镜-息肉位置JSON解析专用
+     * @param json
+     * @return
+     */
+    public static String cEDSizeStd(String json) {
+        JSONObject root = JSONObject.parseObject(json);
+        JSONArray jsonArray = findJSONArray(root, "afterType1");
+        if (jsonArray != null) {
+            String allText = "";
+            String fieldSeparate = "*";
+            String objSeparate = ";";
+            for (Object obj : jsonArray
+                    ) {
+                Map<String, String> objMap = (Map<String, String>) obj;
+                Set<String> keySet = objMap.keySet();
+                String objText = "";
+                String sizeMaxDiamStd = "";
+                String sizeMedianDiamStd = "";
+                String sizeMinDiamStd = "";
+                String sizeUnitStd = "";
+                for (String key : keySet
+                        ) {
+                    String value = objMap.get(key);
+
+                    if ("size_max_diam_std".equalsIgnoreCase(key.replaceAll("\\d+", ""))) {
+                        sizeMaxDiamStd = value;
+                    }
+                    if ("size_median_diam_std".equalsIgnoreCase(key.replaceAll("\\d+", ""))) {
+                        sizeMedianDiamStd = value;
+                    }
+                    if ("size_min_diam_std".equalsIgnoreCase(key.replaceAll("\\d+", ""))) {
+                        sizeMinDiamStd = value;
+                    }
+                    if ("size_unit_std".equalsIgnoreCase(key.replaceAll("\\d+", ""))) {
+                        sizeUnitStd = value;
+                    }
+                }
+
+                objText = sizeMaxDiamStd + fieldSeparate + sizeMedianDiamStd + fieldSeparate + sizeMinDiamStd + sizeUnitStd;
+                if (StringUtils.isNotEmpty(objText)) {
+                    allText += objText + objSeparate;
+                }
+
+            }
+            allText = allText.replace(fieldSeparate + objSeparate, objSeparate);
+            allText = allText.substring(0, allText.length()-1);
+            return allText;
+        }
+        return null;
+    }
+
+    /**
+     * 大肠息肉-免疫组标化物-定性结果JSON解析专用
+     * @param json
+     * @return
+     */
+    public static String ihcMarkerMarkerQualita(String json) {
+        JSONObject root = JSONObject.parseObject(json);
+        JSONArray jsonArray = findJSONArray(root, "afterType1");
+        if (jsonArray != null) {
+            String allText = "";
+            String fieldSeparate = "/";
+            String objSeparate = ";";
+            for (Object obj : jsonArray
+                    ) {
+                Map<String, String> objMap = (Map<String, String>) obj;
+                Set<String> keySet = objMap.keySet();
+                String objText = "";
+                String testItemValueRoughStd = "";
+                String testItemValueNatureStd = "";
+                for (String key : keySet
+                        ) {
+                    String value = objMap.get(key);
+
+                    if ("test_item_value_rough_std".equalsIgnoreCase(key.replaceAll("\\d+", ""))) {
+                        testItemValueRoughStd = value;
+                    }
+                    if ("test_item_value_nature_std".equalsIgnoreCase(key.replaceAll("\\d+", ""))) {
+                        testItemValueNatureStd = value;
+                    }
+                }
+                objText = testItemValueRoughStd + fieldSeparate + testItemValueNatureStd;
+
+                if (StringUtils.isNotEmpty(objText)) {
+                    allText += objText + objSeparate;
+                }
+
+            }
+            allText = allText.replace(fieldSeparate + objSeparate, objSeparate);
+            allText = allText.substring(0, allText.length()-1);
+            return allText;
+        }
+        return null;
+    }
+
+    /**
+     * 大肠息肉-肠镜-息肉位置JSON解析专用
+     * @param json
+     * @return
+     */
+    public static String structureStd(String json) {
+        JSONObject root = JSONObject.parseObject(json);
+        JSONArray jsonArray = findJSONArray(root, "afterType1");
+        if (jsonArray != null) {
+            String allText = "";
+            String fieldSeparate = "/";
+            String objSeparate = ";";
+            for (Object obj : jsonArray
+                    ) {
+                Map<String, String> objMap = (Map<String, String>) obj;
+                Set<String> keySet = objMap.keySet();
+                String objText = "";
+                String structureStd = "";
+                String structureSiteStd = "";
+                for (String key : keySet
+                        ) {
+                    String value = objMap.get(key);
+
+                    if ("structure_std".equalsIgnoreCase(key.replaceAll("\\d+", ""))) {
+                        structureStd = value;
+                    }
+                    if ("structure_site_std".equalsIgnoreCase(key.replaceAll("\\d+", ""))) {
+                        structureSiteStd = value;
+                    }
+                }
+                if (StringUtils.isNotEmpty(structureStd)) {
+                    objText = structureStd;
+                }
+                if (StringUtils.isNotEmpty(structureSiteStd)) {
+                    objText += fieldSeparate + structureSiteStd;
+                }
+
+                if (StringUtils.isNotEmpty(objText)) {
+                    allText += objText + objSeparate;
+                }
+
+            }
+            allText = allText.replace(fieldSeparate + objSeparate, objSeparate);
+            allText = allText.substring(0, allText.length()-1);
+            return allText;
+        }
+        return null;
+    }
+
+    /**
+     * 按照对象分组获取json中字段值
+     * @param jsonText          json文本
+     * @param arrayField        arrayField
+     * @param fieldSeparate     字段分隔符
+     * @param objSeparate       对象分隔符
+     * @return
+     */
+    public static String getAllFieldGroupByObj(String jsonText, String arrayField, String fieldSeparate,
+                                               String objSeparate, String tableFieldName) {
+        JSONObject root = JSONObject.parseObject(jsonText);
+        JSONArray jsonArray = findJSONArray(root, arrayField);
+        if (jsonArray != null) {
+            String allText = "";
+            for (Object obj : jsonArray
+                    ) {
+                Map<String, String> objMap = (Map<String, String>) obj;
+                Set<String> keySet = objMap.keySet();
+                String objText = "";
+                for (String key : keySet
+                        ) {
+
+                    String value = objMap.get(key);
+                    objText += value + fieldSeparate;
+                }
+
+                allText += objText + objSeparate;
+            }
+            allText = allText.replace(fieldSeparate + objSeparate, objSeparate);
+            return allText.substring(0, allText.length()-1);
+        }
+        return null;
+    }
+
+    /**
+     * 按照对象分组获取json中字段值
+     * @param jsonText          json文本
+     * @param arrayField        arrayField
+     * @param fieldSeparate     字段分隔符
+     * @param objSeparate       对象分隔符
+     * @return
+     */
+    public static String getAllFieldGroupByObj(String jsonText, String arrayField, String fieldSeparate, String objSeparate) {
+        JSONObject root = JSONObject.parseObject(jsonText);
+        JSONArray jsonArray = findJSONArray(root, arrayField);
+        if (jsonArray != null) {
+            String allText = "";
+            for (Object obj : jsonArray
+                    ) {
+                Map<String, String> objMap = (Map<String, String>) obj;
+                Set<String> keySet = objMap.keySet();
+                String objText = "";
+                for (String key : keySet
+                        ) {
+                    String value = objMap.get(key);
+                    objText += value + fieldSeparate;
+                }
+
+                allText += objText + objSeparate;
+            }
+            allText = allText.replace(fieldSeparate + objSeparate, objSeparate);
+            return allText.substring(0, allText.length()-1);
+        }
+        return null;
+    }
 
     /**
      * 解析json中的标化字段，返回指定标化字段的values list
@@ -102,8 +352,11 @@ public class JSONUtils {
 
 
     private static JSONArray findJSONArray(JSONObject jsonObject,String arrayField){
+        if (jsonObject == null) {
+            return null;
+        }
         for (Map.Entry<String,Object> entry:jsonObject.entrySet()
-        ) {
+                ) {
             if (arrayField.equals(entry.getKey())){
                 return ((JSONArray) entry.getValue());
             }
@@ -115,7 +368,7 @@ public class JSONUtils {
         List<String> result = new ArrayList<>();
         Map<String, List<String>> processMap = new HashMap<>(16);
         for (Object object:jsonArray
-        ) {
+                ) {
             JSONObject jsonObject = ((JSONObject) object);
             List<String> list = processMap.get(stdField);
             if (list==null){

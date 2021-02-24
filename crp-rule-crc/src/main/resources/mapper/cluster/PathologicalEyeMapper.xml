@@ -42,7 +42,6 @@ values
        #{tumorSize},
        #{numberOfLesions},
        #{lesionMorphology},
-       #{incisalMargin},
        #{cuttingEdgeDistance},
        #{dataVersion},
        #{dataDbSource},

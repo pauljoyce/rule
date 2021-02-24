@@ -1,111 +1,24 @@
 package com.clinical.service.impl;
 
-import com.clinical.dao.master.ZjBasyDiagStdMapper;
-import com.clinical.dao.master.ZjBasyNstdMapper;
-import com.clinical.dao.master.ZjBasyOpStdMapper;
-import com.clinical.dao.master.ZjClinicalDiagMapper;
-import com.clinical.dao.master.ZjDrugOrderMapper;
-import com.clinical.dao.master.ZjEmergencyRecordMapper;
-import com.clinical.dao.master.ZjExamMasterMapper;
-import com.clinical.dao.master.ZjFamilyHistoryMapper;
-import com.clinical.dao.master.ZjFollowUpMapper;
-import com.clinical.dao.master.ZjHistologyReportMapper;
-import com.clinical.dao.master.ZjInpConsultationDoctorDetailMapper;
-import com.clinical.dao.master.ZjInpConsultationDoctorMasterMapper;
-import com.clinical.dao.master.ZjInpDiagnosisMapper;
-import com.clinical.dao.master.ZjInpOrdersMapper;
-import com.clinical.dao.master.ZjLisRecordMapper;
-import com.clinical.dao.master.ZjNursingRecordMapper;
-import com.clinical.dao.master.ZjOutpRecordMapper;
-import com.clinical.dao.master.ZjPatVisitMasterMapper;
-import com.clinical.dao.master.ZjPhysicalExamParaMapper;
-import com.clinical.dao.master.ZjPostOpCourseMapper;
-import com.clinical.dao.master.ZjPreOpDiscussionMapper;
-import com.clinical.dao.master.ZjPriorDiseaseAndSurgeryMapper;
-import com.clinical.dao.master.ZjProcedureRecordMapper;
-import com.clinical.dao.master.ZjSmokeAndDrinkMapper;
-import com.clinical.dao.master.ZjStageSummaryMapper;
-import com.clinical.dao.master.ZjSympPresentMapper;
-import com.clinical.dao.master.ZjTem24hInOutMapper;
-import com.clinical.dao.master.ZjTemCourseDisMapper;
-import com.clinical.dao.master.ZjTemDeathRecordMapper;
-import com.clinical.dao.master.ZjTemInpAdmissionStatusMapper;
-import com.clinical.dao.master.ZjTemOperationRecordMapper;
-import com.clinical.dao.master.ZjTemOutpDischargeStatusMapper;
-import com.clinical.dao.master.ZjTemOutpDischargeSummerMapper;
-import com.clinical.dao.master.ZjTemPatMasterIndexMapper;
-import com.clinical.dao.master.ZjTemPreCourseDisMapper;
-import com.clinical.dao.master.ZjTransferDeptMapper;
-import com.clinical.dao.master.ZjVitalRecordMapper;
-import com.clinical.dao.master.ZjWardRoundRecordMapper;
-import com.clinical.model.cluster.IndexDiagnosisAdmit;
-import com.clinical.model.cluster.IndexDiagnosisAdmitIcd;
-import com.clinical.model.cluster.IndexDiagnosisClinic;
-import com.clinical.model.cluster.IndexDiagnosisClinicIcd;
-import com.clinical.model.cluster.IndexDiagnosisMain;
-import com.clinical.model.cluster.IndexDiagnosisMainIcd;
-import com.clinical.model.cluster.IndexDiagnosisOther;
-import com.clinical.model.cluster.IndexDiagnosisOtherIcd;
-import com.clinical.model.cluster.IndexIcu;
-import com.clinical.model.cluster.IndexInjury;
-import com.clinical.model.cluster.IndexOperation;
-import com.clinical.model.cluster.IndexOperationIcd;
-import com.clinical.model.cluster.IndexPathology;
-import com.clinical.model.cluster.IndexPathologyIcd;
-import com.clinical.model.cluster.IndexPerson;
-import com.clinical.model.cluster.Person;
-import com.clinical.model.cluster.PersonGeneral;
-import com.clinical.model.cluster.TemInpAdmissionStatus;
-import com.clinical.model.cluster.VisitRecord;
-import com.clinical.model.master.BASY_DIAG_STD;
-import com.clinical.model.master.BASY_NSTD;
-import com.clinical.model.master.BASY_OP_STD;
-import com.clinical.model.master.NURSING_RECORD;
-import com.clinical.model.master.PAT_VISIT_MASTER;
-import com.clinical.model.master.TEM_INP_ADMISSION_STATUS;
-import com.clinical.model.master.TEM_PAT_MASTER_INDEX;
-import com.clinical.model.master.VITAL_RECORD;
-import com.clinical.service.ExamMasterService;
-import com.clinical.service.FollowUpService;
-import com.clinical.service.HisFamilyService;
-import com.clinical.service.HisPastService;
-import com.clinical.service.HisPersonService;
-import com.clinical.service.HistologyReportService;
-import com.clinical.service.ImmuneService;
-import com.clinical.service.IndexDiagnosisAdmitIcdService;
-import com.clinical.service.IndexDiagnosisAdmitService;
-import com.clinical.service.IndexDiagnosisClinicIcdService;
-import com.clinical.service.IndexDiagnosisClinicService;
-import com.clinical.service.IndexDiagnosisMainIcdService;
-import com.clinical.service.IndexDiagnosisMainService;
-import com.clinical.service.IndexDiagnosisOtherIcdService;
-import com.clinical.service.IndexDiagnosisOtherService;
-import com.clinical.service.IndexIcuService;
-import com.clinical.service.IndexInjuryService;
-import com.clinical.service.IndexOperationIcdService;
-import com.clinical.service.IndexOperationService;
-import com.clinical.service.IndexPathologyIcdService;
-import com.clinical.service.IndexPathologyService;
-import com.clinical.service.IndexPersonService;
-import com.clinical.service.PathologicalService;
-import com.clinical.service.PersonGeneralService;
-import com.clinical.service.PersonService;
-import com.clinical.service.RuleRunService;
-import com.clinical.service.SymptomService;
-import com.clinical.service.TemInpAdmissionStatusService;
-import com.clinical.service.VisitRecordService;
-
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
+import com.clinical.dao.master.*;
+import com.clinical.model.cluster.*;
+import com.clinical.model.master.*;
+import com.clinical.service.*;
+import com.clinical.utils.JSONUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Service
@@ -236,41 +149,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //    @Autowired
 //    TumorPunctureService    tumorPunctureService;
 
-
-
-
-    @Autowired
-    HistologyReportService    histologyReportService;
-
-
-    @Autowired
-    PathologicalService    pathologicalService;
-
-
-    @Autowired
-    ImmuneService    immuneService;
-
-
-
-
-//    @Autowired
-//    TreatmentService    treatmentService;
-//
-//
-//    @Autowired
-//    ChemotherapyService    chemotherapyService;
-//
-//
-//    @Autowired
-//    RadiotherapyService    radiotherapyService;
-
-
-
-
     @Autowired
     FollowUpService    followUpService;
-
-
 
 //    @Autowired
 //    ZjBasyNstdMapper zjBasyNstdMapper;
@@ -297,9 +177,6 @@ public class RuleRunServiceImpl implements RuleRunService {
     ZjExamMasterMapper    zjExamMasterMapper;
 
     @Autowired
-    ZjHistologyReportMapper    zjHistologyReportMapper;
-
-    @Autowired
     ZjTemOperationRecordMapper    zjTemOperationRecordMapper;
 
     @Autowired
@@ -316,9 +193,6 @@ public class RuleRunServiceImpl implements RuleRunService {
 
     @Autowired
     ZjVitalRecordMapper    zjVitalRecordMapper;
-
-    @Autowired
-    ZjDrugOrderMapper    zjDrugOrderMapper;
 
     @Autowired
     ZjTemInpAdmissionStatusMapper    zjTemInpAdmissionStatusMapper;
@@ -403,10 +277,7 @@ public class RuleRunServiceImpl implements RuleRunService {
 //
 //    @Autowired
 //    ZjPostopCompMapper    zjPostopCompMapper;
-//
-//    @Autowired
-//    ZjRadiotherapyMapper    zjRadiotherapyMapper;
-//
+
 //    @Autowired
 //    ZjAbdomUsDescriptionMapper    zjAbdomUsDescriptionMapper;
 //
@@ -436,6 +307,114 @@ public class RuleRunServiceImpl implements RuleRunService {
 
 //    @Autowired
 //    ZjSpecialityExamMapper zjSpecialityExamMapper;
+
+    /**
+     * 放疗
+     */
+    @Autowired
+    ZjRadiotherapyMapper    zjRadiotherapyMapper;
+    /**
+     * 放疗
+     */
+    @Autowired
+    RadiotherapyService    radiotherapyService;
+
+    /**
+     * 化疗
+     */
+    @Autowired
+    ZjDrugOrderMapper    zjDrugOrderMapper;
+    /**
+     * 化疗
+     */
+    @Autowired
+    ChemotherapyService    chemotherapyService;
+
+    /**
+     * 药物治疗
+     */
+    @Autowired
+    TreatmentService    treatmentService;
+
+    /**
+     * 免疫组化标志物
+     */
+    @Autowired
+    ZjIhcMarkerMapper zjIhcMarkerMapper;
+    /**
+     * 免疫组化标志物
+     */
+    @Autowired
+    ImmuneService immuneService;
+
+    /**
+     * 病理检查-淋巴结
+     */
+    @Autowired
+    ZjPathologyLnMapper zjPathologyLnMapper;
+    /**
+     * 病理检查-淋巴结
+     */
+    @Autowired
+    PathologicalLnService pathologicalLnService;
+
+    /**
+     * 病理检查肉眼
+     */
+    @Autowired
+    ZjPathologyEyeMapper zjPathologyEyeMapper;
+    /**
+     * 病理检查肉眼
+     */
+    @Autowired
+    PathologicalEyeService pathologicalEyeService;
+
+    /**
+     * 病理检查结论
+     */
+    @Autowired
+    ZjPathologyMapper zjPathologyMapper;
+    /**
+     * 病理检查结论
+     */
+    @Autowired
+    PathologicalService pathologicalService;
+
+    /**
+     * 病理报告原文
+     */
+    @Autowired
+    ZjHistologyReportMapper    zjHistologyReportMapper;
+    /**
+     * 病理报告原文
+     */
+    @Autowired
+    HistologyReportService histologyReportService;
+
+    /**
+     * 手术并发症
+     */
+    @Autowired
+    ZjPostopCompMapper zjPostopCompMapper;
+    /**
+     * 手术并发症
+     */
+    @Autowired
+    OperativeComplicationsService operativeComplicationsService;
+
+    /**
+     * 术后恢复
+     */
+    @Autowired
+    ZjPostopFunctionMapper zjPostopFunctionMapper;
+    /**
+     * 术后恢复
+     */
+    @Autowired
+    PostoperativeRecoveryService postoperativeRecoveryService;
+
+    @Autowired
+    StandardResultMapper standardResultMapper;
 
     @Override
     public void saveRuleRun(Integer pageNo, Integer pageSize, String flag) {
@@ -486,10 +465,6 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                }else {
 //                    zj_BASY_DIAG_STD =  zjBasyDiagStdMapper.findZjBasyDiagStdByUniqueId(uniqueId);
 //                }
-//
-//
-//
-//
 //                List<INP_DIAGNOSIS>  zj_INP_DIAGNOSIS =  zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
 //                List<LIS_RECORD>  zj_LIS_RECORD =  zjLisRecordMapper.findZjLisRecordByUniqueId(uniqueId);
 //                List<EXAM_MASTER>  zj_EXAM_MASTER =  zjExamMasterMapper.findZjExamMasterByUniqueId(uniqueId);
@@ -497,10 +472,9 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                List<TEM_OPERATION_RECORD>  zj_TEM_OPERATION_RECORD =  zjTemOperationRecordMapper.findZjTemOperationRecordByUniqueId(uniqueId);
 //                List<PROCEDURE_RECORD>  zj_PROCEDURE_RECORD =  zjProcedureRecordMapper.findZjProcedureRecordByUniqueId(uniqueId);
 //                List<TEM_DEATH_RECORD>  zj_TEM_DEATH_RECORD =  zjTemDeathRecordMapper.findZjTemDeathRecordByUniqueId(uniqueId);
-                List<NURSING_RECORD>  zj_NURSING_RECORD =  zjNursingRecordMapper.findZjNursingRecordByUniqueId(uniqueId);
+//                List<NURSING_RECORD>  zj_NURSING_RECORD =  zjNursingRecordMapper.findZjNursingRecordByUniqueId(uniqueId);
 //                List<FOLLOW_UP>  zj_FOLLOW_UP =  zjFollowUpMapper.findZjFollowUpByUniqueId(uniqueId);
-                List<VITAL_RECORD>  zj_VITAL_RECORD =  zjVitalRecordMapper.findZjVitalRecordByUniqueId(uniqueId);
-//                List<DRUG_ORDER>  zj_DRUG_ORDER =  zjDrugOrderMapper.findZjDrugOrderByUniqueId(uniqueId);
+//                List<VITAL_RECORD>  zj_VITAL_RECORD =  zjVitalRecordMapper.findZjVitalRecordByUniqueId(uniqueId);
 //                List<TEM_INP_ADMISSION_STATUS>  zj_TEM_INP_ADMISSION_STATUS =  zjTemInpAdmissionStatusMapper.findZjTemInpAdmissionStatusByUniqueId(uniqueId);
 //                List<TEM_OUTP_DISCHARGE_STATUS>  zj_TEM_OUTP_DISCHARGE_STATUS =  zjTemOutpDischargeStatusMapper.findZjTemOutpDischargeStatusByUniqueId(uniqueId);
 //                List<TEM_24H_IN_OUT>  zj_TEM_24H_IN_OUT =  zjTem24hInOutMapper.findZjTem24hInOutByUniqueId(uniqueId);
@@ -541,6 +515,65 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                List<SYMP_PRESENT> zj_SYMPTOMS= zjSympPresentMapper.findZjSympPresentByUniqueId(uniqueId);
 //                List<SPECIALITY_EXAM> zj_SPECICALITY_EXAM= zjSpecialityExamMapper.findZjSpecialityExamByUniqueId(uniqueId);
 
+                // 放疗
+                List<RADIOTHERAPY>  zj_radiotherapy =  zjRadiotherapyMapper.findZjRadiotherapyByUniqueId(uniqueId);
+                if (zj_radiotherapy != null && zj_radiotherapy.size() > 0) {
+                    saveRadiotherapy(zj_radiotherapy);
+                }
+
+                /*// 化疗
+                List<DRUG_ORDER>  zj_DRUG_ORDER =  zjDrugOrderMapper.findZjDrugOrderByUniqueId(uniqueId);
+                if (zj_DRUG_ORDER != null && zj_DRUG_ORDER.size() > 0) {
+                    saveChemotherapy(zj_DRUG_ORDER);
+                }
+
+                // 药物治疗
+//                List<DRUG_ORDER>  zj_DRUG_ORDER =  zjDrugOrderMapper.findZjDrugOrderByUniqueId(uniqueId);
+                if (zj_DRUG_ORDER != null && zj_DRUG_ORDER.size() > 0) {
+                    saveTreatment(zj_DRUG_ORDER);
+                }*/
+
+                // 免疫组化标志物
+                List<IHC_MARKER> zj_IHC_MARKER = zjIhcMarkerMapper.findZjIhcMarkerByUniqueId(uniqueId);
+                if (zj_IHC_MARKER != null && zj_IHC_MARKER.size() > 0) {
+                    saveImmune(zj_IHC_MARKER);
+                }
+
+                // 病理检查-淋巴结
+                List<PATHOLOGY_LN> zj_PATHOLOGY_LN = zjPathologyLnMapper.findZjPathologyLnByUniqueId(uniqueId);
+                if (zj_PATHOLOGY_LN != null && zj_PATHOLOGY_LN.size() > 0) {
+                    savePathologicalIn(zj_PATHOLOGY_LN);
+                }
+
+                // 病理检查肉眼
+                List<PATHOLOGY_EYE> zj_PATHOLOGY_EYE = zjPathologyEyeMapper.findZjPathologyEyeByUniqueId(uniqueId);
+                if (zj_PATHOLOGY_EYE != null && zj_PATHOLOGY_EYE.size() > 0) {
+                    savePathologicalEye(zj_PATHOLOGY_EYE);
+                }
+
+                // 病理检查结论
+                List<PATHOLOGY> zj_PATHOLOGY = zjPathologyMapper.findZjPathologyByUniqueId(uniqueId);
+                if (zj_PATHOLOGY != null && zj_PATHOLOGY.size() > 0) {
+                    savePathological(zj_PATHOLOGY);
+                }
+
+                // 病理报告原文
+                List<HISTOLOGY_REPORT> zj_HISTOLOGY_REPORT = zjHistologyReportMapper.findZjHistologyReportByUniqueId(uniqueId);
+                if (zj_HISTOLOGY_REPORT != null && zj_HISTOLOGY_REPORT.size() > 0) {
+                    saveHistologyReport(zj_HISTOLOGY_REPORT);
+                }
+
+                // 手术并发症
+                List<POSTOP_COMP> zj_POSTOP_COMP = zjPostopCompMapper.findZjPostopCompByUniqueId(uniqueId);
+                if (zj_POSTOP_COMP != null && zj_POSTOP_COMP.size() > 0) {
+                    saveOperativeComplications(zj_POSTOP_COMP);
+                }
+
+                // 术后恢复
+                List<POSTOP_FUNCTION> zj_POSTOP_FUNCTION = zjPostopFunctionMapper.findZjPostopFunctionByUniqueId(uniqueId);
+                if (zj_POSTOP_FUNCTION != null && zj_POSTOP_FUNCTION.size() > 0) {
+                    savePostoperativeRecovery(zj_POSTOP_FUNCTION);
+                }
 
 //                if(zj_BASY_NSTD!=null){
 //                    saveIndexPerson(zj_BASY_NSTD,zj_BASY_DIAG_STD);
@@ -567,7 +600,6 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                                pathdate=diagnosis.getDIAGNOSIS_DATE();
 //                            }
 //                        }
-//
 //                    }
 //
 //                    if (zj_BASY_NSTD==null){
@@ -586,7 +618,6 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                    saveIndexOperation(zj_BASY_OP_STD,zj_BASY_NSTD);
 //                }
 
-
 //                if(zj_NURSING_RECORD!=null&&zj_NURSING_RECORD.size()>0){
 //                    savePersonGeneral(zj_NURSING_RECORD, zj_VITAL_RECORD);
 //                }
@@ -602,7 +633,6 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                    for(TEM_INP_ADMISSION_STATUS tem_inp_admission_status:zj_TEM_INP_ADMISSION_STATUS){
 //                        saveInpAdmissionStatus(tem_inp_admission_status);
 //                    }
-//
 //                }
 
 //                if (zj_SYMPTOMS!=null&&zj_SYMPTOMS.size()!=0){
@@ -617,14 +647,1176 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                if (zj_prior_disease_and_surgery!=null&&zj_prior_disease_and_surgery.size()!=0){
 //                    saveHisPast(zj_prior_disease_and_surgery);
 //                }
-
-
-
             }
         }
-
     }
 
+    /**
+     * 术后恢复
+     * @param zj_POSTOP_FUNCTION
+     */
+    public void savePostoperativeRecovery(List<POSTOP_FUNCTION> zj_POSTOP_FUNCTION) {
+        for (POSTOP_FUNCTION postop_function : zj_POSTOP_FUNCTION
+             ) {
+            List<TEM_OPERATION_RECORD> tem_operation_recordList = zjTemOperationRecordMapper.
+                    findZjTemOperationRecordByUniqueIdOrderByItemEndDate(postop_function.getunique_id_lv2());
+            TEM_OPERATION_RECORD tem_operation_record = new TEM_OPERATION_RECORD();
+            if (tem_operation_recordList != null && tem_operation_recordList.size() > 0) {
+                tem_operation_record = tem_operation_recordList.get(0);
+            }
+            List<INP_ORDERS> inp_ordersList = zjInpOrdersMapper.findZjInpOrdersByUniqueIdOrderByEnterDateTime(postop_function.getunique_id_lv2());
+            INP_ORDERS inp_orders = new INP_ORDERS();
+            if (inp_ordersList != null && inp_ordersList.size() > 0) {
+                inp_orders = inp_ordersList.get(0);
+            }
+            PostoperativeRecovery postoperativeRecovery = new PostoperativeRecovery();
+            // unique_id	unique_id
+            postoperativeRecovery.setUniqueId(postop_function.getunique_id());
+            // unique_id_lv1	标识患者身份唯一标识
+            postoperativeRecovery.setUniqueIdLv1(postop_function.getunique_id_lv1());
+            // unique_id_lv2	唯一标识
+            postoperativeRecovery.setUniqueIdLv2(postop_function.getunique_id_lv2());
+            // p900	医疗机构代码
+            postoperativeRecovery.setP900(postop_function.getp900());
+            // patient_id	患者id
+            postoperativeRecovery.setPatientId(postop_function.getpatient_id());
+            // visit_id	住院号
+            postoperativeRecovery.setVisitId(postop_function.getvisit_id());
+            // time_out_of_bed	术后首次离床时间
+            String neg_std = getStandardResultTextById(postop_function.getneg_std(), "afterType1",
+                    "neg_std");
+            String function_para_std = getStandardResultTextById(postop_function.getfunction_para_std(), "afterType1",
+                    "function_para_std");
+            Date timeOutOfBed = null;
+            if (StringUtils.isEmpty(postop_function.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (function_para_std.indexOf("下床活动") != -1) {
+                    if (postop_function.getdate_time_p() != null) {
+                        timeOutOfBed = postop_function.getdate_time_p();
+                    } else {
+                        timeOutOfBed = postop_function.getdate_time_estimate();
+                    }
+                }
+            }
+            postoperativeRecovery.setTimeOutOfBed(timeOutOfBed);
+            // first_time_out_of_bed	术后恢复至首次离床时长
+            String firstTimeOutOfBed = null;
+            if (postoperativeRecovery.getTimeOutOfBed() != null && tem_operation_record.getITEM_END_DATE() != null) {
+                firstTimeOutOfBed = DateUtil.between(postoperativeRecovery.getTimeOutOfBed(),
+                        tem_operation_record.getITEM_END_DATE(), DateUnit.HOUR) + "";
+            }
+            postoperativeRecovery.setFirstTimeOutOfBed(firstTimeOutOfBed);
+            // exhaust_time	术后首次排气时间
+            Date exhaustTime = null;
+            if (StringUtils.isEmpty(postop_function.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (function_para_std.indexOf("肛门排气") != -1 || function_para_std.indexOf("造口排气") != -1
+                        || function_para_std.indexOf("回肠造瘘口排气") != -1) {
+                    if (postop_function.getdate_time_p() != null) {
+                        exhaustTime = postop_function.getdate_time_p();
+                    } else {
+                        exhaustTime = postop_function.getdate_time_estimate();
+                    }
+                }
+            }
+            postoperativeRecovery.setExhaustTime(exhaustTime);
+            // first_exhaust_time	术后恢复至首次排气时长
+            String firstExhaustTime = null;
+            if (postoperativeRecovery.getExhaustTime() != null && tem_operation_record.getITEM_END_DATE() != null) {
+                firstExhaustTime = DateUtil.between(postoperativeRecovery.getExhaustTime(),
+                        tem_operation_record.getITEM_END_DATE(), DateUnit.HOUR) + "";
+            }
+            postoperativeRecovery.setFirstExhaustTime(firstExhaustTime);
+            // defecation_time	术后首次排便时间
+            Date defecationTime = null;
+            if (StringUtils.isEmpty(postop_function.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (function_para_std.indexOf("肛门排便") != -1 || function_para_std.indexOf("造口排便") != -1) {
+                    if (postop_function.getdate_time_p() != null) {
+                        defecationTime = postop_function.getdate_time_p();
+                    } else {
+                        defecationTime = postop_function.getdate_time_estimate();
+                    }
+                }
+            }
+            postoperativeRecovery.setDefecationTime(defecationTime);
+            // first_defecation	术后恢复至首次排便时长
+            String firstDefecation = null;
+            if (postoperativeRecovery.getDefecationTime() != null && tem_operation_record.getITEM_END_DATE() != null) {
+                firstDefecation = DateUtil.between(postoperativeRecovery.getDefecationTime(),
+                        tem_operation_record.getITEM_END_DATE(), DateUnit.HOUR) + "";
+            }
+            postoperativeRecovery.setFirstDefecation(firstDefecation);
+            // half_liquid_time	术后恢复半流食时间
+            Date halfLiquidTime = null;
+            if (StringUtils.isEmpty(postop_function.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (function_para_std.indexOf("半流质饮食") != -1) {
+                    if (postop_function.getdate_time_p() != null) {
+                        halfLiquidTime = postop_function.getdate_time_p();
+                    } else {
+                        halfLiquidTime = postop_function.getdate_time_estimate();
+                    }
+                }
+            }
+            postoperativeRecovery.setHalfLiquidTime(halfLiquidTime);
+            // semi_liquid_food	术后恢复至半流食时长
+            String semiLiquidFood = null;
+            if (postoperativeRecovery.getHalfLiquidTime() != null && tem_operation_record.getITEM_END_DATE() != null) {
+                semiLiquidFood = DateUtil.between(postoperativeRecovery.getHalfLiquidTime(),
+                        tem_operation_record.getITEM_END_DATE(), DateUnit.HOUR) + "";
+            }
+            postoperativeRecovery.setSemiLiquidFood(semiLiquidFood);
+            // liquid_time	术后恢复全流食时间
+            Date liquidTime = null;
+            if (StringUtils.isEmpty(postop_function.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (function_para_std.indexOf("全流质饮食") != -1 || function_para_std.indexOf("进食") != -1) {
+                    if (postop_function.getdate_time_p() != null) {
+                        liquidTime = postop_function.getdate_time_p();
+                    } else {
+                        liquidTime = postop_function.getdate_time_estimate();
+                    }
+                }
+            }
+            postoperativeRecovery.setLiquidTime(liquidTime);
+            // liquid_food_duration	术后恢复至全流食时长
+            String liquidFoodDuration = null;
+            if (postoperativeRecovery.getLiquidTime() != null && tem_operation_record.getITEM_END_DATE() != null) {
+                liquidFoodDuration = DateUtil.between(postoperativeRecovery.getLiquidTime(),
+                        tem_operation_record.getITEM_END_DATE(), DateUnit.HOUR) + "";
+            }
+            postoperativeRecovery.setLiquidFoodDuration(liquidFoodDuration);
+            // time_of_drainage_tube_removal	拔除最后一根引流管时间
+            String modifier_std = getStandardResultTextById(postop_function.getmodifier_std(), "afterType1",
+                    "modifier_std");
+            Date timeOfDrainageTubeRemoval = null;
+            if (StringUtils.isEmpty(postop_function.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (function_para_std.indexOf("引流管") != -1 && modifier_std.indexOf("拔除") != -1) {
+                    if (postop_function.getdate_time_p() != null) {
+                        timeOfDrainageTubeRemoval = postop_function.getdate_time_p();
+                    } else {
+                        timeOfDrainageTubeRemoval = postop_function.getdate_time_estimate();
+                    }
+                }
+            }
+            postoperativeRecovery.setTimeOfDrainageTubeRemoval(timeOfDrainageTubeRemoval);
+            // duration_of_drainage_tube	术后留置引流管时长
+            String durationOfDrainageTube = null;
+            if (postoperativeRecovery.getTimeOfDrainageTubeRemoval() != null && tem_operation_record.getITEM_END_DATE() != null) {
+                durationOfDrainageTube = DateUtil.between(postoperativeRecovery.getTimeOfDrainageTubeRemoval(),
+                        tem_operation_record.getITEM_END_DATE(), DateUnit.HOUR) + "";
+            }
+            postoperativeRecovery.setDurationOfDrainageTube(durationOfDrainageTube);
+            // blood_after_operation	术后是否输血
+            String ORDER_CLASS = inp_orders.getORDER_CLASS();
+            String ORDER_TEXT = inp_orders.getORDER_TEXT();
+            String bloodAfterOperation = null;
+            String ORDER_TEXT_TEMP = null;
+            String transfusionComponents = null;
+            if (StringUtils.isNotEmpty(ORDER_CLASS) && StringUtils.isNotEmpty(ORDER_TEXT)
+                    && (ORDER_CLASS.indexOf("临时医嘱") != -1 || ORDER_CLASS.indexOf("临时") != -1)) {
+                Date ITEM_END_DATE = tem_operation_record.getITEM_END_DATE();
+                Date ENTER_DATE_TIME = inp_orders.getENTER_DATE_TIME();
+                if (ITEM_END_DATE != null && ENTER_DATE_TIME != null && ENTER_DATE_TIME.after(ITEM_END_DATE)) {
+                    boolean flag = false;
+                    if (ORDER_TEXT.indexOf("输血浆") != -1) {
+                        flag = true;
+                        transfusionComponents = "输血浆";
+                    } else if (ORDER_TEXT.indexOf("输红细胞") != -1) {
+                        flag = true;
+                        transfusionComponents = "输红细胞";
+                    } else if (ORDER_TEXT.indexOf("输血小板") != -1) {
+                        flag = true;
+                        transfusionComponents = "输血小板";
+                    } else if (ORDER_TEXT.indexOf("输血") != -1) {
+                        flag = true;
+                        transfusionComponents = "输血";
+                    } else if (ORDER_TEXT.indexOf("输冷沉淀") != -1) {
+                        flag = true;
+                        transfusionComponents = "输冷沉淀";
+                    }
+                    if (flag) {
+                        ORDER_TEXT_TEMP = ORDER_TEXT;
+                        bloodAfterOperation = "是";
+                    }
+                }
+            }
+            postoperativeRecovery.setBloodAfterOperation(bloodAfterOperation);
+            // transfusion	术后输血量
+            String transfusionTemp = null;
+            String transfusion = null;
+            if (StringUtils.isNotEmpty(ORDER_TEXT_TEMP)) {
+                Matcher matcher = Pattern.compile("(?<=\\()(\\S+)(?=\\))").matcher(ORDER_TEXT_TEMP);//此处是中文输入的（）
+                while(matcher.find()){
+                    transfusionTemp = matcher.group();
+                }
+                Matcher matcher2 = Pattern.compile("(?<=\\()(\\S+)(?=\\))").matcher(ORDER_TEXT_TEMP);//此处是英文输入的()
+                while(matcher2.find()){
+                    transfusionTemp = matcher2.group();
+                }
+                if (StringUtils.isNotEmpty(transfusionTemp) && (transfusionTemp.indexOf("单位") != -1
+                        || transfusionTemp.indexOf("毫升") != -1 || transfusionTemp.indexOf("ml") != -1)) {
+                    transfusion = transfusionTemp;
+                }
+            }
+            postoperativeRecovery.setTransfusion(transfusion);
+            // transfusion_components	术后输血成分
+            postoperativeRecovery.setTransfusionComponents(transfusionComponents);
+            // data_version	数据版本
+            postoperativeRecovery.setDataVersion(postop_function.getdata_version());
+            // data_db_source	数据库来源
+            postoperativeRecovery.setDataDbSource(postop_function.getdata_db_source());
+            // data_table_source	数据表来源
+            postoperativeRecovery.setDataTableSource(postop_function.getdata_table_source());
+            // data_field_source	数据项来源
+            postoperativeRecovery.setDataFieldSource(postop_function.getdata_field_source());
+            // created_at	创建时间
+            postoperativeRecovery.setCreatedAt(postop_function.getcreate_time());
+            // creator	创建人
+            postoperativeRecovery.setCreator(postop_function.getcreator());
+            // updated_at	修改时间
+            postoperativeRecovery.setUpdatedAt(null);
+            postoperativeRecoveryService.savePostoperativeRecovery(postoperativeRecovery);
+            log.info("保存术后恢复：" + postoperativeRecovery.getUniqueId());
+        }
+    }
+
+    /**
+     * 手术并发症
+     * @param zj_POSTOP_COMP
+     */
+    public void saveOperativeComplications(List<POSTOP_COMP> zj_POSTOP_COMP) {
+        for (POSTOP_COMP postop_comp : zj_POSTOP_COMP
+             ) {
+            OperativeComplications operativeComplications = new OperativeComplications();
+            // unique_id	unique_id
+            operativeComplications.setUniqueId(postop_comp.getunique_id());
+            // unique_id_lv1	标识患者身份唯一标识
+            operativeComplications.setUniqueIdLv1(postop_comp.getunique_id_lv1());
+            // unique_id_lv2	唯一标识
+            operativeComplications.setUniqueIdLv2(postop_comp.getunique_id_lv2());
+            // p900	医疗机构代码
+            operativeComplications.setP900(postop_comp.getp900());
+            // patient_id	患者id
+            operativeComplications.setPatientId(postop_comp.getpatient_id());
+            // visit_id	住院号
+            operativeComplications.setVisitId(postop_comp.getvisit_id());
+            // fat_liquefaction	脂肪液化
+            String neg_std = getStandardResultTextById(postop_comp.getneg_std(), "afterType1",
+                    "neg_std");
+            String comp_std = getStandardResultTextById(postop_comp.getcomp_std(), "afterType1",
+                    "comp_std");
+            String fatLiquefaction = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("脂肪液化") != -1) {
+                    fatLiquefaction = "是";
+                }
+            }
+            operativeComplications.setFatLiquefaction(fatLiquefaction);
+            // septic_shock	感染性休克
+            String septicShock = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("感染性休克") != -1) {
+                    septicShock = "是";
+                }
+            }
+            operativeComplications.setSepticShock(septicShock);
+            // hemorrhage	出血
+            String hemorrhage = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("出血") != -1) {
+                    hemorrhage = "是";
+                }
+            }
+            operativeComplications.setHemorrhage(hemorrhage);
+            // anastomotic_bleeding	吻合口出血
+            String anastomoticBleeding = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("吻合口出血") != -1) {
+                    anastomoticBleeding = "是";
+                }
+            }
+            operativeComplications.setAnastomoticBleeding(anastomoticBleeding);
+            // abdominal_hemorrhage	腹腔出血
+            String abdominalHemorrhage = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("腹腔出血") != -1) {
+                    abdominalHemorrhage = "是";
+                }
+            }
+            operativeComplications.setAbdominalHemorrhage(abdominalHemorrhage);
+            // bile_leakage	胆漏
+            String bileLeakage = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("胆漏") != -1) {
+                    bileLeakage = "是";
+                }
+            }
+            operativeComplications.setBileLeakage(bileLeakage);
+            // enterorrhea	肠漏
+            String enterorrhea = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("肠漏") != -1) {
+                    enterorrhea = "是";
+                }
+            }
+            operativeComplications.setEnterorrhea(enterorrhea);
+            // pulmonary_infection	肺部感染
+            String pulmonaryInfection = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("肺部感染") != -1) {
+                    pulmonaryInfection = "是";
+                }
+            }
+            operativeComplications.setPulmonaryInfection(pulmonaryInfection);
+            // respiratory_failure	呼吸衰竭
+            String respiratoryFailure = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("呼吸衰竭") != -1) {
+                    respiratoryFailure = "是";
+                }
+            }
+            operativeComplications.setRespiratoryFailure(respiratoryFailure);
+            // heart_failure	心力衰竭
+            String heartFailure = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("心力衰竭") != -1) {
+                    heartFailure = "是";
+                }
+            }
+            operativeComplications.setHeartFailure(heartFailure);
+            // deep_venous_thrombosis	深静脉血栓
+            String deepVenousThrombosis = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("深静脉血栓") != -1) {
+                    deepVenousThrombosis = "是";
+                }
+            }
+            operativeComplications.setDeepVenousThrombosis(deepVenousThrombosis);
+            // atelectasis	肺不张
+            String atelectasis = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("肺不张") != -1) {
+                    atelectasis = "是";
+                }
+            }
+            operativeComplications.setAtelectasis(atelectasis);
+            // anastomotic_leakage	吻合口瘘
+            String anastomoticLeakage = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("吻合口瘘") != -1) {
+                    anastomoticLeakage = "是";
+                }
+            }
+            operativeComplications.setAnastomoticLeakage(anastomoticLeakage);
+            // peritonitis	腹膜炎
+            String peritonitis = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("腹膜炎") != -1) {
+                    peritonitis = "是";
+                }
+            }
+            operativeComplications.setPeritonitis(peritonitis);
+            // urinary_tract_infection	泌尿系感染
+            String urinaryTractInfection = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("泌尿系感染") != -1) {
+                    urinaryTractInfection = "是";
+                }
+            }
+            operativeComplications.setUrinaryTractInfection(urinaryTractInfection);
+            // intestinal_obstruction	肠梗阻
+            String intestinalObstruction = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("肠梗阻") != -1) {
+                    intestinalObstruction = "是";
+                }
+            }
+            operativeComplications.setIntestinalObstruction(intestinalObstruction);
+            // urinary_retention	尿潴留
+            String urinaryRetention = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("尿潴留") != -1) {
+                    urinaryRetention = "是";
+                }
+            }
+            operativeComplications.setUrinaryRetention(urinaryRetention);
+            // gastrointestinal_bleeding	消化道出血
+            String gastrointestinalBleeding = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("消化道出血") != -1) {
+                    gastrointestinalBleeding = "是";
+                }
+            }
+            operativeComplications.setGastrointestinalBleeding(gastrointestinalBleeding);
+            // abdominal_infection	腹腔感染
+            String abdominalInfection = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("腹腔感染") != -1) {
+                    abdominalInfection = "是";
+                }
+            }
+            operativeComplications.setAbdominalInfection(abdominalInfection);
+            // cardiovascular_and_cerebrovascular_accident	心脑血管意外
+            String cardiovascularAndCerebrovascularAccident = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("心脑血管意外") != -1) {
+                    cardiovascularAndCerebrovascularAccident = "是";
+                }
+            }
+            operativeComplications.setCardiovascularAndCerebrovascularAccident(cardiovascularAndCerebrovascularAccident);
+            // pulmonary_embolism	肺栓塞
+            String pulmonaryEmbolism = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("肺栓塞") != -1) {
+                    pulmonaryEmbolism = "是";
+                }
+            }
+            operativeComplications.setPulmonaryEmbolism(pulmonaryEmbolism);
+            // incision_infection	切口感染
+            String incisionInfection = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("切口感染") != -1) {
+                    incisionInfection = "是";
+                }
+            }
+            operativeComplications.setIncisionInfection(incisionInfection);
+            // gastrointestinal_perforation	消化道穿孔
+            String gastrointestinalPerforation = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("消化道穿孔") != -1) {
+                    gastrointestinalPerforation = "是";
+                }
+            }
+            operativeComplications.setGastrointestinalPerforation(gastrointestinalPerforation);
+            // ascites	腹腔积液
+            String ascites = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("腹腔积液") != -1) {
+                    ascites = "是";
+                }
+            }
+            operativeComplications.setAscites(ascites);
+            // lymphatic_fistula	淋巴瘘
+            String lymphaticFistula = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("淋巴瘘") != -1) {
+                    lymphaticFistula = "是";
+                }
+            }
+            operativeComplications.setLymphaticFistula(lymphaticFistula);
+            // ketoacidosis	酮症酸中毒
+            String ketoacidosis = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("酮症酸中毒") != -1) {
+                    ketoacidosis = "是";
+                }
+            }
+            operativeComplications.setKetoacidosis(ketoacidosis);
+            // anastomotic_stenosis	吻合口狭窄
+            String anastomoticStenosis = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("吻合口狭窄") != -1) {
+                    anastomoticStenosis = "是";
+                }
+            }
+            operativeComplications.setAnastomoticStenosis(anastomoticStenosis);
+            // renal_failure	肾功能衰竭
+            String renalFailure = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("肾功能衰竭") != -1) {
+                    renalFailure = "是";
+                }
+            }
+            operativeComplications.setRenalFailure(renalFailure);
+            // systemic_multiple_organ_failure	全身多器官功能衰竭
+            String systemicMultipleOrganFailure = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("全身多器官功能衰竭") != -1) {
+                    systemicMultipleOrganFailure = "是";
+                }
+            }
+            operativeComplications.setSystemicMultipleOrganFailure(systemicMultipleOrganFailure);
+            // liver_dysfunction	肝功能不全
+            String liverDysfunction = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("肝功能不全") != -1) {
+                    liverDysfunction = "是";
+                }
+            }
+            operativeComplications.setLiverDysfunction(liverDysfunction);
+            // liver_failure	肝功能衰竭
+            String liverFailure = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("肝功能衰竭") != -1) {
+                    liverFailure = "是";
+                }
+            }
+            operativeComplications.setLiverFailure(liverFailure);
+            // intraperitoneal_hemorrhage	腹腔内出血
+            String intraperitonealHemorrhage = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("腹腔内出血") != -1) {
+                    intraperitonealHemorrhage = "是";
+                }
+            }
+            operativeComplications.setIntraperitonealHemorrhage(intraperitonealHemorrhage);
+            // pancreatitis	胰腺炎
+            String pancreatitis = null;
+            if (StringUtils.isEmpty(postop_comp.getneg_std()) || StringUtils.isEmpty(neg_std)) {
+                if (comp_std.indexOf("胰腺炎") != -1) {
+                    pancreatitis = "是";
+                }
+            }
+            operativeComplications.setPancreatitis(pancreatitis);
+            // data_version	数据版本
+            operativeComplications.setDataVersion(postop_comp.getdata_version());
+            // data_db_source	数据库来源
+            operativeComplications.setDataDbSource(postop_comp.getdata_db_source());
+            // data_table_source	数据表来源
+            operativeComplications.setDataTableSource(postop_comp.getdata_table_source());
+            // data_field_source	数据项来源
+            operativeComplications.setDataFieldSource(postop_comp.getdata_field_source());
+            // created_at	创建时间
+            operativeComplications.setCreatedAt(postop_comp.getcreate_time());
+            // creator	创建人
+            operativeComplications.setCreator(postop_comp.getcreator());
+            // updated_at	修改时间
+            operativeComplications.setUpdatedAt(null);
+            operativeComplicationsService.saveOperativeComplications(operativeComplications);
+            log.info("保存手术并发症：" + operativeComplications.getUniqueId());
+        }
+    }
+
+    /**
+     * 病理报告原文
+     * @param zj_HISTOLOGY_REPORT
+     */
+    public void saveHistologyReport(List<HISTOLOGY_REPORT> zj_HISTOLOGY_REPORT) {
+        for (HISTOLOGY_REPORT histology_report : zj_HISTOLOGY_REPORT
+             ) {
+            HistologyReport histologyReport = new HistologyReport();
+            // unique_id	unique_id
+            histologyReport.setUniqueId(histology_report.getUNIQUE_ID());
+            // unique_id_lv1	标识患者身份唯一标识
+            histologyReport.setUniqueIdLv1(histology_report.getUNIQUE_ID_LV1());
+            // unique_id_lv2	唯一标识
+            histologyReport.setUniqueIdLv2(histology_report.getUNIQUE_ID_LV2());
+            // p900	医疗机构代码
+            histologyReport.setP900(histology_report.getP900());
+            // patient_id	患者id
+            histologyReport.setPatientId(histology_report.getPATIENT_ID());
+            // visit_id	住院号
+            histologyReport.setVisitId(histology_report.getVISIT_ID());
+            // admission_number	住院次数
+            histologyReport.setAdmissionNumber(histology_report.getADMISSION_NUMBER());
+            // visit_type	就诊类型
+            histologyReport.setVisitType(histology_report.getVISIT_TYPE());
+            // pathology_no	病理系统编号
+            histologyReport.setPathologyNo(histology_report.getPATHOLOGY_NO());
+            // inspection_hospital	送检医院
+            histologyReport.setInspectionHospital(histology_report.getINSPECTION_HOSPITAL());
+            // inspection_department	送检科室
+            histologyReport.setInspectionDepartment(histology_report.getINSPECTION_DEPARTMENT());
+            // inspection_physician	送检医师
+            histologyReport.setInspectionPhysician(histology_report.getINSPECTION_PHYSICIAN());
+            // inspection_time	送检时间
+            histologyReport.setInspectionTime(histology_report.getINSPECTION_TIME());
+            // inspection_site	送检部位
+            histologyReport.setInspectionSite(histology_report.getINSPECTION_SITE());
+            // clinical_diagnosis	临床诊断
+            histologyReport.setClinicalDiagnosis(histology_report.getCLINICAL_DIAGNOSIS());
+            // name	姓名
+            histologyReport.setName(histology_report.getNAME());
+            // specimen_receiving_time	标本接收时间
+            histologyReport.setSpecimenReceivingTime(histology_report.getSPECIMEN_RECEIVING_TIME());
+            // report_time	报告时间
+            histologyReport.setReportTime(histology_report.getREPORT_TIME());
+            // review_time	审核时间
+            histologyReport.setReviewTime(histology_report.getREVIEW_TIME());
+            // path_eye	病理所见-肉眼所见
+            histologyReport.setPathEye(histology_report.getPATH_EYE());
+            // path_microscope	病理所见-镜下所见
+            histologyReport.setPathMicroscope(histology_report.getPATH_MICROSCOPE());
+            // path_diag	病理诊断
+            histologyReport.setPathDiag(histology_report.getPATH_DIAG());
+            // path_diag_code	病理诊断编码
+            histologyReport.setPathDiagCode(histology_report.getPATH_DIAG_CODE());
+            // report_doctor	报告医师
+            histologyReport.setReportDoctor(histology_report.getREPORT_DOCTOR());
+            // review_doctor	审核医师
+            histologyReport.setReviewDoctor(histology_report.getREVIEW_DOCTOR());
+            // report_status	报告状态
+            histologyReport.setReportStatus(histology_report.getREPORT_STATUS());
+            // data_version	数据版本
+            histologyReport.setDataVersion(histology_report.getDATA_VERSION());
+            // data_db_source	数据库来源
+            histologyReport.setDataDbSource(histology_report.getDATA_DB_SOURCE());
+            // data_table_source	数据表来源
+            histologyReport.setDataTableSource(histology_report.getDATA_TABLE_SOURCE());
+            // data_field_source	数据项来源
+            histologyReport.setDataFieldSource(histology_report.getDATA_FIELD_SOURCE());
+            // created_at	创建时间
+            histologyReport.setCreatedAt(histology_report.getCREATED_AT());
+            // creator	创建人
+            histologyReport.setCreator(histology_report.getCREATOR());
+            // updated_at	修改时间
+            histologyReport.setUpdatedAt(histology_report.getUPDATED_AT());
+            histologyReportService.saveHistologyReport(histologyReport);
+            log.info("保存病理报告原文：" + histologyReport.getUniqueId());
+        }
+    }
+
+    /**
+     * 病理检查结论
+     * @param zj_PATHOLOGY
+     */
+    public void savePathological(List<PATHOLOGY> zj_PATHOLOGY) {
+        for (PATHOLOGY pathology : zj_PATHOLOGY
+             ) {
+            HISTOLOGY_REPORT histology_report = zjHistologyReportMapper.findZjHistologyReportByUniqueId2(pathology.getunique_id());
+            Pathological pathological = new Pathological();
+            // unique_id	unique_id
+            pathological.setUniqueId(pathology.getunique_id());
+            // unique_id_lv1	标识患者身份唯一标识
+            pathological.setUniqueIdLv1(pathology.getunique_id_lv1());
+            // unique_id_lv2	唯一标识
+            pathological.setUniqueIdLv2(pathology.getunique_id_lv2());
+            // p900	医疗机构代码
+            pathological.setP900(pathology.getp900());
+            // patient_id	患者id
+            pathological.setPatientId(pathology.getpatient_id());
+            // visit_id	住院号
+            pathological.setVisitId(pathology.getvisit_id());
+            // case_number	病理号
+            pathological.setCaseNumber(histology_report.getPATHOLOGY_NO());
+            // inspect_time	收到日期
+            pathological.setInspectTime(histology_report.getSPECIMEN_RECEIVING_TIME());
+            // reprot_time	报告日期
+            pathological.setReprotTime(histology_report.getREPORT_TIME());
+            // specimen_name	送检标本名称
+            pathological.setSpecimenName(getStandardResultTextById(pathology.getstructure_std(), "afterType1",
+                    "/", ";"));
+            // pathological_type	病理类型
+            pathological.setPathologicalType(getStandardResultTextById(pathology.getfeature_std(), "afterType1",
+                    "feature_type_std"));
+            // organization_classification	组织分级（G）
+            pathological.setOrganizationClassification(getStandardResultTextById(pathology.getfeature_std(), "afterType1",
+                    "feature_differ_std"));
+            // incisal_margin	切缘
+            String structure_type_std = getStandardResultTextById(pathology.getstructure_std(), "afterType1",
+                    "structure_type_std");
+            String finding_result_std = getStandardResultTextById(pathology.getfinding_std(), "afterType1",
+                    "finding_result_std");
+            String neg_std = getStandardResultTextById(pathology.getneg_std(), "afterType1",
+                    "neg_std");
+            String incisalMargin = null;
+            if (structure_type_std.indexOf("切缘") != -1 && finding_result_std.indexOf("癌") != -1) {
+                if (StringUtils.isNotEmpty(neg_std)) {
+                    incisalMargin = "阴性";
+                } else {
+                    incisalMargin = "阳性";
+                }
+            }
+            pathological.setIncisalMargin(incisalMargin);
+            // infiltration_layer	肠壁浸润层次
+            pathological.setInfiltrationLayer(getStandardResultTextById(pathology.getinvasion_std(), "afterType1",
+                    "/", ";"));
+            // invasion_of_organs	侵犯邻近器官/结构
+            String invasion_structure_std = getStandardResultTextById(pathology.getinvasion_std(), "afterType1",
+                    "invasion_structure_std");
+            String invasion_site_std = getStandardResultTextById(pathology.getinvasion_std(), "afterType1",
+                    "invasion_site_std");
+            String invasionOfOrgans = null;
+            if (invasion_site_std.indexOf("肠") == -1 && invasion_site_std.indexOf("神经") == -1
+                    && invasion_site_std.indexOf("脉管") == -1 && invasion_site_std.indexOf("血管") == -1) {
+                if (StringUtils.isNotEmpty(invasion_structure_std)) {
+                    invasionOfOrgans = invasion_structure_std + "/" + invasion_site_std;
+                } else {
+                    invasionOfOrgans = invasion_site_std;
+                }
+            }
+            pathological.setInvasionOfOrgans(invasionOfOrgans);
+            // vascular_invasion	是否有脉管侵犯
+            String vascularInvasion = null;
+            if (invasion_site_std.indexOf("脉管") != -1 || invasion_site_std.indexOf("血管") != -1
+                    || invasion_site_std.indexOf("淋巴管") != -1) {
+                vascularInvasion = "阳性";
+            }
+            pathological.setVascularInvasion(vascularInvasion);
+            // nerve_invasion	是否侵犯神经
+            String nerveInvasion = null;
+            if (invasion_site_std.indexOf("神经") != -1) {
+                nerveInvasion = "是";
+            }
+            pathological.setNerveInvasion(nerveInvasion);
+            // data_version	数据版本
+            pathological.setDataVersion(pathology.getdata_version());
+            // data_db_source	数据库来源
+            pathological.setDataDbSource(pathology.getdata_db_source());
+            // data_table_source	数据表来源
+            pathological.setDataTableSource(pathology.getdata_table_source());
+            // data_field_source	数据项来源
+            pathological.setDataFieldSource(pathology.getdata_field_source());
+            // created_at	创建时间
+            pathological.setCreatedAt(pathology.getcreate_time());
+            // creator	创建人
+            pathological.setCreator(pathology.getcreator());
+            // updated_at	修改时间
+            pathological.setUpdatedAt(histology_report.getUPDATED_AT());
+            pathologicalService.savePathological(pathological);
+            log.info("保存病理检查结论：" + pathological.getUniqueId());
+        }
+    }
+
+    /**
+     * 病理检查肉眼
+     * @param zj_PATHOLOGY_EYE
+     */
+    public void savePathologicalEye(List<PATHOLOGY_EYE> zj_PATHOLOGY_EYE) {
+        for (PATHOLOGY_EYE pathology_eye : zj_PATHOLOGY_EYE
+             ) {
+            HISTOLOGY_REPORT histology_report = zjHistologyReportMapper.findZjHistologyReportByUniqueId2(pathology_eye.getunique_id());
+            PathologicalEye pathologicalEye = new PathologicalEye();
+            // unique_id	unique_id
+            pathologicalEye.setUniqueId(pathology_eye.getunique_id());
+            // unique_id_lv1	标识患者身份唯一标识
+            pathologicalEye.setUniqueIdLv1(pathology_eye.getunique_id_lv1());
+            // unique_id_lv2	唯一标识
+            pathologicalEye.setUniqueIdLv2(pathology_eye.getunique_id_lv2());
+            // p900	医疗机构代码
+            pathologicalEye.setP900(pathology_eye.getp900());
+            // patient_id	患者id
+            pathologicalEye.setPatientId(pathology_eye.getpatient_id());
+            // visit_id	住院号
+            pathologicalEye.setVisitId(pathology_eye.getvisit_id());
+            // case_number	病理号
+            pathologicalEye.setCaseNumber(histology_report.getPATHOLOGY_NO());
+            // inspect_time	收到日期
+            pathologicalEye.setInspectTime(histology_report.getSPECIMEN_RECEIVING_TIME());
+            // reprot_time	报告日期
+            pathologicalEye.setReprotTime(histology_report.getREPORT_TIME());
+            // tumor_location	肿瘤部位
+            pathologicalEye.setTumorLocation(getStandardResultTextById(pathology_eye.getstructure_std(), "afterType1",
+                    "/", ";"));
+            // tumor_size	肿瘤大小
+            pathologicalEye.setTumorSize(getStandardResultTextById(pathology_eye.getsize_std(), "afterType1",
+                    "/", ";"));
+            // number_of_lesions	病灶数量
+            pathologicalEye.setNumberOfLesions(getStandardResultTextById(pathology_eye.getquantity_std(), "afterType1",
+                    "quantity_std"));
+            // lesion_morphology	病灶形态
+            pathologicalEye.setLesionMorphology(getStandardResultTextById(pathology_eye.getlesion_std(), "afterType1",
+                    "/", ";"));
+            // cutting_edge_distance	切缘距离
+            pathologicalEye.setCuttingEdgeDistance(getStandardResultTextById(pathology_eye.getedge_distance_std(), "afterType1",
+                    "edge_distance_std"));
+            // data_version	数据版本
+            pathologicalEye.setDataVersion(pathology_eye.getdata_version());
+            // data_db_source	数据库来源
+            pathologicalEye.setDataDbSource(pathology_eye.getdata_db_source());
+            // data_table_source	数据表来源
+            pathologicalEye.setDataTableSource(pathology_eye.getdata_table_source());
+            // data_field_source	数据项来源
+            pathologicalEye.setDataFieldSource(pathology_eye.getdata_field_source());
+            // created_at	创建时间
+            pathologicalEye.setCreatedAt(pathology_eye.getcreate_time());
+            // creator	创建人
+            pathologicalEye.setCreator(pathology_eye.getcreator());
+            // updated_at	修改时间
+            pathologicalEye.setUpdatedAt(histology_report.getUPDATED_AT());
+            pathologicalEyeService.savePathologicalEye(pathologicalEye);
+            log.info("保存病理检查肉眼：" + pathologicalEye.getUniqueId());
+        }
+    }
+
+    /**
+     * 病理检查-淋巴结
+     * @param zj_PATHOLOGY_LN
+     */
+    public void savePathologicalIn(List<PATHOLOGY_LN> zj_PATHOLOGY_LN) {
+        for ( PATHOLOGY_LN pathology_ln : zj_PATHOLOGY_LN
+             ) {
+            HISTOLOGY_REPORT histology_report = zjHistologyReportMapper.findZjHistologyReportByUniqueId2(pathology_ln.getunique_id());
+            PathologicalLn pathologicalLn = new PathologicalLn();
+            // unique_id	unique_id
+            pathologicalLn.setUniqueId(pathology_ln.getunique_id());
+            // unique_id_lv1	标识患者身份唯一标识
+            pathologicalLn.setUniqueIdLv1(pathology_ln.getunique_id_lv1());
+            // unique_id_lv2	唯一标识
+            pathologicalLn.setUniqueIdLv2(pathology_ln.getunique_id_lv2());
+            // p900	医疗机构代码
+            pathologicalLn.setP900(pathology_ln.getp900());
+            // patient_id	患者id
+            pathologicalLn.setPatientId(pathology_ln.getpatient_id());
+            // visit_id	住院号
+            pathologicalLn.setVisitId(pathology_ln.getvisit_id());
+            // case_number	病理号
+            pathologicalLn.setCaseNumber(histology_report.getPATHOLOGY_NO());
+            // inspect_time	收到日期
+            pathologicalLn.setInspectTime(histology_report.getSPECIMEN_RECEIVING_TIME());
+            // reprot_time	报告日期
+            pathologicalLn.setReprotTime(histology_report.getREPORT_TIME());
+            // lymph_total	送检淋巴结总数
+            String quantity_total_std = getStandardResultTextById(pathology_ln.getquantity_std(), "afterType1",
+                    "quantity_total_std");
+            String[] quantity_total_std_split = quantity_total_std.split(",");
+            Integer lymphTotal = 0;
+            for (String total : quantity_total_std_split
+                 ) {
+                try {
+                    lymphTotal += Integer.valueOf(total);
+                } catch (NumberFormatException e) {
+                    e.getStackTrace();
+                }
+            }
+            pathologicalLn.setLymphTotal(String.valueOf(lymphTotal));
+            // lymph_number	淋巴结转移数量
+            String quantity_positive_std = getStandardResultTextById(pathology_ln.getquantity_std(), "afterType1",
+                    "quantity_positive_std");
+            String[] quantity_positive_std_split = quantity_positive_std.split(",");
+            Integer lymphNumber = 0;
+            for (String positive : quantity_positive_std_split
+                 ) {
+                try {
+                    lymphNumber += Integer.valueOf(positive);
+                } catch (NumberFormatException e) {
+                    e.getStackTrace();
+                }
+            }
+            pathologicalLn.setLymphNumber(String.valueOf(lymphNumber));
+            // data_version	数据版本
+            pathologicalLn.setDataVersion(pathology_ln.getdata_version());
+            // data_db_source	数据库来源
+            pathologicalLn.setDataDbSource(pathology_ln.getdata_db_source());
+            // data_table_source	数据表来源
+            pathologicalLn.setDataTableSource(pathology_ln.getdata_table_source());
+            // data_field_source	数据项来源
+            pathologicalLn.setDataFieldSource(pathology_ln.getdata_field_source());
+            // created_at	创建时间
+            pathologicalLn.setCreatedAt(pathology_ln.getcreate_time());
+            // creator	创建人
+            pathologicalLn.setCreator(pathology_ln.getcreator());
+            // updated_at	修改时间
+            pathologicalLn.setUpdatedAt(histology_report.getUPDATED_AT());
+            pathologicalLnService.savePathologicalLn(pathologicalLn);
+            log.info("保存病理检查-淋巴结：" + pathologicalLn.getUniqueId());
+        }
+    }
+
+    /**
+     * 免疫组化标志物
+     */
+    public void saveImmune(List<IHC_MARKER> zj_IHC_MARKER) {
+        for (IHC_MARKER ihc_marker : zj_IHC_MARKER
+                ) {
+            HISTOLOGY_REPORT histology_report = zjHistologyReportMapper.findZjHistologyReportByUniqueId2(ihc_marker.getunique_id());
+            Immune immune = new Immune();
+            // unique_id	unique_id
+            immune.setUniqueId(ihc_marker.getunique_id());
+            // unique_id_lv1	标识患者身份唯一标识
+            immune.setUniqueIdLv1(ihc_marker.getunique_id_lv1());
+            // unique_id_lv2	唯一标识
+            immune.setUniqueIdLv2(ihc_marker.getunique_id_lv2());
+            // p900	医疗机构代码
+            immune.setP900(ihc_marker.getp900());
+            // patient_id	患者id
+            immune.setPatientId(ihc_marker.getpatient_id());
+            // visit_id	住院号
+            immune.setVisitId(ihc_marker.getvisit_id());
+            // marker_name	免疫组化检测项目
+            immune.setMarkerName(getStandardResultTextById(ihc_marker.gettest_item_name_std(),"afterType1",
+                    "/", ";"));
+            // marker_qualitative	免疫组化标志物检测定性结果
+            immune.setMarkerQualitative(getIhcMarkerMarkerQualita(ihc_marker.gettest_item_value_std()));
+            // marker_quantify	免疫组化标志物检测定量结果
+            // 质检反馈：这个字段应该转化成百分比而不是小数
+            String markerQuantify = getStandardResultTextById(ihc_marker.gettest_item_value_std(), "afterType1",
+                    "test_item_value_precise_std");
+            String markerQuantifyTransfer = null;
+            if (StringUtils.isEmpty(markerQuantify)) {
+                markerQuantifyTransfer = null;
+            } else {
+                try {
+                    markerQuantifyTransfer = Double.valueOf(markerQuantify) * 100 + "%";
+                } catch (NumberFormatException e) {
+                    markerQuantifyTransfer = markerQuantify;
+                }
+            }
+            immune.setMarkerQuantify(markerQuantifyTransfer);
+            // data_version	数据版本
+            immune.setDataVersion(ihc_marker.getdata_version());
+            // data_db_source	数据库来源
+            immune.setDataDbSource(ihc_marker.getdata_db_source());
+            // data_table_source	数据表来源
+            immune.setDataTableSource(ihc_marker.getdata_table_source());
+            // data_field_source	数据项来源
+            immune.setDataFieldSource(ihc_marker.getdata_field_source());
+            // created_at	创建时间
+            immune.setCreatedAt(ihc_marker.getcreate_time());
+            // creator	创建人
+            immune.setCreator(ihc_marker.getcreator());
+            // updated_at	修改时间
+            immune.setUpdatedAt(histology_report.getUPDATED_AT());
+            this.immuneService.saveImmune(immune);
+            log.info("保存免疫组化标志物：" + immune.getUniqueId());
+        }
+    }
+
+    /**
+     * 药物治疗
+     * @param zj_DRUG_ORDER
+     */
+    public void saveTreatment(List<DRUG_ORDER> zj_DRUG_ORDER) {
+        for (DRUG_ORDER drug_order : zj_DRUG_ORDER
+                ) {
+            Treatment treatment = new Treatment();
+            // unique_id	unique_id
+            treatment.setUniqueId(drug_order.getUNIQUE_ID());
+            // unique_id_lv1	标识患者身份唯一标识
+            treatment.setUniqueIdLv1(drug_order.getUNIQUE_ID_LV1());
+            // unique_id_lv2	唯一标识
+            treatment.setUniqueIdLv2(drug_order.getUNIQUE_ID_LV2());
+            // p900	医疗机构代码
+            treatment.setP900(drug_order.getP900());
+            // patient_id	患者id
+            treatment.setPatientId(drug_order.getPATIENT_ID());
+            // visit_id	住院号
+            treatment.setVisitId(drug_order.getVISIT_ID());
+            // drug_type	用药分类    FIXME 待商定   pharmacologySystem1  对应  drug_class_std;  pharmacologyType1  对应  drug_subclass_std
+            treatment.setDrugType(drug_order.getORDER_TYPE());
+            // drug_name	具体药物名称
+            treatment.setDrugName(drug_order.getINGREDIENT_STD());
+            // channel	给药途径
+            treatment.setChannel(drug_order.getADMINISTRATION());
+            // dose	药物剂量
+            treatment.setDose(drug_order.getDOSAGE());
+            // unit	剂量单位
+            treatment.setUnit(drug_order.getDOSAGE_UNITS());
+            // start_date	用药开始日期
+            treatment.setStartDate(drug_order.getENTER_DATE_TIME());
+            // end_date	用药结束日期
+            treatment.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
+            // data_version	数据版本
+            treatment.setDataVersion(drug_order.getDATA_VERSION());
+            // data_db_source	数据库来源
+            treatment.setDataDbSource(drug_order.getDATA_DB_SOURCE());
+            // data_table_source	数据表来源
+            treatment.setDataTableSource(drug_order.getDATA_TABLE_SOURCE());
+            // data_field_source	数据项来源
+            treatment.setDataFieldSource(drug_order.getDATA_FIELD_SOURCE());
+            // created_at	创建时间
+            treatment.setCreatedAt(drug_order.getCREATED_AT());
+            // creator	创建人
+            treatment.setCreator(drug_order.getCREATOR());
+            // updated_at	修改时间
+            treatment.setUpdatedAt(drug_order.getUPDATED_AT());
+            treatmentService.saveTreatment(treatment);
+            log.info("保存药物治疗：" + treatment.getUniqueId());
+        }
+    }
+
+    /**
+     * 化疗
+     * @param zj_DRUG_ORDER
+     */
+    public void saveChemotherapy(List<DRUG_ORDER> zj_DRUG_ORDER) {
+        for (DRUG_ORDER drug_order : zj_DRUG_ORDER
+             ) {
+            Chemotherapy chemotherapy = new Chemotherapy();
+            // unique_id	unique_id
+            chemotherapy.setUniqueId(drug_order.getUNIQUE_ID());
+            // unique_id_lv1	标识患者身份唯一标识
+            chemotherapy.setUniqueIdLv1(drug_order.getUNIQUE_ID_LV1());
+            // unique_id_lv2	唯一标识
+            chemotherapy.setUniqueIdLv2(drug_order.getUNIQUE_ID_LV2());
+            // p900	医疗机构代码
+            chemotherapy.setP900(drug_order.getP900());
+            // patient_id	患者id
+            chemotherapy.setPatientId(drug_order.getPATIENT_ID());
+            // visit_id	住院号
+            chemotherapy.setVisitId(drug_order.getVISIT_ID());
+            // drug_type	用药分类 FIXME 待商定  pharmacologySystem1  对应  drug_class_std;  pharmacologyType1  对应  drug_subclass_std
+            chemotherapy.setDrugType(drug_order.getORDER_TYPE());
+            // drug_name	具体药物名称
+            chemotherapy.setDrugName(drug_order.getINGREDIENT_STD());
+            // channel	给药途径
+            chemotherapy.setChannel(drug_order.getADMINISTRATION());
+            // dose	药物剂量
+            chemotherapy.setDose(drug_order.getDOSAGE());
+            // unit	剂量单位
+            chemotherapy.setUnit(drug_order.getDOSAGE_UNITS());
+            // rate	用药频率
+            chemotherapy.setRate(drug_order.getFREQUENCY());
+            // start_date	用药开始日期
+            chemotherapy.setStartDate(drug_order.getENTER_DATE_TIME());
+            // end_date	用药结束日期
+            chemotherapy.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
+            // data_version	数据版本
+            chemotherapy.setDataVersion(drug_order.getDATA_VERSION());
+            // data_db_source	数据库来源
+            chemotherapy.setDataDbSource(drug_order.getDATA_DB_SOURCE());
+            // data_table_source	数据表来源
+            chemotherapy.setDataTableSource(drug_order.getDATA_TABLE_SOURCE());
+            // data_field_source	数据项来源
+            chemotherapy.setDataFieldSource(drug_order.getDATA_FIELD_SOURCE());
+            // created_at	创建时间
+            chemotherapy.setCreatedAt(drug_order.getCREATED_AT());
+            // creator	创建人
+            chemotherapy.setCreator(drug_order.getCREATOR());
+            // updated_at	修改时间
+            chemotherapy.setUpdatedAt(drug_order.getUPDATED_AT());
+            chemotherapyService.saveChemotherapy(chemotherapy);
+            log.info("保存化疗：" + chemotherapy.getUniqueId());
+        }
+    }
+
+    /**
+     * 放疗
+     * @param zj_radiotherapy
+     */
+    public void saveRadiotherapy(List<RADIOTHERAPY>  zj_radiotherapy){
+        for (RADIOTHERAPY rADIOTHERAPY : zj_radiotherapy
+             ) {
+            Radiotherapy radiotherapy = new Radiotherapy();
+            // unique_id	unique_id
+            radiotherapy.setUniqueId(rADIOTHERAPY.getunique_id());
+            // unique_id_lv1	标识患者身份唯一标识
+            radiotherapy.setUniqueIdLv1(rADIOTHERAPY.getunique_id_lv1());
+            // unique_id_lv2	唯一标识
+            radiotherapy.setUniqueIdLv2(rADIOTHERAPY.getunique_id_lv2());
+            // p900	医疗机构代码
+            radiotherapy.setP900(rADIOTHERAPY.getp900());
+            // patient_id	患者id
+            radiotherapy.setPatientId(rADIOTHERAPY.getpatient_id());
+            // visit_id	住院号
+            radiotherapy.setVisitId(rADIOTHERAPY.getvisit_id());
+            // radio_begin_time	放疗开始日期
+            String modifier_std = getStandardResultTextById(rADIOTHERAPY.getmodifier_std(), "afterType1",
+                    "modifier_std");
+            Date radioBeginTime = null;
+            Date radioEndTime = null;
+            if (modifier_std.indexOf("开始") != -1) {
+                if (rADIOTHERAPY.getdate_time_p() != null) {
+                    radioBeginTime = rADIOTHERAPY.getdate_time_p();
+                } else {
+                    radioBeginTime = rADIOTHERAPY.getdate_time_estimate();
+                }
+            }
+            if (modifier_std.indexOf("已行") != -1) {
+                if (rADIOTHERAPY.getdate_time_p() != null) {
+                    radioEndTime = rADIOTHERAPY.getdate_time_p();
+                } else {
+                    radioEndTime = rADIOTHERAPY.getdate_time_estimate();
+                }
+            }
+            radiotherapy.setRadioBeginTime(radioBeginTime);
+            // radio_end_time	放疗结束日期
+            radiotherapy.setRadioEndTime(radioEndTime);
+            // purpose	放疗目的
+            radiotherapy.setPurpose(getStandardResultTextById(rADIOTHERAPY.getpurpose_std(), "afterType1",
+                    "purpose_std"));
+            // site	放疗部位
+            radiotherapy.setSite(getStructureStd(rADIOTHERAPY.getstructure_std()));
+            // site_type	放疗部位类型
+            radiotherapy.setSiteType(getStandardResultTextById(rADIOTHERAPY.getstructure_std(), "afterType1",
+                    "structure_lesion_std"));
+            // target_site	靶区部位
+            radiotherapy.setTargetSite(getStandardResultTextById(rADIOTHERAPY.getstructure_std(), "afterType1",
+                    "structure_tv_std"));
+            // way	放疗方式
+            radiotherapy.setWay(getStandardResultTextById(rADIOTHERAPY.gettreatment_std(), "afterType1",
+                    "treatment_std"));
+            // ray_type	射线类型    ** 无此字段
+            radiotherapy.setRayType(null);
+            // total_dose	放疗总量
+            String dose_type_std = getStandardResultTextById(rADIOTHERAPY.getdose_type_std(), "afterType1",
+                    "dose_type_std");
+            String para_value_std = getStandardResultTextById(rADIOTHERAPY.getpara_value_std(), "afterType1",
+                    "para_value_std");
+            String para_value_freq_std = getStandardResultTextById(rADIOTHERAPY.getpara_value_std(), "afterType1",
+                    "para_value_freq_std");
+            String para_value_freq_unit_std = getStandardResultTextById(rADIOTHERAPY.getpara_value_std(), "afterType1",
+                    "para_value_freq_unit_std");
+            Double totalDose = null;
+            Double singleDose = null;
+            String radioNumber = null;
+            if (dose_type_std.indexOf("照射剂量") != -1 || dose_type_std.indexOf("总剂量") != -1
+                    || dose_type_std.indexOf("治疗剂量") != -1 || dose_type_std.indexOf("放疗剂量") != -1) {
+                try {
+                    totalDose = Double.valueOf(para_value_std);
+                } catch (NumberFormatException e) {
+                    totalDose = null;
+                }
+                try {
+                    singleDose = Double.valueOf(String.format("%.1f", Double.valueOf(para_value_std) / Double.valueOf(para_value_freq_std)));
+                } catch (NumberFormatException e) {
+                    singleDose = null;
+                }
+                radioNumber = para_value_freq_std + para_value_freq_unit_std;
+            }
+            radiotherapy.setTotalDose(totalDose);
+            // single_dose	放疗单次剂量
+            radiotherapy.setSingleDose(singleDose);
+            // radio_number	放疗次数
+            radiotherapy.setRadioNumber(radioNumber);
+            // prescript_radio_total	处方放疗总量
+            String prescriptRadioTotal = null;
+            String prescriptRadioSingle = null;
+            String prescriptRadioNumber = null;
+            if (dose_type_std.indexOf("计划剂量") != -1 || dose_type_std.indexOf("处方剂量") != -1) {
+                prescriptRadioTotal = para_value_std;
+                try {
+                    prescriptRadioSingle = String.format("%.1f", Double.valueOf(para_value_std) / Double.valueOf(para_value_freq_std));
+                } catch (NumberFormatException e) {
+                    prescriptRadioSingle = null;
+                }
+                prescriptRadioNumber = para_value_freq_std + para_value_freq_unit_std;
+            }
+            radiotherapy.setPrescriptRadioTotal(prescriptRadioTotal);
+            // prescript_radio_single	处方放疗单次剂量
+            radiotherapy.setPrescriptRadioSingle(prescriptRadioSingle);
+            // prescript_radio_number	处方放疗次数
+            radiotherapy.setPrescriptRadioNumber(prescriptRadioNumber);
+            // data_version	数据版本
+            radiotherapy.setDataVersion(rADIOTHERAPY.getdata_version());
+            // data_db_source	数据库来源
+            radiotherapy.setDataDbSource(rADIOTHERAPY.getdata_db_source());
+            // data_table_source	数据表来源
+            radiotherapy.setDataTableSource(rADIOTHERAPY.getdata_table_source());
+            // data_field_source	数据项来源
+            radiotherapy.setDataFieldSource(rADIOTHERAPY.getdata_field_source());
+            // created_at	创建时间
+            radiotherapy.setCreatedAt(rADIOTHERAPY.getcreate_time());
+            // creator	创建人
+            radiotherapy.setCreator(rADIOTHERAPY.getcreator());
+            //updated_at	修改时间
+            radiotherapy.setUpdatedAt(null);
+            radiotherapyService.saveRadiotherapy(radiotherapy);
+            log.info("保存放疗：" + radiotherapy.getUniqueId());
+        }
+    }
+
+    /**
+     * 放疗部位
+     * @param standardTableId
+     * @return
+     */
+    public String getStructureStd(String standardTableId) {
+        String resultJson = standardResultMapper.selectStandardResultById(standardTableId);
+        return JSONUtils.structureStd(resultJson);
+    }
+
+    public String getIhcMarkerMarkerQualita(String standardTableId) {
+        String resultJson = standardResultMapper.selectStandardResultById(standardTableId);
+        return JSONUtils.ihcMarkerMarkerQualita(resultJson);
+    }
+
+    public String getStandardResultTextById(String standardTableId, String arrayField, String stdField) {
+        String resultJson = standardResultMapper.selectStandardResultById(standardTableId);
+        return JSONUtils.getDuplicatedConcatOne(resultJson, arrayField, stdField);
+    }
+
+    public String getStandardResultTextById(String standardTableId, String arrayField, String fieldSeparate, String objSeparate) {
+        String resultJson = standardResultMapper.selectStandardResultById(standardTableId);
+        return JSONUtils.getAllFieldGroupByObj(resultJson, arrayField, fieldSeparate, objSeparate);
+    }
 
     public void savePerson(TEM_PAT_MASTER_INDEX index){
         Person person = new Person();
@@ -8045,54 +9237,7 @@ public class RuleRunServiceImpl implements RuleRunService {
 //        chemotherapy.setUpdatedAt();
 //        chemotherapyService.saveChemotherapy(chemotherapy);
 //    }
-//    public void saveRadiotherapy(){
-//        Radiotherapy radiotherapy = new Radiotherapy();
-//        //标识患者身份唯一标识
-//        radiotherapy.setPersonId();
-//        //唯一标识
-//        radiotherapy.setUniqueId();
-//        //放疗的子表关联
-//        radiotherapy.setUniqueIdLv3();
-//        //医疗机构代码
-//        radiotherapy.setP900();
-//        //患者id
-//        radiotherapy.setPatientId();
-//        //住院号
-//        radiotherapy.setVisitId();
-//        //放疗开始日期
-//        radiotherapy.setRadioBeginTime();
-//        //放疗结束日期
-//        radiotherapy.setRadioEndTime();
-//        //放射源
-//        radiotherapy.setRadioSource();
-//        //放疗模式
-//        radiotherapy.setRadioStyle();
-//        //放疗射线能量
-//        radiotherapy.setRadioRayEnergy();
-//        //放疗部位及剂量
-//        radiotherapy.setRadioSiteAndDose();
-//        //放疗副反应与分级
-//        radiotherapy.setRadioLevel();
-//        //责任医生
-//        radiotherapy.setRadioDoctor();
-//        //疗效评估
-//        radiotherapy.setEfficacyEvaluation();
-//        //数据版本
-//        radiotherapy.setDataVersion();
-//        //数据库来源
-//        radiotherapy.setDataDbSource();
-//        //数据表来源
-//        radiotherapy.setDataTableSource();
-//        //数据项来源
-//        radiotherapy.setDataFieldSource();
-//        //创建时间
-//        radiotherapy.setCreatedAt();
-//        //创建人
-//        radiotherapy.setCreator();
-//        //修改时间
-//        radiotherapy.setUpdatedAt();
-//        radiotherapyService.saveRadiotherapy(radiotherapy);
-//    }
+
 //    public void saveRadiotherapySite(){
 //        RadiotherapySite radiotherapySite = new RadiotherapySite();
 //        //标识患者身份唯一标识

@@ -6,4 +6,8 @@
        SELECT * FROM INP_ORDERS WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
+<select id="findZjInpOrdersByUniqueIdOrderByEnterDateTime"  resultType="com.clinical.model.master.INP_ORDERS">
+       SELECT * FROM INP_ORDERS WHERE unique_id_lv2 = #{unique_id_lv2} order by ENTER_DATE_TIME
+</select>
+
 </mapper>
