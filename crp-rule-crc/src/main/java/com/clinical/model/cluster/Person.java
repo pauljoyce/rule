@@ -37,6 +37,8 @@ public class Person{
     private String relationship;
     //入院来源
     private String patientClass;
+    //首诊年龄
+    private String firstVisitAge;
     //数据版本
     private String dataVersion;
     //数据库来源
@@ -201,5 +203,13 @@ public class Person{
     } 
     public void setUpdatedAt(Date updatedAt) {
          this.updatedAt = updatedAt;
-    } 
+    }
+
+    public String getFirstVisitAge() {
+        return firstVisitAge;
+    }
+
+    public void setFirstVisitAge(String firstVisitAge) {
+        this.firstVisitAge = firstVisitAge;
+    }
 }

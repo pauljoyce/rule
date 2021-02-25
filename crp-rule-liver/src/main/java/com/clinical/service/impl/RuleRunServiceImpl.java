@@ -12,11 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUnit;
 
 
 @Service
@@ -415,40 +420,40 @@ public class RuleRunServiceImpl implements RuleRunService {
             for (PAT_VISIT_MASTER master : zj_PAT_VISIT_MASTER) {
 
                 //保存就诊----------------------------------------------------
-                saveVisitRecord(master);
+//                saveVisitRecord(master);
 
                 String uniqueId = master.getUNIQUE_ID();
 
                 Date visitdate=master.getADMISSION_DATE_TIME();
-                //病案首页
-                List<BASY_NSTD> zj_BASY_NSTDs=zjBasyNstdMapper.findZjBasyNstdsByUniqueId(uniqueId);
-                BASY_NSTD zj_BASY_NSTD;
-                if (zj_BASY_NSTDs.size()==1){
-                    zj_BASY_NSTD = zj_BASY_NSTDs.get(0);
-                }else {
-                    zj_BASY_NSTD=  zjBasyNstdMapper.findZjBasyNstdByUniqueId(uniqueId);
-                }
-
-                List<BASY_OP_STD> zj_BASY_OP_STDs=zjBasyOpStdMapper.findZjBasyOpStdsByUniqueId(uniqueId);
-                BASY_OP_STD zj_BASY_OP_STD;
-                if (zj_BASY_OP_STDs.size()==1){
-                    zj_BASY_OP_STD = zj_BASY_OP_STDs.get(0);
-                }else {
-                    zj_BASY_OP_STD = zjBasyOpStdMapper.findZjBasyOpStdByUniqueId(uniqueId);
-                }
-
-                List<BASY_DIAG_STD> zj_BASY_DIAG_STDs=zjBasyDiagStdMapper.findZjBasyDiagStdsByUniqueId(uniqueId);
-                BASY_DIAG_STD  zj_BASY_DIAG_STD;
-                if (zj_BASY_DIAG_STDs.size()==1){
-                    zj_BASY_DIAG_STD = zj_BASY_DIAG_STDs.get(0);
-                }else {
-                    zj_BASY_DIAG_STD =  zjBasyDiagStdMapper.findZjBasyDiagStdByUniqueId(uniqueId);
-                }
-
-
+//                //病案首页
+//                List<BASY_NSTD> zj_BASY_NSTDs=zjBasyNstdMapper.findZjBasyNstdsByUniqueId(uniqueId);
+//                BASY_NSTD zj_BASY_NSTD;
+//                if (zj_BASY_NSTDs.size()==1){
+//                    zj_BASY_NSTD = zj_BASY_NSTDs.get(0);
+//                }else {
+//                    zj_BASY_NSTD=  zjBasyNstdMapper.findZjBasyNstdByUniqueId(uniqueId);
+//                }
+//
+//                List<BASY_OP_STD> zj_BASY_OP_STDs=zjBasyOpStdMapper.findZjBasyOpStdsByUniqueId(uniqueId);
+//                BASY_OP_STD zj_BASY_OP_STD;
+//                if (zj_BASY_OP_STDs.size()==1){
+//                    zj_BASY_OP_STD = zj_BASY_OP_STDs.get(0);
+//                }else {
+//                    zj_BASY_OP_STD = zjBasyOpStdMapper.findZjBasyOpStdByUniqueId(uniqueId);
+//                }
+//
+//                List<BASY_DIAG_STD> zj_BASY_DIAG_STDs=zjBasyDiagStdMapper.findZjBasyDiagStdsByUniqueId(uniqueId);
+//                BASY_DIAG_STD  zj_BASY_DIAG_STD;
+//                if (zj_BASY_DIAG_STDs.size()==1){
+//                    zj_BASY_DIAG_STD = zj_BASY_DIAG_STDs.get(0);
+//                }else {
+//                    zj_BASY_DIAG_STD =  zjBasyDiagStdMapper.findZjBasyDiagStdByUniqueId(uniqueId);
+//                }
 
 
-                List<INP_DIAGNOSIS>  zj_INP_DIAGNOSIS =  zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
+
+
+//                List<INP_DIAGNOSIS>  zj_INP_DIAGNOSIS =  zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
 //                List<LIS_RECORD>  zj_LIS_RECORD =  zjLisRecordMapper.findZjLisRecordByUniqueId(uniqueId);
 //                List<EXAM_MASTER>  zj_EXAM_MASTER =  zjExamMasterMapper.findZjExamMasterByUniqueId(uniqueId);
 //                List<HISTOLOGY_REPORT>  zj_HISTOLOGY_REPORT =  zjHistologyReportMapper.findZjHistologyReportByUniqueId(uniqueId);
@@ -497,48 +502,49 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                List<INTERVENTION_THERAPY>  zj_intervention_therapy =  zjInterventionTherapyMapper.findZjInterventionTherapyByUniqueId(uniqueId);
 //                List<CLINICAL_DIAG>  zj_clinical_diag =  zjClinicalDiagMapper.findZjClinicalDiagByUniqueId(uniqueId);
 //                List<SYMP_PRESENT> zj_SYMPTOMS= zjSympPresentMapper.findZjSympPresentByUniqueId(uniqueId);
+                List<POSTOP_COMP> zj_postop_comp = zjPostopCompMapper.findZjPostopCompByUniqueId(uniqueId);
 
 
-                if(zj_BASY_NSTD!=null){
-                    saveIndexPerson(zj_BASY_NSTD,zj_BASY_DIAG_STD);
-                    saveIndexIcu(zj_BASY_NSTD);
-                }
-                if(zj_BASY_DIAG_STD!=null){
-
-                    Date admitdate=null;
-                    Date maindate=null;
-                    Date clinicdate=null;
-                    Date pathdate=null;
-                    for(INP_DIAGNOSIS diagnosis: zj_INP_DIAGNOSIS){
-                        if(diagnosis.getDIAGNOSIS_TYPE()!=null){
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("出院主要诊断")){
-                                maindate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("门诊诊断")){
-                                clinicdate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("入院初诊")){
-                                admitdate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("病理诊断")){
-                                pathdate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                        }
-
-                    }
-
-
-                    saveIndexDiagnosisAdmit(zj_BASY_DIAG_STD,visitdate,admitdate);
-                    saveIndexDiagnosisClinic(zj_BASY_DIAG_STD,visitdate,clinicdate);
-                    saveIndexDiagnosisMain(zj_BASY_DIAG_STD,visitdate,maindate);
-                    saveIndexDiagnosisOther(zj_BASY_DIAG_STD,visitdate,maindate);
-                    saveIndexInjury(zj_BASY_DIAG_STD);
-                    saveIndexPathology(zj_BASY_DIAG_STD,visitdate,pathdate);
-                }
-
-                if(zj_BASY_OP_STD!=null){
-                    saveIndexOperation(zj_BASY_OP_STD);
-                }
+//                if(zj_BASY_NSTD!=null){
+//                    saveIndexPerson(zj_BASY_NSTD,zj_BASY_DIAG_STD);
+//                    saveIndexIcu(zj_BASY_NSTD);
+//                }
+//                if(zj_BASY_DIAG_STD!=null){
+//
+//                    Date admitdate=null;
+//                    Date maindate=null;
+//                    Date clinicdate=null;
+//                    Date pathdate=null;
+//                    for(INP_DIAGNOSIS diagnosis: zj_INP_DIAGNOSIS){
+//                        if(diagnosis.getDIAGNOSIS_TYPE()!=null){
+//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("出院主要诊断")){
+//                                maindate=diagnosis.getDIAGNOSIS_DATE();
+//                            }
+//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("门诊诊断")){
+//                                clinicdate=diagnosis.getDIAGNOSIS_DATE();
+//                            }
+//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("入院初诊")){
+//                                admitdate=diagnosis.getDIAGNOSIS_DATE();
+//                            }
+//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("病理诊断")){
+//                                pathdate=diagnosis.getDIAGNOSIS_DATE();
+//                            }
+//                        }
+//
+//                    }
+//
+//
+//                    saveIndexDiagnosisAdmit(zj_BASY_DIAG_STD,visitdate,admitdate);
+//                    saveIndexDiagnosisClinic(zj_BASY_DIAG_STD,visitdate,clinicdate);
+//                    saveIndexDiagnosisMain(zj_BASY_DIAG_STD,visitdate,maindate);
+//                    saveIndexDiagnosisOther(zj_BASY_DIAG_STD,visitdate,maindate);
+//                    saveIndexInjury(zj_BASY_DIAG_STD);
+//                    saveIndexPathology(zj_BASY_DIAG_STD,visitdate,pathdate);
+//                }
+//
+//                if(zj_BASY_OP_STD!=null){
+//                    saveIndexOperation(zj_BASY_OP_STD);
+//                }
 
 
 //                if(zj_NURSING_RECORD!=null&&zj_NURSING_RECORD.size()>0){
@@ -615,23 +621,67 @@ public class RuleRunServiceImpl implements RuleRunService {
         person.setRelationship(index.getRELATIONSHIP());
         //入院来源
         person.setPatientClass(index.getPATIENT_CLASS());
-   /*     //数据版本
-        person.setDataVersion();
-        //数据库来源
-        person.setDataDbSource();
-        //数据表来源
-        person.setDataTableSource();
-        //数据项来源
-        person.setDataFieldSource();
-        //创建时间
-        person.setCreatedAt();
-        //创建人
-        person.setCreator();
-        //修改时间
-        person.setUpdatedAt();*/
-        personService.savePerson(person);
-        log.info("保存患者："+person.getUniqueId());
+
+        List<String> neededDiagList = Arrays.asList(
+                "肝细胞癌",
+                "肝恶性细胞瘤",
+                "肝内胆管癌",
+                "胆管癌",
+                "肝母细胞瘤",
+                "肝血管肉瘤",
+                "肝巨噬细胞肉瘤[Kupffer细胞肉瘤]",
+                "肝巨噬细胞肉瘤",
+                "肝的其他肉瘤",
+                "肝恶性肿瘤，其他特指的",
+                "肝恶性肿瘤",
+                "胆囊恶性肿瘤",
+                "肝外胆管恶性肿瘤",
+                "肝胆管恶性肿瘤",
+                "肝门胆管恶性肿瘤",
+                "肝管恶性肿瘤",
+                "胆管恶性肿瘤",
+                "胆总管恶性肿瘤",
+                "胆囊管恶性肿瘤",
+                "肝内及肝外胆管恶性肿瘤",
+                "肝部继发性恶性肿瘤",
+                "肝继发恶性肿瘤",
+                "肝恶性肿瘤个人史"
+        );
+        List<String> visits = new ArrayList<>();
+        //患者就诊列表
+        List<PAT_VISIT_MASTER> zj_PAT_VISIT_MASTER = zjPatVisitMasterMapper.findZjPatVisitMasterByUniqueId(index.getUNIQUE_ID());
+        zj_PAT_VISIT_MASTER.forEach(master -> visits.add(master.getUNIQUE_ID()));
+        List<INP_DIAGNOSIS> diagnosisList = new ArrayList<>();
+        List<INP_DIAGNOSIS> finalDiagnosisList = new ArrayList<>();
+        List<Date> diagnosisDateList = new ArrayList<>();
+        visits.forEach(visit -> diagnosisList.addAll(zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(visit)));
+        finalDiagnosisList=diagnosisList.stream().filter(diagnosis -> diagnosis != null && diagnosis.getDIAGNOSIS_DATE() != null&&diagnosis.getDIAGNOSIS_DESC()!=null)
+                .filter(diagnosis -> neededDiagList.contains(diagnosis.getDIAGNOSIS_DESC()))
+                .collect(Collectors.toList());
+        finalDiagnosisList.forEach(diag -> diagnosisDateList.add(diag.getDIAGNOSIS_DATE()));
+
+        Date birthDate = index.getDATE_OF_BIRTH();
+        if (diagnosisDateList.size()==0||birthDate==null){
+            personService.savePerson(person);
+            log.info("无法计算首次诊断日期，保存患者："+person.getUniqueId());
+        }else {
+            Date firstDiagDate = Collections.min(diagnosisDateList);
+
+            DateTime birthDateTime = DateTime.of(birthDate);
+            DateTime firstDiagDateTime = DateTime.of(firstDiagDate);
+            log.info("id:" + index.getUNIQUE_ID());
+            log.info("出生日期：" + birthDateTime.toString());
+            log.info("首次诊断日期：" + firstDiagDateTime.toString());
+            long betweenDays = birthDateTime.between(firstDiagDateTime, DateUnit.DAY);
+            double betweenYears = betweenDays / 365;
+            log.info("日期相差天数：" + betweenDays + "，年数：" + new BigDecimal(betweenYears).setScale(0, RoundingMode.DOWN).toString());
+            person.setFirstVisitAge(new BigDecimal(betweenYears).setScale(0, RoundingMode.DOWN).toString());
+
+            personService.savePerson(person);
+            log.info("保存患者："+person.getUniqueId());
+        }
     }
+
     public void saveVisitRecord(PAT_VISIT_MASTER master) {
         VisitRecord visitRecord = new VisitRecord();
         //患者身份标识
@@ -6082,38 +6132,6 @@ public class RuleRunServiceImpl implements RuleRunService {
         return "否";
     }
 
-//    public void saveSymptom(){
-//        Symptom symptom = new Symptom();
-//        //标识患者身份唯一标识
-//        symptom.setPersonId();
-//        //唯一标识
-//        symptom.setUniqueId();
-//        //中间库unique_id
-//        symptom.setUniqueIdLv3();
-//        //医疗机构代码
-//        symptom.setP900();
-//        //患者id
-//        symptom.setPatientId();
-//        //门诊/住院号
-//        symptom.setVisitId();
-//        //其他症状和体征
-//        symptom.setSymptoms();
-//        //数据版本
-//        symptom.setDataVersion();
-//        //数据库来源
-//        symptom.setDataDbSource();
-//        //数据表来源
-//        symptom.setDataTableSource();
-//        //数据项来源
-//        symptom.setDataFieldSource();
-//        //创建时间
-//        symptom.setCreatedAt();
-//        //创建人
-//        symptom.setCreator();
-//        //修改时间
-//        symptom.setUpdatedAt();
-//        symptomService.saveSymptom(symptom);
-//    }
 //    public void savePrimaryDiagnosis(){
 //        PrimaryDiagnosis primaryDiagnosis = new PrimaryDiagnosis();
 //        //标识患者身份唯一标识
