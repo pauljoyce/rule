@@ -1,5 +1,5 @@
 server:
-  port: 8012
+  port: 8089
 spring:
   application:
     name: crp-rule-stomach
@@ -11,13 +11,25 @@ spring:
     # mysql 8.0 以上使用
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://172.20.25.100:3306/dmp_sd_stomachca?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
-    username: root
-    password: 123456
+    url: jdbc:mysql://192.168.129.1:3306/dmp_sd_stomachca?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    username: dmp_zb
+    password: dmp_zb@2020
 
-    url2: jdbc:mysql://172.20.25.100:3306/zbk?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    url2: jdbc:mysql://192.168.129.14:3306/dmp_zbk_stomachca?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
     username2: root
     password2: 123456
+
+
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://172.20.25.100:3306/dmp_sd_stomachca?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+#    username: root
+#    password: 123456
+#
+#    url2: jdbc:mysql://172.20.25.100:3306/zbk?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+#    username2: root
+#    password2: 123456
+
 
     #type: com.alibaba.druid.pool.DruidDataSource
     #driverClassName: com.mysql.cj.jdbc.Driver

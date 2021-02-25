@@ -13,30 +13,34 @@ public class Pathological{
     private String patientId;
     //住院号
     private String visitId;
+    //病理unique_id
+    private String uniqueIdLv3;
     //病理号
     private String caseNumber;
-    //送检标本名称
-    private String specimenName;
-    //送检日期
-    private Date inspectTime;
     //收到日期
-    private Date receiveTime;
+    private Date inspectTime;
     //报告日期
     private Date reprotTime;
-    //肉眼所见
-    private String visible;
-    //镜下所见
-    private String mirror;
-    //病理诊断
-    private String pathDiag;
-    //病理诊断编码
-    private String pathDiagCode;
-    //大体分型-早期胃癌 
-    private String earlyType;
-    //大体分型-进展期胃癌
-    private String advType;
-    //原位癌
-    private String carcinomaSitu;
+    //送检标本名称
+    private String specimenName;
+    //Lauren 分型
+    private String lauren;
+    //病理类型
+    private String pathologicalType;
+    //分化程度
+    private String differentiationDegree;
+    //浸润深度
+    private String infiltrationDepth;
+    //血管侵犯
+    private String vascularInvasion;
+    //淋巴管侵犯
+    private String lymphaticInvasion;
+    //神经侵犯
+    private String nerveInvasion;
+    //侵犯邻近脏器或组织名称
+    private String invasionOfOrgans;
+    //切缘
+    private String incisalMargin;
     //数据版本
     private String dataVersion;
     //数据库来源
@@ -88,17 +92,17 @@ public class Pathological{
     public void setVisitId(String visitId) {
          this.visitId = visitId;
     } 
+    public String getUniqueIdLv3(){
+        return uniqueIdLv3;
+    } 
+    public void setUniqueIdLv3(String uniqueIdLv3) {
+         this.uniqueIdLv3 = uniqueIdLv3;
+    } 
     public String getCaseNumber(){
         return caseNumber;
     } 
     public void setCaseNumber(String caseNumber) {
          this.caseNumber = caseNumber;
-    } 
-    public String getSpecimenName(){
-        return specimenName;
-    } 
-    public void setSpecimenName(String specimenName) {
-         this.specimenName = specimenName;
     } 
     public Date getInspectTime(){
         return inspectTime;
@@ -106,59 +110,71 @@ public class Pathological{
     public void setInspectTime(Date inspectTime) {
          this.inspectTime = inspectTime;
     } 
-    public Date getReceiveTime(){
-        return receiveTime;
-    } 
-    public void setReceiveTime(Date receiveTime) {
-         this.receiveTime = receiveTime;
-    } 
     public Date getReprotTime(){
         return reprotTime;
     } 
     public void setReprotTime(Date reprotTime) {
          this.reprotTime = reprotTime;
     } 
-    public String getVisible(){
-        return visible;
+    public String getSpecimenName(){
+        return specimenName;
     } 
-    public void setVisible(String visible) {
-         this.visible = visible;
+    public void setSpecimenName(String specimenName) {
+         this.specimenName = specimenName;
     } 
-    public String getMirror(){
-        return mirror;
+    public String getLauren(){
+        return lauren;
     } 
-    public void setMirror(String mirror) {
-         this.mirror = mirror;
+    public void setLauren(String lauren) {
+         this.lauren = lauren;
     } 
-    public String getPathDiag(){
-        return pathDiag;
+    public String getPathologicalType(){
+        return pathologicalType;
     } 
-    public void setPathDiag(String pathDiag) {
-         this.pathDiag = pathDiag;
+    public void setPathologicalType(String pathologicalType) {
+         this.pathologicalType = pathologicalType;
     } 
-    public String getPathDiagCode(){
-        return pathDiagCode;
+    public String getDifferentiationDegree(){
+        return differentiationDegree;
     } 
-    public void setPathDiagCode(String pathDiagCode) {
-         this.pathDiagCode = pathDiagCode;
+    public void setDifferentiationDegree(String differentiationDegree) {
+         this.differentiationDegree = differentiationDegree;
     } 
-    public String getEarlyType(){
-        return earlyType;
+    public String getInfiltrationDepth(){
+        return infiltrationDepth;
     } 
-    public void setEarlyType(String earlyType) {
-         this.earlyType = earlyType;
+    public void setInfiltrationDepth(String infiltrationDepth) {
+         this.infiltrationDepth = infiltrationDepth;
     } 
-    public String getAdvType(){
-        return advType;
+    public String getVascularInvasion(){
+        return vascularInvasion;
     } 
-    public void setAdvType(String advType) {
-         this.advType = advType;
+    public void setVascularInvasion(String vascularInvasion) {
+         this.vascularInvasion = vascularInvasion;
     } 
-    public String getCarcinomaSitu(){
-        return carcinomaSitu;
+    public String getLymphaticInvasion(){
+        return lymphaticInvasion;
     } 
-    public void setCarcinomaSitu(String carcinomaSitu) {
-         this.carcinomaSitu = carcinomaSitu;
+    public void setLymphaticInvasion(String lymphaticInvasion) {
+         this.lymphaticInvasion = lymphaticInvasion;
+    } 
+    public String getNerveInvasion(){
+        return nerveInvasion;
+    } 
+    public void setNerveInvasion(String nerveInvasion) {
+         this.nerveInvasion = nerveInvasion;
+    } 
+    public String getInvasionOfOrgans(){
+        return invasionOfOrgans;
+    } 
+    public void setInvasionOfOrgans(String invasionOfOrgans) {
+         this.invasionOfOrgans = invasionOfOrgans;
+    } 
+    public String getIncisalMargin(){
+        return incisalMargin;
+    } 
+    public void setIncisalMargin(String incisalMargin) {
+         this.incisalMargin = incisalMargin;
     } 
     public String getDataVersion(){
         return dataVersion;

@@ -1,5 +1,6 @@
 package com.clinical.service.impl;
 
+import cn.hutool.core.util.NumberUtil;
 import com.clinical.constant.Constant;
 import com.clinical.constant.DrugConstant;
 import com.clinical.model.cluster.*;
@@ -163,12 +164,6 @@ public class RuleRunServiceImpl implements RuleRunService {
     PathologicalStdService  pathologicalStdService;
 
     @Autowired
-    PathologicalService  pathologicalService;
-
-    @Autowired
-    MarkerService  markerService;
-
-    @Autowired
     TreatmentService  treatmentService;
 
     @Autowired
@@ -185,8 +180,6 @@ public class RuleRunServiceImpl implements RuleRunService {
 
     @Autowired
     FollowUpService  followUpService;
-
-
 
     @Autowired
     ZjBasyNstdMapper zjBasyNstdMapper;
@@ -211,9 +204,6 @@ public class RuleRunServiceImpl implements RuleRunService {
 
     @Autowired
     ZjExamMasterMapper zjExamMasterMapper;
-
-    @Autowired
-    ZjHistologyReportMapper zjHistologyReportMapper;
 
     @Autowired
     ZjTemOperationRecordMapper zjTemOperationRecordMapper;
@@ -336,9 +326,6 @@ public class RuleRunServiceImpl implements RuleRunService {
     ZjBiomarkerMapper zjBiomarkerMapper;
 
     @Autowired
-    ZjPathologyMapper zjPathologyMapper;
-
-    @Autowired
     ZjSurgeryProcMapper zjSurgeryProcMapper;
 
     @Autowired
@@ -350,15 +337,68 @@ public class RuleRunServiceImpl implements RuleRunService {
     @Autowired
     DiagnosisStageService diagnosisStageService;
 
+    /**
+     * 病理报告原文
+     */
+    @Autowired
+    ZjHistologyReportMapper    zjHistologyReportMapper;
+    /**
+     * 病理报告原文
+     */
+    @Autowired
+    HistologyReportService histologyReportService;
+
+    /**
+     * 病理检查结论
+     */
+    @Autowired
+    ZjPathologyMapper zjPathologyMapper;
+    /**
+     * 病理检查结论
+     */
+    @Autowired
+    PathologicalService pathologicalService;
+
+    /**
+     * 病理检查肉眼
+     */
+    @Autowired
+    ZjPathologyEyeMapper zjPathologyEyeMapper;
+    /**
+     * 病理检查肉眼
+     */
+    @Autowired
+    PathologicalEyeService pathologicalEyeService;
+
+    /**
+     * 病理检查-淋巴结
+     */
+    @Autowired
+    ZjPathologyLnMapper zjPathologyLnMapper;
+    /**
+     * 病理检查-淋巴结
+     */
+    @Autowired
+    PathologicalLnService pathologicalLnService;
+
+    /**
+     * 免疫组化标志物
+     */
+    @Autowired
+    ZjIhcMarkerMapper zjIhcMarkerMapper;
+    /**
+     * 免疫组化标志物
+     */
+    @Autowired
+    MarkerService markerService;
+
     @Override
     public void saveRuleRun(Integer pageNo, Integer pageSize, String flag) {
-
         Map<String, Integer> map = new HashMap<>();
         map.put("pageNo", pageNo);
         map.put("pageSize", pageSize);
         //查找患者列表
         List<TEM_PAT_MASTER_INDEX> zj_TEM_PAT_MASTER_INDEX = zjTemPatMasterIndexMapper.findZjTemPatMasterIndexByUniqueId(map);
-
 
         for (TEM_PAT_MASTER_INDEX index : zj_TEM_PAT_MASTER_INDEX) {
             //保存患者--------------------------------------------------
@@ -371,259 +411,476 @@ public class RuleRunServiceImpl implements RuleRunService {
             for (PAT_VISIT_MASTER master : zj_PAT_VISIT_MASTER) {
 
                 //保存就诊----------------------------------------------------
-                 saveVisitRecord(master);
+//                 saveVisitRecord(master);
 
                 String uniqueId = master.getUNIQUE_ID();
 
                 Date visitdate=master.getADMISSION_DATE_TIME();
 
-                //病案首页
-                List<BASY_NSTD> zj_BASY_NSTDs=zjBasyNstdMapper.findZjBasyNstdsByUniqueId(uniqueId);
-                BASY_NSTD zj_BASY_NSTD;
-                if (zj_BASY_NSTDs.size()==1){
-                    zj_BASY_NSTD = zj_BASY_NSTDs.get(0);
-                }else {
-                    zj_BASY_NSTD=  zjBasyNstdMapper.findZjBasyNstdByUniqueId(uniqueId);
+                // 病理报告原文
+                List<HISTOLOGY_REPORT> zj_HISTOLOGY_REPORT = zjHistologyReportMapper.findZjHistologyReportByUniqueId(uniqueId);
+                if (zj_HISTOLOGY_REPORT != null && zj_HISTOLOGY_REPORT.size() > 0) {
+                    saveHistologyReport(zj_HISTOLOGY_REPORT);
                 }
 
-                List<BASY_OP_STD> zj_BASY_OP_STDs=zjBasyOpStdMapper.findZjBasyOpStdsByUniqueId(uniqueId);
-                BASY_OP_STD zj_BASY_OP_STD;
-                if (zj_BASY_OP_STDs.size()==1){
-                    zj_BASY_OP_STD = zj_BASY_OP_STDs.get(0);
-                }else {
-                    zj_BASY_OP_STD = zjBasyOpStdMapper.findZjBasyOpStdByUniqueId(uniqueId);
+                // 病理检查结论
+                List<PATHOLOGY> zj_PATHOLOGY = zjPathologyMapper.findZjPathologyByUniqueId(uniqueId);
+                if (zj_PATHOLOGY != null && zj_PATHOLOGY.size() > 0) {
+                    savePathological(zj_PATHOLOGY);
                 }
 
-                List<BASY_DIAG_STD> zj_BASY_DIAG_STDs=zjBasyDiagStdMapper.findZjBasyDiagStdsByUniqueId(uniqueId);
-                BASY_DIAG_STD  zj_BASY_DIAG_STD;
-                if (zj_BASY_DIAG_STDs.size()==1){
-                    zj_BASY_DIAG_STD = zj_BASY_DIAG_STDs.get(0);
-                }else {
-                    zj_BASY_DIAG_STD =  zjBasyDiagStdMapper.findZjBasyDiagStdByUniqueId(uniqueId);
+                // 病理检查肉眼
+                List<PATHOLOGY_EYE> zj_PATHOLOGY_EYE = zjPathologyEyeMapper.findZjPathologyEyeByUniqueId(uniqueId);
+                if (zj_PATHOLOGY_EYE != null && zj_PATHOLOGY_EYE.size() > 0) {
+                    savePathologicalEye(zj_PATHOLOGY_EYE);
                 }
 
-                List<INP_DIAGNOSIS> zj_INP_DIAGNOSIS = zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
-
-
-//                List<NURSING_RECORD> zj_NURSING_RECORD = zjNursingRecordMapper.findZjNursingRecordByUniqueId(uniqueId);
-//                List<VITAL_RECORD> zj_VITAL_RECORD = zjVitalRecordMapper.findZjVitalRecordByUniqueId(uniqueId);
-//                List<TEM_INP_ADMISSION_STATUS> zj_TEM_INP_ADMISSION_STATUS = zjTemInpAdmissionStatusMapper.findZjTemInpAdmissionStatusByUniqueId(uniqueId);
-                //List<INP_DIAGNOSIS> zj_INP_DIAGNOSIS = zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
-              //  List<INP_CONSULTATION_DOCTOR_DETAIL> zj_INP_CONSULTATION_DOCTOR_DETAIL = zjInpConsultationDoctorDetailMapper.findZjInpConsultationDoctorDetailByUniqueId(uniqueId);*/
-                //List<LIS_RECORD> zj_LIS_RECORD = zjLisRecordMapper.findZjLisRecordByUniqueId(uniqueId);
-//                List<DRUG_ORDER> zj_DRUG_ORDER = zjDrugOrderMapper.findZjDrugOrderByUniqueId(uniqueId);
-//                List<DRUG_COURSE> zj_DRUG_COURSE = zjDrugCourseMapper.findZjDrugCourseByUniqueId(uniqueId);
-               // List<POSSIBLE_CAUSE> zj_POSSIBLE_CAUSE = zjPossibleCauseMapper.findZjPossibleCauseByUniqueId(uniqueId);
-               // List<FAMILY_HISTORY> zj_FAMILY_HISTORY = zjFamilyHistoryMapper.findZjFamilyHistoryByUniqueId(uniqueId);
-                //List<CONCOMITANT_DISEASE> zj_CONCOMITANT_DISEASE = zjConcomitantDiseaseMapper.findZjConcomitantDiseaseByUniqueId(uniqueId);
-              //  List<SYMPTOMS> zj_SYMPTOMS = zjSymptomsMapper.findZjSymptomsByUniqueId(uniqueId);
-//                List<EXAM_MASTER> zj_EXAM_MASTER = zjExamMasterMapper.findZjExamMasterByUniqueId(uniqueId);
-
-
-//                List<HISTOLOGY_REPORT> zj_HISTOLOGY_REPORT = zjHistologyReportMapper.findZjHistologyReportByUniqueId(uniqueId);
-//                List<TEM_OPERATION_RECORD> zj_TEM_OPERATION_RECORD = zjTemOperationRecordMapper.findZjTemOperationRecordByUniqueId(uniqueId);
-//                List<PROCEDURE_RECORD> zj_PROCEDURE_RECORD = zjProcedureRecordMapper.findZjProcedureRecordByUniqueId(uniqueId);
-//                List<TEM_DEATH_RECORD> zj_TEM_DEATH_RECORD = zjTemDeathRecordMapper.findZjTemDeathRecordByUniqueId(uniqueId);
-//                List<FOLLOW_UP> zj_FOLLOW_UP = zjFollowUpMapper.findZjFollowUpByUniqueId(uniqueId);
-//
-//                List<TEM_OUTP_DISCHARGE_STATUS> zj_TEM_OUTP_DISCHARGE_STATUS = zjTemOutpDischargeStatusMapper.findZjTemOutpDischargeStatusByUniqueId(uniqueId);
-//                List<TEM_24H_IN_OUT> zj_TEM_24H_IN_OUT = zjTem24hInOutMapper.findZjTem24hInOutByUniqueId(uniqueId);
-//                List<OUTP_RECORD> zj_OUTP_RECORD = zjOutpRecordMapper.findZjOutpRecordByUniqueId(uniqueId);
-//                List<TEM_COURSE_DIS> zj_TEM_COURSE_DIS = zjTemCourseDisMapper.findZjTemCourseDisByUniqueId(uniqueId);
-//                List<TEM_OUTP_DISCHARGE_SUMMER> zj_TEM_OUTP_DISCHARGE_SUMMER = zjTemOutpDischargeSummerMapper.findZjTemOutpDischargeSummerByUniqueId(uniqueId);
-//                List<WARD_ROUND_RECORD> zj_WARD_ROUND_RECORD = zjWardRoundRecordMapper.findZjWardRoundRecordByUniqueId(uniqueId);
-//                List<INP_CONSULTATION_DOCTOR_MASTER> zj_INP_CONSULTATION_DOCTOR_MASTER = zjInpConsultationDoctorMasterMapper.findZjInpConsultationDoctorMasterByUniqueId(uniqueId);
-//                List<INP_CONSULTATION_DOCTOR_DETAIL> zj_INP_CONSULTATION_DOCTOR_DETAIL = zjInpConsultationDoctorDetailMapper.findZjInpConsultationDoctorDetailByUniqueId(uniqueId);
-//                List<TEM_PRE_COURSE_DIS> zj_TEM_PRE_COURSE_DIS = zjTemPreCourseDisMapper.findZjTemPreCourseDisByUniqueId(uniqueId);
-//                List<PRE_OP_DISCUSSION> zj_PRE_OP_DISCUSSION = zjPreOpDiscussionMapper.findZjPreOpDiscussionByUniqueId(uniqueId);
-//                List<POST_OP_COURSE> zj_POST_OP_COURSE = zjPostOpCourseMapper.findZjPostOpCourseByUniqueId(uniqueId);
-//                List<TRANSFER_DEPT> zj_TRANSFER_DEPT = zjTransferDeptMapper.findZjTransferDeptByUniqueId(uniqueId);
-//                List<EMERGENCY_RECORD> zj_EMERGENCY_RECORD = zjEmergencyRecordMapper.findZjEmergencyRecordByUniqueId(uniqueId);
-//                List<STAGE_SUMMARY> zj_STAGE_SUMMARY = zjStageSummaryMapper.findZjStageSummaryByUniqueId(uniqueId);
-//                List<INP_BILL_DETAIL> zj_INP_BILL_DETAIL = zjInpBillDetailMapper.findZjInpBillDetailByUniqueId(uniqueId);
-//                List<TRANSFUSION_ORDER> zj_TRANSFUSION_ORDER = zjTransfusionOrderMapper.findZjTransfusionOrderByUniqueId(uniqueId);
-//                List<DIET_ORDER> zj_DIET_ORDER = zjDietOrderMapper.findZjDietOrderByUniqueId(uniqueId);
-//                List<INP_ORDERS> zj_INP_ORDERS = zjInpOrdersMapper.findZjInpOrdersByUniqueId(uniqueId);
-//                List<OUTP_DIAGNOSIS_SPLIT> zj_OUTP_DIAGNOSIS_SPLIT = zjOutpDiagnosisSplitMapper.findZjOutpDiagnosisSplitByUniqueId(uniqueId);
-//                List<SYMPTOMS> zj_SYMPTOMS = zjSymptomsMapper.findZjSymptomsByUniqueId(uniqueId);
-//                List<FAMILY_HISTORY> zj_FAMILY_HISTORY = zjFamilyHistoryMapper.findZjFamilyHistoryByUniqueId(uniqueId);
-//                List<SURGERY_HISTORY> zj_SURGERY_HISTORY = zjSurgeryHistoryMapper.findZjSurgeryHistoryByUniqueId(uniqueId);
-//                List<ALLERGY_HISTORY> zj_ALLERGY_HISTORY = zjAllergyHistoryMapper.findZjAllergyHistoryByUniqueId(uniqueId);
-//                List<TRANSFUSION_HISTORY> zj_TRANSFUSION_HISTORY = zjTransfusionHistoryMapper.findZjTransfusionHistoryByUniqueId(uniqueId);
-//                List<POSSIBLE_CAUSE> zj_POSSIBLE_CAUSE = zjPossibleCauseMapper.findZjPossibleCauseByUniqueId(uniqueId);
-//                List<DIET> zj_DIET = zjDietMapper.findZjDietByUniqueId(uniqueId);
-//                List<CONCOMITANT_DISEASE> zj_CONCOMITANT_DISEASE = zjConcomitantDiseaseMapper.findZjConcomitantDiseaseByUniqueId(uniqueId);
-//                List<PHYSICAL_EXAM> zj_PHYSICAL_EXAM = zjPhysicalExamMapper.findZjPhysicalExamByUniqueId(uniqueId);
-//                List<IMAGING> zj_IMAGING = zjImagingMapper.findZjImagingByUniqueId(uniqueId);
-//                List<ENDOSCOPY> zj_ENDOSCOPY = zjEndoscopyMapper.findZjEndoscopyByUniqueId(uniqueId);
-//                List<DRUG_COURSE> zj_DRUG_COURSE = zjDrugCourseMapper.findZjDrugCourseByUniqueId(uniqueId);
-//                List<BIOMARKER> zj_BIOMARKER = zjBiomarkerMapper.findZjBiomarkerByUniqueId(uniqueId);
-//                List<PATHOLOGY> zj_PATHOLOGY = zjPathologyMapper.findZjPathologyByUniqueId(uniqueId);
-//                List<SURGERY_PROC> zj_SURGERY_PROC = zjSurgeryProcMapper.findZjSurgeryProcByUniqueId(uniqueId);
-//                List<POSTOP_FUNCTION> zj_POSTOP_FUNCTION = zjPostopFunctionMapper.findZjPostopFunctionByUniqueId(uniqueId);
-//                List<RADIOTHERAPY> zj_RADIOTHERAPY = zjRadiotherapyMapper.findZjRadiotherapyByUniqueId(uniqueId);
-//
-//                List<IMAGING> zj_IMAGING = zjImagingMapper.findZjImagingByUniqueId(uniqueId);
-
-
-
-               if(zj_BASY_NSTD!=null){
-                    saveIndexPerson(zj_BASY_NSTD,zj_BASY_DIAG_STD);
-                    saveIndexIcu(zj_BASY_NSTD);
-                }
-                if(zj_BASY_DIAG_STD!=null){
-
-                    Date admitdate=null;
-                    Date maindate=null;
-                    Date clinicdate=null;
-                    Date pathdate=null;
-                    for(INP_DIAGNOSIS diagnosis: zj_INP_DIAGNOSIS){
-                        if(diagnosis.getDIAGNOSIS_TYPE()!=null){
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("出院主要诊断")){
-                                maindate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("门诊诊断")){
-                                clinicdate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("入院初诊")){
-                                admitdate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("病理诊断")){
-                                pathdate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                        }
-
-                    }
-
-
-                    saveIndexDiagnosisAdmit(zj_BASY_DIAG_STD,visitdate,admitdate);
-                    saveIndexDiagnosisClinic(zj_BASY_DIAG_STD,visitdate,clinicdate);
-                    saveIndexDiagnosisMain(zj_BASY_DIAG_STD,visitdate,maindate);
-                    saveIndexDiagnosisOther(zj_BASY_DIAG_STD,visitdate,maindate);
-                    saveIndexInjury(zj_BASY_DIAG_STD);
-                    saveIndexPathology(zj_BASY_DIAG_STD,visitdate,pathdate);
+                // 病理检查-淋巴结
+                List<PATHOLOGY_LN> zj_PATHOLOGY_LN = zjPathologyLnMapper.findZjPathologyLnByUniqueId(uniqueId);
+                if (zj_PATHOLOGY_LN != null && zj_PATHOLOGY_LN.size() > 0) {
+                    savePathologicalIn(zj_PATHOLOGY_LN);
                 }
 
-                if(zj_BASY_OP_STD!=null){
-                    saveIndexOperation(zj_BASY_OP_STD);
+                // 免疫组化标志物
+                List<IHC_MARKER> zj_IHC_MARKER = zjIhcMarkerMapper.findZjIhcMarkerByUniqueId(uniqueId);
+                if (zj_IHC_MARKER != null && zj_IHC_MARKER.size() > 0) {
+                    saveMarker(zj_IHC_MARKER);
                 }
-
-/*
-
-                if(zj_NURSING_RECORD!=null&&zj_NURSING_RECORD.size()>0){
-                    savePersonGeneral(zj_NURSING_RECORD, zj_VITAL_RECORD);
-                }
-*/
-
-/*
-               if(zj_TEM_INP_ADMISSION_STATUS!=null&&zj_TEM_INP_ADMISSION_STATUS.size()>0){
-                    saveHisMarriage(zj_TEM_INP_ADMISSION_STATUS);
-                }*/
-
-            /*    if(zj_INP_DIAGNOSIS!=null&&zj_INP_DIAGNOSIS.size()>0){
-                    saveDiagnosis(zj_INP_DIAGNOSIS);
-                }*/
-
-   /*             if(zj_INP_CONSULTATION_DOCTOR_DETAIL!=null&&zj_INP_CONSULTATION_DOCTOR_DETAIL.size()>0){
-
-                    saveConsultation(patientId,visitId,zj_INP_CONSULTATION_DOCTOR_DETAIL);
-                }*/
-
-             /*   if(zj_LIS_RECORD!=null&&zj_LIS_RECORD.size()>0){
-                    saveInspection(zj_LIS_RECORD);
-                }*/
-
-      /*          if(zj_POSSIBLE_CAUSE!=null&&zj_POSSIBLE_CAUSE.size()>0){
-                    saveHisPerson(zj_POSSIBLE_CAUSE,null);
-                }
-
-                if(zj_FAMILY_HISTORY!=null&&zj_FAMILY_HISTORY.size()>0){
-                    saveHisFamily( zj_FAMILY_HISTORY );
-                }
-
-                if(zj_CONCOMITANT_DISEASE!=null&&zj_CONCOMITANT_DISEASE.size()>0){
-                    saveHisPast( zj_CONCOMITANT_DISEASE );
-                }
-
-                if(zj_SYMPTOMS!=null&&zj_SYMPTOMS.size()>0){
-                    saveSymptom(zj_SYMPTOMS);
-                }*/
-
-
-//                if(zj_DRUG_ORDER!=null&&zj_DRUG_ORDER.size()>0){
-//                    saveTreatment(zj_DRUG_ORDER);
-//                }
-//                if(zj_DRUG_COURSE!=null&&zj_DRUG_COURSE.size()>0){
-//                    saveChemotherapyDrug( zj_DRUG_COURSE);
-//                }
-/*
-                if(zj_TEM_INP_ADMISSION_STATUS!=null&&zj_TEM_INP_ADMISSION_STATUS.size()>0){
-                    for(TEM_INP_ADMISSION_STATUS tem_inp_admission_status:zj_TEM_INP_ADMISSION_STATUS){
-                        saveInpAdmissionStatus(tem_inp_admission_status);
-                    }
-
-                }
-
-                if(zj_EXAM_MASTER!=null&&zj_EXAM_MASTER.size()>0){
-                    saveExamMaster(zj_EXAM_MASTER);
-                    saveExamMasterStd(zj_EXAM_MASTER);
-                }*/
-//                if(zj_EXAM_MASTER!=null&&zj_EXAM_MASTER.size()>0){
-//                    saveExamMaster(zj_EXAM_MASTER);
-//                    saveExamMasterStd(zj_EXAM_MASTER);
-//
-//                    for (EXAM_MASTER exam_master:zj_EXAM_MASTER
-//                         ) {
-//
-//                        if (zj_IMAGING==null||zj_IMAGING.size()==0){
-//                            continue;
-//                        }
-//                        String examName = exam_master.getEXAM_NAME1_STD() + ","
-//                                + exam_master.getEXAM_NAME2_STD() + ","
-//                                + exam_master.getEXAM_NAME3_STD() + ","
-//                                + exam_master.getEXAM_NAME4_STD() + ","
-//                                + exam_master.getEXAM_NAME5_STD() + ","
-//                                + exam_master.getEXAM_NAME6_STD();
-//
-//                        try {
-//                            saveUgi(examName,exam_master,zj_IMAGING);
-//                            saveRabat(examName,exam_master,zj_IMAGING);
-//                            saveChestCt(examName,exam_master,zj_IMAGING);
-//                            saveAbdominalCt(examName,exam_master,zj_IMAGING);
-//                            saveAbdominalMri(examName,exam_master,zj_IMAGING);
-//                            saveAbdominalUltrasound(examName,exam_master,zj_IMAGING);
-//                            saveNeckUltrasound(examName,exam_master,zj_IMAGING);
-//                            savePetCt(examName,exam_master,zj_IMAGING);
-//                        } catch (ParseException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//                if(zj_INP_DIAGNOSIS!=null&&zj_INP_DIAGNOSIS.size()>0){
-//                    saveDiagnosis(zj_INP_DIAGNOSIS);
-//                    saveDiagnosisStage(zj_INP_DIAGNOSIS);
-//                }
-
-//                if(zj_NURSING_RECORD!=null&&zj_NURSING_RECORD.size()>0){
-//                    savePersonGeneral(zj_NURSING_RECORD, zj_VITAL_RECORD);
-//                }
-
 
             }
-
         }
-
-
-
-
-
-
-
-
-
     }
 
+    /**
+     * 病理报告原文
+     * @param zj_HISTOLOGY_REPORT
+     */
+    public void saveHistologyReport(List<HISTOLOGY_REPORT> zj_HISTOLOGY_REPORT) {
+        for (HISTOLOGY_REPORT histology_report : zj_HISTOLOGY_REPORT
+                ) {
+            HistologyReport histologyReport = new HistologyReport();
+            // person_id	标识患者身份唯一标识
+            histologyReport.setPersonId(histology_report.getUNIQUE_ID_LV1());
+            // unique_id	唯一标识
+            histologyReport.setUniqueId(histology_report.getUNIQUE_ID_LV2());
+            // p900	医疗机构代码
+            histologyReport.setP900(histology_report.getP900());
+            // patient_id	患者id
+            histologyReport.setPatientId(histology_report.getPATIENT_ID());
+            // visit_id	住院号
+            histologyReport.setVisitId(histology_report.getVISIT_ID());
+            // unique_id_lv3	病理unique_id
+            histologyReport.setUniqueIdLv3(histology_report.getUNIQUE_ID());
+            // admission_number	住院次数
+            histologyReport.setAdmissionNumber(histology_report.getADMISSION_NUMBER());
+            // visit_type	就诊类型
+            histologyReport.setVisitType(histology_report.getVISIT_TYPE());
+            // pathology_no	病理系统编号
+            histologyReport.setPathologyNo(histology_report.getPATHOLOGY_NO());
+            // inspection_hospital	送检医院
+            histologyReport.setInspectionHospital(histology_report.getINSPECTION_HOSPITAL());
+            // inspection_department	送检科室
+            histologyReport.setInspectionDepartment(histology_report.getINSPECTION_DEPARTMENT());
+            // inspection_physician	送检医师
+            histologyReport.setInspectionPhysician(histology_report.getINSPECTION_PHYSICIAN());
+            // inspection_time	送检时间
+            histologyReport.setInspectionTime(histology_report.getINSPECTION_TIME());
+            // inspection_site	送检部位
+            histologyReport.setInspectionSite(histology_report.getINSPECTION_SITE());
+            // clinical_diagnosis	临床诊断
+            histologyReport.setClinicalDiagnosis(histology_report.getCLINICAL_DIAGNOSIS());
+            // name	姓名
+            histologyReport.setName(histology_report.getNAME());
+            // specimen_receiving_time	标本接收时间
+            histologyReport.setSpecimenReceivingTime(histology_report.getSPECIMEN_RECEIVING_TIME());
+            // report_time	报告时间
+            histologyReport.setReportTime(histology_report.getREPORT_TIME());
+            // review_time	审核时间
+            histologyReport.setReviewTime(histology_report.getREVIEW_TIME());
+            // path_eye	病理所见-肉眼所见
+            histologyReport.setPathEye(histology_report.getPATH_EYE());
+            // path_microscope	病理所见-镜下所见
+            histologyReport.setPathMicroscope(histology_report.getPATH_MICROSCOPE());
+            // path_diag	病理诊断
+            histologyReport.setPathDiag(histology_report.getPATH_DIAG());
+            // path_diag_code	病理诊断编码
+            histologyReport.setPathDiagCode(histology_report.getPATH_DIAG_CODE());
+            // report_doctor	报告医师
+            histologyReport.setReportDoctor(histology_report.getREPORT_DOCTOR());
+            // review_doctor	审核医师
+            histologyReport.setReviewDoctor(histology_report.getREVIEW_DOCTOR());
+            // report_status	报告状态
+            histologyReport.setReportStatus(histology_report.getREPORT_STATUS());
+            // data_version	数据版本
+            histologyReport.setDataVersion(histology_report.getDATA_VERSION());
+            // data_db_source	数据库来源
+            histologyReport.setDataDbSource(histology_report.getDATA_DB_SOURCE());
+            // data_table_source	数据表来源
+            histologyReport.setDataTableSource(histology_report.getDATA_TABLE_SOURCE());
+            // data_field_source	数据项来源
+            histologyReport.setDataFieldSource(histology_report.getDATA_FIELD_SOURCE());
+            // created_at	创建时间
+            histologyReport.setCreatedAt(histology_report.getCREATED_AT());
+            // creator	创建人
+            histologyReport.setCreator(histology_report.getCREATOR());
+            // updated_at	修改时间
+            histologyReport.setUpdatedAt(histology_report.getUPDATED_AT());
+            histologyReportService.saveHistologyReport(histologyReport);
+            log.info("保存病理报告原文：" + histologyReport.getUniqueId());
+        }
+    }
 
+    /**
+     * 病理检查结论
+     * @param zj_PATHOLOGY
+     */
+    public void savePathological(List<PATHOLOGY> zj_PATHOLOGY) {
+        for (PATHOLOGY pathology : zj_PATHOLOGY
+                ) {
+            HISTOLOGY_REPORT histology_report = zjHistologyReportMapper.findZjHistologyReportByUniqueId2(pathology.getunique_id());
+            Pathological pathological = new Pathological();
+            // person_id	标识患者身份唯一标识
+            pathological.setPersonId(pathology.getunique_id_lv1());
+            // unique_id	唯一标识
+            pathological.setUniqueId(pathology.getunique_id_lv2());
+            // p900	医疗机构代码
+            pathological.setP900(pathology.getp900());
+            // patient_id	患者id
+            pathological.setPatientId(pathology.getpatient_id());
+            // visit_id	住院号
+            pathological.setVisitId(pathology.getvisit_id());
+            // unique_id_lv3	病理unique_id
+            pathological.setUniqueIdLv3(pathology.getunique_id());
+            // case_number	病理号
+            pathological.setCaseNumber(histology_report.getPATHOLOGY_NO());
+            // inspect_time	收到日期
+            pathological.setInspectTime(histology_report.getSPECIMEN_RECEIVING_TIME());
+            // reprot_time	报告日期
+            pathological.setReprotTime(histology_report.getREPORT_TIME());
+            // specimen_name	送检标本名称
+            pathological.setSpecimenName(pathology.getstructure_site1_std() + "," + pathology.getstructure_sub_site1_std()
+                    + "," + pathology.getstructure_type1_std() + ";"
+                    + pathology.getstructure_site2_std() + "," + pathology.getstructure_sub_site2_std() + ","
+                    + pathology.getstructure_type2_std() + ";"
+                    + pathology.getstructure_site2_std() + "," + pathology.getstructure_sub_site2_std() + ","
+                    + pathology.getstructure_type2_std());
+            pathological.setSpecimenName(pathological.getSpecimenName().replace("null", ""));
+            // Lauren分型
+            pathological.setLauren(pathology.getlauren_type_std());
+            // pathological_type	病理类型
+            pathological.setPathologicalType(pathology.getfeature_type1_std() + "," + pathology.getfeature_type2_std());
+            pathological.setPathologicalType(pathological.getPathologicalType().replace("null", ""));
+            // differentiation_degree	分化程度
+            pathological.setDifferentiationDegree((StringUtils.isEmpty(pathology.getfeature_differ1_std())
+                    && StringUtils.isEmpty(pathology.getfeature_differ2_std())) ? "无法评估" : pathology.getfeature_differ1_std()
+                    + pathology.getfeature_differ2_std());
+            // infiltration_depth	浸润深度
+            String infiltrationDepth = pathology.getinvasion1_std() + ","
+                    + pathology.getinvasion_site1_std() + "," + pathology.getinvasion_structure1_std() + ","
+                    + pathology.getinvasion_layer1_std() + ";" + pathology.getinvasion2_std() + ","
+                    + pathology.getinvasion_site2_std() + "," + pathology.getinvasion_structure2_std() + ","
+                    + pathology.getinvasion_layer2_std() + ";" + pathology.getinvasion3_std() + ","
+                    + pathology.getinvasion_site3_std() + "," + pathology.getinvasion_structure3_std() + ","
+                    + pathology.getinvasion_layer3_std() + ";" + pathology.getinvasion4_std() + ","
+                    + pathology.getinvasion_site4_std() + "," + pathology.getinvasion_structure4_std() + ","
+                    + pathology.getinvasion_layer4_std();
+            pathological.setInfiltrationDepth(StringUtils.isEmpty(pathology.getneg_std()) ?
+                    infiltrationDepth.replace("null", "") : null);
+            // vascular_invasion	血管侵犯
+            String vascularInvasion = null;
+            if (StringUtils.isEmpty(pathology.getneg_std())) {
+                if ((StringUtils.isNotEmpty(pathology.getinvasion_site1_std()) && pathology.getinvasion_site1_std().indexOf("血管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site2_std()) && pathology.getinvasion_site2_std().indexOf("血管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site3_std()) && pathology.getinvasion_site3_std().indexOf("血管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site4_std()) && pathology.getinvasion_site4_std().indexOf("血管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site1_std()) && pathology.getinvasion_site1_std().indexOf("脉管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site2_std()) && pathology.getinvasion_site2_std().indexOf("脉管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site3_std()) && pathology.getinvasion_site3_std().indexOf("脉管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site4_std()) && pathology.getinvasion_site4_std().indexOf("脉管") != -1)) {
+                    vascularInvasion = "是";
+                }
+            }
+            pathological.setVascularInvasion(vascularInvasion);
+            // lymphatic_invasion	淋巴管侵犯
+            String lymphaticInvasion = null;
+            if (StringUtils.isEmpty(pathology.getneg_std())) {
+                if ((StringUtils.isNotEmpty(pathology.getinvasion_site1_std()) && pathology.getinvasion_site1_std().indexOf("淋巴管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site2_std()) && pathology.getinvasion_site2_std().indexOf("淋巴管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site3_std()) && pathology.getinvasion_site3_std().indexOf("淋巴管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site4_std()) && pathology.getinvasion_site4_std().indexOf("淋巴管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site1_std()) && pathology.getinvasion_site1_std().indexOf("脉管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site2_std()) && pathology.getinvasion_site2_std().indexOf("脉管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site3_std()) && pathology.getinvasion_site3_std().indexOf("脉管") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site4_std()) && pathology.getinvasion_site4_std().indexOf("脉管") != -1)) {
+                    lymphaticInvasion = "是";
+                }
+            }
+            pathological.setLymphaticInvasion(lymphaticInvasion);
+            // nerve_invasion	神经侵犯
+            String nerveInvasion = null;
+            if (StringUtils.isEmpty(pathology.getneg_std())) {
+                if ((StringUtils.isNotEmpty(pathology.getinvasion_site1_std()) && pathology.getinvasion_site1_std().indexOf("神经") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site2_std()) && pathology.getinvasion_site2_std().indexOf("神经") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site3_std()) && pathology.getinvasion_site3_std().indexOf("神经") != -1)
+                        || (StringUtils.isNotEmpty(pathology.getinvasion_site4_std()) && pathology.getinvasion_site4_std().indexOf("神经") != -1)) {
+                    nerveInvasion = "是";
+                }
+            }
+            pathological.setNerveInvasion(nerveInvasion);
+            // invasion_of_organs	侵犯邻近器官/结构
+            String invasionOfOrgans = null;
+            if (StringUtils.isEmpty(pathology.getneg_std())) {
+                if (StringUtils.isNotEmpty(pathology.getinvasion_site1_std()) && pathology.getinvasion_site1_std().indexOf("胃") == -1) {
+                    invasionOfOrgans += pathology.getinvasion_site1_std() + ",";
+                }
+                if (StringUtils.isNotEmpty(pathology.getinvasion_site2_std()) && pathology.getinvasion_site2_std().indexOf("胃") == -1) {
+                    invasionOfOrgans += pathology.getinvasion_site2_std() + ",";
+                }
+                if (StringUtils.isNotEmpty(pathology.getinvasion_site3_std()) && pathology.getinvasion_site3_std().indexOf("胃") == -1) {
+                    invasionOfOrgans += pathology.getinvasion_site3_std() + ",";
+                }
+                if (StringUtils.isNotEmpty(pathology.getinvasion_site4_std()) && pathology.getinvasion_site4_std().indexOf("胃") == -1) {
+                    invasionOfOrgans += pathology.getinvasion_site4_std();
+                }
+            }
+            pathological.setInvasionOfOrgans(StringUtils.isNotEmpty(invasionOfOrgans)
+                    ? invasionOfOrgans.replace("null", "") : null);
+            // incisal_margin	切缘
+            String incisalMargin = null;
+            if (((StringUtils.isNotEmpty(pathology.getstructure_type1_std()) && pathology.getstructure_type1_std().indexOf("切缘") != -1)
+                    || (StringUtils.isNotEmpty(pathology.getstructure_type2_std()) && pathology.getstructure_type2_std().indexOf("切缘") != -1)
+                    || (StringUtils.isNotEmpty(pathology.getstructure_type3_std()) && pathology.getstructure_type3_std().indexOf("切缘") != -1))
+                    && ((StringUtils.isNotEmpty(pathology.getfinding_result1_std()) && pathology.getfinding_result1_std().indexOf("癌") != -1)
+                    || (StringUtils.isNotEmpty(pathology.getfinding_result2_std()) &&pathology.getfinding_result2_std().indexOf("癌") != -1))) {
+                if (StringUtils.isEmpty(pathology.getneg_std())) {
+                    incisalMargin = "阳性";
+                } else {
+                    incisalMargin = "阴性";
+                }
+            }
+            pathological.setIncisalMargin(incisalMargin);
+            // data_version	数据版本
+            pathological.setDataVersion(pathology.getdata_version());
+            // data_db_source	数据库来源
+            pathological.setDataDbSource(pathology.getdata_db_source());
+            // data_table_source	数据表来源
+            pathological.setDataTableSource(pathology.getdata_table_source());
+            // data_field_source	数据项来源
+            pathological.setDataFieldSource(pathology.getdata_field_source());
+            // created_at	创建时间
+            pathological.setCreatedAt(pathology.getcreate_time());
+            // creator	创建人
+            pathological.setCreator(pathology.getcreator());
+            // updated_at	修改时间
+            pathological.setUpdatedAt(histology_report.getUPDATED_AT());
+            pathologicalService.savePathological(pathological);
+            log.info("保存病理检查结论：" + pathological.getUniqueId());
+        }
+    }
+
+    /**
+     * 病理检查肉眼
+     * @param zj_PATHOLOGY_EYE
+     */
+    public void savePathologicalEye(List<PATHOLOGY_EYE> zj_PATHOLOGY_EYE) {
+        for (PATHOLOGY_EYE pathology_eye : zj_PATHOLOGY_EYE
+                ) {
+            HISTOLOGY_REPORT histology_report = zjHistologyReportMapper.findZjHistologyReportByUniqueId2(pathology_eye.getunique_id());
+            PathologicalEye pathologicalEye = new PathologicalEye();
+            // person_id	标识患者身份唯一标识
+            pathologicalEye.setPersonId(pathology_eye.getunique_id_lv1());
+            // unique_id	unique_id
+            pathologicalEye.setUniqueId(pathology_eye.getunique_id_lv2());
+            // p900	医疗机构代码
+            pathologicalEye.setP900(pathology_eye.getp900());
+            // patient_id	患者id
+            pathologicalEye.setPatientId(pathology_eye.getpatient_id());
+            // visit_id	住院号
+            pathologicalEye.setVisitId(pathology_eye.getvisit_id());
+            // unique_id_lv3	病理unique_id
+            pathologicalEye.setUniqueIdLv3(pathology_eye.getunique_id());
+            // case_number	病理号
+            pathologicalEye.setCaseNumber(histology_report.getPATHOLOGY_NO());
+            // inspect_time	收到日期
+            pathologicalEye.setInspectTime(histology_report.getSPECIMEN_RECEIVING_TIME());
+            // reprot_time	报告日期
+            pathologicalEye.setReprotTime(histology_report.getREPORT_TIME());
+            // tumor_location	肿瘤部位
+            pathologicalEye.setTumorLocation(pathology_eye.getstructure1_std() + "," + pathology_eye.getstructure_site1_std() + ";"
+                    + pathology_eye.getstructure2_std() + "," + pathology_eye.getstructure_site2_std() + ";"
+                    + pathology_eye.getstructure3_std() + "," + pathology_eye.getstructure_site3_std());
+            pathologicalEye.setTumorLocation(pathologicalEye.getTumorLocation().replace("null", ""));
+            // tumor_size	肿瘤大小
+            pathologicalEye.setTumorSize(pathology_eye.getsize_max_diam1_std() + "*" + pathology_eye.getsize_median_diam1_std()
+                    + "*" + pathology_eye.getsize_min_diam1_std() + pathology_eye.getsize_unit1_std() + ";"
+                    + pathology_eye.getsize_max_diam2_std() + "*" + pathology_eye.getsize_median_diam2_std()
+                    + "*" + pathology_eye.getsize_min_diam2_std() + pathology_eye.getsize_unit2_std() + ";"
+                    + pathology_eye.getsize_max_diam3_std() + "*" + pathology_eye.getsize_median_diam3_std()
+                    + "*" + pathology_eye.getsize_min_diam3_std() + pathology_eye.getsize_unit3_std());
+            pathologicalEye.setTumorSize(pathologicalEye.getTumorSize().replace("null", ""));
+            // number_of_lesions	病灶数量
+            pathologicalEye.setNumberOfLesions(pathology_eye.getquantity_std() + "," + pathology_eye.getquantity_unit_std());
+            pathologicalEye.setNumberOfLesions(pathologicalEye.getNumberOfLesions().replace("null", ""));
+            // cutting_edge_distance	切缘距离
+            pathologicalEye.setCuttingEdgeDistance(pathology_eye.getedge_distance1_std() + "," + pathology_eye.getedge_distance_unit_std() + ";"
+                + pathology_eye.getedge_distance2_std() + "," + pathology_eye.getedge_distance_unit_std());
+            pathologicalEye.setCuttingEdgeDistance(pathologicalEye.getCuttingEdgeDistance().replace("null", ""));
+            // data_version	数据版本
+            pathologicalEye.setDataVersion(pathology_eye.getdata_version());
+            // data_db_source	数据库来源
+            pathologicalEye.setDataDbSource(pathology_eye.getdata_db_source());
+            // data_table_source	数据表来源
+            pathologicalEye.setDataTableSource(pathology_eye.getdata_table_source());
+            // data_field_source	数据项来源
+            pathologicalEye.setDataFieldSource(pathology_eye.getdata_field_source());
+            // created_at	创建时间
+            pathologicalEye.setCreatedAt(pathology_eye.getcreate_time());
+            // creator	创建人
+            pathologicalEye.setCreator(pathology_eye.getcreator());
+            // updated_at	修改时间
+            pathologicalEye.setUpdatedAt(histology_report.getUPDATED_AT());
+            pathologicalEyeService.savePathologicalEye(pathologicalEye);
+            log.info("保存病理检查肉眼：" + pathologicalEye.getUniqueId());
+        }
+    }
+
+    /**
+     * 病理检查-淋巴结
+     * @param zj_PATHOLOGY_LN
+     */
+    public void savePathologicalIn(List<PATHOLOGY_LN> zj_PATHOLOGY_LN) {
+        for ( PATHOLOGY_LN pathology_ln : zj_PATHOLOGY_LN
+                ) {
+            HISTOLOGY_REPORT histology_report = zjHistologyReportMapper.findZjHistologyReportByUniqueId2(pathology_ln.getunique_id());
+            PathologicalLn pathologicalLn = new PathologicalLn();
+            // person_id	标识患者身份唯一标识
+            pathologicalLn.setPersonId(pathology_ln.getunique_id_lv1());
+            // unique_id	unique_id
+            pathologicalLn.setUniqueId(pathology_ln.getunique_id_lv2());
+            // p900	医疗机构代码
+            pathologicalLn.setP900(pathology_ln.getp900());
+            // patient_id	患者id
+            pathologicalLn.setPatientId(pathology_ln.getpatient_id());
+            // visit_id	住院号
+            pathologicalLn.setVisitId(pathology_ln.getvisit_id());
+            // unique_id_lv3	病理unique_id
+            pathologicalLn.setUniqueIdLv3(pathology_ln.getunique_id());
+            // case_number	病理号
+            pathologicalLn.setCaseNumber(histology_report.getPATHOLOGY_NO());
+            // inspect_time	收到日期
+            pathologicalLn.setInspectTime(histology_report.getSPECIMEN_RECEIVING_TIME());
+            // reprot_time	报告日期
+            pathologicalLn.setReprotTime(histology_report.getREPORT_TIME());
+            // lymph_total	送检淋巴结总数
+            pathologicalLn.setLymphTotal(NumberUtil.add(pathology_ln.getquantity_total1_std(),
+                    pathology_ln.getquantity_total2_std(), pathology_ln.getquantity_total3_std(),
+                    pathology_ln.getquantity_total4_std(), pathology_ln.getquantity_total5_std(),
+                    pathology_ln.getquantity_total6_std(), pathology_ln.getquantity_total7_std(),
+                    pathology_ln.getquantity_total8_std(), pathology_ln.getquantity_total9_std(),
+                    pathology_ln.getquantity_total10_std(), pathology_ln.getquantity_total11_std(),
+                    pathology_ln.getquantity_total12_std(), pathology_ln.getquantity_total13_std()) + "");
+            // lymph_metastasis	淋巴结转移
+            pathologicalLn.setLymphMetastasis((pathology_ln.getquantity_positive1_std() != null
+                    || pathology_ln.getquantity_positive2_std() != null || pathology_ln.getquantity_positive3_std() != null
+                    || pathology_ln.getquantity_positive4_std() != null || pathology_ln.getquantity_positive5_std() != null
+                    || pathology_ln.getquantity_positive6_std() != null || pathology_ln.getquantity_positive7_std() != null
+                    || pathology_ln.getquantity_positive8_std() != null || pathology_ln.getquantity_positive9_std() != null
+                    || pathology_ln.getquantity_positive10_std() != null || pathology_ln.getquantity_positive11_std() != null
+                    || pathology_ln.getquantity_positive12_std() != null || pathology_ln.getquantity_positive13_std() != null) ? "是" : "");
+            // lymph_number	淋巴结转移数量
+            pathologicalLn.setLymphNumber(NumberUtil.add(pathology_ln.getquantity_positive1_std(),
+                    pathology_ln.getquantity_positive2_std(), pathology_ln.getquantity_positive3_std(),
+                    pathology_ln.getquantity_positive4_std(), pathology_ln.getquantity_positive5_std(),
+                    pathology_ln.getquantity_positive6_std(), pathology_ln.getquantity_positive7_std(),
+                    pathology_ln.getquantity_positive8_std(), pathology_ln.getquantity_positive9_std(),
+                    pathology_ln.getquantity_positive10_std(), pathology_ln.getquantity_positive11_std(),
+                    pathology_ln.getquantity_positive12_std(), pathology_ln.getquantity_positive13_std()) + "");
+            // positive_site	阳性淋巴结的部位
+            String positiveSite = pathology_ln.getln_site1_std() + ","
+                    + pathology_ln.getln_location1_std() + ";" + pathology_ln.getln_site2_std() + ","
+                    + pathology_ln.getln_location2_std() + ";" + pathology_ln.getln_site3_std() + ","
+                    + pathology_ln.getln_location3_std() + ";" + pathology_ln.getln_site4_std() + ","
+                    + pathology_ln.getln_location4_std() + ";" + pathology_ln.getln_site5_std() + ","
+                    + pathology_ln.getln_location5_std() + ";" + pathology_ln.getln_site6_std() + ","
+                    + pathology_ln.getln_location6_std() + ";" + pathology_ln.getln_site7_std() + ","
+                    + pathology_ln.getln_location7_std() + ";" + pathology_ln.getln_site8_std() + ","
+                    + pathology_ln.getln_location8_std() + ";" + pathology_ln.getln_site9_std() + ","
+                    + pathology_ln.getln_location9_std() + ";" + pathology_ln.getln_site10_std() + ","
+                    + pathology_ln.getln_location10_std() + ";" + pathology_ln.getln_site11_std() + ","
+                    + pathology_ln.getln_location11_std() + ";" + pathology_ln.getln_site12_std() + ","
+                    + pathology_ln.getln_location12_std() + ";" + pathology_ln.getln_site13_std() + ","
+                    + pathology_ln.getln_location13_std();
+            pathologicalLn.setPositiveSite(NumberUtil.add(pathology_ln.getquantity_positive1_std(),
+                    pathology_ln.getquantity_positive2_std(), pathology_ln.getquantity_positive3_std(),
+                    pathology_ln.getquantity_positive4_std(), pathology_ln.getquantity_positive5_std(),
+                    pathology_ln.getquantity_positive6_std(), pathology_ln.getquantity_positive7_std(),
+                    pathology_ln.getquantity_positive8_std(), pathology_ln.getquantity_positive9_std(),
+                    pathology_ln.getquantity_positive10_std(), pathology_ln.getquantity_positive11_std(),
+                    pathology_ln.getquantity_positive12_std(), pathology_ln.getquantity_positive13_std()).intValue() > 1
+                    ? positiveSite.replace("null", "") : null);
+            // data_version	数据版本
+            pathologicalLn.setDataVersion(pathology_ln.getdata_version());
+            // data_db_source	数据库来源
+            pathologicalLn.setDataDbSource(pathology_ln.getdata_db_source());
+            // data_table_source	数据表来源
+            pathologicalLn.setDataTableSource(pathology_ln.getdata_table_source());
+            // data_field_source	数据项来源
+            pathologicalLn.setDataFieldSource(pathology_ln.getdata_field_source());
+            // created_at	创建时间
+            pathologicalLn.setCreatedAt(pathology_ln.getcreate_time());
+            // creator	创建人
+            pathologicalLn.setCreator(pathology_ln.getcreator());
+            // updated_at	修改时间
+            pathologicalLn.setUpdatedAt(histology_report.getUPDATED_AT());
+            pathologicalLnService.savePathologicalLn(pathologicalLn);
+            log.info("保存病理检查-淋巴结：" + pathologicalLn.getUniqueId());
+        }
+    }
+
+    /**
+     * 免疫组化标志物
+     */
+    public void saveMarker(List<IHC_MARKER> zj_IHC_MARKER) {
+        for (IHC_MARKER ihc_marker : zj_IHC_MARKER
+                ) {
+            HISTOLOGY_REPORT histology_report = zjHistologyReportMapper.findZjHistologyReportByUniqueId2(ihc_marker.getunique_id());
+            Marker marker = new Marker();
+            // person_id	标识患者身份唯一标识
+            marker.setPersonId(ihc_marker.getunique_id_lv1());
+            // unique_id	unique_id
+            marker.setUniqueId(ihc_marker.getunique_id_lv2());
+            // p900	医疗机构代码
+            marker.setP900(ihc_marker.getp900());
+            // patient_id	患者id
+            marker.setPatientId(ihc_marker.getpatient_id());
+            // visit_id	住院号
+            marker.setVisitId(ihc_marker.getvisit_id());
+            // marker_name	免疫组化检测项目
+            marker.setMarkerName(ihc_marker.gettest_item_name1_std() + "," + ihc_marker.gettest_item_name2_std());
+            marker.setMarkerName(marker.getMarkerName().replace("null", ""));
+            // marker_qualitative	免疫组化标志物检测定性结果
+            marker.setMarkerQualitative(ihc_marker.gettest_item_value_rough_std() + "," + ihc_marker.gettest_item_value_nature_std());
+            marker.setMarkerQualitative(marker.getMarkerQualitative().replace("null", ""));
+            // marker_quantify	免疫组化标志物检测定量结果
+            marker.setMarkerQuantify(ihc_marker.gettest_item_value_precise_std());
+            // data_version	数据版本
+            marker.setDataVersion(ihc_marker.getdata_version());
+            // data_db_source	数据库来源
+            marker.setDataDbSource(ihc_marker.getdata_db_source());
+            // data_table_source	数据表来源
+            marker.setDataTableSource(ihc_marker.getdata_table_source());
+            // data_field_source	数据项来源
+            marker.setDataFieldSource(ihc_marker.getdata_field_source());
+            // created_at	创建时间
+            marker.setCreatedAt(ihc_marker.getcreate_time());
+            // creator	创建人
+            marker.setCreator(ihc_marker.getcreator());
+            // updated_at	修改时间
+            marker.setUpdatedAt(histology_report.getUPDATED_AT());
+            this.markerService.saveMarker(marker);
+            log.info("保存免疫组化标志物：" + marker.getUniqueId());
+        }
+    }
 
 
     public void savePerson(TEM_PAT_MASTER_INDEX index){
@@ -4972,7 +5229,7 @@ public class RuleRunServiceImpl implements RuleRunService {
 
                  //舒张压(低压)，收缩压(高压)
                  String lowPressure = nursing_record.getDIASTOLIC_BLOOD_PRESSURE();
-                 String[] lowPressures=lowPressure.split("/");
+                 String[] lowPressures=lowPressure.split(",");
                  if (lowPressures.length==2){
                      String highString = lowPressures[0];
                      String lowString = lowPressures[1];
@@ -7822,8 +8079,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                            }
 //                        }
 //                    }
-//                    if(pathology.getCOUNT1_STD() != null && pathology.getCOUNT1_STD().contains("/")){
-//                        strArray = pathology.getCOUNT1_STD().split("/");
+//                    if(pathology.getCOUNT1_STD() != null && pathology.getCOUNT1_STD().contains(",")){
+//                        strArray = pathology.getCOUNT1_STD().split(",");
 //                        totalNodes = totalNodes + Integer.valueOf(strArray[1]);
 //                        lymphNodeNumber = lymphNodeNumber + Integer.valueOf(strArray[0]);
 //                        lymphFlag = "1";
@@ -7831,8 +8088,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                            locationLymphNode = locationLymphNode + "," + pathology.getLN_SITE1_STD() + "," + pathology.getLN_LOCATION1_STD();
 //                        }
 //                    }
-//                    if(pathology.getCOUNT2_STD() != null && pathology.getCOUNT2_STD().contains("/")){
-//                        strArray = pathology.getCOUNT2_STD().split("/");
+//                    if(pathology.getCOUNT2_STD() != null && pathology.getCOUNT2_STD().contains(",")){
+//                        strArray = pathology.getCOUNT2_STD().split(",");
 //                        totalNodes = totalNodes + Integer.valueOf(strArray[1]);
 //                        lymphNodeNumber = lymphNodeNumber + Integer.valueOf(strArray[0]);
 //                        lymphFlag = "1";
@@ -7840,8 +8097,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                            locationLymphNode = locationLymphNode + "," + pathology.getLN_SITE2_STD() + "," + pathology.getLN_LOCATION2_STD();
 //                        }
 //                    }
-//                    if(pathology.getCOUNT3_STD() != null && pathology.getCOUNT3_STD().contains("/")){
-//                        strArray = pathology.getCOUNT3_STD().split("/");
+//                    if(pathology.getCOUNT3_STD() != null && pathology.getCOUNT3_STD().contains(",")){
+//                        strArray = pathology.getCOUNT3_STD().split(",");
 //                        totalNodes = totalNodes + Integer.valueOf(strArray[1]);
 //                        lymphNodeNumber = lymphNodeNumber + Integer.valueOf(strArray[0]);
 //                        lymphFlag = "1";
@@ -7849,8 +8106,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                            locationLymphNode = locationLymphNode + "," + pathology.getLN_SITE3_STD() + "," + pathology.getLN_LOCATION3_STD();
 //                        }
 //                    }
-//                    if(pathology.getCOUNT4_STD() != null && pathology.getCOUNT4_STD().contains("/")){
-//                        strArray = pathology.getCOUNT4_STD().split("/");
+//                    if(pathology.getCOUNT4_STD() != null && pathology.getCOUNT4_STD().contains(",")){
+//                        strArray = pathology.getCOUNT4_STD().split(",");
 //                        totalNodes = totalNodes + Integer.valueOf(strArray[1]);
 //                        lymphNodeNumber = lymphNodeNumber + Integer.valueOf(strArray[0]);
 //                        lymphFlag = "1";
@@ -7858,8 +8115,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                            locationLymphNode = locationLymphNode + "," + pathology.getLN_SITE4_STD() + "," + pathology.getLN_LOCATION4_STD();
 //                        }
 //                    }
-//                    if(pathology.getCOUNT5_STD() != null && pathology.getCOUNT5_STD().contains("/")){
-//                        strArray = pathology.getCOUNT5_STD().split("/");
+//                    if(pathology.getCOUNT5_STD() != null && pathology.getCOUNT5_STD().contains(",")){
+//                        strArray = pathology.getCOUNT5_STD().split(",");
 //                        totalNodes = totalNodes + Integer.valueOf(strArray[1]);
 //                        lymphNodeNumber = lymphNodeNumber + Integer.valueOf(strArray[0]);
 //                        lymphFlag = "1";
@@ -7867,8 +8124,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                            locationLymphNode = locationLymphNode + "," + pathology.getLN_SITE5_STD() + "," + pathology.getLN_LOCATION5_STD();
 //                        }
 //                    }
-//                    if(pathology.getCOUNT6_STD() != null && pathology.getCOUNT6_STD().contains("/")){
-//                        strArray = pathology.getCOUNT6_STD().split("/");
+//                    if(pathology.getCOUNT6_STD() != null && pathology.getCOUNT6_STD().contains(",")){
+//                        strArray = pathology.getCOUNT6_STD().split(",");
 //                        totalNodes = totalNodes + Integer.valueOf(strArray[1]);
 //                        lymphNodeNumber = lymphNodeNumber + Integer.valueOf(strArray[0]);
 //                        lymphFlag = "1";
@@ -7876,8 +8133,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                            locationLymphNode = locationLymphNode + "," + pathology.getLN_SITE6_STD() + "," + pathology.getLN_LOCATION6_STD();
 //                        }
 //                    }
-//                    if(pathology.getCOUNT7_STD() != null && pathology.getCOUNT7_STD().contains("/")){
-//                        strArray = pathology.getCOUNT7_STD().split("/");
+//                    if(pathology.getCOUNT7_STD() != null && pathology.getCOUNT7_STD().contains(",")){
+//                        strArray = pathology.getCOUNT7_STD().split(",");
 //                        totalNodes = totalNodes + Integer.valueOf(strArray[1]);
 //                        lymphNodeNumber = lymphNodeNumber + Integer.valueOf(strArray[0]);
 //                        lymphFlag = "1";
@@ -7885,8 +8142,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                            locationLymphNode = locationLymphNode + "," + pathology.getLN_SITE7_STD() + "," + pathology.getLN_LOCATION7_STD();
 //                        }
 //                    }
-//                    if(pathology.getCOUNT8_STD() != null && pathology.getCOUNT8_STD().contains("/")){
-//                        strArray = pathology.getCOUNT8_STD().split("/");
+//                    if(pathology.getCOUNT8_STD() != null && pathology.getCOUNT8_STD().contains(",")){
+//                        strArray = pathology.getCOUNT8_STD().split(",");
 //                        totalNodes = totalNodes + Integer.valueOf(strArray[1]);
 //                        lymphNodeNumber = lymphNodeNumber + Integer.valueOf(strArray[0]);
 //                        lymphFlag = "1";
@@ -7894,8 +8151,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                            locationLymphNode = locationLymphNode + "," + pathology.getLN_SITE8_STD() + "," + pathology.getLN_LOCATION8_STD();
 //                        }
 //                    }
-//                    if(pathology.getCOUNT9_STD() != null && pathology.getCOUNT9_STD().contains("/")){
-//                        strArray = pathology.getCOUNT9_STD().split("/");
+//                    if(pathology.getCOUNT9_STD() != null && pathology.getCOUNT9_STD().contains(",")){
+//                        strArray = pathology.getCOUNT9_STD().split(",");
 //                        totalNodes = totalNodes + Integer.valueOf(strArray[1]);
 //                        lymphNodeNumber = lymphNodeNumber + Integer.valueOf(strArray[0]);
 //                        lymphFlag = "1";
@@ -7903,8 +8160,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                            locationLymphNode = locationLymphNode + "," + pathology.getLN_SITE9_STD() + "," + pathology.getLN_LOCATION9_STD();
 //                        }
 //                    }
-//                    if(pathology.getCOUNT10_STD() != null && pathology.getCOUNT10_STD().contains("/")){
-//                        strArray = pathology.getCOUNT10_STD().split("/");
+//                    if(pathology.getCOUNT10_STD() != null && pathology.getCOUNT10_STD().contains(",")){
+//                        strArray = pathology.getCOUNT10_STD().split(",");
 //                        totalNodes = totalNodes + Integer.valueOf(strArray[1]);
 //                        lymphNodeNumber = lymphNodeNumber + Integer.valueOf(strArray[0]);
 //                        lymphFlag = "1";
@@ -7912,8 +8169,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                            locationLymphNode = locationLymphNode + "," + pathology.getLN_SITE10_STD() + "," + pathology.getLN_LOCATION10_STD();
 //                        }
 //                    }
-//                    if(pathology.getCOUNT11_STD() != null && pathology.getCOUNT11_STD().contains("/")){
-//                        strArray = pathology.getCOUNT11_STD().split("/");
+//                    if(pathology.getCOUNT11_STD() != null && pathology.getCOUNT11_STD().contains(",")){
+//                        strArray = pathology.getCOUNT11_STD().split(",");
 //                        totalNodes = totalNodes + Integer.valueOf(strArray[1]);
 //                        lymphNodeNumber = lymphNodeNumber + Integer.valueOf(strArray[0]);
 //                        lymphFlag = "1";
@@ -7921,8 +8178,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                            locationLymphNode = locationLymphNode + "," + pathology.getLN_SITE11_STD() + "," + pathology.getLN_LOCATION11_STD();
 //                        }
 //                    }
-//                    if(pathology.getCOUNT12_STD() != null && pathology.getCOUNT12_STD().contains("/")){
-//                        strArray = pathology.getCOUNT12_STD().split("/");
+//                    if(pathology.getCOUNT12_STD() != null && pathology.getCOUNT12_STD().contains(",")){
+//                        strArray = pathology.getCOUNT12_STD().split(",");
 //                        totalNodes = totalNodes + Integer.valueOf(strArray[1]);
 //                        lymphNodeNumber = lymphNodeNumber + Integer.valueOf(strArray[0]);
 //                        lymphFlag = "1";
@@ -7930,8 +8187,8 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                            locationLymphNode = locationLymphNode + "," + pathology.getLN_SITE12_STD() + "," + pathology.getLN_LOCATION12_STD();
 //                        }
 //                    }
-//                    if(pathology.getCOUNT13_STD() != null && pathology.getCOUNT13_STD().contains("/")){
-//                        strArray = pathology.getCOUNT13_STD().split("/");
+//                    if(pathology.getCOUNT13_STD() != null && pathology.getCOUNT13_STD().contains(",")){
+//                        strArray = pathology.getCOUNT13_STD().split(",");
 //                        totalNodes = totalNodes + Integer.valueOf(strArray[1]);
 //                        lymphNodeNumber = lymphNodeNumber + Integer.valueOf(strArray[0]);
 //                        lymphFlag = "1";
@@ -8084,7 +8341,7 @@ public class RuleRunServiceImpl implements RuleRunService {
 ////        //修改时间
 ////        pathological.setUpdatedAt();
 //    }
-    public void saveMarker(List<BIOMARKER> zj_BIOMARKER) {
+    /*public void saveMarker(List<BIOMARKER> zj_BIOMARKER) {
         Marker marker;
         for(BIOMARKER biomarker:zj_BIOMARKER){
             if(biomarker.getTEST_ITEM_NAME() != null){
@@ -8131,7 +8388,7 @@ public class RuleRunServiceImpl implements RuleRunService {
             }
         }
 
-    }
+    }*/
 
     public void saveTreatment(List<DRUG_ORDER> zj_DRUG_ORDER) {
         Treatment treatment;

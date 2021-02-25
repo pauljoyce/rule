@@ -6,7 +6,7 @@
        SELECT * FROM marker WHERE unique_id=#{unique_id}
 </select>
 
- <insert id="saveMarker"  parameterType="com.clinical.model.cluster.Marker">
+ <insert id="saveMarker"  parameterType="com.clinical.model.cluster.Marker" useGeneratedKeys="true" keyProperty="id">
   insert into marker(       person_id,
        unique_id,
        p900,
@@ -15,7 +15,6 @@
        marker_name,
        marker_qualitative,
        marker_quantify,
-       marker_type,
        data_version,
        data_db_source,
        data_table_source,
@@ -32,7 +31,6 @@ values
        #{markerName},
        #{markerQualitative},
        #{markerQuantify},
-       #{markerType},
        #{dataVersion},
        #{dataDbSource},
        #{dataTableSource},
@@ -41,11 +39,6 @@ values
        #{creator},
        #{updatedAt})
 </insert>
-
- <delete id="deleteMarker">
-   delete * from marker where unique_id=#{unique_id}
-  </delete>
-
  <update id="updateMarker"  parameterType="com.clinical.model.cluster.Marker">
       update   marker
  set
@@ -57,7 +50,6 @@ values
     marker_name = #{markerName},  
     marker_qualitative = #{markerQualitative},  
     marker_quantify = #{markerQuantify},  
-    marker_type = #{markerType},  
     data_version = #{dataVersion},  
     data_db_source = #{dataDbSource},  
     data_table_source = #{dataTableSource},  
