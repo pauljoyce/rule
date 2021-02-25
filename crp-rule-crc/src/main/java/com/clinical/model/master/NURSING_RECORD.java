@@ -1,5 +1,6 @@
 package com.clinical.model.master;
 import java.util.Date;
+
 public class NURSING_RECORD{
     //主键id
     private Integer ID;
@@ -20,31 +21,31 @@ public class NURSING_RECORD{
     //住院次数
     private Integer ADMISSION_NUMBER;
     //体温（℃）
-    private Double BODY_TEMPERATURE;
+    private String BODY_TEMPERATURE;
     //脉搏（次_分）
-    private Integer PULSE;
+    private String PULSE;
     //呼吸频率（次_分）
-    private Integer BREATHING_FREQUENCY;
+    private String BREATHING_FREQUENCY;
     //收缩压（mmhg）
-    private Integer SYSTOLIC_BLOOD_PRESSURE;
+    private String SYSTOLIC_BLOOD_PRESSURE;
     //舒张压（mmhg）
-    private Integer DIASTOLIC_BLOOD_PRESSURE;
+    private String DIASTOLIC_BLOOD_PRESSURE;
     //血氧饱和度（%）
-    private Integer BLOOD_OXYGEN_SATURATION;
+    private String BLOOD_OXYGEN_SATURATION;
     //入量名称
     private String INPUT_NAME;
     //入量
-    private Double INPUT_VOLUME;
+    private String INPUT_VOLUME;
     //入量单位
     private String INPUT_UNIT;
     //总入量
-    private Double TOTAL_INPUT;
+    private String TOTAL_INPUT;
     //总入量单位
     private String TOTAL_INPUT_UNIT;
     //出量名称
     private String OUTPUT_NAME;
     //出量
-    private Double OUTPUT_VOLUME;
+    private String OUTPUT_VOLUME;
     //出量单位
     private String OUTPUT_UNIT;
     //出量液体颜色
@@ -52,7 +53,7 @@ public class NURSING_RECORD{
     //出量液体性质
     private String LIQUID_PROPERTIES;
     //总出量
-    private Double TOTAL_OUTPUT;
+    private String TOTAL_OUTPUT;
     //总出量单位
     private String TOTAL_OUTPUT_UNIT;
     //病情记录
@@ -152,40 +153,40 @@ public class NURSING_RECORD{
     public void setADMISSION_NUMBER(Integer ADMISSION_NUMBER) {
          this.ADMISSION_NUMBER = ADMISSION_NUMBER;
     } 
-    public Double getBODY_TEMPERATURE(){
+    public String getBODY_TEMPERATURE(){
         return BODY_TEMPERATURE;
     } 
-    public void setBODY_TEMPERATURE(Double BODY_TEMPERATURE) {
+    public void setBODY_TEMPERATURE(String BODY_TEMPERATURE) {
          this.BODY_TEMPERATURE = BODY_TEMPERATURE;
     } 
-    public Integer getPULSE(){
+    public String getPULSE(){
         return PULSE;
     } 
-    public void setPULSE(Integer PULSE) {
+    public void setPULSE(String PULSE) {
          this.PULSE = PULSE;
     } 
-    public Integer getBREATHING_FREQUENCY(){
+    public String getBREATHING_FREQUENCY(){
         return BREATHING_FREQUENCY;
     } 
-    public void setBREATHING_FREQUENCY(Integer BREATHING_FREQUENCY) {
+    public void setBREATHING_FREQUENCY(String BREATHING_FREQUENCY) {
          this.BREATHING_FREQUENCY = BREATHING_FREQUENCY;
     } 
-    public Integer getSYSTOLIC_BLOOD_PRESSURE(){
+    public String getSYSTOLIC_BLOOD_PRESSURE(){
         return SYSTOLIC_BLOOD_PRESSURE;
     } 
-    public void setSYSTOLIC_BLOOD_PRESSURE(Integer SYSTOLIC_BLOOD_PRESSURE) {
+    public void setSYSTOLIC_BLOOD_PRESSURE(String SYSTOLIC_BLOOD_PRESSURE) {
          this.SYSTOLIC_BLOOD_PRESSURE = SYSTOLIC_BLOOD_PRESSURE;
     } 
-    public Integer getDIASTOLIC_BLOOD_PRESSURE(){
+    public String getDIASTOLIC_BLOOD_PRESSURE(){
         return DIASTOLIC_BLOOD_PRESSURE;
     } 
-    public void setDIASTOLIC_BLOOD_PRESSURE(Integer DIASTOLIC_BLOOD_PRESSURE) {
+    public void setDIASTOLIC_BLOOD_PRESSURE(String DIASTOLIC_BLOOD_PRESSURE) {
          this.DIASTOLIC_BLOOD_PRESSURE = DIASTOLIC_BLOOD_PRESSURE;
     } 
-    public Integer getBLOOD_OXYGEN_SATURATION(){
+    public String getBLOOD_OXYGEN_SATURATION(){
         return BLOOD_OXYGEN_SATURATION;
     } 
-    public void setBLOOD_OXYGEN_SATURATION(Integer BLOOD_OXYGEN_SATURATION) {
+    public void setBLOOD_OXYGEN_SATURATION(String BLOOD_OXYGEN_SATURATION) {
          this.BLOOD_OXYGEN_SATURATION = BLOOD_OXYGEN_SATURATION;
     } 
     public String getINPUT_NAME(){
@@ -194,10 +195,10 @@ public class NURSING_RECORD{
     public void setINPUT_NAME(String INPUT_NAME) {
          this.INPUT_NAME = INPUT_NAME;
     } 
-    public Double getINPUT_VOLUME(){
+    public String getINPUT_VOLUME(){
         return INPUT_VOLUME;
     } 
-    public void setINPUT_VOLUME(Double INPUT_VOLUME) {
+    public void setINPUT_VOLUME(String INPUT_VOLUME) {
          this.INPUT_VOLUME = INPUT_VOLUME;
     } 
     public String getINPUT_UNIT(){
@@ -206,10 +207,10 @@ public class NURSING_RECORD{
     public void setINPUT_UNIT(String INPUT_UNIT) {
          this.INPUT_UNIT = INPUT_UNIT;
     } 
-    public Double getTOTAL_INPUT(){
+    public String getTOTAL_INPUT(){
         return TOTAL_INPUT;
     } 
-    public void setTOTAL_INPUT(Double TOTAL_INPUT) {
+    public void setTOTAL_INPUT(String TOTAL_INPUT) {
          this.TOTAL_INPUT = TOTAL_INPUT;
     } 
     public String getTOTAL_INPUT_UNIT(){
@@ -224,10 +225,10 @@ public class NURSING_RECORD{
     public void setOUTPUT_NAME(String OUTPUT_NAME) {
          this.OUTPUT_NAME = OUTPUT_NAME;
     } 
-    public Double getOUTPUT_VOLUME(){
+    public String getOUTPUT_VOLUME(){
         return OUTPUT_VOLUME;
     } 
-    public void setOUTPUT_VOLUME(Double OUTPUT_VOLUME) {
+    public void setOUTPUT_VOLUME(String OUTPUT_VOLUME) {
          this.OUTPUT_VOLUME = OUTPUT_VOLUME;
     } 
     public String getOUTPUT_UNIT(){
@@ -248,10 +249,10 @@ public class NURSING_RECORD{
     public void setLIQUID_PROPERTIES(String LIQUID_PROPERTIES) {
          this.LIQUID_PROPERTIES = LIQUID_PROPERTIES;
     } 
-    public Double getTOTAL_OUTPUT(){
+    public String getTOTAL_OUTPUT(){
         return TOTAL_OUTPUT;
     } 
-    public void setTOTAL_OUTPUT(Double TOTAL_OUTPUT) {
+    public void setTOTAL_OUTPUT(String TOTAL_OUTPUT) {
          this.TOTAL_OUTPUT = TOTAL_OUTPUT;
     } 
     public String getTOTAL_OUTPUT_UNIT(){

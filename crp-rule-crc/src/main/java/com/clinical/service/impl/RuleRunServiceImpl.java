@@ -60,8 +60,10 @@ import com.clinical.model.cluster.VisitRecord;
 import com.clinical.model.master.BASY_DIAG_STD;
 import com.clinical.model.master.BASY_NSTD;
 import com.clinical.model.master.BASY_OP_STD;
+import com.clinical.model.master.INP_DIAGNOSIS;
 import com.clinical.model.master.NURSING_RECORD;
 import com.clinical.model.master.PAT_VISIT_MASTER;
+import com.clinical.model.master.SYMP_PRESENT;
 import com.clinical.model.master.TEM_INP_ADMISSION_STATUS;
 import com.clinical.model.master.TEM_PAT_MASTER_INDEX;
 import com.clinical.model.master.VITAL_RECORD;
@@ -100,12 +102,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 
 
 @Service
@@ -449,7 +461,7 @@ public class RuleRunServiceImpl implements RuleRunService {
 
         for(TEM_PAT_MASTER_INDEX index: zj_TEM_PAT_MASTER_INDEX) {
             //保存患者--------------------------------------------------
-            //savePerson(index);
+            savePerson(index);
 
             //患者就诊列表
             List<PAT_VISIT_MASTER> zj_PAT_VISIT_MASTER = zjPatVisitMasterMapper.findZjPatVisitMasterByUniqueId(index.getUNIQUE_ID());
@@ -497,9 +509,9 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                List<TEM_OPERATION_RECORD>  zj_TEM_OPERATION_RECORD =  zjTemOperationRecordMapper.findZjTemOperationRecordByUniqueId(uniqueId);
 //                List<PROCEDURE_RECORD>  zj_PROCEDURE_RECORD =  zjProcedureRecordMapper.findZjProcedureRecordByUniqueId(uniqueId);
 //                List<TEM_DEATH_RECORD>  zj_TEM_DEATH_RECORD =  zjTemDeathRecordMapper.findZjTemDeathRecordByUniqueId(uniqueId);
-                List<NURSING_RECORD>  zj_NURSING_RECORD =  zjNursingRecordMapper.findZjNursingRecordByUniqueId(uniqueId);
+//                List<NURSING_RECORD>  zj_NURSING_RECORD =  zjNursingRecordMapper.findZjNursingRecordByUniqueId(uniqueId);
 //                List<FOLLOW_UP>  zj_FOLLOW_UP =  zjFollowUpMapper.findZjFollowUpByUniqueId(uniqueId);
-                List<VITAL_RECORD>  zj_VITAL_RECORD =  zjVitalRecordMapper.findZjVitalRecordByUniqueId(uniqueId);
+//                List<VITAL_RECORD>  zj_VITAL_RECORD =  zjVitalRecordMapper.findZjVitalRecordByUniqueId(uniqueId);
 //                List<DRUG_ORDER>  zj_DRUG_ORDER =  zjDrugOrderMapper.findZjDrugOrderByUniqueId(uniqueId);
 //                List<TEM_INP_ADMISSION_STATUS>  zj_TEM_INP_ADMISSION_STATUS =  zjTemInpAdmissionStatusMapper.findZjTemInpAdmissionStatusByUniqueId(uniqueId);
 //                List<TEM_OUTP_DISCHARGE_STATUS>  zj_TEM_OUTP_DISCHARGE_STATUS =  zjTemOutpDischargeStatusMapper.findZjTemOutpDischargeStatusByUniqueId(uniqueId);
@@ -676,8 +688,91 @@ public class RuleRunServiceImpl implements RuleRunService {
         person.setCreator();
         //修改时间
         person.setUpdatedAt();*/
-        personService.savePerson(person);
-        log.info("保存患者："+person.getUniqueId());
+
+        List<String> neededDiagList = Arrays.asList(
+                "盲肠恶性肿瘤",
+                "回盲部恶性肿瘤",
+                "阑尾恶性肿瘤",
+                "升结肠恶性肿瘤",
+                "结肠肝曲恶性肿瘤",
+                "横结肠恶性肿瘤",
+                "结肠脾曲恶性肿瘤",
+                "降结肠恶性肿瘤",
+                "乙状结肠恶性肿瘤",
+                "结肠交搭跨越恶性肿瘤的损害",
+                "盲肠及升结肠恶性肿瘤",
+                "降结肠乙状结肠恶性肿瘤",
+                "升结肠横结肠恶性肿瘤",
+                "横结肠降结肠恶性肿瘤",
+                "结肠恶性肿瘤",
+                "结肠多处恶性肿瘤",
+                "结肠腺瘤恶变",
+                "直肠乙状结肠连接处恶性肿瘤",
+                "直肠乙状结肠连接部恶性肿瘤",
+                "结肠和直肠恶性肿瘤",
+                "直肠恶性肿瘤",
+                "直肠多处恶性肿瘤",
+                "直肠壶腹部恶性肿瘤",
+                "直肠、肛门和肛管交搭跨越恶性肿瘤的损害",
+                "肛门直肠连接部恶性肿瘤",
+                "直肠肛管恶性肿瘤",
+                "直肠肛门恶性肿瘤",
+                "肠道部位的恶性肿瘤",
+                "肠道恶性肿瘤",
+                "消化系统交搭跨越恶性肿瘤的损害",
+                "小肠及结肠恶性肿瘤",
+                "胃体及横结肠恶性肿瘤",
+                "消化系统部位不明确的恶性肿瘤",
+                "消化道恶性肿瘤",
+                "胃肠道恶性肿瘤",
+                "大肠和直肠继发性恶性肿瘤",
+                "乙状结肠继发恶性肿瘤",
+                "直肠乙状结肠连接部继发恶性肿瘤",
+                "直肠继发恶性肿瘤",
+                "盲肠继发恶性肿瘤",
+                "结肠继发恶性肿瘤",
+                "肠系膜继发恶性肿瘤",
+                "胃肠道继发恶性肿瘤",
+                "盲肠恶性肿瘤个人史",
+                "结肠恶性肿瘤个人史",
+                "直肠恶性肿瘤个人史",
+                "胃肠道恶性肿瘤家族史",
+                "大肠恶性肿瘤家族史"
+        );
+        List<String> visits = new ArrayList<>();
+        //患者就诊列表
+        List<PAT_VISIT_MASTER> zj_PAT_VISIT_MASTER = zjPatVisitMasterMapper.findZjPatVisitMasterByUniqueId(index.getUNIQUE_ID());
+        zj_PAT_VISIT_MASTER.forEach(master -> visits.add(master.getUNIQUE_ID()));
+        List<INP_DIAGNOSIS> diagnosisList = new ArrayList<>();
+        List<INP_DIAGNOSIS> finalDiagnosisList = new ArrayList<>();
+        List<Date> diagnosisDateList = new ArrayList<>();
+        visits.forEach(visit -> diagnosisList.addAll(zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(visit)));
+        finalDiagnosisList=diagnosisList.stream().filter(diagnosis -> diagnosis != null && diagnosis.getDIAGNOSIS_DATE() != null&&diagnosis.getDIAGNOSIS_DESC()!=null)
+                .filter(diagnosis -> neededDiagList.contains(diagnosis.getDIAGNOSIS_DESC()))
+                .collect(Collectors.toList());
+        finalDiagnosisList.forEach(diag -> diagnosisDateList.add(diag.getDIAGNOSIS_DATE()));
+
+        Date birthDate = index.getDATE_OF_BIRTH();
+        if (diagnosisDateList.size()==0||birthDate==null){
+            personService.savePerson(person);
+            log.info("无法计算首次诊断日期，保存患者："+person.getUniqueId());
+        }else {
+            Date firstDiagDate = Collections.min(diagnosisDateList);
+
+            DateTime birthDateTime = DateTime.of(birthDate);
+            DateTime firstDiagDateTime = DateTime.of(firstDiagDate);
+            log.info("id:" + index.getUNIQUE_ID());
+            log.info("出生日期：" + birthDateTime.toString());
+            log.info("首次诊断日期：" + firstDiagDateTime.toString());
+            long betweenDays = birthDateTime.between(firstDiagDateTime, DateUnit.DAY);
+            double betweenYears = betweenDays / 365;
+            log.info("日期相差天数：" + betweenDays + "，年数：" + new BigDecimal(betweenYears).setScale(0, RoundingMode.DOWN).toString());
+            person.setFirstVisitAge(new BigDecimal(betweenYears).setScale(0, RoundingMode.DOWN).toString());
+
+            personService.savePerson(person);
+            log.info("保存患者："+person.getUniqueId());
+        }
+
     }
     public void saveVisitRecord(PAT_VISIT_MASTER master) {
         VisitRecord visitRecord = new VisitRecord();
@@ -5955,365 +6050,198 @@ public class RuleRunServiceImpl implements RuleRunService {
         temInpAdmissionStatusService.saveTemInpAdmissionStatus(temInpAdmissionStatus);
     }
 
-//    @Deprecated
-//    public void savePersonGeneral(List<NURSING_RECORD> zj_NURSING_RECORD,List<VITAL_RECORD> zj_VITAL_RECORD,
-//                                  List<PHYSICAL_EXAM_PARA>  zj_physical_exam_para){
-//        //体温map，数据来自体温单
-//        DateFormat format1=new SimpleDateFormat("yyyy-MM-dd");
-//        Map<String,String> vitalMap=new HashMap<>();
-//        if(zj_VITAL_RECORD!=null&&zj_VITAL_RECORD.size()>0){
-//            for(VITAL_RECORD vital_record:zj_VITAL_RECORD){
-//                if(vital_record.getEXAM_TIME()!=null&&vital_record.getEXAM_RESULT()!=null){
-//                    String date= format1.format( vital_record.getEXAM_TIME());
-//                    vitalMap.put(date,vital_record.getEXAM_RESULT());
-//                }
-//            }
-//        }
-//        //体格检查map
-//        DateFormat format2=new SimpleDateFormat("yyyy-MM-dd");
-//        Map<String,String> phyMap=new HashMap<>();
-//        if(zj_physical_exam_para!=null&&zj_physical_exam_para.size()>0){
-//            for(PHYSICAL_EXAM_PARA physical_exam_para:zj_physical_exam_para){
-//                if(physical_exam_para.getrecord_time()!=null&&physical_exam_para.getpara_value()!=null){
-//                    String date= format2.format(physical_exam_para.getrecord_time());
-//                    phyMap.put(date+"-"+physical_exam_para.getparameter(),physical_exam_para.getpara_value());
-//                }
-//            }
-//        }
-//
-//
-//
-//
-//        for(NURSING_RECORD nursing_record:zj_NURSING_RECORD){
-//            PersonGeneral personGeneral = new PersonGeneral();
-//            log.info("保存患者一般情况"+nursing_record.getUNIQUE_ID_LV2());
-//            personGeneral.setUniqueId(nursing_record.getUNIQUE_ID());
-//            //标识患者身份唯一标识
-//            personGeneral.setUniqueIdLv1(nursing_record.getUNIQUE_ID_LV1());
-//            //唯一标识
-//            personGeneral.setUniqueIdLv2(nursing_record.getUNIQUE_ID_LV2());
-//            //医疗机构代码
-//            personGeneral.setP900(nursing_record.getP900());
-//            //患者id
-//            personGeneral.setPatientId(nursing_record.getPATIENT_ID());
-//            //住院号
-//            personGeneral.setVisitId(nursing_record.getVISIT_ID());
-//            //日期
-//            personGeneral.setRecordTime(nursing_record.getRECORD_TIME());
-//            //if(nursing_record!=null&&nursing_record.getBREATHING_FREQUENCY()!=null&&nursing_record.getSYSTOLIC_BLOOD_PRESSURE()!=null&&nursing_record.getDIASTOLIC_BLOOD_PRESSURE()!=null){
-//
-//            //呼吸频率
-//            if(nursing_record!=null&&nursing_record.getBREATHING_FREQUENCY()!=null){
-//                try {
-//                    Integer temp = Integer.parseInt(nursing_record.getBREATHING_FREQUENCY());
-//                    personGeneral.setBreathingFrequency(temp);
-//                }catch (Exception e1){
-//                    if (personGeneral.getBreathingFrequency()==null){
-//                        try {
-//                            Integer temp = Integer.parseInt(phyMap.get(personGeneral.getRecordTime()+"-"+"呼吸"));
-//                            personGeneral.setBreathingFrequency(temp);
-//                        }catch (Exception e2){
-//
-//                        }
-//                    }
-//                }
-//            }else {
-//                if (personGeneral.getBreathingFrequency()==null){
-//                    try {
-//                        Integer temp = Integer.parseInt(phyMap.get(personGeneral.getRecordTime()+"-"+"呼吸"));
-//                        personGeneral.setBreathingFrequency(temp);
-//                    }catch (Exception e2){
-//
-//                    }
-//                }
-//            }
-//
-//            //脉搏
-//            if(nursing_record!=null&&nursing_record.getPULSE()!=null){
-//                try {
-//                    Integer temp = Integer.parseInt(nursing_record.getPULSE());
-//                    personGeneral.setHeartRate(temp);
-//                }catch (Exception e1){
-//                    if (personGeneral.getHeartRate()==null){
-//                        try {
-//                            Integer temp = Integer.parseInt(phyMap.get(personGeneral.getRecordTime()+"-"+"脉搏"));
-//                            personGeneral.setHeartRate(temp);
-//                        }catch (Exception e2){
-//
-//                        }
-//                    }
-//                }
-//            }else {
-//                try {
-//                    Integer temp = Integer.parseInt(phyMap.get(personGeneral.getRecordTime()+"-"+"脉搏"));
-//                    personGeneral.setHeartRate(temp);
-//                }catch (Exception e2){
-//
-//                }
-//            }
-//
-//            //体温
-//            if(nursing_record!=null&&nursing_record.getBODY_TEMPERATURE()!=null){
-//                try {
-//                    Double temp = Double.parseDouble(nursing_record.getBODY_TEMPERATURE());
-//                    personGeneral.setBodyTemperature(temp);
-//                }catch (Exception e){
-//                    if (personGeneral.getBodyTemperature()==null){
-//                        try {
-//                            Double temp = Double.parseDouble(vitalMap.get(personGeneral.getRecordTime()));
-//                            personGeneral.setBodyTemperature(temp);
-//                        }catch (Exception e2){
-//                            Double temp = Double.parseDouble(phyMap.get(personGeneral.getRecordTime()+"-"+"体温"));
-//                            personGeneral.setBodyTemperature(temp);
-//                        }
-//                    }
-//                }
-//            }else {
-//                if (personGeneral.getBodyTemperature()==null){
-//                    try {
-//                        Double temp = Double.parseDouble(vitalMap.get(personGeneral.getRecordTime()));
-//                        personGeneral.setBodyTemperature(temp);
-//                    }catch (Exception e2){
-//                        Double temp = Double.parseDouble(phyMap.get(personGeneral.getRecordTime()+"-"+"体温"));
-//                        personGeneral.setBodyTemperature(temp);
-//                    }
-//                }
-//            }
-//
-//            //血压
-//            //舒张压(低压)，收缩压(高压)
-//            int lowInt=-1;
-//            int highInt =-1;
-//            if(nursing_record!=null&&nursing_record.getDIASTOLIC_BLOOD_PRESSURE()!=null){
-//                String lowPressure = nursing_record.getDIASTOLIC_BLOOD_PRESSURE();
-//                String[] lowPressures=lowPressure.split("/");
-//                if (lowPressures.length==2){
-//                    String highString = lowPressures[0];
-//                    String lowString = lowPressures[1];
-//                    try{
-//                        lowInt = Integer.parseInt(lowString);
-//                        highInt = Integer.parseInt(highString);
-//                    }catch (Exception e){
-//                        try {
-//                            lowInt = Integer.parseInt(phyMap.get(personGeneral.getRecordTime()+"-"+"舒张压"));
-//                            highInt = Integer.parseInt(phyMap.get(personGeneral.getRecordTime()+"-"+"收缩压"));
-//                        }catch (Exception exception){
-//
-//                        }
-//                    }
-//                }
-//            }else {
-//                lowInt = Integer.parseInt(phyMap.get(personGeneral.getRecordTime()+"-"+"舒张压"));
-//                highInt = Integer.parseInt(phyMap.get(personGeneral.getRecordTime()+"-"+"收缩压"));
-//            }
-//
-//            if (lowInt>highInt){
-//                int temp;
-//                temp = lowInt;
-//                lowInt = highInt;
-//                highInt = lowInt;
-//            }
-//            if (lowInt>=0&&lowInt<300&&highInt>=0&&highInt<300){
-//                personGeneral.setDiastolicBloodPressure(lowInt);
-//                personGeneral.setSystolicBloodPressure(highInt);
-//            }
-//
-//            personGeneralService.savePersonGeneral(personGeneral);
-//
-//        }
-//    }
 
-//    public void savePersonGeneral(List<NURSING_RECORD> zj_NURSING_RECORD,List<VITAL_RECORD> zj_VITAL_RECORD){
-//
-//        DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-//        Map<String,String> map=new HashMap<>();
-//        if(zj_VITAL_RECORD!=null&&zj_VITAL_RECORD.size()>0){
-//            for(VITAL_RECORD vital_record:zj_VITAL_RECORD){
-//                if(vital_record.getEXAM_TIME()!=null&&vital_record.getEXAM_RESULT()!=null){
-//                    String date= format.format( vital_record.getEXAM_TIME());
-//                    map.put(date,vital_record.getEXAM_RESULT());
-//                }
-//
-//            }
-//        }
-//        if (zj_NURSING_RECORD.size()!=0&&zj_NURSING_RECORD.get(0).getNURSE_SIGNATURE_TIME()!=null){
-//            for(NURSING_RECORD nursing_record:zj_NURSING_RECORD){
-//                PersonGeneral personGeneral = new PersonGeneral();
-//                log.info("保存患者一般情况"+nursing_record.getUNIQUE_ID_LV2());
-//                personGeneral.setUniqueId(nursing_record.getUNIQUE_ID());
-//                //标识患者身份唯一标识
-//                personGeneral.setUniqueIdLv1(nursing_record.getUNIQUE_ID_LV1());
-//                //唯一标识
-//                personGeneral.setUniqueIdLv2(nursing_record.getUNIQUE_ID_LV2());
-//                //医疗机构代码
-//                personGeneral.setP900(nursing_record.getP900());
-//                //患者id
-//                personGeneral.setPatientId(nursing_record.getPATIENT_ID());
-//                //住院号
-//                personGeneral.setVisitId(nursing_record.getVISIT_ID());
-//                //日期
-//                personGeneral.setRecordTime(nursing_record.getNURSE_SIGNATURE_TIME());
-////                if (zj_VITAL_RECORD.size()!=0){
-////                    log.info("保存患者一般情况"+zj_VITAL_RECORD.get(0).getUNIQUE_ID_LV2());
-////                    personGeneral.setUniqueId(nursing_record.getUNIQUE_ID());
-////                    //标识患者身份唯一标识
-////                    personGeneral.setUniqueIdLv1(zj_VITAL_RECORD.get(0).getUNIQUE_ID_LV1());
-////                    //唯一标识
-////                    personGeneral.setUniqueIdLv2(zj_VITAL_RECORD.get(0).getUNIQUE_ID_LV2());
-////                    //医疗机构代码
-////                    personGeneral.setP900(zj_VITAL_RECORD.get(0).getP900());
-////                    //患者id
-////                    personGeneral.setPatientId(zj_VITAL_RECORD.get(0).getPATIENT_ID());
-////                    //住院号
-////                    personGeneral.setVisitId(zj_VITAL_RECORD.get(0).getVISIT_ID());
-////                    //日期
-////                    personGeneral.setRecordTime(nursing_record.getNURSE_SIGNATURE_TIME());
-////                }
-//                if(nursing_record!=null&&nursing_record.getNURSE_SIGNATURE_TIME()!=null){
-//
-//                    //体温
-//                    try {
-//                        Double temp = Double.parseDouble(nursing_record.getBODY_TEMPERATURE());
-//                        personGeneral.setBodyTemperature(temp);
-//                    }catch (Exception e){
-//                        if (nursing_record.getNURSE_SIGNATURE_TIME()!=null){
-//                            String date =format.format(nursing_record.getNURSE_SIGNATURE_TIME());
-//                            String temperature=  map.get(date);
-//                            try{
-//                                Double temp = Double.parseDouble(temperature);
-//                                personGeneral.setBodyTemperature(temp);
-//                            }catch (Exception e1){
-//                            }
-//                        }
-//                    }
-//
-//                    //呼吸
-//                    try {
-//                        Integer temp = Integer.parseInt(nursing_record.getBREATHING_FREQUENCY());
-//                        personGeneral.setBreathingFrequency(temp);
-//                    }catch (Exception e){
-//
-//                    }
-//
-//                    //脉搏
-//                    try {
-//                        Integer temp = Integer.parseInt(nursing_record.getPULSE());
-//                        personGeneral.setHeartRate(temp);
-//                    }catch (Exception e){
-//
-//                    }
-//
+    public void savePersonGeneral(List<NURSING_RECORD> zj_NURSING_RECORD,List<VITAL_RECORD> zj_VITAL_RECORD){
+
+        DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        Map<String,String> map=new HashMap<>();
+        if(zj_VITAL_RECORD!=null&&zj_VITAL_RECORD.size()>0){
+            for(VITAL_RECORD vital_record:zj_VITAL_RECORD){
+                if(vital_record.getEXAM_TIME()!=null&&vital_record.getEXAM_RESULT()!=null){
+                    String date= format.format( vital_record.getEXAM_TIME());
+                    map.put(date,vital_record.getEXAM_RESULT());
+                }
+
+            }
+        }
+        if (zj_NURSING_RECORD.size()!=0&&zj_NURSING_RECORD.get(0).getNURSE_SIGNATURE_TIME()!=null){
+            for(NURSING_RECORD nursing_record:zj_NURSING_RECORD){
+                PersonGeneral personGeneral = new PersonGeneral();
+                log.info("保存患者一般情况"+nursing_record.getUNIQUE_ID_LV2());
+                personGeneral.setUniqueId(nursing_record.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                personGeneral.setUniqueIdLv1(nursing_record.getUNIQUE_ID_LV1());
+                //唯一标识
+                personGeneral.setUniqueIdLv2(nursing_record.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                personGeneral.setP900(nursing_record.getP900());
+                //患者id
+                personGeneral.setPatientId(nursing_record.getPATIENT_ID());
+                //住院号
+                personGeneral.setVisitId(nursing_record.getVISIT_ID());
+                //日期
+                personGeneral.setRecordTime(nursing_record.getNURSE_SIGNATURE_TIME());
+//                if (zj_VITAL_RECORD.size()!=0){
+//                    log.info("保存患者一般情况"+zj_VITAL_RECORD.get(0).getUNIQUE_ID_LV2());
+//                    personGeneral.setUniqueId(nursing_record.getUNIQUE_ID());
+//                    //标识患者身份唯一标识
+//                    personGeneral.setUniqueIdLv1(zj_VITAL_RECORD.get(0).getUNIQUE_ID_LV1());
+//                    //唯一标识
+//                    personGeneral.setUniqueIdLv2(zj_VITAL_RECORD.get(0).getUNIQUE_ID_LV2());
+//                    //医疗机构代码
+//                    personGeneral.setP900(zj_VITAL_RECORD.get(0).getP900());
+//                    //患者id
+//                    personGeneral.setPatientId(zj_VITAL_RECORD.get(0).getPATIENT_ID());
+//                    //住院号
+//                    personGeneral.setVisitId(zj_VITAL_RECORD.get(0).getVISIT_ID());
+//                    //日期
 //                    personGeneral.setRecordTime(nursing_record.getNURSE_SIGNATURE_TIME());
-//
-//                    //舒张压(低压)，收缩压(高压)
-//                    String lowPressure = nursing_record.getDIASTOLIC_BLOOD_PRESSURE();
-//                    if (lowPressure==null){
-//                        lowPressure = "";
-//                    }
-//                    String[] lowPressures=lowPressure.split("/");
-//                    int lowInt=-1;
-//                    int highInt =-1;
-//                    if (lowPressures.length==2){
-//                        String highString = lowPressures[0];
-//                        String lowString = lowPressures[1];
-//
-//                        try{
-//                            lowInt = Integer.parseInt(lowString);
-//                            highInt = Integer.parseInt(highString);
-//                        }catch (Exception e){
-//                        }
-//                        if (lowInt>highInt){
-//                            int temp;
-//                            temp = lowInt;
-//                            lowInt = highInt;
-//                            highInt = lowInt;
-//                        }
-//                        if (lowInt>=0&&lowInt<300&&highInt>=0&&highInt<300){
-//                            personGeneral.setDiastolicBloodPressure(lowInt);
-//                            personGeneral.setSystolicBloodPressure(highInt);
-//                        }
-//                    }else {
-//                    }
-//                    personGeneralService.savePersonGeneral(personGeneral);
 //                }
-//
-//            }
-//        }else if (zj_NURSING_RECORD.size()!=0&&zj_NURSING_RECORD.get(0).getRECORD_TIME()!=null){
-//            log.info("保存患者一般情况"+zj_NURSING_RECORD.get(0).getUNIQUE_ID_LV2());
-//            PersonGeneral personGeneral = new PersonGeneral();
-//            personGeneral.setUniqueId(zj_NURSING_RECORD.get(0).getUNIQUE_ID());
-//            //标识患者身份唯一标识
-//            personGeneral.setUniqueIdLv1(zj_NURSING_RECORD.get(0).getUNIQUE_ID_LV1());
-//            //唯一标识
-//            personGeneral.setUniqueIdLv2(zj_NURSING_RECORD.get(0).getUNIQUE_ID_LV2());
-//            //医疗机构代码
-//            personGeneral.setP900(zj_NURSING_RECORD.get(0).getP900());
-//            //患者id
-//            personGeneral.setPatientId(zj_NURSING_RECORD.get(0).getPATIENT_ID());
-//            //住院号
-//            personGeneral.setVisitId(zj_NURSING_RECORD.get(0).getVISIT_ID());
-//            //日期
-//            personGeneral.setRecordTime(zj_NURSING_RECORD.get(0).getRECORD_TIME());
-//
-//            for(NURSING_RECORD nursing_record:zj_NURSING_RECORD){
-//                if (personGeneral.getBreathingFrequency()==null&&nursing_record.getBREATHING_FREQUENCY()!=null&&!nursing_record.getBREATHING_FREQUENCY().equals("")){
-//                    try {
-//                        Integer temp = Integer.parseInt(nursing_record.getBREATHING_FREQUENCY());
-//                        personGeneral.setBreathingFrequency(temp);
-//                    }catch (Exception e){
-//
-//                    }
-//                }
-//                if (personGeneral.getHeartRate()==null&&nursing_record.getPULSE()!=null&&!nursing_record.getPULSE().equals("")){
-//                    try {
-//                        Integer temp1 = Integer.parseInt(nursing_record.getPULSE());
-//                        personGeneral.setHeartRate(temp1);
-//                    }catch (Exception e){
-//
-//                    }
-//
-//                }
-//                if (personGeneral.getBodyTemperature()==null&&nursing_record.getBODY_TEMPERATURE()!=null&&!nursing_record.getBODY_TEMPERATURE().equals("")){
-//                    try {
-//                        Double temp = Double.parseDouble(nursing_record.getBODY_TEMPERATURE());
-//                        personGeneral.setBodyTemperature(temp);
-//                    }catch (Exception e){
-//
-//                    }
-//                }else {
-//                    String date =format.format(nursing_record.getRECORD_TIME());
-//                    String temperature=  map.get(date);
-//                    if (temperature!=null){
-//                        try{
-//                            Double temp = Double.parseDouble(temperature);
-//                            personGeneral.setBodyTemperature(temp);
-//                        }catch (Exception e1){
-//                        }
-//                    }
-//                }
-//                if (personGeneral.getDiastolicBloodPressure()==null&&nursing_record.getDIASTOLIC_BLOOD_PRESSURE()!=null&&!nursing_record.getDIASTOLIC_BLOOD_PRESSURE().equals("")){
-//                    try {
-//                        Integer temp2 = Integer.parseInt(nursing_record.getDIASTOLIC_BLOOD_PRESSURE());
-//                        personGeneral.setDiastolicBloodPressure(temp2);
-//                    }catch (Exception e){
-//
-//                    }
-//                }
-//                if (personGeneral.getSystolicBloodPressure()==null&&nursing_record.getSYSTOLIC_BLOOD_PRESSURE()!=null&&!nursing_record.getSYSTOLIC_BLOOD_PRESSURE().equals("")){
-//                    try {
-//                        Integer temp2 = Integer.parseInt(nursing_record.getSYSTOLIC_BLOOD_PRESSURE());
-//                        personGeneral.setSystolicBloodPressure(temp2);
-//                    }catch (Exception e){
-//
-//                    }
-//
-//                }
-//            }
-//            personGeneralService.savePersonGeneral(personGeneral);
-//        }
-//
-//
-//    }
+                if(nursing_record!=null&&nursing_record.getNURSE_SIGNATURE_TIME()!=null){
+
+                    //体温
+                    try {
+                        Double temp = Double.parseDouble(nursing_record.getBODY_TEMPERATURE());
+                        personGeneral.setBodyTemperature(temp);
+                    }catch (Exception e){
+                        if (nursing_record.getNURSE_SIGNATURE_TIME()!=null){
+                            String date =format.format(nursing_record.getNURSE_SIGNATURE_TIME());
+                            String temperature=  map.get(date);
+                            try{
+                                Double temp = Double.parseDouble(temperature);
+                                personGeneral.setBodyTemperature(temp);
+                            }catch (Exception e1){
+                            }
+                        }
+                    }
+
+                    //呼吸
+                    try {
+                        Integer temp = Integer.parseInt(nursing_record.getBREATHING_FREQUENCY());
+                        personGeneral.setBreathingFrequency(temp);
+                    }catch (Exception e){
+
+                    }
+
+                    //脉搏
+                    try {
+                        Integer temp = Integer.parseInt(nursing_record.getPULSE());
+                        personGeneral.setHeartRate(temp);
+                    }catch (Exception e){
+
+                    }
+
+                    personGeneral.setRecordTime(nursing_record.getNURSE_SIGNATURE_TIME());
+
+                    //舒张压(低压)，收缩压(高压)
+                    String lowPressure = nursing_record.getDIASTOLIC_BLOOD_PRESSURE();
+                    if (lowPressure==null){
+                        lowPressure = "";
+                    }
+                    String[] lowPressures=lowPressure.split("/");
+                    int lowInt=-1;
+                    int highInt =-1;
+                    if (lowPressures.length==2){
+                        String highString = lowPressures[0];
+                        String lowString = lowPressures[1];
+
+                        try{
+                            lowInt = Integer.parseInt(lowString);
+                            highInt = Integer.parseInt(highString);
+                        }catch (Exception e){
+                        }
+                        if (lowInt>highInt){
+                            int temp;
+                            temp = lowInt;
+                            lowInt = highInt;
+                            highInt = lowInt;
+                        }
+                        if (lowInt>=0&&lowInt<300&&highInt>=0&&highInt<300){
+                            personGeneral.setDiastolicBloodPressure(lowInt);
+                            personGeneral.setSystolicBloodPressure(highInt);
+                        }
+                    }else {
+                    }
+                    personGeneralService.savePersonGeneral(personGeneral);
+                }
+
+            }
+        }else if (zj_NURSING_RECORD.size()!=0&&zj_NURSING_RECORD.get(0).getRECORD_TIME()!=null){
+            log.info("保存患者一般情况"+zj_NURSING_RECORD.get(0).getUNIQUE_ID_LV2());
+            PersonGeneral personGeneral = new PersonGeneral();
+            personGeneral.setUniqueId(zj_NURSING_RECORD.get(0).getUNIQUE_ID());
+            //标识患者身份唯一标识
+            personGeneral.setUniqueIdLv1(zj_NURSING_RECORD.get(0).getUNIQUE_ID_LV1());
+            //唯一标识
+            personGeneral.setUniqueIdLv2(zj_NURSING_RECORD.get(0).getUNIQUE_ID_LV2());
+            //医疗机构代码
+            personGeneral.setP900(zj_NURSING_RECORD.get(0).getP900());
+            //患者id
+            personGeneral.setPatientId(zj_NURSING_RECORD.get(0).getPATIENT_ID());
+            //住院号
+            personGeneral.setVisitId(zj_NURSING_RECORD.get(0).getVISIT_ID());
+            //日期
+            personGeneral.setRecordTime(zj_NURSING_RECORD.get(0).getRECORD_TIME());
+
+            for(NURSING_RECORD nursing_record:zj_NURSING_RECORD){
+                if (personGeneral.getBreathingFrequency()==null&&nursing_record.getBREATHING_FREQUENCY()!=null&&!nursing_record.getBREATHING_FREQUENCY().equals("")){
+                    try {
+                        Integer temp = Integer.parseInt(nursing_record.getBREATHING_FREQUENCY());
+                        personGeneral.setBreathingFrequency(temp);
+                    }catch (Exception e){
+
+                    }
+                }
+                if (personGeneral.getHeartRate()==null&&nursing_record.getPULSE()!=null&&!nursing_record.getPULSE().equals("")){
+                    try {
+                        Integer temp1 = Integer.parseInt(nursing_record.getPULSE());
+                        personGeneral.setHeartRate(temp1);
+                    }catch (Exception e){
+
+                    }
+
+                }
+                if (personGeneral.getBodyTemperature()==null&&nursing_record.getBODY_TEMPERATURE()!=null&&!nursing_record.getBODY_TEMPERATURE().equals("")){
+                    try {
+                        Double temp = Double.parseDouble(nursing_record.getBODY_TEMPERATURE());
+                        personGeneral.setBodyTemperature(temp);
+                    }catch (Exception e){
+
+                    }
+                }else {
+                    String date =format.format(nursing_record.getRECORD_TIME());
+                    String temperature=  map.get(date);
+                    if (temperature!=null){
+                        try{
+                            Double temp = Double.parseDouble(temperature);
+                            personGeneral.setBodyTemperature(temp);
+                        }catch (Exception e1){
+                        }
+                    }
+                }
+                if (personGeneral.getDiastolicBloodPressure()==null&&nursing_record.getDIASTOLIC_BLOOD_PRESSURE()!=null&&!nursing_record.getDIASTOLIC_BLOOD_PRESSURE().equals("")){
+                    try {
+                        Integer temp2 = Integer.parseInt(nursing_record.getDIASTOLIC_BLOOD_PRESSURE());
+                        personGeneral.setDiastolicBloodPressure(temp2);
+                    }catch (Exception e){
+
+                    }
+                }
+                if (personGeneral.getSystolicBloodPressure()==null&&nursing_record.getSYSTOLIC_BLOOD_PRESSURE()!=null&&!nursing_record.getSYSTOLIC_BLOOD_PRESSURE().equals("")){
+                    try {
+                        Integer temp2 = Integer.parseInt(nursing_record.getSYSTOLIC_BLOOD_PRESSURE());
+                        personGeneral.setSystolicBloodPressure(temp2);
+                    }catch (Exception e){
+
+                    }
+
+                }
+            }
+            personGeneralService.savePersonGeneral(personGeneral);
+        }
+
+
+    }
 
 //    public void saveSymptom(List<SYMP_PRESENT> zj_SYMPTOMS, List<SPECIALITY_EXAM> speciality_exams){
 //        log.info("保存症状体征："+zj_SYMPTOMS.get(0).getunique_id());

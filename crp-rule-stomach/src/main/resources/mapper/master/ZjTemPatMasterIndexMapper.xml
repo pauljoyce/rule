@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.clinical.dao.master.ZjTemPatMasterIndexMapper">
-<select id="findZjTemPatMasterIndexByUniqueId"  resultType="com.clinical.model.master.TEM_PAT_MASTER_INDEX">
-       SELECT * FROM TEM_PAT_MASTER_INDEX WHERE unique_id_lv2 = #{unique_id_lv2}
-</select>
+<!--<select id="findZjTemPatMasterIndexByUniqueId"  resultType="com.clinical.model.master.TEM_PAT_MASTER_INDEX">-->
+<!--       SELECT * FROM TEM_PAT_MASTER_INDEX WHERE unique_id_lv2 = #{unique_id_lv2}-->
+<!--</select>-->
        <select id="findZjTemPatMasterIndexByUniqueId"  parameterType="Map" resultType="com.clinical.model.master.TEM_PAT_MASTER_INDEX">
               SELECT * FROM TEM_PAT_MASTER_INDEX limit #{pageNo},#{pageSize}
        </select>
