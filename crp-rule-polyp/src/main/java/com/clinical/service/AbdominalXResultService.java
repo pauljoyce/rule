@@ -7,5 +7,6 @@ public interface AbdominalXResultService {
 
 
     public  void saveAbdominalXResult(AbdominalXResult abdominalXResult);
+    public  void inAbdominalXResult();
 
 }

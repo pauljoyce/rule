@@ -5,5 +5,7 @@
 <select id="findZjTemOperationRecordByUniqueId"  resultType="com.clinical.model.master.TEM_OPERATION_RECORD">
        SELECT * FROM TEM_OPERATION_RECORD WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
-
+       <select id="findZjTemOperationRecordByALL"  resultType="com.clinical.model.master.TEM_OPERATION_RECORD">
+       SELECT * FROM TEM_OPERATION_RECORD
+</select>
 </mapper>

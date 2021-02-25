@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface ZjFollowUpMapper {
     List<FOLLOW_UP>  findZjFollowUpByUniqueId(String unique_id_lv2);
-
+    List<FOLLOW_UP> findZjFollowUpByALL();
 }

@@ -7,5 +7,6 @@ public interface LisRecordService {
 
 
     public  void saveLisRecord(LisRecord lisRecord);
+    public  void inLisRecord();
 
 }

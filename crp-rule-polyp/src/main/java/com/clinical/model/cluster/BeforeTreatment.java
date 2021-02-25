@@ -120,10 +120,10 @@ public class BeforeTreatment{
     } 
     public String getSodiumPhosphate(){
         return sodiumPhosphate;
-    } 
+    }
     public void setSodiumPhosphate(String sodiumPhosphate) {
          this.sodiumPhosphate = sodiumPhosphate;
-    } 
+    }
     public String getSennaLeaf(){
         return sennaLeaf;
     } 

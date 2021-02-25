@@ -5,5 +5,6 @@ public interface ExamMasterMapper {
     List<ExamMaster>  findExamMaster(String uniqueId);
     void   saveExamMaster(ExamMaster examMaster);
     void   updateExamMaster(ExamMaster examMaster);
+    List<ExamMaster>  findExamMasterALL();
 
 }

@@ -4,5 +4,6 @@ import java.util.List;
 
 public interface ZjDrugOrderMapper {
     List<DRUG_ORDER>  findZjDrugOrderByUniqueId(String unique_id_lv2);
+    List<DRUG_ORDER>  findZjDrugOrderByUniqueId1(String unique_id);
 
 }

@@ -5,5 +5,7 @@
 <select id="findZjAbdomXrEntryResultsByUniqueId"  resultType="com.clinical.model.master.ABDOM_XR_ENTRY_RESULTS">
        SELECT * FROM ABDOM_XR_ENTRY_RESULTS WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
-
+       <select id="findZjAbdomXrEntryResultsByALL"  resultType="com.clinical.model.master.ABDOM_XR_ENTRY_RESULTS">
+       SELECT * FROM ABDOM_XR_ENTRY_RESULTS
+</select>
 </mapper>

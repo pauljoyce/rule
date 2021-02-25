@@ -6,6 +6,7 @@ public interface FollowUpService {
 
 
 
-    public  void saveFollowUp(FollowUp followUp);
 
+    public  void saveFollowUp(FollowUp followUp);
+    public  void inFollowUp();
 }

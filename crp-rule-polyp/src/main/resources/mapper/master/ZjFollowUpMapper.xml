@@ -5,5 +5,7 @@
 <select id="findZjFollowUpByUniqueId"  resultType="com.clinical.model.master.FOLLOW_UP">
        SELECT * FROM FOLLOW_UP WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
-
+       <select id="findZjFollowUpByALL"  resultType="com.clinical.model.master.FOLLOW_UP">
+       SELECT * FROM FOLLOW_UP
+</select>
 </mapper>

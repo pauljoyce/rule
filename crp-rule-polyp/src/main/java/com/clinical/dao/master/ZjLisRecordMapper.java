@@ -4,5 +4,6 @@ import java.util.List;
 
 public interface ZjLisRecordMapper {
     List<LIS_RECORD>  findZjLisRecordByUniqueId(String unique_id_lv2);
+    List<LIS_RECORD>  findZjLisRecordByALL();
 
 }

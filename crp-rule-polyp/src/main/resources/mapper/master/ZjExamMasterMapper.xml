@@ -5,5 +5,11 @@
 <select id="findZjExamMasterByUniqueId"  resultType="com.clinical.model.master.EXAM_MASTER">
        SELECT * FROM EXAM_MASTER WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
+       <select id="findZjExamMasterByUniqueId1"  resultType="com.clinical.model.master.EXAM_MASTER">
+       SELECT * FROM EXAM_MASTER WHERE unique_id = #{unique_id}
+</select>
+       <select id="findZjExamMasterByAll"  resultType="com.clinical.model.master.EXAM_MASTER">
+       SELECT * FROM EXAM_MASTER
+</select>
 
 </mapper>

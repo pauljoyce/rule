@@ -7,5 +7,6 @@ public interface ExamMasterService {
 
 
     public  void saveExamMaster(ExamMaster examMaster);
+    public  void inExamMaster();
 
 }

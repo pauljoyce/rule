@@ -7,5 +7,6 @@ public interface BeforeTreatmentService {
 
 
     public  void saveBeforeTreatment(BeforeTreatment beforeTreatment);
+    public  void inBeforeTreatment();
 
 }

@@ -5,5 +5,8 @@
 <select id="findZjDrugOrderByUniqueId"  resultType="com.clinical.model.master.DRUG_ORDER">
        SELECT * FROM DRUG_ORDER WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
+       <select id="findZjDrugOrderByUniqueId1"  resultType="com.clinical.model.master.DRUG_ORDER">
+       SELECT * FROM DRUG_ORDER WHERE unique_id = #{unique_id}
+</select>
 
 </mapper>

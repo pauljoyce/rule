@@ -5,5 +5,7 @@
 <select id="findZjLisRecordByUniqueId"  resultType="com.clinical.model.master.LIS_RECORD">
        SELECT * FROM LIS_RECORD WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
-
+       <select id="findZjLisRecordByALL"  resultType="com.clinical.model.master.LIS_RECORD">
+       SELECT * FROM LIS_RECORD
+</select>
 </mapper>
