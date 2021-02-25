@@ -6,7 +6,7 @@ import java.util.Map;
 public interface ZjTemPatMasterIndexMapper {
     List<TEM_PAT_MASTER_INDEX> findZjTemPatMasterIndexByUniqueId(Map map);
 
-    List<TEM_PAT_MASTER_INDEX>  findZjTemPatMasterIndexByUniqueId(String unique_id_lv2);
+//    List<TEM_PAT_MASTER_INDEX>  findZjTemPatMasterIndexByUniqueId(String unique_id_lv2);
 
     List<String> findZjTemPatMasterIndexByIncr();
 }

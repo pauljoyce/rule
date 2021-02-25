@@ -6,9 +6,4 @@
        SELECT * FROM PATHOLOGY WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
-<select id="findZjPathologyByIncr"  resultType="java.lang.String">
-       select distinct(unique_id_lv2) FROM PATHOLOGY where date(record_time) = date_sub(curdate(),interval 1 day) 
-</select>
-
-
 </mapper>

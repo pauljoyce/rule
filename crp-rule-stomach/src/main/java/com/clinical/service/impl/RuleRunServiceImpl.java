@@ -13,10 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUnit;
 
 @Service
 public class RuleRunServiceImpl implements RuleRunService {
@@ -346,188 +351,32 @@ public class RuleRunServiceImpl implements RuleRunService {
     DiagnosisStageService diagnosisStageService;
 
     @Override
-    public void saveRuleRunIncr() {
-        Set<String> uniqueIdLv2Set = new HashSet<>();
-        uniqueIdLv2Set.addAll(zjBasyNstdMapper.findZjBasyNstdByIncr());
+    public void saveRuleRun(Integer pageNo, Integer pageSize, String flag) {
 
-        uniqueIdLv2Set.addAll(zjBasyDiagStdMapper.findZjBasyDiagStdByIncr());
+        Map<String, Integer> map = new HashMap<>();
+        map.put("pageNo", pageNo);
+        map.put("pageSize", pageSize);
+        //查找患者列表
+        List<TEM_PAT_MASTER_INDEX> zj_TEM_PAT_MASTER_INDEX = zjTemPatMasterIndexMapper.findZjTemPatMasterIndexByUniqueId(map);
 
-        uniqueIdLv2Set.addAll(zjBasyOpStdMapper.findZjBasyOpStdByIncr());
 
-        uniqueIdLv2Set.addAll(zjTemPatMasterIndexMapper.findZjTemPatMasterIndexByIncr());
+        for (TEM_PAT_MASTER_INDEX index : zj_TEM_PAT_MASTER_INDEX) {
+            //保存患者--------------------------------------------------
+//            savePerson(index);
+            String patientId=index.getPATIENT_ID();
+            String visitId=index.getVISIT_ID();
+            //患者就诊列表
+            List<PAT_VISIT_MASTER> zj_PAT_VISIT_MASTER = zjPatVisitMasterMapper.findZjPatVisitMasterByUniqueId(index.getUNIQUE_ID());
+            //就诊其他数据
+            for (PAT_VISIT_MASTER master : zj_PAT_VISIT_MASTER) {
 
-        uniqueIdLv2Set.addAll(zjPatVisitMasterMapper.findZjPatVisitMasterByIncr());
+                //保存就诊----------------------------------------------------
+                 saveVisitRecord(master);
 
-        uniqueIdLv2Set.addAll(zjInpDiagnosisMapper.findZjInpDiagnosisByIncr());
+                String uniqueId = master.getUNIQUE_ID();
 
-        uniqueIdLv2Set.addAll(zjLisRecordMapper.findZjLisRecordByIncr());
+                Date visitdate=master.getADMISSION_DATE_TIME();
 
-        uniqueIdLv2Set.addAll(zjExamMasterMapper.findZjExamMasterByIncr());
-
-        uniqueIdLv2Set.addAll(zjHistologyReportMapper.findZjHistologyReportByIncr());
-
-        uniqueIdLv2Set.addAll(zjTemOperationRecordMapper.findZjTemOperationRecordByIncr());
-
-        uniqueIdLv2Set.addAll(zjProcedureRecordMapper.findZjProcedureRecordByIncr());
-
-        uniqueIdLv2Set.addAll(zjTemDeathRecordMapper.findZjTemDeathRecordByIncr());
-
-        uniqueIdLv2Set.addAll(zjFollowUpMapper.findZjFollowUpByIncr());
-
-        uniqueIdLv2Set.addAll(zjNursingRecordMapper.findZjNursingRecordByIncr());
-
-        uniqueIdLv2Set.addAll(zjVitalRecordMapper.findZjVitalRecordByIncr());
-
-        uniqueIdLv2Set.addAll(zjDrugOrderMapper.findZjDrugOrderByIncr());
-
-        uniqueIdLv2Set.addAll(zjTemInpAdmissionStatusMapper.findZjTemInpAdmissionStatusByIncr());
-
-        uniqueIdLv2Set.addAll(zjTemOutpDischargeStatusMapper.findZjTemOutpDischargeStatusByIncr());
-
-        uniqueIdLv2Set.addAll(zjTem24hInOutMapper.findZjTem24hInOutByIncr());
-
-        uniqueIdLv2Set.addAll(zjOutpRecordMapper.findZjOutpRecordByIncr());
-
-        uniqueIdLv2Set.addAll(zjTemCourseDisMapper.findZjTemCourseDisByIncr());
-
-        uniqueIdLv2Set.addAll(zjTemOutpDischargeSummerMapper.findZjTemOutpDischargeSummerByIncr());
-
-        uniqueIdLv2Set.addAll(zjWardRoundRecordMapper.findZjWardRoundRecordByIncr());
-
-        uniqueIdLv2Set.addAll(zjInpConsultationDoctorMasterMapper.findZjInpConsultationDoctorMasterByIncr());
-
-        uniqueIdLv2Set.addAll(zjInpConsultationDoctorDetailMapper.findZjInpConsultationDoctorDetailByIncr());
-
-        uniqueIdLv2Set.addAll(zjTemPreCourseDisMapper.findZjTemPreCourseDisByIncr());
-
-        uniqueIdLv2Set.addAll(zjPreOpDiscussionMapper.findZjPreOpDiscussionByIncr());
-
-        uniqueIdLv2Set.addAll(zjPostOpCourseMapper.findZjPostOpCourseByIncr());
-
-        uniqueIdLv2Set.addAll(zjTransferDeptMapper.findZjTransferDeptByIncr());
-
-        uniqueIdLv2Set.addAll(zjEmergencyRecordMapper.findZjEmergencyRecordByIncr());
-
-        uniqueIdLv2Set.addAll(zjStageSummaryMapper.findZjStageSummaryByIncr());
-
-        uniqueIdLv2Set.addAll(zjInpBillDetailMapper.findZjInpBillDetailByIncr());
-
-        uniqueIdLv2Set.addAll(zjTransfusionOrderMapper.findZjTransfusionOrderByIncr());
-
-        uniqueIdLv2Set.addAll(zjDietOrderMapper.findZjDietOrderByIncr());
-
-        uniqueIdLv2Set.addAll(zjInpOrdersMapper.findZjInpOrdersByIncr());
-
-        uniqueIdLv2Set.addAll(zjOutpDiagnosisSplitMapper.findZjOutpDiagnosisSplitByIncr());
-
-        uniqueIdLv2Set.addAll(zjSymptomsMapper.findZjSymptomsByIncr());
-
-        uniqueIdLv2Set.addAll(zjFamilyHistoryMapper.findZjFamilyHistoryByIncr());
-
-        uniqueIdLv2Set.addAll(zjSurgeryHistoryMapper.findZjSurgeryHistoryByIncr());
-
-        uniqueIdLv2Set.addAll(zjAllergyHistoryMapper.findZjAllergyHistoryByIncr());
-
-        uniqueIdLv2Set.addAll(zjTransfusionHistoryMapper.findZjTransfusionHistoryByIncr());
-
-        uniqueIdLv2Set.addAll(zjPossibleCauseMapper.findZjPossibleCauseByIncr());
-
-        uniqueIdLv2Set.addAll(zjDietMapper.findZjDietByIncr());
-
-        uniqueIdLv2Set.addAll(zjConcomitantDiseaseMapper.findZjConcomitantDiseaseByIncr());
-
-        uniqueIdLv2Set.addAll(zjPhysicalExamMapper.findZjPhysicalExamByIncr());
-
-        uniqueIdLv2Set.addAll(zjImagingMapper.findZjImagingByIncr());
-
-        uniqueIdLv2Set.addAll(zjEndoscopyMapper.findZjEndoscopyByIncr());
-
-        uniqueIdLv2Set.addAll(zjDrugCourseMapper.findZjDrugCourseByIncr());
-
-        uniqueIdLv2Set.addAll(zjBiomarkerMapper.findZjBiomarkerByIncr());
-
-        uniqueIdLv2Set.addAll(zjPathologyMapper.findZjPathologyByIncr());
-
-        uniqueIdLv2Set.addAll(zjSurgeryProcMapper.findZjSurgeryProcByIncr());
-
-        uniqueIdLv2Set.addAll(zjPostopFunctionMapper.findZjPostopFunctionByIncr());
-
-        uniqueIdLv2Set.addAll(zjRadiotherapyMapper.findZjRadiotherapyByIncr());
-        for (String uniqueId:uniqueIdLv2Set
-             ) {
-//            personService.deletePerson(uniqueId);
-            visitRecordService.deleteVisitRecord(uniqueId);
-            indexPersonService.deleteIndexPerson(uniqueId);
-            indexDiagnosisAdmitService.deleteIndexDiagnosisAdmit(uniqueId);
-            indexDiagnosisAdmitIcdService.deleteIndexDiagnosisAdmitIcd(uniqueId);
-            indexDiagnosisClinicService.deleteIndexDiagnosisClinic(uniqueId);
-            indexDiagnosisClinicIcdService.deleteIndexDiagnosisClinicIcd(uniqueId);
-            indexOperationService.deleteIndexOperation(uniqueId);
-            indexOperationIcdService.deleteIndexOperationIcd(uniqueId);
-            indexDiagnosisMainService.deleteIndexDiagnosisMain(uniqueId);
-            indexDiagnosisMainIcdService.deleteIndexDiagnosisMainIcd(uniqueId);
-            indexDiagnosisOtherService.deleteIndexDiagnosisOther(uniqueId);
-            indexDiagnosisOtherIcdService.deleteIndexDiagnosisOtherIcd(uniqueId);
-            indexIcuService.deleteIndexIcu(uniqueId);
-            indexPathologyService.deleteIndexPathology(uniqueId);
-            indexPathologyIcdService.deleteIndexPathologyIcd(uniqueId);
-            indexInjuryService.deleteIndexInjury(uniqueId);
-            personGeneralService.deletePersonGeneral(uniqueId);
-            hisFamilyService.deleteHisFamily(uniqueId);
-            hisPersonService.deleteHisPerson(uniqueId);
-            hisPastService.deleteHisPast(uniqueId);
-            hisMarriageService.deleteHisMarriage(uniqueId);
-            consultationService.deleteConsultation(uniqueId);
-            symptomService.deleteSymptom(uniqueId);
-            diagnosisService.deleteDiagnosis(uniqueId);
-            diagnosisStageService.deleteDiagnosisStage(uniqueId);
-            inspectionService.deleteInspection(uniqueId);
-            examMasterService.deleteExamMaster(uniqueId);
-            examMasterStdService.deleteExamMasterStd(uniqueId);
-            gastroscopeService.deleteGastroscope(uniqueId);
-            eusGastroscopeService.deleteEusGastroscope(uniqueId);
-            colonoscopyService.deleteColonoscopy(uniqueId);
-            ugiService.deleteUgi(uniqueId);
-            rabatService.deleteRabat(uniqueId);
-            chestCtService.deleteChestCt(uniqueId);
-            abdominalCtService.deleteAbdominalCt(uniqueId);
-            abdominalMriService.deleteAbdominalMri(uniqueId);
-            abdominalUltrasoundService.deleteAbdominalUltrasound(uniqueId);
-            neckUltrasoundService.deleteNeckUltrasound(uniqueId);
-            petCtService.deletePetCt(uniqueId);
-            operationRecordService.deleteOperationRecord(uniqueId);
-            surgeryProcService.deleteSurgeryProc(uniqueId);
-            postoperativeRecoveryService.deletePostoperativeRecovery(uniqueId);
-            operationComplicationsService.deleteOperationComplications(uniqueId);
-            pathologicalStdService.deletePathologicalStd(uniqueId);
-            pathologicalService.deletePathological(uniqueId);
-            markerService.deleteMarker(uniqueId);
-            treatmentService.deleteTreatment(uniqueId);
-            outpAdmissionStatusService.deleteOutpAdmissionStatus(uniqueId);
-            radiotherapyService.deleteRadiotherapy(uniqueId);
-            chemotherapyDrugService.deleteChemotherapyDrug(uniqueId);
-            cancerPainTreatmentService.deleteCancerPainTreatment(uniqueId);
-            followUpService.deleteFollowUp(uniqueId);
-
-            //----------------------------------------------------保存就诊----------------------------------------------------
-            List<PAT_VISIT_MASTER> pat_visit_masters = zjPatVisitMasterMapper.findZjPatVisitMasterByUniqueId(uniqueId);
-            if (pat_visit_masters.size()!=0){
-                saveVisitRecord(pat_visit_masters.get(0));
-                String uniqueIdLv1 = pat_visit_masters.get(0).getUNIQUE_ID_LV1();
-                if (uniqueIdLv1!=null){
-                    //查询是否有对应的person，没有则插入
-                    List<Person> persons = personService.findPersonByPersonId(uniqueIdLv1);
-                    if (persons.size()==0){
-                        //插入新的person
-                        List<TEM_PAT_MASTER_INDEX> tem_pat_master_indices = zjTemPatMasterIndexMapper.findZjTemPatMasterIndexByUniqueId(uniqueIdLv1);
-                        if (tem_pat_master_indices.size()!=0){
-                            savePerson(tem_pat_master_indices.get(0));
-                        }
-
-                    }
-                }
-
-                Date visitdate=pat_visit_masters.get(0).getADMISSION_DATE_TIME();
                 //病案首页
                 List<BASY_NSTD> zj_BASY_NSTDs=zjBasyNstdMapper.findZjBasyNstdsByUniqueId(uniqueId);
                 BASY_NSTD zj_BASY_NSTD;
@@ -552,252 +401,13 @@ public class RuleRunServiceImpl implements RuleRunService {
                 }else {
                     zj_BASY_DIAG_STD =  zjBasyDiagStdMapper.findZjBasyDiagStdByUniqueId(uniqueId);
                 }
+
                 List<INP_DIAGNOSIS> zj_INP_DIAGNOSIS = zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
-
-                List<NURSING_RECORD> zj_NURSING_RECORD = zjNursingRecordMapper.findZjNursingRecordByUniqueId(uniqueId);
-                List<VITAL_RECORD> zj_VITAL_RECORD = zjVitalRecordMapper.findZjVitalRecordByUniqueId(uniqueId);
-                List<TEM_INP_ADMISSION_STATUS> zj_TEM_INP_ADMISSION_STATUS = zjTemInpAdmissionStatusMapper.findZjTemInpAdmissionStatusByUniqueId(uniqueId);
-                List<LIS_RECORD> zj_LIS_RECORD = zjLisRecordMapper.findZjLisRecordByUniqueId(uniqueId);
-                List<DRUG_ORDER> zj_DRUG_ORDER = zjDrugOrderMapper.findZjDrugOrderByUniqueId(uniqueId);
-                List<EXAM_MASTER> zj_EXAM_MASTER = zjExamMasterMapper.findZjExamMasterByUniqueId(uniqueId);
-
-                List<HISTOLOGY_REPORT> zj_HISTOLOGY_REPORT = zjHistologyReportMapper.findZjHistologyReportByUniqueId(uniqueId);
-                List<TEM_OPERATION_RECORD> zj_TEM_OPERATION_RECORD = zjTemOperationRecordMapper.findZjTemOperationRecordByUniqueId(uniqueId);
-                List<PROCEDURE_RECORD> zj_PROCEDURE_RECORD = zjProcedureRecordMapper.findZjProcedureRecordByUniqueId(uniqueId);
-                List<TEM_DEATH_RECORD> zj_TEM_DEATH_RECORD = zjTemDeathRecordMapper.findZjTemDeathRecordByUniqueId(uniqueId);
-                List<FOLLOW_UP> zj_FOLLOW_UP = zjFollowUpMapper.findZjFollowUpByUniqueId(uniqueId);
-
-                List<TEM_OUTP_DISCHARGE_STATUS> zj_TEM_OUTP_DISCHARGE_STATUS = zjTemOutpDischargeStatusMapper.findZjTemOutpDischargeStatusByUniqueId(uniqueId);
-                List<TEM_24H_IN_OUT> zj_TEM_24H_IN_OUT = zjTem24hInOutMapper.findZjTem24hInOutByUniqueId(uniqueId);
-                List<OUTP_RECORD> zj_OUTP_RECORD = zjOutpRecordMapper.findZjOutpRecordByUniqueId(uniqueId);
-                List<TEM_COURSE_DIS> zj_TEM_COURSE_DIS = zjTemCourseDisMapper.findZjTemCourseDisByUniqueId(uniqueId);
-                List<TEM_OUTP_DISCHARGE_SUMMER> zj_TEM_OUTP_DISCHARGE_SUMMER = zjTemOutpDischargeSummerMapper.findZjTemOutpDischargeSummerByUniqueId(uniqueId);
-                List<WARD_ROUND_RECORD> zj_WARD_ROUND_RECORD = zjWardRoundRecordMapper.findZjWardRoundRecordByUniqueId(uniqueId);
-                List<INP_CONSULTATION_DOCTOR_MASTER> zj_INP_CONSULTATION_DOCTOR_MASTER = zjInpConsultationDoctorMasterMapper.findZjInpConsultationDoctorMasterByUniqueId(uniqueId);
-                List<INP_CONSULTATION_DOCTOR_DETAIL> zj_INP_CONSULTATION_DOCTOR_DETAIL = zjInpConsultationDoctorDetailMapper.findZjInpConsultationDoctorDetailByUniqueId(uniqueId);
-                List<TEM_PRE_COURSE_DIS> zj_TEM_PRE_COURSE_DIS = zjTemPreCourseDisMapper.findZjTemPreCourseDisByUniqueId(uniqueId);
-                List<PRE_OP_DISCUSSION> zj_PRE_OP_DISCUSSION = zjPreOpDiscussionMapper.findZjPreOpDiscussionByUniqueId(uniqueId);
-                List<POST_OP_COURSE> zj_POST_OP_COURSE = zjPostOpCourseMapper.findZjPostOpCourseByUniqueId(uniqueId);
-                List<TRANSFER_DEPT> zj_TRANSFER_DEPT = zjTransferDeptMapper.findZjTransferDeptByUniqueId(uniqueId);
-                List<EMERGENCY_RECORD> zj_EMERGENCY_RECORD = zjEmergencyRecordMapper.findZjEmergencyRecordByUniqueId(uniqueId);
-                List<STAGE_SUMMARY> zj_STAGE_SUMMARY = zjStageSummaryMapper.findZjStageSummaryByUniqueId(uniqueId);
-                List<INP_BILL_DETAIL> zj_INP_BILL_DETAIL = zjInpBillDetailMapper.findZjInpBillDetailByUniqueId(uniqueId);
-                List<TRANSFUSION_ORDER> zj_TRANSFUSION_ORDER = zjTransfusionOrderMapper.findZjTransfusionOrderByUniqueId(uniqueId);
-                List<DIET_ORDER> zj_DIET_ORDER = zjDietOrderMapper.findZjDietOrderByUniqueId(uniqueId);
-                List<INP_ORDERS> zj_INP_ORDERS = zjInpOrdersMapper.findZjInpOrdersByUniqueId(uniqueId);
-                List<OUTP_DIAGNOSIS_SPLIT> zj_OUTP_DIAGNOSIS_SPLIT = zjOutpDiagnosisSplitMapper.findZjOutpDiagnosisSplitByUniqueId(uniqueId);
-                List<SYMPTOMS> zj_SYMPTOMS = zjSymptomsMapper.findZjSymptomsByUniqueId(uniqueId);
-                List<FAMILY_HISTORY> zj_FAMILY_HISTORY = zjFamilyHistoryMapper.findZjFamilyHistoryByUniqueId(uniqueId);
-                List<SURGERY_HISTORY> zj_SURGERY_HISTORY = zjSurgeryHistoryMapper.findZjSurgeryHistoryByUniqueId(uniqueId);
-                List<ALLERGY_HISTORY> zj_ALLERGY_HISTORY = zjAllergyHistoryMapper.findZjAllergyHistoryByUniqueId(uniqueId);
-                List<TRANSFUSION_HISTORY> zj_TRANSFUSION_HISTORY = zjTransfusionHistoryMapper.findZjTransfusionHistoryByUniqueId(uniqueId);
-                List<POSSIBLE_CAUSE> zj_POSSIBLE_CAUSE = zjPossibleCauseMapper.findZjPossibleCauseByUniqueId(uniqueId);
-                List<DIET> zj_DIET = zjDietMapper.findZjDietByUniqueId(uniqueId);
-                List<CONCOMITANT_DISEASE> zj_CONCOMITANT_DISEASE = zjConcomitantDiseaseMapper.findZjConcomitantDiseaseByUniqueId(uniqueId);
-                List<PHYSICAL_EXAM> zj_PHYSICAL_EXAM = zjPhysicalExamMapper.findZjPhysicalExamByUniqueId(uniqueId);
-                List<IMAGING> zj_IMAGING = zjImagingMapper.findZjImagingByUniqueId(uniqueId);
-                List<ENDOSCOPY> zj_ENDOSCOPY = zjEndoscopyMapper.findZjEndoscopyByUniqueId(uniqueId);
-                List<DRUG_COURSE> zj_DRUG_COURSE = zjDrugCourseMapper.findZjDrugCourseByUniqueId(uniqueId);
-                List<BIOMARKER> zj_BIOMARKER = zjBiomarkerMapper.findZjBiomarkerByUniqueId(uniqueId);
-                List<PATHOLOGY> zj_PATHOLOGY = zjPathologyMapper.findZjPathologyByUniqueId(uniqueId);
-                List<SURGERY_PROC> zj_SURGERY_PROC = zjSurgeryProcMapper.findZjSurgeryProcByUniqueId(uniqueId);
-                List<POSTOP_FUNCTION> zj_POSTOP_FUNCTION = zjPostopFunctionMapper.findZjPostopFunctionByUniqueId(uniqueId);
-                List<RADIOTHERAPY> zj_RADIOTHERAPY = zjRadiotherapyMapper.findZjRadiotherapyByUniqueId(uniqueId);
-
-
-                if(zj_BASY_NSTD!=null){
-                    saveIndexPerson(zj_BASY_NSTD,zj_BASY_DIAG_STD);
-                    saveIndexIcu(zj_BASY_NSTD);
-                }
-                if(zj_BASY_DIAG_STD!=null){
-
-                    Date admitdate=null;
-                    Date maindate=null;
-                    Date clinicdate=null;
-                    Date pathdate=null;
-                    for(INP_DIAGNOSIS diagnosis: zj_INP_DIAGNOSIS){
-                        if(diagnosis.getDIAGNOSIS_TYPE()!=null){
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("出院主要诊断")){
-                                maindate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("门诊诊断")){
-                                clinicdate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("入院初诊")){
-                                admitdate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("病理诊断")){
-                                pathdate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                        }
-
-                    }
-
-                    saveIndexDiagnosisAdmit(zj_BASY_DIAG_STD,visitdate,admitdate);
-                    saveIndexDiagnosisClinic(zj_BASY_DIAG_STD,visitdate,clinicdate);
-                    saveIndexDiagnosisMain(zj_BASY_DIAG_STD,visitdate,maindate);
-                    saveIndexDiagnosisOther(zj_BASY_DIAG_STD,visitdate,maindate);
-                    saveIndexInjury(zj_BASY_DIAG_STD);
-                    saveIndexPathology(zj_BASY_DIAG_STD,visitdate,pathdate);
-                }
-
-                if(zj_BASY_OP_STD!=null){
-                    saveIndexOperation(zj_BASY_OP_STD);
-                }
-
-
-
-                if(zj_TEM_INP_ADMISSION_STATUS!=null&&zj_TEM_INP_ADMISSION_STATUS.size()>0){
-                    saveHisMarriage(zj_TEM_INP_ADMISSION_STATUS);
-                }
-
-//                if(zj_INP_CONSULTATION_DOCTOR_DETAIL!=null&&zj_INP_CONSULTATION_DOCTOR_DETAIL.size()>0){
-//
-//                    saveConsultation(patientId,visitId,zj_INP_CONSULTATION_DOCTOR_DETAIL);
-//                }
-
-                if(zj_LIS_RECORD!=null&&zj_LIS_RECORD.size()>0){
-                    saveInspection(zj_LIS_RECORD);
-                }
-
-                if(zj_POSSIBLE_CAUSE!=null&&zj_POSSIBLE_CAUSE.size()>0){
-                    saveHisPerson(zj_POSSIBLE_CAUSE,null);
-                }
-
-                if(zj_FAMILY_HISTORY!=null&&zj_FAMILY_HISTORY.size()>0){
-                    saveHisFamily( zj_FAMILY_HISTORY );
-                }
-
-                if(zj_CONCOMITANT_DISEASE!=null&&zj_CONCOMITANT_DISEASE.size()>0){
-                    saveHisPast( zj_CONCOMITANT_DISEASE );
-                }
-
-                if(zj_SYMPTOMS!=null&&zj_SYMPTOMS.size()>0){
-                    saveSymptom(zj_SYMPTOMS);
-                }
-
-
-                if(zj_DRUG_ORDER!=null&&zj_DRUG_ORDER.size()>0){
-                    saveTreatment(zj_DRUG_ORDER);
-                }
-                if(zj_DRUG_COURSE!=null&&zj_DRUG_COURSE.size()>0){
-                    saveChemotherapyDrug( zj_DRUG_COURSE);
-                }
-
-                if(zj_TEM_INP_ADMISSION_STATUS!=null&&zj_TEM_INP_ADMISSION_STATUS.size()>0){
-                    for(TEM_INP_ADMISSION_STATUS tem_inp_admission_status:zj_TEM_INP_ADMISSION_STATUS){
-                        saveInpAdmissionStatus(tem_inp_admission_status);
-                    }
-
-                }
-
-                if(zj_EXAM_MASTER!=null&&zj_EXAM_MASTER.size()>0){
-                    saveExamMaster(zj_EXAM_MASTER);
-                    saveExamMasterStd(zj_EXAM_MASTER);
-
-                    for (EXAM_MASTER exam_master:zj_EXAM_MASTER
-                    ) {
-
-                        if (zj_IMAGING==null||zj_IMAGING.size()==0){
-                            continue;
-                        }
-                        String examName = exam_master.getEXAM_NAME1_STD() + ","
-                                + exam_master.getEXAM_NAME2_STD() + ","
-                                + exam_master.getEXAM_NAME3_STD() + ","
-                                + exam_master.getEXAM_NAME4_STD() + ","
-                                + exam_master.getEXAM_NAME5_STD() + ","
-                                + exam_master.getEXAM_NAME6_STD();
-
-                        try {
-                            saveUgi(examName,exam_master,zj_IMAGING);
-                            saveRabat(examName,exam_master,zj_IMAGING);
-                            saveChestCt(examName,exam_master,zj_IMAGING);
-                            saveAbdominalCt(examName,exam_master,zj_IMAGING);
-                            saveAbdominalMri(examName,exam_master,zj_IMAGING);
-                            saveAbdominalUltrasound(examName,exam_master,zj_IMAGING);
-                            saveNeckUltrasound(examName,exam_master,zj_IMAGING);
-                            savePetCt(examName,exam_master,zj_IMAGING);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                if(zj_INP_DIAGNOSIS!=null&&zj_INP_DIAGNOSIS.size()>0){
-                    saveDiagnosis(zj_INP_DIAGNOSIS);
-                    saveDiagnosisStage(zj_INP_DIAGNOSIS);
-                }
-
-                if(zj_NURSING_RECORD!=null&&zj_NURSING_RECORD.size()>0){
-                    savePersonGeneral(zj_NURSING_RECORD, zj_VITAL_RECORD);
-                }
-
-            }else {
-
-            }
-
-
-
-        }
-
-    }
-    @Override
-    public void saveRuleRun(Integer pageNo, Integer pageSize, String flag) {
-
-        Map<String, Integer> map = new HashMap<>();
-        map.put("pageNo", pageNo);
-        map.put("pageSize", pageSize);
-        //查找患者列表
-        List<TEM_PAT_MASTER_INDEX> zj_TEM_PAT_MASTER_INDEX = zjTemPatMasterIndexMapper.findZjTemPatMasterIndexByUniqueId(map);
-
-
-        for (TEM_PAT_MASTER_INDEX index : zj_TEM_PAT_MASTER_INDEX) {
-            //保存患者--------------------------------------------------
-//             savePerson(index);
-            String patientId=index.getPATIENT_ID();
-            String visitId=index.getVISIT_ID();
-            //患者就诊列表
-            List<PAT_VISIT_MASTER> zj_PAT_VISIT_MASTER = zjPatVisitMasterMapper.findZjPatVisitMasterByUniqueId(index.getUNIQUE_ID());
-            //就诊其他数据
-            for (PAT_VISIT_MASTER master : zj_PAT_VISIT_MASTER) {
-
-                //保存就诊----------------------------------------------------
-//                 saveVisitRecord(master);
-
-                String uniqueId = master.getUNIQUE_ID();
-
-                Date visitdate=master.getADMISSION_DATE_TIME();
-
-//                //病案首页
-//                List<BASY_NSTD> zj_BASY_NSTDs=zjBasyNstdMapper.findZjBasyNstdsByUniqueId(uniqueId);
-//                BASY_NSTD zj_BASY_NSTD;
-//                if (zj_BASY_NSTDs.size()==1){
-//                    zj_BASY_NSTD = zj_BASY_NSTDs.get(0);
-//                }else {
-//                    zj_BASY_NSTD=  zjBasyNstdMapper.findZjBasyNstdByUniqueId(uniqueId);
-//                }
-//
-//                List<BASY_OP_STD> zj_BASY_OP_STDs=zjBasyOpStdMapper.findZjBasyOpStdsByUniqueId(uniqueId);
-//                BASY_OP_STD zj_BASY_OP_STD;
-//                if (zj_BASY_OP_STDs.size()==1){
-//                    zj_BASY_OP_STD = zj_BASY_OP_STDs.get(0);
-//                }else {
-//                    zj_BASY_OP_STD = zjBasyOpStdMapper.findZjBasyOpStdByUniqueId(uniqueId);
-//                }
-//
-//                List<BASY_DIAG_STD> zj_BASY_DIAG_STDs=zjBasyDiagStdMapper.findZjBasyDiagStdsByUniqueId(uniqueId);
-//                BASY_DIAG_STD  zj_BASY_DIAG_STD;
-//                if (zj_BASY_DIAG_STDs.size()==1){
-//                    zj_BASY_DIAG_STD = zj_BASY_DIAG_STDs.get(0);
-//                }else {
-//                    zj_BASY_DIAG_STD =  zjBasyDiagStdMapper.findZjBasyDiagStdByUniqueId(uniqueId);
-//                }
-//
-//                List<INP_DIAGNOSIS> zj_INP_DIAGNOSIS = zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
 
 
 //                List<NURSING_RECORD> zj_NURSING_RECORD = zjNursingRecordMapper.findZjNursingRecordByUniqueId(uniqueId);
 //                List<VITAL_RECORD> zj_VITAL_RECORD = zjVitalRecordMapper.findZjVitalRecordByUniqueId(uniqueId);
-               // List<TEM_INP_ADMISSION_STATUS> zj_TEM_INP_ADMISSION_STATUS = zjTemInpAdmissionStatusMapper.findZjTemInpAdmissionStatusByUniqueId(uniqueId);
+//                List<TEM_INP_ADMISSION_STATUS> zj_TEM_INP_ADMISSION_STATUS = zjTemInpAdmissionStatusMapper.findZjTemInpAdmissionStatusByUniqueId(uniqueId);
                 //List<INP_DIAGNOSIS> zj_INP_DIAGNOSIS = zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
               //  List<INP_CONSULTATION_DOCTOR_DETAIL> zj_INP_CONSULTATION_DOCTOR_DETAIL = zjInpConsultationDoctorDetailMapper.findZjInpConsultationDoctorDetailByUniqueId(uniqueId);*/
                 //List<LIS_RECORD> zj_LIS_RECORD = zjLisRecordMapper.findZjLisRecordByUniqueId(uniqueId);
@@ -807,7 +417,7 @@ public class RuleRunServiceImpl implements RuleRunService {
                // List<FAMILY_HISTORY> zj_FAMILY_HISTORY = zjFamilyHistoryMapper.findZjFamilyHistoryByUniqueId(uniqueId);
                 //List<CONCOMITANT_DISEASE> zj_CONCOMITANT_DISEASE = zjConcomitantDiseaseMapper.findZjConcomitantDiseaseByUniqueId(uniqueId);
               //  List<SYMPTOMS> zj_SYMPTOMS = zjSymptomsMapper.findZjSymptomsByUniqueId(uniqueId);
-                List<EXAM_MASTER> zj_EXAM_MASTER = zjExamMasterMapper.findZjExamMasterByUniqueId(uniqueId);
+//                List<EXAM_MASTER> zj_EXAM_MASTER = zjExamMasterMapper.findZjExamMasterByUniqueId(uniqueId);
 
 
 //                List<HISTOLOGY_REPORT> zj_HISTOLOGY_REPORT = zjHistologyReportMapper.findZjHistologyReportByUniqueId(uniqueId);
@@ -845,7 +455,7 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                List<CONCOMITANT_DISEASE> zj_CONCOMITANT_DISEASE = zjConcomitantDiseaseMapper.findZjConcomitantDiseaseByUniqueId(uniqueId);
 //                List<PHYSICAL_EXAM> zj_PHYSICAL_EXAM = zjPhysicalExamMapper.findZjPhysicalExamByUniqueId(uniqueId);
 //                List<IMAGING> zj_IMAGING = zjImagingMapper.findZjImagingByUniqueId(uniqueId);
-                List<ENDOSCOPY> zj_ENDOSCOPY = zjEndoscopyMapper.findZjEndoscopyByUniqueId(uniqueId);
+//                List<ENDOSCOPY> zj_ENDOSCOPY = zjEndoscopyMapper.findZjEndoscopyByUniqueId(uniqueId);
 //                List<DRUG_COURSE> zj_DRUG_COURSE = zjDrugCourseMapper.findZjDrugCourseByUniqueId(uniqueId);
 //                List<BIOMARKER> zj_BIOMARKER = zjBiomarkerMapper.findZjBiomarkerByUniqueId(uniqueId);
 //                List<PATHOLOGY> zj_PATHOLOGY = zjPathologyMapper.findZjPathologyByUniqueId(uniqueId);
@@ -857,46 +467,47 @@ public class RuleRunServiceImpl implements RuleRunService {
 
 
 
-//               if(zj_BASY_NSTD!=null){
-//                    saveIndexPerson(zj_BASY_NSTD,zj_BASY_DIAG_STD);
-//                    saveIndexIcu(zj_BASY_NSTD);
-//                }
-//                if(zj_BASY_DIAG_STD!=null){
-//
-//                    Date admitdate=null;
-//                    Date maindate=null;
-//                    Date clinicdate=null;
-//                    Date pathdate=null;
-//                    for(INP_DIAGNOSIS diagnosis: zj_INP_DIAGNOSIS){
-//                        if(diagnosis.getDIAGNOSIS_TYPE()!=null){
-//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("出院主要诊断")){
-//                                maindate=diagnosis.getDIAGNOSIS_DATE();
-//                            }
-//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("门诊诊断")){
-//                                clinicdate=diagnosis.getDIAGNOSIS_DATE();
-//                            }
-//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("入院初诊")){
-//                                admitdate=diagnosis.getDIAGNOSIS_DATE();
-//                            }
-//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("病理诊断")){
-//                                pathdate=diagnosis.getDIAGNOSIS_DATE();
-//                            }
-//                        }
-//
-//                    }
-//
-//
-//                    saveIndexDiagnosisAdmit(zj_BASY_DIAG_STD,visitdate,admitdate);
-//                    saveIndexDiagnosisClinic(zj_BASY_DIAG_STD,visitdate,clinicdate);
-//                    saveIndexDiagnosisMain(zj_BASY_DIAG_STD,visitdate,maindate);
-//                    saveIndexDiagnosisOther(zj_BASY_DIAG_STD,visitdate,maindate);
-//                    saveIndexInjury(zj_BASY_DIAG_STD);
-//                    saveIndexPathology(zj_BASY_DIAG_STD,visitdate,pathdate);
-//                }
-//
-//                if(zj_BASY_OP_STD!=null){
-//                    saveIndexOperation(zj_BASY_OP_STD);
-//                }
+               if(zj_BASY_NSTD!=null){
+                    saveIndexPerson(zj_BASY_NSTD,zj_BASY_DIAG_STD);
+                    saveIndexIcu(zj_BASY_NSTD);
+                }
+                if(zj_BASY_DIAG_STD!=null){
+
+                    Date admitdate=null;
+                    Date maindate=null;
+                    Date clinicdate=null;
+                    Date pathdate=null;
+                    for(INP_DIAGNOSIS diagnosis: zj_INP_DIAGNOSIS){
+                        if(diagnosis.getDIAGNOSIS_TYPE()!=null){
+                            if(diagnosis.getDIAGNOSIS_TYPE().contains("出院主要诊断")){
+                                maindate=diagnosis.getDIAGNOSIS_DATE();
+                            }
+                            if(diagnosis.getDIAGNOSIS_TYPE().contains("门诊诊断")){
+                                clinicdate=diagnosis.getDIAGNOSIS_DATE();
+                            }
+                            if(diagnosis.getDIAGNOSIS_TYPE().contains("入院初诊")){
+                                admitdate=diagnosis.getDIAGNOSIS_DATE();
+                            }
+                            if(diagnosis.getDIAGNOSIS_TYPE().contains("病理诊断")){
+                                pathdate=diagnosis.getDIAGNOSIS_DATE();
+                            }
+                        }
+
+                    }
+
+
+                    saveIndexDiagnosisAdmit(zj_BASY_DIAG_STD,visitdate,admitdate);
+                    saveIndexDiagnosisClinic(zj_BASY_DIAG_STD,visitdate,clinicdate);
+                    saveIndexDiagnosisMain(zj_BASY_DIAG_STD,visitdate,maindate);
+                    saveIndexDiagnosisOther(zj_BASY_DIAG_STD,visitdate,maindate);
+                    saveIndexInjury(zj_BASY_DIAG_STD);
+                    saveIndexPathology(zj_BASY_DIAG_STD,visitdate,pathdate);
+                }
+
+                if(zj_BASY_OP_STD!=null){
+                    saveIndexOperation(zj_BASY_OP_STD);
+                }
+
 /*
 
                 if(zj_NURSING_RECORD!=null&&zj_NURSING_RECORD.size()>0){
@@ -1051,22 +662,75 @@ public class RuleRunServiceImpl implements RuleRunService {
         person.setRelationship(index.getRELATIONSHIP());
         //入院来源
         person.setPatientClass(index.getPATIENT_CLASS());
-   /*     //数据版本
-        person.setDataVersion();
-        //数据库来源
-        person.setDataDbSource();
-        //数据表来源
-        person.setDataTableSource();
-        //数据项来源
-        person.setDataFieldSource();
-        //创建时间
-        person.setCreatedAt();
-        //创建人
-        person.setCreator();
-        //修改时间
-        person.setUpdatedAt();*/
-        personService.savePerson(person);
-        log.info("保存患者："+person.getPersonId());
+
+        List<String> neededDiagList = Arrays.asList(
+                "食管胃连接处恶性肿瘤",
+                "胃底恶性肿瘤",
+                "胃体恶性肿瘤",
+                "胃窦恶性肿瘤",
+                "胃小弯恶性肿瘤",
+                "胃大弯恶性肿瘤",
+                "胃交搭跨越恶性肿瘤的损害",
+                "胃体和胃窦及胃大弯恶性肿瘤",
+                "贲门胃底恶性肿瘤",
+                "贲门胃体恶性肿瘤",
+                "胃窦胃体恶性肿瘤",
+                "胃底胃体恶性肿瘤",
+                "胃恶性肿瘤",
+                "胃多处恶性肿瘤",
+                "残胃恶性肿瘤",
+                "胃体及横结肠恶性肿瘤",
+                "胃肠道恶性肿瘤",
+                "胃肠道继发恶性肿瘤",
+                "胃底继发恶性肿瘤",
+                "胃食管连接部继发恶性肿瘤",
+                "胃继发恶性肿瘤",
+                "胃肠道恶性肿瘤家族史",
+                "胃恶性肿瘤个人史",
+                "贲门恶性肿瘤",
+                "贲门口恶性肿瘤",
+                "食管贲门连接处恶性肿瘤",
+                "幽门窦恶性肿瘤",
+                "幽门恶性肿瘤",
+                "幽门前恶性肿瘤",
+                "幽门管恶性肿瘤",
+                "胃溃疡癌变",
+                "消化系统部位不明确的恶性肿瘤",
+                "消化道恶性肿瘤"
+        );
+        List<String> visits = new ArrayList<>();
+        //患者就诊列表
+        List<PAT_VISIT_MASTER> zj_PAT_VISIT_MASTER = zjPatVisitMasterMapper.findZjPatVisitMasterByUniqueId(index.getUNIQUE_ID());
+        zj_PAT_VISIT_MASTER.forEach(master -> visits.add(master.getUNIQUE_ID()));
+        List<INP_DIAGNOSIS> diagnosisList = new ArrayList<>();
+        List<INP_DIAGNOSIS> finalDiagnosisList = new ArrayList<>();
+        List<Date> diagnosisDateList = new ArrayList<>();
+        visits.forEach(visit -> diagnosisList.addAll(zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(visit)));
+        finalDiagnosisList=diagnosisList.stream().filter(diagnosis -> diagnosis != null && diagnosis.getDIAGNOSIS_DATE() != null&&diagnosis.getDIAGNOSIS_DESC()!=null)
+                .filter(diagnosis -> neededDiagList.contains(diagnosis.getDIAGNOSIS_DESC()))
+                .collect(Collectors.toList());
+        finalDiagnosisList.forEach(diag -> diagnosisDateList.add(diag.getDIAGNOSIS_DATE()));
+
+        Date birthDate = index.getDATE_OF_BIRTH();
+        if (diagnosisDateList.size()==0||birthDate==null){
+            personService.savePerson(person);
+            log.info("无法计算首次诊断日期，保存患者："+person.getPersonId());
+        }else {
+            Date firstDiagDate = Collections.min(diagnosisDateList);
+
+            DateTime birthDateTime = DateTime.of(birthDate);
+            DateTime firstDiagDateTime = DateTime.of(firstDiagDate);
+            log.info("id:" + index.getUNIQUE_ID());
+            log.info("出生日期：" + birthDateTime.toString());
+            log.info("首次诊断日期：" + firstDiagDateTime.toString());
+            long betweenDays = birthDateTime.between(firstDiagDateTime, DateUnit.DAY);
+            double betweenYears = betweenDays / 365;
+            log.info("日期相差天数：" + betweenDays + "，年数：" + new BigDecimal(betweenYears).setScale(0, RoundingMode.DOWN).toString());
+            person.setFirstVisitAge(new BigDecimal(betweenYears).setScale(0, RoundingMode.DOWN).toString());
+
+            personService.savePerson(person);
+            log.info("保存患者："+person.getPersonId());
+        }
     }
     public void saveVisitRecord(PAT_VISIT_MASTER master) {
         VisitRecord visitRecord = new VisitRecord();
@@ -4606,66 +4270,66 @@ public class RuleRunServiceImpl implements RuleRunService {
         indexPerson.setUpdatedAt();*/
         indexPersonService.saveIndexPerson(indexPerson);
     }
-    public void saveInpAdmissionStatus(TEM_INP_ADMISSION_STATUS zj_TEM_INP_ADMISSION_STATUS){
-        InpAdmissionStatus inpAdmissionStatus = new InpAdmissionStatus();
-        //标识患者身份唯一标识
-        inpAdmissionStatus.setPersonId(zj_TEM_INP_ADMISSION_STATUS.getunique_id_lv1());
-        //唯一标识
-        inpAdmissionStatus.setUniqueId(zj_TEM_INP_ADMISSION_STATUS.getunique_id_lv2());
-        //医疗机构代码
-        inpAdmissionStatus.setP900(zj_TEM_INP_ADMISSION_STATUS.getp900());
-        //患者id
-        inpAdmissionStatus.setPatientId(zj_TEM_INP_ADMISSION_STATUS.getpatient_id());
-        //住院号
-        inpAdmissionStatus.setVisitId(zj_TEM_INP_ADMISSION_STATUS.getvisit_id());
-        //主诉
-        inpAdmissionStatus.setChiefComplaint(zj_TEM_INP_ADMISSION_STATUS.getchief_complaint());
-        //现病史
-        inpAdmissionStatus.setHisPresent(zj_TEM_INP_ADMISSION_STATUS.gethy_present());
-        //既往史
-        inpAdmissionStatus.setHisPast(zj_TEM_INP_ADMISSION_STATUS.gethy_pats());
-        //个人史
-        inpAdmissionStatus.setHisPerson(zj_TEM_INP_ADMISSION_STATUS.gethy_individual());
-        //家族史
-        inpAdmissionStatus.setHisFamily(zj_TEM_INP_ADMISSION_STATUS.gethy_family());
-        //月经史
-        inpAdmissionStatus.setHisMenstrualSta(zj_TEM_INP_ADMISSION_STATUS.getmenstrual_history_sta());
-        //婚育史
-        inpAdmissionStatus.setHisMarrChild(zj_TEM_INP_ADMISSION_STATUS.gethistory_of_marr_child());
-        //体格检查
-        inpAdmissionStatus.setPhysicalExam(zj_TEM_INP_ADMISSION_STATUS.getphysical_exam());
-        //专科检查
-        inpAdmissionStatus.setSpecialityExam(zj_TEM_INP_ADMISSION_STATUS.getspeciality_exam());
-        //辅助检查
-        inpAdmissionStatus.setSupplementaryExam(zj_TEM_INP_ADMISSION_STATUS.getsupplementary_exam());
-        //身高
-        inpAdmissionStatus.setHeight(zj_TEM_INP_ADMISSION_STATUS.getby_height());
-        //体重
-        inpAdmissionStatus.setWeight(zj_TEM_INP_ADMISSION_STATUS.getby_weight());
-        //ECOG评分
-        inpAdmissionStatus.setTEcogWhops(zj_TEM_INP_ADMISSION_STATUS.gett_ecog_whops());
-        //KPS评分
-        inpAdmissionStatus.setTKps(zj_TEM_INP_ADMISSION_STATUS.gett_kps());
-        //体表面积
-        inpAdmissionStatus.setTBodyarea(zj_TEM_INP_ADMISSION_STATUS.getby_surface_area());
-        //疼痛评分_nrs法
-        inpAdmissionStatus.setTNrs(zj_TEM_INP_ADMISSION_STATUS.gett_nrs());
-        /*//数据版本
-        inpAdmissionStatus.setDataVersion();
-        //数据库来源
-        inpAdmissionStatus.setDataDbSource();
-        //数据表来源
-        inpAdmissionStatus.setDataTableSource();
-        //数据项来源
-        inpAdmissionStatus.setDataFieldSource();
-        //创建时间
-        inpAdmissionStatus.setCreatedAt();
-        //创建人
-        inpAdmissionStatus.setCreator();
-        //修改时间
-        inpAdmissionStatus.setUpdatedAt();*/
-        inpAdmissionStatusService.saveInpAdmissionStatus(inpAdmissionStatus);
-    }
+//    public void saveInpAdmissionStatus(TEM_INP_ADMISSION_STATUS zj_TEM_INP_ADMISSION_STATUS){
+//        InpAdmissionStatus inpAdmissionStatus = new InpAdmissionStatus();
+//        //标识患者身份唯一标识
+//        inpAdmissionStatus.setPersonId(zj_TEM_INP_ADMISSION_STATUS.getunique_id_lv1());
+//        //唯一标识
+//        inpAdmissionStatus.setUniqueId(zj_TEM_INP_ADMISSION_STATUS.getunique_id_lv2());
+//        //医疗机构代码
+//        inpAdmissionStatus.setP900(zj_TEM_INP_ADMISSION_STATUS.getp900());
+//        //患者id
+//        inpAdmissionStatus.setPatientId(zj_TEM_INP_ADMISSION_STATUS.getpatient_id());
+//        //住院号
+//        inpAdmissionStatus.setVisitId(zj_TEM_INP_ADMISSION_STATUS.getvisit_id());
+//        //主诉
+//        inpAdmissionStatus.setChiefComplaint(zj_TEM_INP_ADMISSION_STATUS.getchief_complaint());
+//        //现病史
+//        inpAdmissionStatus.setHyPresent(zj_TEM_INP_ADMISSION_STATUS.gethy_present());
+//        //既往史
+//        inpAdmissionStatus.setHyPats(zj_TEM_INP_ADMISSION_STATUS.gethy_pats());
+//        //个人史
+//        inpAdmissionStatus.setHyIndividual(zj_TEM_INP_ADMISSION_STATUS.gethy_individual());
+//        //家族史
+//        inpAdmissionStatus.setHyFamily(zj_TEM_INP_ADMISSION_STATUS.gethy_family());
+//        //月经史
+//        inpAdmissionStatus.setMenstrualHistorySta(zj_TEM_INP_ADMISSION_STATUS.getmenstrual_history_sta());
+//        //婚育史
+//        inpAdmissionStatus.setHistoryOfMarrChild(zj_TEM_INP_ADMISSION_STATUS.gethistory_of_marr_child());
+//        //体格检查
+//        inpAdmissionStatus.setPhysicalExam(zj_TEM_INP_ADMISSION_STATUS.getphysical_exam());
+//        //专科检查
+//        inpAdmissionStatus.setSpecialityExam(zj_TEM_INP_ADMISSION_STATUS.getspeciality_exam());
+//        //辅助检查
+//        inpAdmissionStatus.setSupplementaryExam(zj_TEM_INP_ADMISSION_STATUS.getsupplementary_exam());
+//        //身高
+//        inpAdmissionStatus.setByHeight(zj_TEM_INP_ADMISSION_STATUS.getby_height());
+//        //体重
+//        inpAdmissionStatus.setByWeight(zj_TEM_INP_ADMISSION_STATUS.getby_weight());
+//        //ECOG评分
+//        inpAdmissionStatus.setTEcogWhops(zj_TEM_INP_ADMISSION_STATUS.gett_ecog_whops());
+//        //KPS评分
+//        inpAdmissionStatus.setTKps(zj_TEM_INP_ADMISSION_STATUS.gett_kps());
+//        //体表面积
+//        inpAdmissionStatus.setBySurfaceArea(zj_TEM_INP_ADMISSION_STATUS.getby_surface_area());
+//        //疼痛评分_nrs法
+//        inpAdmissionStatus.setTNrs(zj_TEM_INP_ADMISSION_STATUS.gett_nrs());
+//        /*//数据版本
+//        inpAdmissionStatus.setDataVersion();
+//        //数据库来源
+//        inpAdmissionStatus.setDataDbSource();
+//        //数据表来源
+//        inpAdmissionStatus.setDataTableSource();
+//        //数据项来源
+//        inpAdmissionStatus.setDataFieldSource();
+//        //创建时间
+//        inpAdmissionStatus.setCreatedAt();
+//        //创建人
+//        inpAdmissionStatus.setCreator();
+//        //修改时间
+//        inpAdmissionStatus.setUpdatedAt();*/
+//        inpAdmissionStatusService.saveInpAdmissionStatus(inpAdmissionStatus);
+//    }
     public void saveInspection(List<LIS_RECORD> zj_LIS_RECORD){
         for(LIS_RECORD lis_record: zj_LIS_RECORD){
             log.info("保存患者检验信息"+lis_record.getUNIQUE_ID_LV2());

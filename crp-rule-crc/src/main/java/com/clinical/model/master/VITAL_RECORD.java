@@ -1,5 +1,6 @@
 package com.clinical.model.master;
 import java.util.Date;
+
 public class VITAL_RECORD{
     //主键id
     private Integer ID;
