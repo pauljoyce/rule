@@ -371,38 +371,38 @@ public class RuleRunServiceImpl implements RuleRunService {
             for (PAT_VISIT_MASTER master : zj_PAT_VISIT_MASTER) {
 
                 //保存就诊----------------------------------------------------
-                 saveVisitRecord(master);
+//                 saveVisitRecord(master);
 
                 String uniqueId = master.getUNIQUE_ID();
 
                 Date visitdate=master.getADMISSION_DATE_TIME();
 
                 //病案首页
-                List<BASY_NSTD> zj_BASY_NSTDs=zjBasyNstdMapper.findZjBasyNstdsByUniqueId(uniqueId);
-                BASY_NSTD zj_BASY_NSTD;
-                if (zj_BASY_NSTDs.size()==1){
-                    zj_BASY_NSTD = zj_BASY_NSTDs.get(0);
-                }else {
-                    zj_BASY_NSTD=  zjBasyNstdMapper.findZjBasyNstdByUniqueId(uniqueId);
-                }
+//                List<BASY_NSTD> zj_BASY_NSTDs=zjBasyNstdMapper.findZjBasyNstdsByUniqueId(uniqueId);
+//                BASY_NSTD zj_BASY_NSTD;
+//                if (zj_BASY_NSTDs.size()==1){
+//                    zj_BASY_NSTD = zj_BASY_NSTDs.get(0);
+//                }else {
+//                    zj_BASY_NSTD=  zjBasyNstdMapper.findZjBasyNstdByUniqueId(uniqueId);
+//                }
+//
+//                List<BASY_OP_STD> zj_BASY_OP_STDs=zjBasyOpStdMapper.findZjBasyOpStdsByUniqueId(uniqueId);
+//                BASY_OP_STD zj_BASY_OP_STD;
+//                if (zj_BASY_OP_STDs.size()==1){
+//                    zj_BASY_OP_STD = zj_BASY_OP_STDs.get(0);
+//                }else {
+//                    zj_BASY_OP_STD = zjBasyOpStdMapper.findZjBasyOpStdByUniqueId(uniqueId);
+//                }
+//
+//                List<BASY_DIAG_STD> zj_BASY_DIAG_STDs=zjBasyDiagStdMapper.findZjBasyDiagStdsByUniqueId(uniqueId);
+//                BASY_DIAG_STD  zj_BASY_DIAG_STD;
+//                if (zj_BASY_DIAG_STDs.size()==1){
+//                    zj_BASY_DIAG_STD = zj_BASY_DIAG_STDs.get(0);
+//                }else {
+//                    zj_BASY_DIAG_STD =  zjBasyDiagStdMapper.findZjBasyDiagStdByUniqueId(uniqueId);
+//                }
 
-                List<BASY_OP_STD> zj_BASY_OP_STDs=zjBasyOpStdMapper.findZjBasyOpStdsByUniqueId(uniqueId);
-                BASY_OP_STD zj_BASY_OP_STD;
-                if (zj_BASY_OP_STDs.size()==1){
-                    zj_BASY_OP_STD = zj_BASY_OP_STDs.get(0);
-                }else {
-                    zj_BASY_OP_STD = zjBasyOpStdMapper.findZjBasyOpStdByUniqueId(uniqueId);
-                }
-
-                List<BASY_DIAG_STD> zj_BASY_DIAG_STDs=zjBasyDiagStdMapper.findZjBasyDiagStdsByUniqueId(uniqueId);
-                BASY_DIAG_STD  zj_BASY_DIAG_STD;
-                if (zj_BASY_DIAG_STDs.size()==1){
-                    zj_BASY_DIAG_STD = zj_BASY_DIAG_STDs.get(0);
-                }else {
-                    zj_BASY_DIAG_STD =  zjBasyDiagStdMapper.findZjBasyDiagStdByUniqueId(uniqueId);
-                }
-
-                List<INP_DIAGNOSIS> zj_INP_DIAGNOSIS = zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
+//                List<INP_DIAGNOSIS> zj_INP_DIAGNOSIS = zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
 
 
 //                List<NURSING_RECORD> zj_NURSING_RECORD = zjNursingRecordMapper.findZjNursingRecordByUniqueId(uniqueId);
@@ -467,46 +467,46 @@ public class RuleRunServiceImpl implements RuleRunService {
 
 
 
-               if(zj_BASY_NSTD!=null){
-                    saveIndexPerson(zj_BASY_NSTD,zj_BASY_DIAG_STD);
-                    saveIndexIcu(zj_BASY_NSTD);
-                }
-                if(zj_BASY_DIAG_STD!=null){
-
-                    Date admitdate=null;
-                    Date maindate=null;
-                    Date clinicdate=null;
-                    Date pathdate=null;
-                    for(INP_DIAGNOSIS diagnosis: zj_INP_DIAGNOSIS){
-                        if(diagnosis.getDIAGNOSIS_TYPE()!=null){
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("出院主要诊断")){
-                                maindate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("门诊诊断")){
-                                clinicdate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("入院初诊")){
-                                admitdate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                            if(diagnosis.getDIAGNOSIS_TYPE().contains("病理诊断")){
-                                pathdate=diagnosis.getDIAGNOSIS_DATE();
-                            }
-                        }
-
-                    }
-
-
-                    saveIndexDiagnosisAdmit(zj_BASY_DIAG_STD,visitdate,admitdate);
-                    saveIndexDiagnosisClinic(zj_BASY_DIAG_STD,visitdate,clinicdate);
-                    saveIndexDiagnosisMain(zj_BASY_DIAG_STD,visitdate,maindate);
-                    saveIndexDiagnosisOther(zj_BASY_DIAG_STD,visitdate,maindate);
-                    saveIndexInjury(zj_BASY_DIAG_STD);
-                    saveIndexPathology(zj_BASY_DIAG_STD,visitdate,pathdate);
-                }
-
-                if(zj_BASY_OP_STD!=null){
-                    saveIndexOperation(zj_BASY_OP_STD);
-                }
+//               if(zj_BASY_NSTD!=null){
+//                    saveIndexPerson(zj_BASY_NSTD,zj_BASY_DIAG_STD);
+//                    saveIndexIcu(zj_BASY_NSTD);
+//                }
+//                if(zj_BASY_DIAG_STD!=null){
+//
+//                    Date admitdate=null;
+//                    Date maindate=null;
+//                    Date clinicdate=null;
+//                    Date pathdate=null;
+//                    for(INP_DIAGNOSIS diagnosis: zj_INP_DIAGNOSIS){
+//                        if(diagnosis.getDIAGNOSIS_TYPE()!=null){
+//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("出院主要诊断")){
+//                                maindate=diagnosis.getDIAGNOSIS_DATE();
+//                            }
+//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("门诊诊断")){
+//                                clinicdate=diagnosis.getDIAGNOSIS_DATE();
+//                            }
+//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("入院初诊")){
+//                                admitdate=diagnosis.getDIAGNOSIS_DATE();
+//                            }
+//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("病理诊断")){
+//                                pathdate=diagnosis.getDIAGNOSIS_DATE();
+//                            }
+//                        }
+//
+//                    }
+//
+//
+//                    saveIndexDiagnosisAdmit(zj_BASY_DIAG_STD,visitdate,admitdate);
+//                    saveIndexDiagnosisClinic(zj_BASY_DIAG_STD,visitdate,clinicdate);
+//                    saveIndexDiagnosisMain(zj_BASY_DIAG_STD,visitdate,maindate);
+//                    saveIndexDiagnosisOther(zj_BASY_DIAG_STD,visitdate,maindate);
+//                    saveIndexInjury(zj_BASY_DIAG_STD);
+//                    saveIndexPathology(zj_BASY_DIAG_STD,visitdate,pathdate);
+//                }
+//
+//                if(zj_BASY_OP_STD!=null){
+//                    saveIndexOperation(zj_BASY_OP_STD);
+//                }
 
 /*
 
@@ -8221,20 +8221,6 @@ public class RuleRunServiceImpl implements RuleRunService {
                     treatment.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
                     treatmentService.saveTreatment(treatment);
                 }
-                //数据版本
-//                     treatment.setDataVersion();
-//                     //数据库来源
-//                     treatment.setDataDbSource();
-//                     //数据表来源
-//                     treatment.setDataTableSource();
-//                     //数据项来源
-//                     treatment.setDataFieldSource();
-//                     //创建时间
-//                     treatment.setCreatedAt();
-//                     //创建人
-//                     treatment.setCreator();
-//                     //修改时间
-//                     treatment.setUpdatedAt();
             }
         }
     }
