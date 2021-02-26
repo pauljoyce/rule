@@ -8496,54 +8496,6 @@ public class RuleRunServiceImpl implements RuleRunService {
         }
     }
 
-    public void saveChemotherapyDrug(List<DRUG_COURSE> zj_DRUG_COURSE) {
-        ChemotherapyDrug chemotherapyDrug;
-        for(DRUG_COURSE drugCourse : zj_DRUG_COURSE){
-            if(StringUtils.isNotEmpty(drugCourse.getDRUG_NAME())){
-                chemotherapyDrug = new ChemotherapyDrug();
-                //标识患者身份唯一标识
-                chemotherapyDrug.setPersonId(drugCourse.getUNIQUE_ID_LV1());
-                //唯一标识
-                chemotherapyDrug.setUniqueId(drugCourse.getUNIQUE_ID_LV2());
-                //医疗机构代码
-                chemotherapyDrug.setP900(drugCourse.getP900());
-                //患者id
-                chemotherapyDrug.setPatientId(drugCourse.getPATIENT_ID());
-                //住院号
-                chemotherapyDrug.setVisitId(drugCourse.getVISIT_ID());
-                //具体药物名称
-                chemotherapyDrug.setDrugName(drugCourse.getDRUG_NAME());
-                //给药途径
-                chemotherapyDrug.setChannel(drugCourse.getADMIN_ROUTE());
-                //用药频率
-                chemotherapyDrug.setFrequency(drugCourse.getADMIN_FREQ());
-                //药物剂量
-                chemotherapyDrug.setDose(drugCourse.getDRUG_DOSE());
-                //剂量单位
-//            chemotherapyDrug.setUnit();
-                //用药开始日期
-                chemotherapyDrug.setStartDate(drugCourse.getDATE_TIME_P());
-                //用药结束日期
-//                chemotherapyDrug.setEndDate(drugCourse.getDATE_TIME_ESTIMATE());
-                //数据版本
-//            chemotherapyDrug.setDataVersion();
-//            //数据库来源
-//            chemotherapyDrug.setDataDbSource();
-//            //数据表来源
-//            chemotherapyDrug.setDataTableSource();
-//            //数据项来源
-//            chemotherapyDrug.setDataFieldSource();
-//            //创建时间
-//            chemotherapyDrug.setCreatedAt();
-//            //创建人
-//            chemotherapyDrug.setCreator();
-//            //修改时间
-//            chemotherapyDrug.setUpdatedAt();
-                chemotherapyDrugService.saveChemotherapyDrug(chemotherapyDrug);
-            }
-        }
-    }
-
     public void saveRadiotherapy(List<RADIOTHERAPY> zj_RADIOTHERAPY) {
         Radiotherapy radiotherapy;
         for(RADIOTHERAPY radiotherapy1 : zj_RADIOTHERAPY){
