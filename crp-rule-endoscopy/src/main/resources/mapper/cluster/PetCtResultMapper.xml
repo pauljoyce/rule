@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.PetCtResultMapper">
+<select id="findPetCtResultByUniqueId"  resultType="com.clinical.model.cluster.PetCtResult">
+       SELECT * FROM pet_ct_result WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="savePetCtResult"  parameterType="com.clinical.model.cluster.PetCtResult" useGeneratedKeys="true" keyProperty="id">
+  insert into pet_ct_result(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       exam_no,
+       exam_name,
+       tumor,
+       primary_tumor_location,
+       primary_tumors_number,
+       primary_tumor_size,
+       recrudescence,
+       move,
+       move_site,
+       move_number,
+       move_size,
+       lymphadenopathy,
+       enlarged_lymph_location,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{examNo},
+       #{examName},
+       #{tumor},
+       #{primaryTumorLocation},
+       #{primaryTumorsNumber},
+       #{primaryTumorSize},
+       #{recrudescence},
+       #{move},
+       #{moveSite},
+       #{moveNumber},
+       #{moveSize},
+       #{lymphadenopathy},
+       #{enlargedLymphLocation},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updatePetCtResult"  parameterType="com.clinical.model.cluster.PetCtResult">
+      update   pet_ct_result
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    exam_no = #{examNo},  
+    exam_name = #{examName},  
+    tumor = #{tumor},  
+    primary_tumor_location = #{primaryTumorLocation},  
+    primary_tumors_number = #{primaryTumorsNumber},  
+    primary_tumor_size = #{primaryTumorSize},  
+    recrudescence = #{recrudescence},  
+    move = #{move},  
+    move_site = #{moveSite},  
+    move_number = #{moveNumber},  
+    move_size = #{moveSize},  
+    lymphadenopathy = #{lymphadenopathy},  
+    enlarged_lymph_location = #{enlargedLymphLocation},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

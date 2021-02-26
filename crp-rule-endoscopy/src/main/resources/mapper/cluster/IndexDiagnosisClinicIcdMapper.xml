@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.IndexDiagnosisClinicIcdMapper">
+<select id="findIndexDiagnosisClinicIcdByUniqueId"  resultType="com.clinical.model.cluster.IndexDiagnosisClinicIcd">
+       SELECT * FROM index_diagnosis_clinic_icd WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveIndexDiagnosisClinicIcd"  parameterType="com.clinical.model.cluster.IndexDiagnosisClinicIcd" useGeneratedKeys="true" keyProperty="id">
+  insert into index_diagnosis_clinic_icd(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       clinic_id,
+       diagnosis_icdcode,
+       diagnosis_icddesc,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{clinicId},
+       #{diagnosisIcdcode},
+       #{diagnosisIcddesc},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateIndexDiagnosisClinicIcd"  parameterType="com.clinical.model.cluster.IndexDiagnosisClinicIcd">
+      update   index_diagnosis_clinic_icd
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    clinic_id = #{clinicId},  
+    diagnosis_icdcode = #{diagnosisIcdcode},  
+    diagnosis_icddesc = #{diagnosisIcddesc},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

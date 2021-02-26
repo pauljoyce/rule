@@ -13,6 +13,8 @@ public class ChemotherapyDrug{
     private String patientId;
     //住院号
     private String visitId;
+    //具体药物类型
+    private String drugType;
     //具体药物名称
     private String drugName;
     //给药途径
@@ -77,6 +79,12 @@ public class ChemotherapyDrug{
     } 
     public void setVisitId(String visitId) {
          this.visitId = visitId;
+    } 
+    public String getDrugType(){
+        return drugType;
+    } 
+    public void setDrugType(String drugType) {
+         this.drugType = drugType;
     } 
     public String getDrugName(){
         return drugName;
