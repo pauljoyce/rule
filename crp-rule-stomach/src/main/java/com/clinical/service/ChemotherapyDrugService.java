@@ -8,6 +8,4 @@ public interface ChemotherapyDrugService {
 
     public  void saveChemotherapyDrug(ChemotherapyDrug chemotherapyDrug);
 
-    public  void deleteChemotherapyDrug(String uniqueId);
-
 }

@@ -6,12 +6,13 @@
        SELECT * FROM chemotherapy_drug WHERE unique_id=#{unique_id}
 </select>
 
- <insert id="saveChemotherapyDrug"  parameterType="com.clinical.model.cluster.ChemotherapyDrug">
+ <insert id="saveChemotherapyDrug"  parameterType="com.clinical.model.cluster.ChemotherapyDrug" useGeneratedKeys="true" keyProperty="id">
   insert into chemotherapy_drug(       person_id,
        unique_id,
        p900,
        patient_id,
        visit_id,
+       drug_type,
        drug_name,
        channel,
        frequency,
@@ -32,6 +33,7 @@ values
        #{p900},
        #{patientId},
        #{visitId},
+       #{drugType},
        #{drugName},
        #{channel},
        #{frequency},
@@ -47,11 +49,6 @@ values
        #{creator},
        #{updatedAt})
 </insert>
-
- <delete id="deleteChemotherapyDrug">
-   delete * from chemotherapy_drug where unique_id=#{unique_id}
-  </delete>
-
  <update id="updateChemotherapyDrug"  parameterType="com.clinical.model.cluster.ChemotherapyDrug">
       update   chemotherapy_drug
  set
@@ -60,6 +57,7 @@ values
     p900 = #{p900},  
     patient_id = #{patientId},  
     visit_id = #{visitId},  
+    drug_type = #{drugType},  
     drug_name = #{drugName},  
     channel = #{channel},  
     frequency = #{frequency},  

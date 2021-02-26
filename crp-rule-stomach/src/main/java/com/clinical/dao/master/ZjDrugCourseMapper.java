@@ -5,5 +5,4 @@ import java.util.List;
 public interface ZjDrugCourseMapper {
     List<DRUG_COURSE>  findZjDrugCourseByUniqueId(String unique_id_lv2);
 
-    List<String> findZjDrugCourseByIncr();
 }

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.HisPersonMapper">
+<select id="findHisPersonByUniqueId"  resultType="com.clinical.model.cluster.HisPerson">
+       SELECT * FROM his_person WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveHisPerson"  parameterType="com.clinical.model.cluster.HisPerson" useGeneratedKeys="true" keyProperty="id">
+  insert into his_person(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       smoke,
+       smoke_year,
+       daily_smoke,
+       stop_smoke,
+       stop_smoke_year,
+       drink,
+       drink_type,
+       drink_year,
+       daily_drink,
+       stop_drink,
+       stop_drink_year,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{smoke},
+       #{smokeYear},
+       #{dailySmoke},
+       #{stopSmoke},
+       #{stopSmokeYear},
+       #{drink},
+       #{drinkType},
+       #{drinkYear},
+       #{dailyDrink},
+       #{stopDrink},
+       #{stopDrinkYear},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateHisPerson"  parameterType="com.clinical.model.cluster.HisPerson">
+      update   his_person
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    smoke = #{smoke},  
+    smoke_year = #{smokeYear},  
+    daily_smoke = #{dailySmoke},  
+    stop_smoke = #{stopSmoke},  
+    stop_smoke_year = #{stopSmokeYear},  
+    drink = #{drink},  
+    drink_type = #{drinkType},  
+    drink_year = #{drinkYear},  
+    daily_drink = #{dailyDrink},  
+    stop_drink = #{stopDrink},  
+    stop_drink_year = #{stopDrinkYear},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>
