@@ -411,8 +411,8 @@ public class RuleRunServiceImpl implements RuleRunService {
                 //List<INP_DIAGNOSIS> zj_INP_DIAGNOSIS = zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
               //  List<INP_CONSULTATION_DOCTOR_DETAIL> zj_INP_CONSULTATION_DOCTOR_DETAIL = zjInpConsultationDoctorDetailMapper.findZjInpConsultationDoctorDetailByUniqueId(uniqueId);*/
                 //List<LIS_RECORD> zj_LIS_RECORD = zjLisRecordMapper.findZjLisRecordByUniqueId(uniqueId);
-//                List<DRUG_ORDER> zj_DRUG_ORDER = zjDrugOrderMapper.findZjDrugOrderByUniqueId(uniqueId);
-//                List<DRUG_COURSE> zj_DRUG_COURSE = zjDrugCourseMapper.findZjDrugCourseByUniqueId(uniqueId);
+                List<DRUG_ORDER> zj_DRUG_ORDER = zjDrugOrderMapper.findZjDrugOrderByUniqueId(uniqueId);
+                List<DRUG_COURSE> zj_DRUG_COURSE = zjDrugCourseMapper.findZjDrugCourseByUniqueId(uniqueId);
                // List<POSSIBLE_CAUSE> zj_POSSIBLE_CAUSE = zjPossibleCauseMapper.findZjPossibleCauseByUniqueId(uniqueId);
                // List<FAMILY_HISTORY> zj_FAMILY_HISTORY = zjFamilyHistoryMapper.findZjFamilyHistoryByUniqueId(uniqueId);
                 //List<CONCOMITANT_DISEASE> zj_CONCOMITANT_DISEASE = zjConcomitantDiseaseMapper.findZjConcomitantDiseaseByUniqueId(uniqueId);
@@ -607,8 +607,13 @@ public class RuleRunServiceImpl implements RuleRunService {
 //                if(zj_NURSING_RECORD!=null&&zj_NURSING_RECORD.size()>0){
 //                    savePersonGeneral(zj_NURSING_RECORD, zj_VITAL_RECORD);
 //                }
-
-
+                if (zj_DRUG_ORDER!=null&&zj_DRUG_COURSE.size()!=0){
+                    saveTreatment(zj_DRUG_ORDER);
+                    saveCancerPainTreatment(zj_DRUG_ORDER);
+                    saveChemotherapyDrug(zj_DRUG_COURSE, zj_DRUG_ORDER);
+                }else if (zj_DRUG_COURSE!=null&&zj_DRUG_COURSE.size()!=0){
+                    saveChemotherapyDrug(zj_DRUG_COURSE, zj_DRUG_ORDER);
+                }
             }
 
         }
@@ -8134,14 +8139,170 @@ public class RuleRunServiceImpl implements RuleRunService {
     }
 
     public void saveTreatment(List<DRUG_ORDER> zj_DRUG_ORDER) {
-        Treatment treatment;
         ChemotherapyDrug chemotherapyDrug;
         CancerPainTreatment cancerPainTreatment;
-        String drugType;
+        String drugType="";
         for (DRUG_ORDER drug_order : zj_DRUG_ORDER) {
-            drugType = DrugConstant.getDrugType(drug_order.getDRUG_NAME());
-            if ("化疗药物".equals(drugType)) {
-                chemotherapyDrug = new ChemotherapyDrug();
+
+            if(drug_order.getDRUG_NAME() != null){
+                Treatment treatment = new Treatment();
+                //标识患者身份唯一标识
+                treatment.setPersonId(drug_order.getUNIQUE_ID_LV1());
+                //唯一标识
+                treatment.setUniqueId(drug_order.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                treatment.setP900(drug_order.getP900());
+                //患者id
+                treatment.setPatientId(drug_order.getPATIENT_ID());
+                //住院号
+                treatment.setVisitId(drug_order.getVISIT_ID());
+                //医嘱类别
+                treatment.setOrderClass(drug_order.getORDER_CLASS());
+                // todo 用药分类
+                treatment.setDrugType(drugType);
+                //具体药物名称
+                treatment.setDrugName(drug_order.getINGREDIENT_STD());
+                //给药途径
+                treatment.setChannel(drug_order.getADMINISTRATION());
+                //药物剂量
+                treatment.setDose(drug_order.getDOSAGE());
+                //剂量单位
+                treatment.setUnit(drug_order.getDOSAGE_UNITS());
+                //用药开始日期
+                treatment.setStartDate(drug_order.getENTER_DATE_TIME());
+                //用药结束日期
+                treatment.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
+                log.info("正在保存治疗，visitid=" + drug_order.getVISIT_ID());
+                treatmentService.saveTreatment(treatment);
+            }
+//            drugType = DrugConstant.getDrugType(drug_order.getDRUG_NAME());
+//            if ("化疗药物".equals(drugType)) {
+//                chemotherapyDrug = new ChemotherapyDrug();
+//                //标识患者身份唯一标识
+//                chemotherapyDrug.setPersonId(drug_order.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                chemotherapyDrug.setUniqueId(drug_order.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                chemotherapyDrug.setP900(drug_order.getP900());
+//                //患者id
+//                chemotherapyDrug.setPatientId(drug_order.getPATIENT_ID());
+//                //住院号
+//                chemotherapyDrug.setVisitId(drug_order.getVISIT_ID());
+//                //具体药物名称
+//                chemotherapyDrug.setDrugName(drug_order.getDRUG_NAME());
+//                //给药途径
+//                chemotherapyDrug.setChannel(drug_order.getADMINISTRATION());
+//                //用药频率
+//                chemotherapyDrug.setFrequency(drug_order.getFREQUENCY());
+//                //药物剂量
+//                chemotherapyDrug.setDose(drug_order.getDOSAGE());
+//                //剂量单位
+//                chemotherapyDrug.setUnit(drug_order.getDOSAGE_UNITS());
+//                //用药开始日期
+//                chemotherapyDrug.setStartDate(drug_order.getENTER_DATE_TIME());
+//                //用药结束日期
+//                chemotherapyDrug.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
+//                chemotherapyDrugService.saveChemotherapyDrug(chemotherapyDrug);
+//            } else if ("癌痛治疗药物".equals(drugType)) {
+//                cancerPainTreatment = new CancerPainTreatment();
+//                //标识患者身份唯一标识
+//                cancerPainTreatment.setPersonId(drug_order.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                cancerPainTreatment.setUniqueId(drug_order.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                cancerPainTreatment.setP900(drug_order.getP900());
+//                //患者id
+//                cancerPainTreatment.setPatientId(drug_order.getPATIENT_ID());
+//                //住院号
+//                cancerPainTreatment.setVisitId(drug_order.getVISIT_ID());
+//                //癌痛治疗药物名称
+//                cancerPainTreatment.setDrugName(drug_order.getDRUG_NAME());
+//                //给药途径
+//                cancerPainTreatment.setAdministration(drug_order.getADMINISTRATION());
+//                //药物剂量
+//                cancerPainTreatment.setDosage(drug_order.getDOSAGE());
+//                //用药开始日期
+//                cancerPainTreatment.setEnterDateTime(drug_order.getENTER_DATE_TIME());
+//                //用药结束日期
+//                cancerPainTreatment.setStopOrderDateTime(drug_order.getSTOP_ORDER_DATE_TIME());
+//                cancerPainTreatmentService.saveCancerPainTreatment(cancerPainTreatment);
+//            } else {
+//                if(drug_order.getDRUG_NAME() != null){
+//                    treatment = new Treatment();
+//                    //标识患者身份唯一标识
+//                    treatment.setPersonId(drug_order.getUNIQUE_ID_LV1());
+//                    //唯一标识
+//                    treatment.setUniqueId(drug_order.getUNIQUE_ID_LV2());
+//                    //医疗机构代码
+//                    treatment.setP900(drug_order.getP900());
+//                    //患者id
+//                    treatment.setPatientId(drug_order.getPATIENT_ID());
+//                    //住院号
+//                    treatment.setVisitId(drug_order.getVISIT_ID());
+//                    //医嘱类别
+//                    treatment.setOrderClass(drug_order.getORDER_CLASS());
+//                    //用药分类
+//                    treatment.setDrugType(drugType);
+//                    //具体药物名称
+//                    treatment.setDrugName(drug_order.getDRUG_NAME());
+//                    //给药途径
+//                    treatment.setChannel(drug_order.getADMINISTRATION());
+//                    //药物剂量
+//                    treatment.setDose(drug_order.getDOSAGE());
+//                    //剂量单位
+//                    treatment.setUnit(drug_order.getDOSAGE_UNITS());
+//                    //用药开始日期
+//                    treatment.setStartDate(drug_order.getENTER_DATE_TIME());
+//                    //用药结束日期
+//                    treatment.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
+//                    treatmentService.saveTreatment(treatment);
+//                }
+//            }
+        }
+    }
+
+    public void saveChemotherapyDrug(List<DRUG_COURSE> zj_DRUG_COURSE,List<DRUG_ORDER> zj_DRUG_ORDER) {
+        for(DRUG_COURSE drugCourse : zj_DRUG_COURSE){
+            if(StringUtils.isNotEmpty(drugCourse.getdrug_name_std())){
+                ChemotherapyDrug chemotherapyDrug = new ChemotherapyDrug();
+                //标识患者身份唯一标识
+                chemotherapyDrug.setPersonId(drugCourse.getunique_id_lv1());
+                //唯一标识
+                chemotherapyDrug.setUniqueId(drugCourse.getunique_id_lv2());
+                //医疗机构代码
+                chemotherapyDrug.setP900(drugCourse.getp900());
+                //患者id
+                chemotherapyDrug.setPatientId(drugCourse.getpatient_id());
+                //住院号
+                chemotherapyDrug.setVisitId(drugCourse.getvisit_id());
+                //todo 具体药物类型
+                chemotherapyDrug.setDrugType("");
+                //具体药物名称
+                chemotherapyDrug.setDrugName(drugCourse.getdrug_name_std());
+                //给药途径
+                chemotherapyDrug.setChannel(drugCourse.getadmin_route_std());
+                //用药频率
+                chemotherapyDrug.setFrequency(drugCourse.getadmin_freq_std()==null?null:drugCourse.getadmin_freq_std().toString());
+                //药物剂量
+                if (drugCourse.getdrug_dose1_std()==null||"".equals(drugCourse.getdrug_dose1_std())){
+                    chemotherapyDrug.setDose(drugCourse.getdrug_dose2_std()==null?null:drugCourse.getdrug_dose2_std().toString());
+                    chemotherapyDrug.setUnit(drugCourse.getdrug_dose_unit2_std());
+                }else {
+                    chemotherapyDrug.setDose(drugCourse.getdrug_dose1_std()==null?null:drugCourse.getdrug_dose1_std().toString());
+                    chemotherapyDrug.setUnit(drugCourse.getdrug_dose_unit1_std());
+                }
+                //用药开始日期
+                chemotherapyDrug.setStartDate(drugCourse.getdate_time_p());
+                //用药结束日期
+//                chemotherapyDrug.setEndDate(drugCourse.getDATE_TIME_ESTIMATE());
+                log.info("正在保存化疗：药品病程，visitid=" + drugCourse.getvisit_id());
+                chemotherapyDrugService.saveChemotherapyDrug(chemotherapyDrug);
+            }
+        }
+
+        for(DRUG_ORDER drug_order : zj_DRUG_ORDER){
+            if(StringUtils.isNotEmpty(drug_order.getINGREDIENT_STD())){
+                ChemotherapyDrug chemotherapyDrug = new ChemotherapyDrug();
                 //标识患者身份唯一标识
                 chemotherapyDrug.setPersonId(drug_order.getUNIQUE_ID_LV1());
                 //唯一标识
@@ -8152,122 +8313,22 @@ public class RuleRunServiceImpl implements RuleRunService {
                 chemotherapyDrug.setPatientId(drug_order.getPATIENT_ID());
                 //住院号
                 chemotherapyDrug.setVisitId(drug_order.getVISIT_ID());
+                //todo 具体药物类型
+                chemotherapyDrug.setDrugType("");
                 //具体药物名称
-                chemotherapyDrug.setDrugName(drug_order.getDRUG_NAME());
+                chemotherapyDrug.setDrugName(drug_order.getINGREDIENT_STD());
                 //给药途径
                 chemotherapyDrug.setChannel(drug_order.getADMINISTRATION());
                 //用药频率
                 chemotherapyDrug.setFrequency(drug_order.getFREQUENCY());
                 //药物剂量
                 chemotherapyDrug.setDose(drug_order.getDOSAGE());
-                //剂量单位
                 chemotherapyDrug.setUnit(drug_order.getDOSAGE_UNITS());
                 //用药开始日期
                 chemotherapyDrug.setStartDate(drug_order.getENTER_DATE_TIME());
                 //用药结束日期
                 chemotherapyDrug.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
-                chemotherapyDrugService.saveChemotherapyDrug(chemotherapyDrug);
-            } else if ("癌痛治疗药物".equals(drugType)) {
-                cancerPainTreatment = new CancerPainTreatment();
-                //标识患者身份唯一标识
-                cancerPainTreatment.setPersonId(drug_order.getUNIQUE_ID_LV1());
-                //唯一标识
-                cancerPainTreatment.setUniqueId(drug_order.getUNIQUE_ID_LV2());
-                //医疗机构代码
-                cancerPainTreatment.setP900(drug_order.getP900());
-                //患者id
-                cancerPainTreatment.setPatientId(drug_order.getPATIENT_ID());
-                //住院号
-                cancerPainTreatment.setVisitId(drug_order.getVISIT_ID());
-                //癌痛治疗药物名称
-                cancerPainTreatment.setDrugName(drug_order.getDRUG_NAME());
-                //给药途径
-                cancerPainTreatment.setAdministration(drug_order.getADMINISTRATION());
-                //药物剂量
-                cancerPainTreatment.setDosage(drug_order.getDOSAGE());
-                //用药开始日期
-                cancerPainTreatment.setEnterDateTime(drug_order.getENTER_DATE_TIME());
-                //用药结束日期
-                cancerPainTreatment.setStopOrderDateTime(drug_order.getSTOP_ORDER_DATE_TIME());
-                cancerPainTreatmentService.saveCancerPainTreatment(cancerPainTreatment);
-            } else {
-                if(drug_order.getDRUG_NAME() != null){
-                    treatment = new Treatment();
-                    //标识患者身份唯一标识
-                    treatment.setPersonId(drug_order.getUNIQUE_ID_LV1());
-                    //唯一标识
-                    treatment.setUniqueId(drug_order.getUNIQUE_ID_LV2());
-                    //医疗机构代码
-                    treatment.setP900(drug_order.getP900());
-                    //患者id
-                    treatment.setPatientId(drug_order.getPATIENT_ID());
-                    //住院号
-                    treatment.setVisitId(drug_order.getVISIT_ID());
-                    //医嘱类别
-                    treatment.setOrderClass(drug_order.getORDER_CLASS());
-                    //用药分类
-                    treatment.setDrugType(drugType);
-                    //具体药物名称
-                    treatment.setDrugName(drug_order.getDRUG_NAME());
-                    //给药途径
-                    treatment.setChannel(drug_order.getADMINISTRATION());
-                    //药物剂量
-                    treatment.setDose(drug_order.getDOSAGE());
-                    //剂量单位
-                    treatment.setUnit(drug_order.getDOSAGE_UNITS());
-                    //用药开始日期
-                    treatment.setStartDate(drug_order.getENTER_DATE_TIME());
-                    //用药结束日期
-                    treatment.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
-                    treatmentService.saveTreatment(treatment);
-                }
-            }
-        }
-    }
-
-    public void saveChemotherapyDrug(List<DRUG_COURSE> zj_DRUG_COURSE) {
-        ChemotherapyDrug chemotherapyDrug;
-        for(DRUG_COURSE drugCourse : zj_DRUG_COURSE){
-            if(StringUtils.isNotEmpty(drugCourse.getDRUG_NAME())){
-                chemotherapyDrug = new ChemotherapyDrug();
-                //标识患者身份唯一标识
-                chemotherapyDrug.setPersonId(drugCourse.getUNIQUE_ID_LV1());
-                //唯一标识
-                chemotherapyDrug.setUniqueId(drugCourse.getUNIQUE_ID_LV2());
-                //医疗机构代码
-                chemotherapyDrug.setP900(drugCourse.getP900());
-                //患者id
-                chemotherapyDrug.setPatientId(drugCourse.getPATIENT_ID());
-                //住院号
-                chemotherapyDrug.setVisitId(drugCourse.getVISIT_ID());
-                //具体药物名称
-                chemotherapyDrug.setDrugName(drugCourse.getDRUG_NAME());
-                //给药途径
-                chemotherapyDrug.setChannel(drugCourse.getADMIN_ROUTE());
-                //用药频率
-                chemotherapyDrug.setFrequency(drugCourse.getADMIN_FREQ());
-                //药物剂量
-                chemotherapyDrug.setDose(drugCourse.getDRUG_DOSE());
-                //剂量单位
-//            chemotherapyDrug.setUnit();
-                //用药开始日期
-                chemotherapyDrug.setStartDate(drugCourse.getDATE_TIME_P());
-                //用药结束日期
-//                chemotherapyDrug.setEndDate(drugCourse.getDATE_TIME_ESTIMATE());
-                //数据版本
-//            chemotherapyDrug.setDataVersion();
-//            //数据库来源
-//            chemotherapyDrug.setDataDbSource();
-//            //数据表来源
-//            chemotherapyDrug.setDataTableSource();
-//            //数据项来源
-//            chemotherapyDrug.setDataFieldSource();
-//            //创建时间
-//            chemotherapyDrug.setCreatedAt();
-//            //创建人
-//            chemotherapyDrug.setCreator();
-//            //修改时间
-//            chemotherapyDrug.setUpdatedAt();
+                log.info("正在保存化疗：药品医嘱，visitid=" + drug_order.getVISIT_ID());
                 chemotherapyDrugService.saveChemotherapyDrug(chemotherapyDrug);
             }
         }
@@ -8359,89 +8420,37 @@ public class RuleRunServiceImpl implements RuleRunService {
         }
     }
 
-    //         public void saveCancerPainTreatment(){
-//                 CancerPainTreatment cancerPainTreatment = new CancerPainTreatment();
-//                    //标识患者身份唯一标识
-//                   cancerPainTreatment.setPersonId();
-//                    //唯一标识
-//                   cancerPainTreatment.setUniqueId();
-//                    //医疗机构代码
-//                   cancerPainTreatment.setP900();
-//                    //患者id
-//                   cancerPainTreatment.setPatientId();
-//                    //住院号
-//                   cancerPainTreatment.setVisitId();
-//                    //癌痛治疗药物名称
-//                   cancerPainTreatment.setDrugName();
-//                    //给药途径
-//                   cancerPainTreatment.setAdministration();
-//                    //药物剂量
-//                   cancerPainTreatment.setDosage();
-//                    //用药开始日期
-//                   cancerPainTreatment.setEnterDateTime();
-//                    //用药结束日期
-//                   cancerPainTreatment.setStopOrderDateTime();
-//                    //数据版本
-//                   cancerPainTreatment.setDataVersion();
-//                    //数据库来源
-//                   cancerPainTreatment.setDataDbSource();
-//                    //数据表来源
-//                   cancerPainTreatment.setDataTableSource();
-//                    //数据项来源
-//                   cancerPainTreatment.setDataFieldSource();
-//                    //创建时间
-//                   cancerPainTreatment.setCreatedAt();
-//                    //创建人
-//                   cancerPainTreatment.setCreator();
-//                    //修改时间
-//                    cancerPainTreatment.setUpdatedAt();
-//            cancerPainTreatmentService.saveCancerPainTreatment(cancerPainTreatment);
-//            }
-    public void saveFollowUp(List<FOLLOW_UP> zj_FOLLOW_UP) {
-        FollowUp followUp;
-        for (FOLLOW_UP follow_up : zj_FOLLOW_UP) {
-            followUp = new FollowUp();
-            //标识患者身份唯一标识
-            followUp.setPersonId(follow_up.getUNIQUE_ID_LV1());
-            //唯一标识
-            followUp.setUniqueId(follow_up.getUNIQUE_ID_LV2());
-            //医疗机构代码
-            followUp.setP900(follow_up.getP900());
-            //患者id
-            followUp.setPatientId(follow_up.getPATIENT_ID());
-            //住院号
-            followUp.setVisitId(follow_up.getVISIT_ID());
-            //随访方式
-            followUp.setFollowMethod(follow_up.getFOLLOW_METHOD());
-            //随访日期
-            followUp.setFollowupTime(follow_up.getFOLLOWUP_TIME());
-            //疾病状态
-            followUp.setTumourSta(follow_up.getTUMOUR_STA());
-            //生存情况
-            followUp.setFollowupStatus(follow_up.getFOLLOWUP_STATUS());
-            //死亡原因
-            followUp.setCauseOfDeath(follow_up.getCAUSE_OF_DEATH());
-            //死亡日期
-            followUp.setDateOfDeath(follow_up.getDATE_OF_DEATH());
-            //末次随访日期
-            followUp.setLastContactDate(follow_up.getLAST_CONTACT_DATE());
-            //数据版本
-//                 followUp.setDataVersion();
-//                 //数据库来源
-//                 followUp.setDataDbSource();
-//                 //数据表来源
-//                 followUp.setDataTableSource();
-//                 //数据项来源
-//                 followUp.setDataFieldSource();
-//                 //创建时间
-//                 followUp.setCreatedAt();
-//                 //创建人
-//                 followUp.setCreator();
-//                 //修改时间
-//                 followUp.setUpdatedAt();
-            followUpService.saveFollowUp(followUp);
-        }
-    }
-
+     public void saveCancerPainTreatment(List<DRUG_ORDER> zj_DRUG_ORDER) {
+         String drugType = "";
+         for (DRUG_ORDER drug_order : zj_DRUG_ORDER) {
+             if (drug_order.getDRUG_NAME() != null) {
+                 CancerPainTreatment cancerPainTreatment = new CancerPainTreatment();
+                 //标识患者身份唯一标识
+                 cancerPainTreatment.setPersonId(drug_order.getUNIQUE_ID_LV1());
+                 //唯一标识
+                 cancerPainTreatment.setUniqueId(drug_order.getUNIQUE_ID_LV2());
+                 //医疗机构代码
+                 cancerPainTreatment.setP900(drug_order.getP900());
+                 //患者id
+                 cancerPainTreatment.setPatientId(drug_order.getPATIENT_ID());
+                 //住院号
+                 cancerPainTreatment.setVisitId(drug_order.getVISIT_ID());
+                 //具体药物名称
+                 cancerPainTreatment.setDrugName(drug_order.getINGREDIENT_STD());
+                 // todo 癌痛治疗药物类型
+                 cancerPainTreatment.setDrugType(drugType);
+                 //给药途径
+                 cancerPainTreatment.setAdministration(drug_order.getADMINISTRATION());
+                 //药物剂量
+                 cancerPainTreatment.setDosage(drug_order.getDOSAGE());
+                 //用药开始日期
+                 cancerPainTreatment.setEnterDateTime(drug_order.getENTER_DATE_TIME());
+                 //用药结束日期
+                 cancerPainTreatment.setStopOrderDateTime(drug_order.getSTOP_ORDER_DATE_TIME());
+                 log.info("正在保存癌痛治疗，visitid=" + drug_order.getVISIT_ID());
+                 cancerPainTreatmentService.saveCancerPainTreatment(cancerPainTreatment);
+             }
+         }
+     }
 
 }

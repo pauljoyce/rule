@@ -15,6 +15,8 @@ public class CancerPainTreatment{
     private String visitId;
     //癌痛治疗药物名称
     private String drugName;
+    //具体药物类型
+    private String drugType;
     //给药途径
     private String administration;
     //药物剂量
@@ -79,6 +81,12 @@ public class CancerPainTreatment{
     } 
     public void setDrugName(String drugName) {
          this.drugName = drugName;
+    } 
+    public String getDrugType(){
+        return drugType;
+    } 
+    public void setDrugType(String drugType) {
+         this.drugType = drugType;
     } 
     public String getAdministration(){
         return administration;

@@ -2,324 +2,316 @@ package com.clinical.model.master;
 import java.util.Date;
 public class DRUG_COURSE{
     //流水号
-    private String SEQ_ID;
+    private Integer seq_id;
     //唯一标识
-    private String UNIQUE_ID;
+    private String unique_id;
     //关联1级表unique_id
-    private String UNIQUE_ID_LV1;
+    private String unique_id_lv1;
     //关联2级表unique_id
-    private String UNIQUE_ID_LV2;
+    private String unique_id_lv2;
     //医疗机构代码
-    private String P900;
+    private String p900;
     //患者ID
-    private String PATIENT_ID;
+    private String patient_id;
     //病案号
-    private String TPATNO;
+    private String tpatno;
     //就诊类型
-    private Integer VISIT_TYPE;
+    private Integer visit_type;
     //记录状态
-    private String RECORD_STATUS;
+    private String record_status;
     //住院号
-    private String VISIT_ID;
+    private String visit_id;
     //住院次数
-    private Double ADMISSION_NUMBER;
+    private Integer admission_number;
     //入院时间
-    private Date ADMISSION_DATE_TIME;
+    private Date admission_date_time;
     //时间点
-    private String DATE_TIME;
-    //几线治疗
-    private String LINE_VALUE;
-    //周期
-    private String COURSE;
-    //方案
-    private String REGIMEN;
-    //治疗方式
-    private String TREATMENT;
+    private String date_time;
     //药物名称
-    private String DRUG_NAME;
+    private String drug_name;
     //用药剂量
-    private String DRUG_DOSE;
+    private String drug_dose;
     //用药频率
-    private String ADMIN_FREQ;
-    //用药时长
-    private String DRUG_DURATION;
+    private String admin_freq;
     //给药方式
-    private String ADMIN_ROUTE;
-    //特别动作
-    private String MODIFY;
-    //疗效评价
-    private String EFFICACY;
-    //疗效评价时间
-    private String EFFICACY_DATE_TIME;
-    //目的
-    private String PURPOSE;
+    private String admin_route;
     //药物治疗信息字段来源
-    private String FS_NLP;
+    private String fs_nlp;
     //药物治疗信息字段来源中文备注
-    private String FS_NLP_CN;
+    private String fs_nlp_cn;
     //字段来源中的药物治疗流水号
-    private Double FS_SERIAL_NUMBER;
+    private Integer fs_serial_number;
     //字段来源中药物治疗信息所在位置
-    private Double FS_LOCATION;
+    private Integer fs_location;
     //数据版本
-    private String DATA_VERSION;
+    private String data_version;
     //数据表来源
-    private String DATA_TABLE_SOURCE;
+    private String data_table_source;
     //数据表来源中文备注
-    private String DATA_TABLE_SOURCE_CN;
+    private String data_table_source_cn;
     //数据项来源
-    private String DATA_FIELD_SOURCE;
+    private String data_field_source;
     //创建时间
-    private Date CREATE_TIME;
+    private Date create_time;
     //创建人
-    private String CREATOR;
+    private String creator;
     //记录时间
-    private Date RECORD_TIME;
+    private Date record_time;
     //批号
-    private String BATCH_NUMBER;
+    private String batch_number;
     //时间点精确时间
-    private Date DATE_TIME_P;
+    private Date date_time_p;
     //时间点推测时间
-    private Date DATE_TIME_ESTIMATE;
+    private Date date_time_estimate;
+    //药物名称-标准名称
+    private String drug_name_std;
+    //用药剂量-标准剂量1
+    private Integer drug_dose1_std;
+    //用药剂量-单位1
+    private String drug_dose_unit1_std;
+    //用药剂量-标准剂量2
+    private Integer drug_dose2_std;
+    //用药剂量-单位2
+    private String drug_dose_unit2_std;
+    //用药频率-标准频率
+    private Integer admin_freq_std;
+    //用药频率-单位
+    private String admin_freq_unit_std;
+    //标准给药方式
+    private String admin_route_std;
 
-    public String getSEQ_ID(){
-        return SEQ_ID;
+    public Integer getseq_id(){
+        return seq_id;
     } 
-    public void setSEQ_ID(String SEQ_ID) {
-         this.SEQ_ID = SEQ_ID;
+    public void setseq_id(Integer seq_id) {
+         this.seq_id = seq_id;
     } 
-    public String getUNIQUE_ID(){
-        return UNIQUE_ID;
+    public String getunique_id(){
+        return unique_id;
     } 
-    public void setUNIQUE_ID(String UNIQUE_ID) {
-         this.UNIQUE_ID = UNIQUE_ID;
+    public void setunique_id(String unique_id) {
+         this.unique_id = unique_id;
     } 
-    public String getUNIQUE_ID_LV1(){
-        return UNIQUE_ID_LV1;
+    public String getunique_id_lv1(){
+        return unique_id_lv1;
     } 
-    public void setUNIQUE_ID_LV1(String UNIQUE_ID_LV1) {
-         this.UNIQUE_ID_LV1 = UNIQUE_ID_LV1;
+    public void setunique_id_lv1(String unique_id_lv1) {
+         this.unique_id_lv1 = unique_id_lv1;
     } 
-    public String getUNIQUE_ID_LV2(){
-        return UNIQUE_ID_LV2;
+    public String getunique_id_lv2(){
+        return unique_id_lv2;
     } 
-    public void setUNIQUE_ID_LV2(String UNIQUE_ID_LV2) {
-         this.UNIQUE_ID_LV2 = UNIQUE_ID_LV2;
+    public void setunique_id_lv2(String unique_id_lv2) {
+         this.unique_id_lv2 = unique_id_lv2;
     } 
-    public String getP900(){
-        return P900;
+    public String getp900(){
+        return p900;
     } 
-    public void setP900(String P900) {
-         this.P900 = P900;
+    public void setp900(String p900) {
+         this.p900 = p900;
     } 
-    public String getPATIENT_ID(){
-        return PATIENT_ID;
+    public String getpatient_id(){
+        return patient_id;
     } 
-    public void setPATIENT_ID(String PATIENT_ID) {
-         this.PATIENT_ID = PATIENT_ID;
+    public void setpatient_id(String patient_id) {
+         this.patient_id = patient_id;
     } 
-    public String getTPATNO(){
-        return TPATNO;
+    public String gettpatno(){
+        return tpatno;
     } 
-    public void setTPATNO(String TPATNO) {
-         this.TPATNO = TPATNO;
+    public void settpatno(String tpatno) {
+         this.tpatno = tpatno;
     } 
-    public Integer getVISIT_TYPE(){
-        return VISIT_TYPE;
+    public Integer getvisit_type(){
+        return visit_type;
     } 
-    public void setVISIT_TYPE(Integer VISIT_TYPE) {
-         this.VISIT_TYPE = VISIT_TYPE;
+    public void setvisit_type(Integer visit_type) {
+         this.visit_type = visit_type;
     } 
-    public String getRECORD_STATUS(){
-        return RECORD_STATUS;
+    public String getrecord_status(){
+        return record_status;
     } 
-    public void setRECORD_STATUS(String RECORD_STATUS) {
-         this.RECORD_STATUS = RECORD_STATUS;
+    public void setrecord_status(String record_status) {
+         this.record_status = record_status;
     } 
-    public String getVISIT_ID(){
-        return VISIT_ID;
+    public String getvisit_id(){
+        return visit_id;
     } 
-    public void setVISIT_ID(String VISIT_ID) {
-         this.VISIT_ID = VISIT_ID;
+    public void setvisit_id(String visit_id) {
+         this.visit_id = visit_id;
     } 
-    public Double getADMISSION_NUMBER(){
-        return ADMISSION_NUMBER;
+    public Integer getadmission_number(){
+        return admission_number;
     } 
-    public void setADMISSION_NUMBER(Double ADMISSION_NUMBER) {
-         this.ADMISSION_NUMBER = ADMISSION_NUMBER;
+    public void setadmission_number(Integer admission_number) {
+         this.admission_number = admission_number;
     } 
-    public Date getADMISSION_DATE_TIME(){
-        return ADMISSION_DATE_TIME;
+    public Date getadmission_date_time(){
+        return admission_date_time;
     } 
-    public void setADMISSION_DATE_TIME(Date ADMISSION_DATE_TIME) {
-         this.ADMISSION_DATE_TIME = ADMISSION_DATE_TIME;
+    public void setadmission_date_time(Date admission_date_time) {
+         this.admission_date_time = admission_date_time;
     } 
-    public String getDATE_TIME(){
-        return DATE_TIME;
+    public String getdate_time(){
+        return date_time;
     } 
-    public void setDATE_TIME(String DATE_TIME) {
-         this.DATE_TIME = DATE_TIME;
+    public void setdate_time(String date_time) {
+         this.date_time = date_time;
     } 
-    public String getLINE_VALUE(){
-        return LINE_VALUE;
+    public String getdrug_name(){
+        return drug_name;
     } 
-    public void setLINE_VALUE(String LINE_VALUE) {
-         this.LINE_VALUE = LINE_VALUE;
+    public void setdrug_name(String drug_name) {
+         this.drug_name = drug_name;
     } 
-    public String getCOURSE(){
-        return COURSE;
+    public String getdrug_dose(){
+        return drug_dose;
     } 
-    public void setCOURSE(String COURSE) {
-         this.COURSE = COURSE;
+    public void setdrug_dose(String drug_dose) {
+         this.drug_dose = drug_dose;
     } 
-    public String getREGIMEN(){
-        return REGIMEN;
+    public String getadmin_freq(){
+        return admin_freq;
     } 
-    public void setREGIMEN(String REGIMEN) {
-         this.REGIMEN = REGIMEN;
+    public void setadmin_freq(String admin_freq) {
+         this.admin_freq = admin_freq;
     } 
-    public String getTREATMENT(){
-        return TREATMENT;
+    public String getadmin_route(){
+        return admin_route;
     } 
-    public void setTREATMENT(String TREATMENT) {
-         this.TREATMENT = TREATMENT;
+    public void setadmin_route(String admin_route) {
+         this.admin_route = admin_route;
     } 
-    public String getDRUG_NAME(){
-        return DRUG_NAME;
+    public String getfs_nlp(){
+        return fs_nlp;
     } 
-    public void setDRUG_NAME(String DRUG_NAME) {
-         this.DRUG_NAME = DRUG_NAME;
+    public void setfs_nlp(String fs_nlp) {
+         this.fs_nlp = fs_nlp;
     } 
-    public String getDRUG_DOSE(){
-        return DRUG_DOSE;
+    public String getfs_nlp_cn(){
+        return fs_nlp_cn;
     } 
-    public void setDRUG_DOSE(String DRUG_DOSE) {
-         this.DRUG_DOSE = DRUG_DOSE;
+    public void setfs_nlp_cn(String fs_nlp_cn) {
+         this.fs_nlp_cn = fs_nlp_cn;
     } 
-    public String getADMIN_FREQ(){
-        return ADMIN_FREQ;
+    public Integer getfs_serial_number(){
+        return fs_serial_number;
     } 
-    public void setADMIN_FREQ(String ADMIN_FREQ) {
-         this.ADMIN_FREQ = ADMIN_FREQ;
+    public void setfs_serial_number(Integer fs_serial_number) {
+         this.fs_serial_number = fs_serial_number;
     } 
-    public String getDRUG_DURATION(){
-        return DRUG_DURATION;
+    public Integer getfs_location(){
+        return fs_location;
     } 
-    public void setDRUG_DURATION(String DRUG_DURATION) {
-         this.DRUG_DURATION = DRUG_DURATION;
+    public void setfs_location(Integer fs_location) {
+         this.fs_location = fs_location;
     } 
-    public String getADMIN_ROUTE(){
-        return ADMIN_ROUTE;
+    public String getdata_version(){
+        return data_version;
     } 
-    public void setADMIN_ROUTE(String ADMIN_ROUTE) {
-         this.ADMIN_ROUTE = ADMIN_ROUTE;
+    public void setdata_version(String data_version) {
+         this.data_version = data_version;
     } 
-    public String getMODIFY(){
-        return MODIFY;
+    public String getdata_table_source(){
+        return data_table_source;
     } 
-    public void setMODIFY(String MODIFY) {
-         this.MODIFY = MODIFY;
+    public void setdata_table_source(String data_table_source) {
+         this.data_table_source = data_table_source;
     } 
-    public String getEFFICACY(){
-        return EFFICACY;
+    public String getdata_table_source_cn(){
+        return data_table_source_cn;
     } 
-    public void setEFFICACY(String EFFICACY) {
-         this.EFFICACY = EFFICACY;
+    public void setdata_table_source_cn(String data_table_source_cn) {
+         this.data_table_source_cn = data_table_source_cn;
     } 
-    public String getEFFICACY_DATE_TIME(){
-        return EFFICACY_DATE_TIME;
+    public String getdata_field_source(){
+        return data_field_source;
     } 
-    public void setEFFICACY_DATE_TIME(String EFFICACY_DATE_TIME) {
-         this.EFFICACY_DATE_TIME = EFFICACY_DATE_TIME;
+    public void setdata_field_source(String data_field_source) {
+         this.data_field_source = data_field_source;
     } 
-    public String getPURPOSE(){
-        return PURPOSE;
+    public Date getcreate_time(){
+        return create_time;
     } 
-    public void setPURPOSE(String PURPOSE) {
-         this.PURPOSE = PURPOSE;
+    public void setcreate_time(Date create_time) {
+         this.create_time = create_time;
     } 
-    public String getFS_NLP(){
-        return FS_NLP;
+    public String getcreator(){
+        return creator;
     } 
-    public void setFS_NLP(String FS_NLP) {
-         this.FS_NLP = FS_NLP;
+    public void setcreator(String creator) {
+         this.creator = creator;
     } 
-    public String getFS_NLP_CN(){
-        return FS_NLP_CN;
+    public Date getrecord_time(){
+        return record_time;
     } 
-    public void setFS_NLP_CN(String FS_NLP_CN) {
-         this.FS_NLP_CN = FS_NLP_CN;
+    public void setrecord_time(Date record_time) {
+         this.record_time = record_time;
     } 
-    public Double getFS_SERIAL_NUMBER(){
-        return FS_SERIAL_NUMBER;
+    public String getbatch_number(){
+        return batch_number;
     } 
-    public void setFS_SERIAL_NUMBER(Double FS_SERIAL_NUMBER) {
-         this.FS_SERIAL_NUMBER = FS_SERIAL_NUMBER;
+    public void setbatch_number(String batch_number) {
+         this.batch_number = batch_number;
     } 
-    public Double getFS_LOCATION(){
-        return FS_LOCATION;
+    public Date getdate_time_p(){
+        return date_time_p;
     } 
-    public void setFS_LOCATION(Double FS_LOCATION) {
-         this.FS_LOCATION = FS_LOCATION;
+    public void setdate_time_p(Date date_time_p) {
+         this.date_time_p = date_time_p;
     } 
-    public String getDATA_VERSION(){
-        return DATA_VERSION;
+    public Date getdate_time_estimate(){
+        return date_time_estimate;
     } 
-    public void setDATA_VERSION(String DATA_VERSION) {
-         this.DATA_VERSION = DATA_VERSION;
+    public void setdate_time_estimate(Date date_time_estimate) {
+         this.date_time_estimate = date_time_estimate;
     } 
-    public String getDATA_TABLE_SOURCE(){
-        return DATA_TABLE_SOURCE;
+    public String getdrug_name_std(){
+        return drug_name_std;
     } 
-    public void setDATA_TABLE_SOURCE(String DATA_TABLE_SOURCE) {
-         this.DATA_TABLE_SOURCE = DATA_TABLE_SOURCE;
+    public void setdrug_name_std(String drug_name_std) {
+         this.drug_name_std = drug_name_std;
     } 
-    public String getDATA_TABLE_SOURCE_CN(){
-        return DATA_TABLE_SOURCE_CN;
+    public Integer getdrug_dose1_std(){
+        return drug_dose1_std;
     } 
-    public void setDATA_TABLE_SOURCE_CN(String DATA_TABLE_SOURCE_CN) {
-         this.DATA_TABLE_SOURCE_CN = DATA_TABLE_SOURCE_CN;
+    public void setdrug_dose1_std(Integer drug_dose1_std) {
+         this.drug_dose1_std = drug_dose1_std;
     } 
-    public String getDATA_FIELD_SOURCE(){
-        return DATA_FIELD_SOURCE;
+    public String getdrug_dose_unit1_std(){
+        return drug_dose_unit1_std;
     } 
-    public void setDATA_FIELD_SOURCE(String DATA_FIELD_SOURCE) {
-         this.DATA_FIELD_SOURCE = DATA_FIELD_SOURCE;
+    public void setdrug_dose_unit1_std(String drug_dose_unit1_std) {
+         this.drug_dose_unit1_std = drug_dose_unit1_std;
     } 
-    public Date getCREATE_TIME(){
-        return CREATE_TIME;
+    public Integer getdrug_dose2_std(){
+        return drug_dose2_std;
     } 
-    public void setCREATE_TIME(Date CREATE_TIME) {
-         this.CREATE_TIME = CREATE_TIME;
+    public void setdrug_dose2_std(Integer drug_dose2_std) {
+         this.drug_dose2_std = drug_dose2_std;
     } 
-    public String getCREATOR(){
-        return CREATOR;
+    public String getdrug_dose_unit2_std(){
+        return drug_dose_unit2_std;
     } 
-    public void setCREATOR(String CREATOR) {
-         this.CREATOR = CREATOR;
+    public void setdrug_dose_unit2_std(String drug_dose_unit2_std) {
+         this.drug_dose_unit2_std = drug_dose_unit2_std;
     } 
-    public Date getRECORD_TIME(){
-        return RECORD_TIME;
+    public Integer getadmin_freq_std(){
+        return admin_freq_std;
     } 
-    public void setRECORD_TIME(Date RECORD_TIME) {
-         this.RECORD_TIME = RECORD_TIME;
+    public void setadmin_freq_std(Integer admin_freq_std) {
+         this.admin_freq_std = admin_freq_std;
     } 
-    public String getBATCH_NUMBER(){
-        return BATCH_NUMBER;
+    public String getadmin_freq_unit_std(){
+        return admin_freq_unit_std;
     } 
-    public void setBATCH_NUMBER(String BATCH_NUMBER) {
-         this.BATCH_NUMBER = BATCH_NUMBER;
+    public void setadmin_freq_unit_std(String admin_freq_unit_std) {
+         this.admin_freq_unit_std = admin_freq_unit_std;
     } 
-    public Date getDATE_TIME_P(){
-        return DATE_TIME_P;
+    public String getadmin_route_std(){
+        return admin_route_std;
     } 
-    public void setDATE_TIME_P(Date DATE_TIME_P) {
-         this.DATE_TIME_P = DATE_TIME_P;
-    } 
-    public Date getDATE_TIME_ESTIMATE(){
-        return DATE_TIME_ESTIMATE;
-    } 
-    public void setDATE_TIME_ESTIMATE(Date DATE_TIME_ESTIMATE) {
-         this.DATE_TIME_ESTIMATE = DATE_TIME_ESTIMATE;
+    public void setadmin_route_std(String admin_route_std) {
+         this.admin_route_std = admin_route_std;
     } 
 }

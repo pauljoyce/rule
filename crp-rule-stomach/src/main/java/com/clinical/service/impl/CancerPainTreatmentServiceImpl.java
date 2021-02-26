@@ -17,10 +17,4 @@ public class CancerPainTreatmentServiceImpl implements CancerPainTreatmentServic
          cancerPainTreatmentMapper.saveCancerPainTreatment(cancerPainTreatment);
 
      }
-
-    @Override
-    public  void deleteCancerPainTreatment(String  uniqueId) {
-         cancerPainTreatmentMapper.deleteCancerPainTreatment(uniqueId);
-
-     }
 }

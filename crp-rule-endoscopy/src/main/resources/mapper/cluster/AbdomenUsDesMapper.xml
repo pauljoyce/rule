@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.AbdomenUsDesMapper">
+<select id="findAbdomenUsDesByUniqueId"  resultType="com.clinical.model.cluster.AbdomenUsDes">
+       SELECT * FROM abdomen_us_des WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="saveAbdomenUsDes"  parameterType="com.clinical.model.cluster.AbdomenUsDes" useGeneratedKeys="true" keyProperty="id">
+  insert into abdomen_us_des(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       exam_no,
+       exam_name,
+       structure,
+       location,
+       lesion,
+       size,
+       quanity,
+       gastric_quantity_std,
+       gastric_size_std,
+       liver_quantity_std,
+       liver_size_std,
+       pancreatic_quantity_std,
+       pancreatic_size_std,
+       renal_quantity_std,
+       renal_size_std,
+       colorectal_quantity_std,
+       colorectal_size_std,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{examNo},
+       #{examName},
+       #{structure},
+       #{location},
+       #{lesion},
+       #{size},
+       #{quanity},
+       #{gastricQuantityStd},
+       #{gastricSizeStd},
+       #{liverQuantityStd},
+       #{liverSizeStd},
+       #{pancreaticQuantityStd},
+       #{pancreaticSizeStd},
+       #{renalQuantityStd},
+       #{renalSizeStd},
+       #{colorectalQuantityStd},
+       #{colorectalSizeStd},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+ <update id="updateAbdomenUsDes"  parameterType="com.clinical.model.cluster.AbdomenUsDes">
+      update   abdomen_us_des
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    exam_no = #{examNo},  
+    exam_name = #{examName},  
+    structure = #{structure},  
+    location = #{location},  
+    lesion = #{lesion},  
+    size = #{size},  
+    quanity = #{quanity},  
+    gastric_quantity_std = #{gastricQuantityStd},  
+    gastric_size_std = #{gastricSizeStd},  
+    liver_quantity_std = #{liverQuantityStd},  
+    liver_size_std = #{liverSizeStd},  
+    pancreatic_quantity_std = #{pancreaticQuantityStd},  
+    pancreatic_size_std = #{pancreaticSizeStd},  
+    renal_quantity_std = #{renalQuantityStd},  
+    renal_size_std = #{renalSizeStd},  
+    colorectal_quantity_std = #{colorectalQuantityStd},  
+    colorectal_size_std = #{colorectalSizeStd},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

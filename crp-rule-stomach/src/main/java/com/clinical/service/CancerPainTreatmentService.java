@@ -8,6 +8,4 @@ public interface CancerPainTreatmentService {
 
     public  void saveCancerPainTreatment(CancerPainTreatment cancerPainTreatment);
 
-    public  void deleteCancerPainTreatment(String uniqueId);
-
 }

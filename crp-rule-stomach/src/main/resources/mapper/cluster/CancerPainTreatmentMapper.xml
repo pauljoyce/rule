@@ -6,13 +6,14 @@
        SELECT * FROM cancer_pain_treatment WHERE unique_id=#{unique_id}
 </select>
 
- <insert id="saveCancerPainTreatment"  parameterType="com.clinical.model.cluster.CancerPainTreatment">
+ <insert id="saveCancerPainTreatment"  parameterType="com.clinical.model.cluster.CancerPainTreatment" useGeneratedKeys="true" keyProperty="id">
   insert into cancer_pain_treatment(       person_id,
        unique_id,
        p900,
        patient_id,
        visit_id,
        drug_name,
+       drug_type,
        administration,
        dosage,
        enter_date_time,
@@ -31,6 +32,7 @@ values
        #{patientId},
        #{visitId},
        #{drugName},
+       #{drugType},
        #{administration},
        #{dosage},
        #{enterDateTime},
@@ -43,11 +45,6 @@ values
        #{creator},
        #{updatedAt})
 </insert>
-
- <delete id="deleteCancerPainTreatment">
-   delete * from cancer_pain_treatment where unique_id=#{unique_id}
-  </delete>
-
  <update id="updateCancerPainTreatment"  parameterType="com.clinical.model.cluster.CancerPainTreatment">
       update   cancer_pain_treatment
  set
@@ -57,6 +54,7 @@ values
     patient_id = #{patientId},  
     visit_id = #{visitId},  
     drug_name = #{drugName},  
+    drug_type = #{drugType},  
     administration = #{administration},  
     dosage = #{dosage},  
     enter_date_time = #{enterDateTime},  

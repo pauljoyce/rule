@@ -17,10 +17,4 @@ public class ChemotherapyDrugServiceImpl implements ChemotherapyDrugService {
          chemotherapyDrugMapper.saveChemotherapyDrug(chemotherapyDrug);
 
      }
-
-    @Override
-    public  void deleteChemotherapyDrug(String  uniqueId) {
-         chemotherapyDrugMapper.deleteChemotherapyDrug(uniqueId);
-
-     }
 }
