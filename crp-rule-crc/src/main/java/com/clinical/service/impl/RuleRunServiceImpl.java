@@ -439,87 +439,13 @@ public class RuleRunServiceImpl implements RuleRunService {
                 //saveVisitRecord(master);
 
                 String uniqueId = master.getUNIQUE_ID();
-
                 Date visitdate=master.getADMISSION_DATE_TIME();
-                //病案首页
-//                List<BASY_NSTD> zj_BASY_NSTDs=zjBasyNstdMapper.findZjBasyNstdsByUniqueId(uniqueId);
-//                BASY_NSTD zj_BASY_NSTD;
-//                if (zj_BASY_NSTDs.size()==1){
-//                    zj_BASY_NSTD = zj_BASY_NSTDs.get(0);
-//                }else {
-//                    zj_BASY_NSTD=  zjBasyNstdMapper.findZjBasyNstdByUniqueId(uniqueId);
-//                }
-//
-//                List<BASY_OP_STD> zj_BASY_OP_STDs=zjBasyOpStdMapper.findZjBasyOpStdsByUniqueId(uniqueId);
-//                BASY_OP_STD zj_BASY_OP_STD;
-//                if (zj_BASY_OP_STDs.size()==1){
-//                    zj_BASY_OP_STD = zj_BASY_OP_STDs.get(0);
-//                }else {
-//                    zj_BASY_OP_STD = zjBasyOpStdMapper.findZjBasyOpStdByUniqueId(uniqueId);
-//                }
-//
-//                List<BASY_DIAG_STD> zj_BASY_DIAG_STDs=zjBasyDiagStdMapper.findZjBasyDiagStdsByUniqueId(uniqueId);
-//                BASY_DIAG_STD  zj_BASY_DIAG_STD;
-//                if (zj_BASY_DIAG_STDs.size()==1){
-//                    zj_BASY_DIAG_STD = zj_BASY_DIAG_STDs.get(0);
-//                }else {
-//                    zj_BASY_DIAG_STD =  zjBasyDiagStdMapper.findZjBasyDiagStdByUniqueId(uniqueId);
-//                }
-//                List<INP_DIAGNOSIS>  zj_INP_DIAGNOSIS =  zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
-//                List<LIS_RECORD>  zj_LIS_RECORD =  zjLisRecordMapper.findZjLisRecordByUniqueId(uniqueId);
-//                List<EXAM_MASTER>  zj_EXAM_MASTER =  zjExamMasterMapper.findZjExamMasterByUniqueId(uniqueId);
-//                List<HISTOLOGY_REPORT>  zj_HISTOLOGY_REPORT =  zjHistologyReportMapper.findZjHistologyReportByUniqueId(uniqueId);
-//                List<TEM_OPERATION_RECORD>  zj_TEM_OPERATION_RECORD =  zjTemOperationRecordMapper.findZjTemOperationRecordByUniqueId(uniqueId);
-//                List<PROCEDURE_RECORD>  zj_PROCEDURE_RECORD =  zjProcedureRecordMapper.findZjProcedureRecordByUniqueId(uniqueId);
-//                List<TEM_DEATH_RECORD>  zj_TEM_DEATH_RECORD =  zjTemDeathRecordMapper.findZjTemDeathRecordByUniqueId(uniqueId);
-//                List<NURSING_RECORD>  zj_NURSING_RECORD =  zjNursingRecordMapper.findZjNursingRecordByUniqueId(uniqueId);
-//                List<FOLLOW_UP>  zj_FOLLOW_UP =  zjFollowUpMapper.findZjFollowUpByUniqueId(uniqueId);
-//                List<VITAL_RECORD>  zj_VITAL_RECORD =  zjVitalRecordMapper.findZjVitalRecordByUniqueId(uniqueId);
-//                List<TEM_INP_ADMISSION_STATUS>  zj_TEM_INP_ADMISSION_STATUS =  zjTemInpAdmissionStatusMapper.findZjTemInpAdmissionStatusByUniqueId(uniqueId);
-//                List<TEM_OUTP_DISCHARGE_STATUS>  zj_TEM_OUTP_DISCHARGE_STATUS =  zjTemOutpDischargeStatusMapper.findZjTemOutpDischargeStatusByUniqueId(uniqueId);
-//                List<TEM_24H_IN_OUT>  zj_TEM_24H_IN_OUT =  zjTem24hInOutMapper.findZjTem24hInOutByUniqueId(uniqueId);
-//                List<OUTP_RECORD>  zj_OUTP_RECORD =  zjOutpRecordMapper.findZjOutpRecordByUniqueId(uniqueId);
-//                List<TEM_COURSE_DIS>  zj_TEM_COURSE_DIS =  zjTemCourseDisMapper.findZjTemCourseDisByUniqueId(uniqueId);
-//                List<TEM_OUTP_DISCHARGE_SUMMER>  zj_TEM_OUTP_DISCHARGE_SUMMER =  zjTemOutpDischargeSummerMapper.findZjTemOutpDischargeSummerByUniqueId(uniqueId);
-//                List<WARD_ROUND_RECORD>  zj_WARD_ROUND_RECORD =  zjWardRoundRecordMapper.findZjWardRoundRecordByUniqueId(uniqueId);
-//                List<INP_CONSULTATION_DOCTOR_MASTER>  zj_INP_CONSULTATION_DOCTOR_MASTER =  zjInpConsultationDoctorMasterMapper.findZjInpConsultationDoctorMasterByUniqueId(uniqueId);
-//                List<INP_CONSULTATION_DOCTOR_DETAIL>  zj_INP_CONSULTATION_DOCTOR_DETAIL =  zjInpConsultationDoctorDetailMapper.findZjInpConsultationDoctorDetailByUniqueId(uniqueId);
-//                List<TEM_PRE_COURSE_DIS>  zj_TEM_PRE_COURSE_DIS =  zjTemPreCourseDisMapper.findZjTemPreCourseDisByUniqueId(uniqueId);
-//                List<PRE_OP_DISCUSSION>  zj_PRE_OP_DISCUSSION =  zjPreOpDiscussionMapper.findZjPreOpDiscussionByUniqueId(uniqueId);
-//                List<POST_OP_COURSE>  zj_POST_OP_COURSE =  zjPostOpCourseMapper.findZjPostOpCourseByUniqueId(uniqueId);
-//                List<TRANSFER_DEPT>  zj_TRANSFER_DEPT =  zjTransferDeptMapper.findZjTransferDeptByUniqueId(uniqueId);
-//                List<EMERGENCY_RECORD>  zj_EMERGENCY_RECORD =  zjEmergencyRecordMapper.findZjEmergencyRecordByUniqueId(uniqueId);
-//                List<STAGE_SUMMARY>  zj_STAGE_SUMMARY =  zjStageSummaryMapper.findZjStageSummaryByUniqueId(uniqueId);
-//                List<INP_ORDERS>  zj_INP_ORDERS =  zjInpOrdersMapper.findZjInpOrdersByUniqueId(uniqueId);
-//                List<SYMP_PRESENT>  zj_symp_present =  zjSympPresentMapper.findZjSympPresentByUniqueId(uniqueId);
-//                List<SMOKE_AND_DRINK>  zj_smoke_and_drink =  zjSmokeAndDrinkMapper.findZjSmokeAndDrinkByUniqueId(uniqueId);
-//                List<PRIOR_DISEASE_AND_SURGERY>  zj_prior_disease_and_surgery =  zjPriorDiseaseAndSurgeryMapper.findZjPriorDiseaseAndSurgeryByUniqueId(uniqueId);
-//                List<FAMILY_HISTORY>  zj_family_history =  zjFamilyHistoryMapper.findZjFamilyHistoryByUniqueId(uniqueId);
-//                List<CHEST_XR_ENTRY_RESULTS>  zj_chest_xr_entry_results =  zjChestXrEntryResultsMapper.findZjChestXrEntryResultsByUniqueId(uniqueId);
-//                List<CHEST_CT_DESCRIPTION>  zj_chest_ct_description =  zjChestCtDescriptionMapper.findZjChestCtDescriptionByUniqueId(uniqueId);
-//                List<CHEST_CT_ENTRY_RESULTS>  zj_chest_ct_entry_results =  zjChestCtEntryResultsMapper.findZjChestCtEntryResultsByUniqueId(uniqueId);
-//                List<ABDOM_CT_DESCRIPTION>  zj_abdom_ct_description =  zjAbdomCtDescriptionMapper.findZjAbdomCtDescriptionByUniqueId(uniqueId);
-//                List<ABDOM_CT_ENTRY_RESULTS>  zj_abdom_ct_entry_results =  zjAbdomCtEntryResultsMapper.findZjAbdomCtEntryResultsByUniqueId(uniqueId);
-//                List<ABDOM_MR_DESCRIPTION>  zj_abdom_mr_description =  zjAbdomMrDescriptionMapper.findZjAbdomMrDescriptionByUniqueId(uniqueId);
-//                List<ABDOM_MR_ENTRY_RESULTS>  zj_abdom_mr_entry_results =  zjAbdomMrEntryResultsMapper.findZjAbdomMrEntryResultsByUniqueId(uniqueId);
-//                List<POSTOP_COMP>  zj_postop_comp =  zjPostopCompMapper.findZjPostopCompByUniqueId(uniqueId);
-//                List<RADIOTHERAPY>  zj_radiotherapy =  zjRadiotherapyMapper.findZjRadiotherapyByUniqueId(uniqueId);
-//                List<ABDOM_US_DESCRIPTION>  zj_abdom_us_description =  zjAbdomUsDescriptionMapper.findZjAbdomUsDescriptionByUniqueId(uniqueId);
-//                List<ABDOM_US_ENTRY_RESULTS>  zj_abdom_us_entry_results =  zjAbdomUsEntryResultsMapper.findZjAbdomUsEntryResultsByUniqueId(uniqueId);
-//                List<PET_CT_DESCRIPTION>  zj_pet_ct_description =  zjPetCtDescriptionMapper.findZjPetCtDescriptionByUniqueId(uniqueId);
-//                List<PET_CT_ENTRY_RESULTS>  zj_pet_ct_entry_results =  zjPetCtEntryResultsMapper.findZjPetCtEntryResultsByUniqueId(uniqueId);
-//                List<SURGICAL_RECORD>  zj_surgical_record =  zjSurgicalRecordMapper.findZjSurgicalRecordByUniqueId(uniqueId);
-//                List<PHYSICAL_EXAM_PARA>  zj_physical_exam_para =  zjPhysicalExamParaMapper.findZjPhysicalExamParaByUniqueId(uniqueId);
-//                List<INTERVENTION_THERAPY>  zj_intervention_therapy =  zjInterventionTherapyMapper.findZjInterventionTherapyByUniqueId(uniqueId);
-//                List<CLINICAL_DIAG>  zj_clinical_diag =  zjClinicalDiagMapper.findZjClinicalDiagByUniqueId(uniqueId);
-//                List<SYMP_PRESENT> zj_SYMPTOMS= zjSympPresentMapper.findZjSympPresentByUniqueId(uniqueId);
-//                List<SPECIALITY_EXAM> zj_SPECICALITY_EXAM= zjSpecialityExamMapper.findZjSpecialityExamByUniqueId(uniqueId);
 
-                // 放疗
+                /*// 放疗
                 List<RADIOTHERAPY>  zj_radiotherapy =  zjRadiotherapyMapper.findZjRadiotherapyByUniqueId(uniqueId);
                 if (zj_radiotherapy != null && zj_radiotherapy.size() > 0) {
                     saveRadiotherapy(zj_radiotherapy);
-                }
+                }*/
 
                 /*// 化疗
                 List<DRUG_ORDER>  zj_DRUG_ORDER =  zjDrugOrderMapper.findZjDrugOrderByUniqueId(uniqueId);
@@ -533,7 +459,7 @@ public class RuleRunServiceImpl implements RuleRunService {
                     saveTreatment(zj_DRUG_ORDER);
                 }*/
 
-                // 免疫组化标志物
+                /*// 免疫组化标志物
                 List<IHC_MARKER> zj_IHC_MARKER = zjIhcMarkerMapper.findZjIhcMarkerByUniqueId(uniqueId);
                 if (zj_IHC_MARKER != null && zj_IHC_MARKER.size() > 0) {
                     saveImmune(zj_IHC_MARKER);
@@ -567,87 +493,306 @@ public class RuleRunServiceImpl implements RuleRunService {
                 List<POSTOP_COMP> zj_POSTOP_COMP = zjPostopCompMapper.findZjPostopCompByUniqueId(uniqueId);
                 if (zj_POSTOP_COMP != null && zj_POSTOP_COMP.size() > 0) {
                     saveOperativeComplications(zj_POSTOP_COMP);
-                }
+                }*/
 
-                // 术后恢复
+                /*// 术后恢复
                 List<POSTOP_FUNCTION> zj_POSTOP_FUNCTION = zjPostopFunctionMapper.findZjPostopFunctionByUniqueId(uniqueId);
                 if (zj_POSTOP_FUNCTION != null && zj_POSTOP_FUNCTION.size() > 0) {
                     savePostoperativeRecovery(zj_POSTOP_FUNCTION);
+                }*/
+
+                // 术后恢复2 质检后修改的逻辑
+                List<TEM_OPERATION_RECORD> zj_TEM_OPERATION_RECORD = zjTemOperationRecordMapper.findZjTemOperationRecordByUniqueId(uniqueId);
+                if (zj_TEM_OPERATION_RECORD != null && zj_TEM_OPERATION_RECORD.size() > 0) {
+                    savePostoperativeRecovery2(zj_TEM_OPERATION_RECORD);
                 }
-
-//                if(zj_BASY_NSTD!=null){
-//                    saveIndexPerson(zj_BASY_NSTD,zj_BASY_DIAG_STD);
-//                    saveIndexIcu(zj_BASY_NSTD);
-//                }
-//                if(zj_BASY_DIAG_STD!=null){
-//
-//                    Date admitdate=null;
-//                    Date maindate=null;
-//                    Date clinicdate=null;
-//                    Date pathdate=null;
-//                    for(INP_DIAGNOSIS diagnosis: zj_INP_DIAGNOSIS){
-//                        if(diagnosis.getDIAGNOSIS_TYPE()!=null){
-//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("出院主要诊断")){
-//                                maindate=diagnosis.getDIAGNOSIS_DATE();
-//                            }
-//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("门诊诊断")){
-//                                clinicdate=diagnosis.getDIAGNOSIS_DATE();
-//                            }
-//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("入院初诊")){
-//                                admitdate=diagnosis.getDIAGNOSIS_DATE();
-//                            }
-//                            if(diagnosis.getDIAGNOSIS_TYPE().contains("病理诊断")){
-//                                pathdate=diagnosis.getDIAGNOSIS_DATE();
-//                            }
-//                        }
-//                    }
-//
-//                    if (zj_BASY_NSTD==null){
-//                        zj_BASY_NSTD = new BASY_NSTD();
-//                        zj_BASY_NSTD.setDOP3("");
-//                    }
-//                    saveIndexDiagnosisAdmit(zj_BASY_DIAG_STD,visitdate,admitdate,zj_BASY_NSTD);
-//                    saveIndexDiagnosisClinic(zj_BASY_DIAG_STD,visitdate,clinicdate,zj_BASY_NSTD);
-//                    saveIndexDiagnosisMain(zj_BASY_DIAG_STD,visitdate,maindate,zj_BASY_NSTD);
-//                    saveIndexDiagnosisOther(zj_BASY_DIAG_STD,visitdate,maindate,zj_BASY_NSTD);
-//                    saveIndexInjury(zj_BASY_DIAG_STD,zj_BASY_NSTD);
-//                    saveIndexPathology(zj_BASY_DIAG_STD,visitdate,pathdate,zj_BASY_NSTD);
-//                }
-//
-//                if(zj_BASY_OP_STD!=null){
-//                    saveIndexOperation(zj_BASY_OP_STD,zj_BASY_NSTD);
-//                }
-
-//                if(zj_NURSING_RECORD!=null&&zj_NURSING_RECORD.size()>0){
-//                    savePersonGeneral(zj_NURSING_RECORD, zj_VITAL_RECORD);
-//                }
-
-//               if(zj_INP_DIAGNOSIS!=null&&zj_INP_DIAGNOSIS.size()>0){
-//                   saveDiagnosis(zj_INP_DIAGNOSIS);
-//               }
-//               if(zj_TEM_INP_ADMISSION_STATUS!=null&&zj_TEM_INP_ADMISSION_STATUS.size()>0){
-//                   saveHisMarriage(zj_TEM_INP_ADMISSION_STATUS);
-//               }
-
-//                if(zj_TEM_INP_ADMISSION_STATUS!=null&&zj_TEM_INP_ADMISSION_STATUS.size()>0){
-//                    for(TEM_INP_ADMISSION_STATUS tem_inp_admission_status:zj_TEM_INP_ADMISSION_STATUS){
-//                        saveInpAdmissionStatus(tem_inp_admission_status);
-//                    }
-//                }
-
-//                if (zj_SYMPTOMS!=null&&zj_SYMPTOMS.size()!=0){
-//                    saveSymptom(zj_SYMPTOMS, zj_SPECICALITY_EXAM);
-//                }
-//                if (zj_smoke_and_drink!=null&&zj_smoke_and_drink.size()!=0){
-//                    saveHisPerson(zj_smoke_and_drink);
-//                }
-//                if (zj_family_history!=null&&zj_family_history.size()!=0){
-//                    saveHisFamily(zj_family_history);
-//                }
-//                if (zj_prior_disease_and_surgery!=null&&zj_prior_disease_and_surgery.size()!=0){
-//                    saveHisPast(zj_prior_disease_and_surgery);
-//                }
             }
+        }
+    }
+
+    /**
+     * 术后恢复2 质检后修改的逻辑
+     * @param zj_TEM_OPERATION_RECORD
+     */
+    public void savePostoperativeRecovery2(List<TEM_OPERATION_RECORD> zj_TEM_OPERATION_RECORD) {
+        for (TEM_OPERATION_RECORD tem_operation_record : zj_TEM_OPERATION_RECORD
+             ) {
+            List<POSTOP_FUNCTION> postop_functionList = zjPostopFunctionMapper
+                    .findZjPostopFunctionByUniqueId(tem_operation_record.getUNIQUE_ID_LV2());
+            List<INP_ORDERS> inp_ordersList = zjInpOrdersMapper.findZjInpOrdersByUniqueId(tem_operation_record.getUNIQUE_ID_LV2());
+
+            // time_out_of_bed	术后首次离床时间
+            Date timeOutOfBed = null;
+            for (POSTOP_FUNCTION postop_function : postop_functionList
+                 ) {
+                String neg_std = getStandardResultTextById(postop_function.getneg_std(), "afterType1",
+                        "neg_std");
+                String function_para_std = getStandardResultTextById(postop_function.getfunction_para_std(), "afterType1",
+                        "function_para_std");
+                if (StringUtils.isEmpty(neg_std)) {
+                    if (function_para_std.indexOf("下床活动") != -1) {
+                        if (postop_function.getdate_time_p() != null) {
+                            timeOutOfBed = postop_function.getdate_time_p();
+                            break;
+                        } else {
+                            timeOutOfBed = postop_function.getdate_time_estimate();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // exhaust_time	术后首次排气时间
+            Date exhaustTime = null;
+            for (POSTOP_FUNCTION postop_function : postop_functionList
+                    ) {
+                String neg_std = getStandardResultTextById(postop_function.getneg_std(), "afterType1",
+                        "neg_std");
+                String function_para_std = getStandardResultTextById(postop_function.getfunction_para_std(), "afterType1",
+                        "function_para_std");
+                if (StringUtils.isEmpty(neg_std)) {
+                    if (function_para_std.indexOf("肛门排气") != -1 || function_para_std.indexOf("造口排气") != -1
+                            || function_para_std.indexOf("回肠造瘘口排气") != -1) {
+                        if (postop_function.getdate_time_p() != null) {
+                            exhaustTime = postop_function.getdate_time_p();
+                            break;
+                        } else {
+                            exhaustTime = postop_function.getdate_time_estimate();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // defecation_time	术后首次排便时间
+            Date defecationTime = null;
+            for (POSTOP_FUNCTION postop_function : postop_functionList
+                    ) {
+                String neg_std = getStandardResultTextById(postop_function.getneg_std(), "afterType1",
+                        "neg_std");
+                String function_para_std = getStandardResultTextById(postop_function.getfunction_para_std(), "afterType1",
+                        "function_para_std");
+                if (StringUtils.isEmpty(neg_std)) {
+                    if (function_para_std.indexOf("肛门排便") != -1 || function_para_std.indexOf("造口排便") != -1) {
+                        if (postop_function.getdate_time_p() != null) {
+                            defecationTime = postop_function.getdate_time_p();
+                            break;
+                        } else {
+                            defecationTime = postop_function.getdate_time_estimate();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // half_liquid_time	术后恢复半流食时间
+            Date halfLiquidTime = null;
+            for (POSTOP_FUNCTION postop_function : postop_functionList
+                    ) {
+                String neg_std = getStandardResultTextById(postop_function.getneg_std(), "afterType1",
+                        "neg_std");
+                String function_para_std = getStandardResultTextById(postop_function.getfunction_para_std(), "afterType1",
+                        "function_para_std");
+                if (StringUtils.isEmpty(neg_std)) {
+                    if (function_para_std.indexOf("半流质饮食") != -1) {
+                        if (postop_function.getdate_time_p() != null) {
+                            halfLiquidTime = postop_function.getdate_time_p();
+                            break;
+                        } else {
+                            halfLiquidTime = postop_function.getdate_time_estimate();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // liquid_time	术后恢复全流食时间
+            Date liquidTime = null;
+            for (POSTOP_FUNCTION postop_function : postop_functionList
+                    ) {
+                String neg_std = getStandardResultTextById(postop_function.getneg_std(), "afterType1",
+                        "neg_std");
+                String function_para_std = getStandardResultTextById(postop_function.getfunction_para_std(), "afterType1",
+                        "function_para_std");
+                if (StringUtils.isEmpty(neg_std)) {
+                    if (function_para_std.indexOf("全流质饮食") != -1 || function_para_std.indexOf("进食") != -1) {
+                        if (postop_function.getdate_time_p() != null) {
+                            liquidTime = postop_function.getdate_time_p();
+                            break;
+                        } else {
+                            liquidTime = postop_function.getdate_time_estimate();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // time_of_drainage_tube_removal	拔除最后一根引流管时间
+            Date timeOfDrainageTubeRemoval = null;
+            for (POSTOP_FUNCTION postop_function : postop_functionList
+                    ) {
+                String neg_std = getStandardResultTextById(postop_function.getneg_std(), "afterType1",
+                        "neg_std");
+                String function_para_std = getStandardResultTextById(postop_function.getfunction_para_std(), "afterType1",
+                        "function_para_std");
+                String modifier_std = getStandardResultTextById(postop_function.getmodifier_std(), "afterType1",
+                        "modifier_std");
+                if (StringUtils.isEmpty(neg_std)) {
+                    if (function_para_std.indexOf("引流管") != -1 && modifier_std.indexOf("拔除") != -1) {
+                        if (postop_function.getdate_time_p() != null) {
+                            timeOfDrainageTubeRemoval = postop_function.getdate_time_p();
+                            break;
+                        } else {
+                            timeOfDrainageTubeRemoval = postop_function.getdate_time_estimate();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // blood_after_operation	术后是否输血
+            String bloodAfterOperation = null;
+            String ORDER_TEXT_TEMP = null;
+            String transfusionComponents = null;
+            for (INP_ORDERS inp_orders : inp_ordersList
+                 ) {
+                String ORDER_CLASS = inp_orders.getORDER_CLASS();
+                String ORDER_TEXT = inp_orders.getORDER_TEXT();
+                if (StringUtils.isNotEmpty(ORDER_CLASS) && StringUtils.isNotEmpty(ORDER_TEXT)
+                        && (ORDER_CLASS.indexOf("临时医嘱") != -1 || ORDER_CLASS.indexOf("临时") != -1)) {
+                    Date ITEM_END_DATE = tem_operation_record.getITEM_END_DATE();
+                    Date ENTER_DATE_TIME = inp_orders.getENTER_DATE_TIME();
+                    if (ITEM_END_DATE != null && ENTER_DATE_TIME != null && ENTER_DATE_TIME.after(ITEM_END_DATE)) {
+                        boolean flag = false;
+                        if (ORDER_TEXT.indexOf("输血浆") != -1) {
+                            flag = true;
+                            transfusionComponents = "输血浆";
+                        } else if (ORDER_TEXT.indexOf("输红细胞") != -1) {
+                            flag = true;
+                            transfusionComponents = "输红细胞";
+                        } else if (ORDER_TEXT.indexOf("输血小板") != -1) {
+                            flag = true;
+                            transfusionComponents = "输血小板";
+                        } else if (ORDER_TEXT.indexOf("输血") != -1) {
+                            flag = true;
+                            transfusionComponents = "输血";
+                        } else if (ORDER_TEXT.indexOf("输冷沉淀") != -1) {
+                            flag = true;
+                            transfusionComponents = "输冷沉淀";
+                        }
+                        if (flag) {
+                            ORDER_TEXT_TEMP = ORDER_TEXT;
+                            bloodAfterOperation = "是";
+                        }
+                    }
+                }
+            }
+
+            PostoperativeRecovery postoperativeRecovery = new PostoperativeRecovery();
+            // unique_id	unique_id
+            postoperativeRecovery.setUniqueId(tem_operation_record.getUNIQUE_ID());
+            // unique_id_lv1	标识患者身份唯一标识
+            postoperativeRecovery.setUniqueIdLv1(tem_operation_record.getUNIQUE_ID_LV1());
+            // unique_id_lv2	唯一标识
+            postoperativeRecovery.setUniqueIdLv2(tem_operation_record.getUNIQUE_ID_LV2());
+            // p900	医疗机构代码
+            postoperativeRecovery.setP900(tem_operation_record.getP900());
+            // patient_id	患者id
+            postoperativeRecovery.setPatientId(tem_operation_record.getPATIENT_ID());
+            // visit_id	住院号
+            postoperativeRecovery.setVisitId(tem_operation_record.getVISIT_ID());
+            // time_out_of_bed	术后首次离床时间
+            postoperativeRecovery.setTimeOutOfBed(timeOutOfBed);
+            // first_time_out_of_bed	术后恢复至首次离床时长
+            String firstTimeOutOfBed = null;
+            if (postoperativeRecovery.getTimeOutOfBed() != null && tem_operation_record.getITEM_END_DATE() != null) {
+                firstTimeOutOfBed = DateUtil.between(postoperativeRecovery.getTimeOutOfBed(),
+                        tem_operation_record.getITEM_END_DATE(), DateUnit.HOUR) + "";
+            }
+            postoperativeRecovery.setFirstTimeOutOfBed(firstTimeOutOfBed);
+            // exhaust_time	术后首次排气时间
+            postoperativeRecovery.setExhaustTime(exhaustTime);
+            // first_exhaust_time	术后恢复至首次排气时长
+            String firstExhaustTime = null;
+            if (postoperativeRecovery.getExhaustTime() != null && tem_operation_record.getITEM_END_DATE() != null) {
+                firstExhaustTime = DateUtil.between(postoperativeRecovery.getExhaustTime(),
+                        tem_operation_record.getITEM_END_DATE(), DateUnit.HOUR) + "";
+            }
+            postoperativeRecovery.setFirstExhaustTime(firstExhaustTime);
+            // defecation_time	术后首次排便时间
+            postoperativeRecovery.setDefecationTime(defecationTime);
+            // first_defecation	术后恢复至首次排便时长
+            String firstDefecation = null;
+            if (postoperativeRecovery.getDefecationTime() != null && tem_operation_record.getITEM_END_DATE() != null) {
+                firstDefecation = DateUtil.between(postoperativeRecovery.getDefecationTime(),
+                        tem_operation_record.getITEM_END_DATE(), DateUnit.HOUR) + "";
+            }
+            postoperativeRecovery.setFirstDefecation(firstDefecation);
+            // half_liquid_time	术后恢复半流食时间
+            postoperativeRecovery.setHalfLiquidTime(halfLiquidTime);
+            // semi_liquid_food	术后恢复至半流食时长
+            String semiLiquidFood = null;
+            if (postoperativeRecovery.getHalfLiquidTime() != null && tem_operation_record.getITEM_END_DATE() != null) {
+                semiLiquidFood = DateUtil.between(postoperativeRecovery.getHalfLiquidTime(),
+                        tem_operation_record.getITEM_END_DATE(), DateUnit.HOUR) + "";
+            }
+            postoperativeRecovery.setSemiLiquidFood(semiLiquidFood);
+            // liquid_time	术后恢复全流食时间
+            postoperativeRecovery.setLiquidTime(liquidTime);
+            // liquid_food_duration	术后恢复至全流食时长
+            String liquidFoodDuration = null;
+            if (postoperativeRecovery.getLiquidTime() != null && tem_operation_record.getITEM_END_DATE() != null) {
+                liquidFoodDuration = DateUtil.between(postoperativeRecovery.getLiquidTime(),
+                        tem_operation_record.getITEM_END_DATE(), DateUnit.HOUR) + "";
+            }
+            postoperativeRecovery.setLiquidFoodDuration(liquidFoodDuration);
+            // time_of_drainage_tube_removal	拔除最后一根引流管时间
+            postoperativeRecovery.setTimeOfDrainageTubeRemoval(timeOfDrainageTubeRemoval);
+            // duration_of_drainage_tube	术后留置引流管时长
+            String durationOfDrainageTube = null;
+            if (postoperativeRecovery.getTimeOfDrainageTubeRemoval() != null && tem_operation_record.getITEM_END_DATE() != null) {
+                durationOfDrainageTube = DateUtil.between(postoperativeRecovery.getTimeOfDrainageTubeRemoval(),
+                        tem_operation_record.getITEM_END_DATE(), DateUnit.HOUR) + "";
+            }
+            postoperativeRecovery.setDurationOfDrainageTube(durationOfDrainageTube);
+            // blood_after_operation	术后是否输血
+            postoperativeRecovery.setBloodAfterOperation(bloodAfterOperation);
+            // transfusion	术后输血量
+            String transfusionTemp = null;
+            String transfusion = null;
+            if (StringUtils.isNotEmpty(ORDER_TEXT_TEMP)) {
+                Matcher matcher = Pattern.compile("(?<=\\()(\\S+)(?=\\))").matcher(ORDER_TEXT_TEMP);//此处是中文输入的（）
+                while(matcher.find()){
+                    transfusionTemp = matcher.group();
+                }
+                Matcher matcher2 = Pattern.compile("(?<=\\()(\\S+)(?=\\))").matcher(ORDER_TEXT_TEMP);//此处是英文输入的()
+                while(matcher2.find()){
+                    transfusionTemp = matcher2.group();
+                }
+                if (StringUtils.isNotEmpty(transfusionTemp) && (transfusionTemp.indexOf("单位") != -1
+                        || transfusionTemp.indexOf("毫升") != -1 || transfusionTemp.indexOf("ml") != -1)) {
+                    transfusion = transfusionTemp;
+                }
+            }
+            postoperativeRecovery.setTransfusion(transfusion);
+            // transfusion_components	术后输血成分
+            postoperativeRecovery.setTransfusionComponents(transfusionComponents);
+            // data_version	数据版本
+            postoperativeRecovery.setDataVersion(tem_operation_record.getDATA_VERSION());
+            // data_db_source	数据库来源
+            postoperativeRecovery.setDataDbSource(tem_operation_record.getDATA_DB_SOURCE());
+            // data_table_source	数据表来源
+            postoperativeRecovery.setDataTableSource(tem_operation_record.getDATA_TABLE_SOURCE());
+            // data_field_source	数据项来源
+            postoperativeRecovery.setDataFieldSource(tem_operation_record.getDATA_FIELD_SOURCE());
+            // created_at	创建时间
+            postoperativeRecovery.setCreatedAt(tem_operation_record.getCREATED_AT());
+            // creator	创建人
+            postoperativeRecovery.setCreator(tem_operation_record.getCREATOR());
+            // updated_at	修改时间
+            postoperativeRecovery.setUpdatedAt(tem_operation_record.getUPDATED_AT());
+            postoperativeRecoveryService.savePostoperativeRecovery(postoperativeRecovery);
+            log.info("保存术后恢复：" + postoperativeRecovery.getUniqueId());
         }
     }
 
@@ -1221,7 +1366,12 @@ public class RuleRunServiceImpl implements RuleRunService {
             // inspection_site	送检部位
             histologyReport.setInspectionSite(histology_report.getINSPECTION_SITE());
             // clinical_diagnosis	临床诊断
-            histologyReport.setClinicalDiagnosis(histology_report.getCLINICAL_DIAGNOSIS());
+            // 处理数据中带有“/”的数据值，值为null
+            String clinicalDiagnosis = histology_report.getCLINICAL_DIAGNOSIS();
+            if ("/".equals(clinicalDiagnosis)) {
+                clinicalDiagnosis = null;
+            }
+            histologyReport.setClinicalDiagnosis(clinicalDiagnosis);
             // name	姓名
             histologyReport.setName(histology_report.getNAME());
             // specimen_receiving_time	标本接收时间
@@ -1713,7 +1863,11 @@ public class RuleRunServiceImpl implements RuleRunService {
             radiotherapy.setPurpose(getStandardResultTextById(rADIOTHERAPY.getpurpose_std(), "afterType1",
                     "purpose_std"));
             // site	放疗部位
-            radiotherapy.setSite(getStructureStd(rADIOTHERAPY.getstructure_std()));
+            String site = getStructureStd(rADIOTHERAPY.getstructure_std());
+            if (StringUtils.isNotEmpty(site) && "无效".equals(site)) {
+                site = null;
+            }
+            radiotherapy.setSite(site);
             // site_type	放疗部位类型
             radiotherapy.setSiteType(getStandardResultTextById(rADIOTHERAPY.getstructure_std(), "afterType1",
                     "structure_lesion_std"));
