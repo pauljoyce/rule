@@ -13,10 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -447,17 +444,17 @@ public class RuleRunServiceImpl implements RuleRunService {
                     saveRadiotherapy(zj_radiotherapy);
                 }*/
 
-                /*// 化疗
+                // 化疗和药物治疗
                 List<DRUG_ORDER>  zj_DRUG_ORDER =  zjDrugOrderMapper.findZjDrugOrderByUniqueId(uniqueId);
                 if (zj_DRUG_ORDER != null && zj_DRUG_ORDER.size() > 0) {
-                    saveChemotherapy(zj_DRUG_ORDER);
+                    saveChemotherapyAndTreatment(zj_DRUG_ORDER);
                 }
 
                 // 药物治疗
 //                List<DRUG_ORDER>  zj_DRUG_ORDER =  zjDrugOrderMapper.findZjDrugOrderByUniqueId(uniqueId);
-                if (zj_DRUG_ORDER != null && zj_DRUG_ORDER.size() > 0) {
-                    saveTreatment(zj_DRUG_ORDER);
-                }*/
+//                if (zj_DRUG_ORDER != null && zj_DRUG_ORDER.size() > 0) {
+//                    saveTreatment(zj_DRUG_ORDER);
+//                }
 
                 /*// 免疫组化标志物
                 List<IHC_MARKER> zj_IHC_MARKER = zjIhcMarkerMapper.findZjIhcMarkerByUniqueId(uniqueId);
@@ -501,12 +498,459 @@ public class RuleRunServiceImpl implements RuleRunService {
                     savePostoperativeRecovery(zj_POSTOP_FUNCTION);
                 }*/
 
-                // 术后恢复2 质检后修改的逻辑
+                /*// 术后恢复2 质检后修改的逻辑
                 List<TEM_OPERATION_RECORD> zj_TEM_OPERATION_RECORD = zjTemOperationRecordMapper.findZjTemOperationRecordByUniqueId(uniqueId);
                 if (zj_TEM_OPERATION_RECORD != null && zj_TEM_OPERATION_RECORD.size() > 0) {
                     savePostoperativeRecovery2(zj_TEM_OPERATION_RECORD);
+                }*/
+            }
+        }
+    }
+
+    /**
+     * 化疗和药物治疗
+     * @param zj_DRUG_ORDER
+     */
+    public void saveChemotherapyAndTreatment(List<DRUG_ORDER> zj_DRUG_ORDER) {
+        List<String> chemotherapyList = new ArrayList<>();
+        chemotherapyList.add("生物靶向抗肿瘤药");
+        chemotherapyList.add("抗肿瘤辅助用药");
+        chemotherapyList.add("其他抗肿瘤药");
+        chemotherapyList.add("植物来源的抗肿瘤药及其衍生物");
+        chemotherapyList.add("激素类抗肿瘤药");
+        chemotherapyList.add("抗肿瘤抗生素");
+        List<String> treatmentList = new ArrayList<>();
+        treatmentList.add("预防用生物制品");
+        treatmentList.add("胰岛素及其类似物");
+        treatmentList.add("免疫增强剂");
+        treatmentList.add("治疗消化性溃疡药与胃食管反流病药");
+        treatmentList.add("肠内营养药");
+        treatmentList.add("肠外营养药");
+        treatmentList.add("核苷类逆转录酶抑制剂");
+        treatmentList.add("抗人类免疫缺陷病毒药");
+        treatmentList.add("治疗用生物制品");
+        treatmentList.add("眼科用药");
+        treatmentList.add("驱肠虫药");
+        treatmentList.add("感冒用药");
+        treatmentList.add("皮肤科用药");
+        treatmentList.add("抗组胺药");
+        treatmentList.add("钙代谢调节药物及抗骨质疏松药");
+        treatmentList.add("抗抑郁抗躁狂药");
+        treatmentList.add("气血双补");
+        treatmentList.add("抗凝血药");
+        treatmentList.add("补肝肾,强筋骨");
+        treatmentList.add("其他补益剂");
+        treatmentList.add("其他理血剂");
+        treatmentList.add("其他安神药（含解表,清热祛风除痰镇惊；清热安神）");
+        treatmentList.add("镇咳药");
+        treatmentList.add("口服降糖药");
+        treatmentList.add("蒙药");
+        treatmentList.add("抗精神病药");
+        treatmentList.add("利尿药");
+        treatmentList.add("抗高血压药");
+        treatmentList.add("氨基糖苷类");
+        treatmentList.add("青霉素类");
+        treatmentList.add("β-内酰胺酶抑制剂及其与β-内酰胺类抗生素配伍的复方制剂");
+        treatmentList.add("芳香化酶抑制剂");
+        treatmentList.add("其他妇产科用药");
+        treatmentList.add("抗血小板聚集药");
+        treatmentList.add("其他麻醉药");
+        treatmentList.add("大环内酯类");
+        treatmentList.add("促胃肠动力药与止吐、催吐药");
+        treatmentList.add("治疗肝性脑病药与肝病辅助药");
+        treatmentList.add("抗代谢药");
+        treatmentList.add("局部麻醉药");
+        treatmentList.add("调节血脂药及抗动脉粥样硬化药");
+        treatmentList.add("胃肠解痉药");
+        treatmentList.add("防治心绞痛药");
+        treatmentList.add("其他泌尿系统用药");
+        treatmentList.add("广谱抗病毒药");
+        treatmentList.add("清热解毒");
+        treatmentList.add("抗脑血管病药");
+        treatmentList.add("免疫抑制剂");
+        treatmentList.add("抗贫血药");
+        treatmentList.add("其他降糖药");
+        treatmentList.add("其他祛痰剂");
+        treatmentList.add("前列腺疾病用药物及勃起功能障碍治疗药物");
+        treatmentList.add("辛凉解表");
+        treatmentList.add("其他疏风剂");
+        treatmentList.add("凉开");
+        treatmentList.add("止血");
+        treatmentList.add("其他循环系统用药");
+        treatmentList.add("活血");
+        treatmentList.add("平熄内风");
+        treatmentList.add("补气");
+        treatmentList.add("其他理气剂");
+        treatmentList.add("其他外用药");
+        treatmentList.add("祛痰药");
+        treatmentList.add("抗麻风药");
+        treatmentList.add("平喘药");
+        treatmentList.add("促凝血药");
+        treatmentList.add("口腔科用药");
+        treatmentList.add("中枢神经兴奋药");
+        treatmentList.add("促白细胞增生药");
+        treatmentList.add("补阳");
+        treatmentList.add("抗癫痫及抗惊厥药");
+        treatmentList.add("食欲抑制剂及其他减肥药");
+        treatmentList.add("治疗炎性肠病药");
+        treatmentList.add("硝基咪唑类");
+        treatmentList.add("其他神经系统用药");
+        treatmentList.add("清脏腑热");
+        treatmentList.add("其他清热剂");
+        treatmentList.add("复合维生素制剂");
+        treatmentList.add("补阴");
+        treatmentList.add("阴阳双补");
+        treatmentList.add("其他祛湿药");
+        treatmentList.add("喹诺酮类");
+        treatmentList.add("麻醉辅助药");
+        treatmentList.add("祛痰止咳");
+        treatmentList.add("祛暑剂");
+        treatmentList.add("清热化痰");
+        treatmentList.add("眼病");
+        treatmentList.add("温中祛寒");
+        treatmentList.add("固肾止遗");
+        treatmentList.add("其他呼吸系统用药");
+        treatmentList.add("清热泻火");
+        treatmentList.add("烷化剂");
+        treatmentList.add("活血养血");
+        treatmentList.add("清热祛湿");
+        treatmentList.add("补益止咳平喘");
+        treatmentList.add("咽喉病");
+        treatmentList.add("补养安神");
+        treatmentList.add("雌激素类及抗雌激素药");
+        treatmentList.add("温化寒(燥湿化)痰");
+        treatmentList.add("耳鼻喉科用药");
+        treatmentList.add("解表消食");
+        treatmentList.add("维生素A、D属");
+        treatmentList.add("肾上腺皮质激素类药");
+        treatmentList.add("镇静、催眠药");
+        treatmentList.add("利胆药与胆石溶解药");
+        treatmentList.add("抗偏头痛药");
+        treatmentList.add("抗痛风药");
+        treatmentList.add("消毒防腐药");
+        treatmentList.add("外科用药");
+        treatmentList.add("鼻病");
+        treatmentList.add("泻药、止泻药");
+        treatmentList.add("抗帕金森病药");
+        treatmentList.add("抗血吸虫病药");
+        treatmentList.add("抗结核药");
+        treatmentList.add("温化水湿");
+        treatmentList.add("润下");
+        treatmentList.add("祛风除湿");
+        treatmentList.add("其他泻下剂");
+        treatmentList.add("扶正解表");
+        treatmentList.add("全身麻醉药");
+        treatmentList.add("甲状腺激素及抗甲状腺类药");
+        treatmentList.add("雄激素、抗雄激素及同化激素类药");
+        treatmentList.add("酶及辅酶类药");
+        treatmentList.add("其他抗真菌药");
+        treatmentList.add("清热凉血");
+        treatmentList.add("其他固涩剂");
+        treatmentList.add("回阳救逆");
+        treatmentList.add("祛湿化浊");
+        treatmentList.add("其他开窍剂");
+        treatmentList.add("其他解表剂");
+        treatmentList.add("肛肠科用药");
+        treatmentList.add("口腔、牙病");
+        treatmentList.add("其他温里药");
+        treatmentList.add("疏散外风");
+        treatmentList.add("其他抗感染类药");
+        treatmentList.add("垂体激素及下丘脑释放激素药");
+        treatmentList.add("重镇安神");
+        treatmentList.add("其他抗病毒药");
+        treatmentList.add("其他生化药");
+        treatmentList.add("妇产科用药");
+        treatmentList.add("其他消化系统用药");
+        treatmentList.add("微量元素与矿物质");
+        treatmentList.add("其他激素及调节内分泌功能药");
+        treatmentList.add("孕激素类与抗孕激素类药");
+        treatmentList.add("电解质平衡调节药");
+        treatmentList.add("酪氨酸激酶抑制剂");
+        treatmentList.add("和解少阳");
+        treatmentList.add("三硫代烯丙醚类");
+        treatmentList.add("液体制剂辅料");
+        treatmentList.add("抗焦虑药");
+        treatmentList.add("金属中毒解毒药");
+        treatmentList.add("其他制剂辅料");
+        treatmentList.add("其他化学合成的抗菌药");
+        treatmentList.add("放射性药品");
+        treatmentList.add("造影剂");
+        treatmentList.add("其他诊断用药");
+        treatmentList.add("血浆及血容量扩充剂");
+        treatmentList.add("透析用药");
+        treatmentList.add("耳病");
+        treatmentList.add("强心药");
+        treatmentList.add("其他血液系统用药");
+        treatmentList.add("微生态制剂");
+        treatmentList.add("磺胺类及其增效剂");
+        treatmentList.add("有机磷酸酯类中毒解毒药");
+        treatmentList.add("助消化药");
+        treatmentList.add("碳青霉烯类");
+        treatmentList.add("维生素B属");
+        treatmentList.add("其他抗变态反应药");
+        treatmentList.add("辛温解表");
+        treatmentList.add("其他抗生素类抗感染药");
+        treatmentList.add("硝基呋喃类");
+        treatmentList.add("吡咯类");
+        treatmentList.add("其他解毒药");
+        treatmentList.add("脱水药");
+        treatmentList.add("补血");
+        treatmentList.add("理气舒肝");
+        treatmentList.add("抗疟药");
+        treatmentList.add("酰胺醇类");
+        treatmentList.add("其他维生素类、矿物质类及营养类药");
+        treatmentList.add("酸碱平衡调节药");
+        treatmentList.add("其他专科用药");
+        treatmentList.add("利水渗湿化浊");
+        treatmentList.add("咪唑类");
+        treatmentList.add("头孢菌素类");
+        treatmentList.add("维生素C及其他");
+        treatmentList.add("化湿和胃");
+        treatmentList.add("补益止泻（痢）");
+        treatmentList.add("周围血管扩张药");
+        treatmentList.add("葡萄糖及其他");
+        treatmentList.add("蛋白酶抑制剂");
+        treatmentList.add("嘧啶类");
+        treatmentList.add("抗重症肌无力药");
+        treatmentList.add("补益调经(止带)");
+        treatmentList.add("体内诊断用生物制品");
+        treatmentList.add("理气宽胸");
+        treatmentList.add("林可酰胺类");
+        treatmentList.add("噁唑酮");
+        treatmentList.add("多烯类");
+        treatmentList.add("氰化物中毒解毒药");
+        treatmentList.add("多肽类");
+        treatmentList.add("其他糖、盐及酸碱平衡调节药");
+        treatmentList.add("器官功能检查剂");
+        treatmentList.add("抗利什曼原虫药");
+        treatmentList.add("凉血止血治疡");
+        treatmentList.add("过敏反应介质阻释剂");
+        treatmentList.add("抗痴呆药和脑代谢调节药");
+        treatmentList.add("其他抗寄生虫药");
+        treatmentList.add("四环素类");
+        treatmentList.add("抗心律失常药");
+        treatmentList.add("亚硝酸盐中毒解毒药");
+        treatmentList.add("抗流感及呼吸道病毒药");
+        treatmentList.add("抗休克药");
+        treatmentList.add("阿片类中毒解毒药");
+        treatmentList.add("烯丙胺类");
+        treatmentList.add("抗丝虫药");
+        treatmentList.add("促血小板增生药");
+        treatmentList.add("医疗用毒性药品");
+        treatmentList.add("棘白菌素类");
+        treatmentList.add("其他调节免疫功能药");
+        treatmentList.add("核酸类药");
+        treatmentList.add("糖肽类");
+        treatmentList.add("解热镇痛抗炎药");
+
+        for (DRUG_ORDER drug_order : zj_DRUG_ORDER
+             ) {
+            String drugType = drug_order.getPharmacologytype1();
+            if(StringUtils.isNotEmpty(drugType)) {
+                // 化疗
+                if (chemotherapyList.contains(drugType)) {
+                    Chemotherapy chemotherapy = new Chemotherapy();
+                    // unique_id	unique_id
+                    chemotherapy.setUniqueId(drug_order.getUNIQUE_ID());
+                    // unique_id_lv1	标识患者身份唯一标识
+                    chemotherapy.setUniqueIdLv1(drug_order.getUNIQUE_ID_LV1());
+                    // unique_id_lv2	唯一标识
+                    chemotherapy.setUniqueIdLv2(drug_order.getUNIQUE_ID_LV2());
+                    // p900	医疗机构代码
+                    chemotherapy.setP900(drug_order.getP900());
+                    // patient_id	患者id
+                    chemotherapy.setPatientId(drug_order.getPATIENT_ID());
+                    // visit_id	住院号
+                    chemotherapy.setVisitId(drug_order.getVISIT_ID());
+                    // drug_type	用药分类 商定  pharmacologySystem1  对应  drug_class_std;  pharmacologyType1  对应  drug_subclass_std
+                    chemotherapy.setDrugType(drugType);
+                    // drug_name	具体药物名称
+                    chemotherapy.setDrugName(drug_order.getINGREDIENT_STD());
+                    // channel	给药途径
+                    chemotherapy.setChannel(drug_order.getADMINISTRATION());
+                    // dose	药物剂量
+                    chemotherapy.setDose(drug_order.getDOSAGE());
+                    // unit	剂量单位
+                    chemotherapy.setUnit(drug_order.getDOSAGE_UNITS());
+                    // rate	用药频率
+                    chemotherapy.setRate(drug_order.getFREQUENCY());
+                    // start_date	用药开始日期
+                    chemotherapy.setStartDate(drug_order.getENTER_DATE_TIME());
+                    // end_date	用药结束日期
+                    chemotherapy.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
+                    // data_version	数据版本
+                    chemotherapy.setDataVersion(drug_order.getDATA_VERSION());
+                    // data_db_source	数据库来源
+                    chemotherapy.setDataDbSource(drug_order.getDATA_DB_SOURCE());
+                    // data_table_source	数据表来源
+                    chemotherapy.setDataTableSource(drug_order.getDATA_TABLE_SOURCE());
+                    // data_field_source	数据项来源
+                    chemotherapy.setDataFieldSource(drug_order.getDATA_FIELD_SOURCE());
+                    // created_at	创建时间
+                    chemotherapy.setCreatedAt(drug_order.getCREATED_AT());
+                    // creator	创建人
+                    chemotherapy.setCreator(drug_order.getCREATOR());
+                    // updated_at	修改时间
+                    chemotherapy.setUpdatedAt(drug_order.getUPDATED_AT());
+                    chemotherapyService.saveChemotherapy(chemotherapy);
+                    log.info("保存化疗：" + chemotherapy.getUniqueId());
+                // 药物治疗
+                } else if(treatmentList.contains(drugType)) {
+                    Treatment treatment = new Treatment();
+                    // unique_id	unique_id
+                    treatment.setUniqueId(drug_order.getUNIQUE_ID());
+                    // unique_id_lv1	标识患者身份唯一标识
+                    treatment.setUniqueIdLv1(drug_order.getUNIQUE_ID_LV1());
+                    // unique_id_lv2	唯一标识
+                    treatment.setUniqueIdLv2(drug_order.getUNIQUE_ID_LV2());
+                    // p900	医疗机构代码
+                    treatment.setP900(drug_order.getP900());
+                    // patient_id	患者id
+                    treatment.setPatientId(drug_order.getPATIENT_ID());
+                    // visit_id	住院号
+                    treatment.setVisitId(drug_order.getVISIT_ID());
+                    // drug_type	用药分类    商定   pharmacologySystem1  对应  drug_class_std;  pharmacologyType1  对应  drug_subclass_std
+                    treatment.setDrugType(drugType);
+                    // drug_name	具体药物名称
+                    treatment.setDrugName(drug_order.getINGREDIENT_STD());
+                    // channel	给药途径
+                    treatment.setChannel(drug_order.getADMINISTRATION());
+                    // dose	药物剂量
+                    treatment.setDose(drug_order.getDOSAGE());
+                    // unit	剂量单位
+                    treatment.setUnit(drug_order.getDOSAGE_UNITS());
+                    // start_date	用药开始日期
+                    treatment.setStartDate(drug_order.getENTER_DATE_TIME());
+                    // end_date	用药结束日期
+                    treatment.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
+                    // data_version	数据版本
+                    treatment.setDataVersion(drug_order.getDATA_VERSION());
+                    // data_db_source	数据库来源
+                    treatment.setDataDbSource(drug_order.getDATA_DB_SOURCE());
+                    // data_table_source	数据表来源
+                    treatment.setDataTableSource(drug_order.getDATA_TABLE_SOURCE());
+                    // data_field_source	数据项来源
+                    treatment.setDataFieldSource(drug_order.getDATA_FIELD_SOURCE());
+                    // created_at	创建时间
+                    treatment.setCreatedAt(drug_order.getCREATED_AT());
+                    // creator	创建人
+                    treatment.setCreator(drug_order.getCREATOR());
+                    // updated_at	修改时间
+                    treatment.setUpdatedAt(drug_order.getUPDATED_AT());
+                    treatmentService.saveTreatment(treatment);
+                    log.info("保存药物治疗：" + treatment.getUniqueId());
                 }
             }
+
+        }
+
+    }
+
+    /**
+     * 药物治疗
+     * @param zj_DRUG_ORDER
+     */
+    public void saveTreatment(List<DRUG_ORDER> zj_DRUG_ORDER) {
+        for (DRUG_ORDER drug_order : zj_DRUG_ORDER
+                ) {
+            Treatment treatment = new Treatment();
+            // unique_id	unique_id
+            treatment.setUniqueId(drug_order.getUNIQUE_ID());
+            // unique_id_lv1	标识患者身份唯一标识
+            treatment.setUniqueIdLv1(drug_order.getUNIQUE_ID_LV1());
+            // unique_id_lv2	唯一标识
+            treatment.setUniqueIdLv2(drug_order.getUNIQUE_ID_LV2());
+            // p900	医疗机构代码
+            treatment.setP900(drug_order.getP900());
+            // patient_id	患者id
+            treatment.setPatientId(drug_order.getPATIENT_ID());
+            // visit_id	住院号
+            treatment.setVisitId(drug_order.getVISIT_ID());
+            // drug_type	用药分类    FIXME 待商定   pharmacologySystem1  对应  drug_class_std;  pharmacologyType1  对应  drug_subclass_std
+            treatment.setDrugType(drug_order.getORDER_TYPE());
+            // drug_name	具体药物名称
+            treatment.setDrugName(drug_order.getINGREDIENT_STD());
+            // channel	给药途径
+            treatment.setChannel(drug_order.getADMINISTRATION());
+            // dose	药物剂量
+            treatment.setDose(drug_order.getDOSAGE());
+            // unit	剂量单位
+            treatment.setUnit(drug_order.getDOSAGE_UNITS());
+            // start_date	用药开始日期
+            treatment.setStartDate(drug_order.getENTER_DATE_TIME());
+            // end_date	用药结束日期
+            treatment.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
+            // data_version	数据版本
+            treatment.setDataVersion(drug_order.getDATA_VERSION());
+            // data_db_source	数据库来源
+            treatment.setDataDbSource(drug_order.getDATA_DB_SOURCE());
+            // data_table_source	数据表来源
+            treatment.setDataTableSource(drug_order.getDATA_TABLE_SOURCE());
+            // data_field_source	数据项来源
+            treatment.setDataFieldSource(drug_order.getDATA_FIELD_SOURCE());
+            // created_at	创建时间
+            treatment.setCreatedAt(drug_order.getCREATED_AT());
+            // creator	创建人
+            treatment.setCreator(drug_order.getCREATOR());
+            // updated_at	修改时间
+            treatment.setUpdatedAt(drug_order.getUPDATED_AT());
+            treatmentService.saveTreatment(treatment);
+            log.info("保存药物治疗：" + treatment.getUniqueId());
+        }
+    }
+
+    /**
+     * 化疗
+     * @param zj_DRUG_ORDER
+     */
+    public void saveChemotherapy(List<DRUG_ORDER> zj_DRUG_ORDER) {
+        for (DRUG_ORDER drug_order : zj_DRUG_ORDER
+                ) {
+            Chemotherapy chemotherapy = new Chemotherapy();
+            // unique_id	unique_id
+            chemotherapy.setUniqueId(drug_order.getUNIQUE_ID());
+            // unique_id_lv1	标识患者身份唯一标识
+            chemotherapy.setUniqueIdLv1(drug_order.getUNIQUE_ID_LV1());
+            // unique_id_lv2	唯一标识
+            chemotherapy.setUniqueIdLv2(drug_order.getUNIQUE_ID_LV2());
+            // p900	医疗机构代码
+            chemotherapy.setP900(drug_order.getP900());
+            // patient_id	患者id
+            chemotherapy.setPatientId(drug_order.getPATIENT_ID());
+            // visit_id	住院号
+            chemotherapy.setVisitId(drug_order.getVISIT_ID());
+            // drug_type	用药分类 FIXME 待商定  pharmacologySystem1  对应  drug_class_std;  pharmacologyType1  对应  drug_subclass_std
+            chemotherapy.setDrugType(drug_order.getORDER_TYPE());
+            // drug_name	具体药物名称
+            chemotherapy.setDrugName(drug_order.getINGREDIENT_STD());
+            // channel	给药途径
+            chemotherapy.setChannel(drug_order.getADMINISTRATION());
+            // dose	药物剂量
+            chemotherapy.setDose(drug_order.getDOSAGE());
+            // unit	剂量单位
+            chemotherapy.setUnit(drug_order.getDOSAGE_UNITS());
+            // rate	用药频率
+            chemotherapy.setRate(drug_order.getFREQUENCY());
+            // start_date	用药开始日期
+            chemotherapy.setStartDate(drug_order.getENTER_DATE_TIME());
+            // end_date	用药结束日期
+            chemotherapy.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
+            // data_version	数据版本
+            chemotherapy.setDataVersion(drug_order.getDATA_VERSION());
+            // data_db_source	数据库来源
+            chemotherapy.setDataDbSource(drug_order.getDATA_DB_SOURCE());
+            // data_table_source	数据表来源
+            chemotherapy.setDataTableSource(drug_order.getDATA_TABLE_SOURCE());
+            // data_field_source	数据项来源
+            chemotherapy.setDataFieldSource(drug_order.getDATA_FIELD_SOURCE());
+            // created_at	创建时间
+            chemotherapy.setCreatedAt(drug_order.getCREATED_AT());
+            // creator	创建人
+            chemotherapy.setCreator(drug_order.getCREATOR());
+            // updated_at	修改时间
+            chemotherapy.setUpdatedAt(drug_order.getUPDATED_AT());
+            chemotherapyService.saveChemotherapy(chemotherapy);
+            log.info("保存化疗：" + chemotherapy.getUniqueId());
         }
     }
 
@@ -1706,114 +2150,6 @@ public class RuleRunServiceImpl implements RuleRunService {
             immune.setUpdatedAt(histology_report.getUPDATED_AT());
             this.immuneService.saveImmune(immune);
             log.info("保存免疫组化标志物：" + immune.getUniqueId());
-        }
-    }
-
-    /**
-     * 药物治疗
-     * @param zj_DRUG_ORDER
-     */
-    public void saveTreatment(List<DRUG_ORDER> zj_DRUG_ORDER) {
-        for (DRUG_ORDER drug_order : zj_DRUG_ORDER
-                ) {
-            Treatment treatment = new Treatment();
-            // unique_id	unique_id
-            treatment.setUniqueId(drug_order.getUNIQUE_ID());
-            // unique_id_lv1	标识患者身份唯一标识
-            treatment.setUniqueIdLv1(drug_order.getUNIQUE_ID_LV1());
-            // unique_id_lv2	唯一标识
-            treatment.setUniqueIdLv2(drug_order.getUNIQUE_ID_LV2());
-            // p900	医疗机构代码
-            treatment.setP900(drug_order.getP900());
-            // patient_id	患者id
-            treatment.setPatientId(drug_order.getPATIENT_ID());
-            // visit_id	住院号
-            treatment.setVisitId(drug_order.getVISIT_ID());
-            // drug_type	用药分类    FIXME 待商定   pharmacologySystem1  对应  drug_class_std;  pharmacologyType1  对应  drug_subclass_std
-            treatment.setDrugType(drug_order.getORDER_TYPE());
-            // drug_name	具体药物名称
-            treatment.setDrugName(drug_order.getINGREDIENT_STD());
-            // channel	给药途径
-            treatment.setChannel(drug_order.getADMINISTRATION());
-            // dose	药物剂量
-            treatment.setDose(drug_order.getDOSAGE());
-            // unit	剂量单位
-            treatment.setUnit(drug_order.getDOSAGE_UNITS());
-            // start_date	用药开始日期
-            treatment.setStartDate(drug_order.getENTER_DATE_TIME());
-            // end_date	用药结束日期
-            treatment.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
-            // data_version	数据版本
-            treatment.setDataVersion(drug_order.getDATA_VERSION());
-            // data_db_source	数据库来源
-            treatment.setDataDbSource(drug_order.getDATA_DB_SOURCE());
-            // data_table_source	数据表来源
-            treatment.setDataTableSource(drug_order.getDATA_TABLE_SOURCE());
-            // data_field_source	数据项来源
-            treatment.setDataFieldSource(drug_order.getDATA_FIELD_SOURCE());
-            // created_at	创建时间
-            treatment.setCreatedAt(drug_order.getCREATED_AT());
-            // creator	创建人
-            treatment.setCreator(drug_order.getCREATOR());
-            // updated_at	修改时间
-            treatment.setUpdatedAt(drug_order.getUPDATED_AT());
-            treatmentService.saveTreatment(treatment);
-            log.info("保存药物治疗：" + treatment.getUniqueId());
-        }
-    }
-
-    /**
-     * 化疗
-     * @param zj_DRUG_ORDER
-     */
-    public void saveChemotherapy(List<DRUG_ORDER> zj_DRUG_ORDER) {
-        for (DRUG_ORDER drug_order : zj_DRUG_ORDER
-             ) {
-            Chemotherapy chemotherapy = new Chemotherapy();
-            // unique_id	unique_id
-            chemotherapy.setUniqueId(drug_order.getUNIQUE_ID());
-            // unique_id_lv1	标识患者身份唯一标识
-            chemotherapy.setUniqueIdLv1(drug_order.getUNIQUE_ID_LV1());
-            // unique_id_lv2	唯一标识
-            chemotherapy.setUniqueIdLv2(drug_order.getUNIQUE_ID_LV2());
-            // p900	医疗机构代码
-            chemotherapy.setP900(drug_order.getP900());
-            // patient_id	患者id
-            chemotherapy.setPatientId(drug_order.getPATIENT_ID());
-            // visit_id	住院号
-            chemotherapy.setVisitId(drug_order.getVISIT_ID());
-            // drug_type	用药分类 FIXME 待商定  pharmacologySystem1  对应  drug_class_std;  pharmacologyType1  对应  drug_subclass_std
-            chemotherapy.setDrugType(drug_order.getORDER_TYPE());
-            // drug_name	具体药物名称
-            chemotherapy.setDrugName(drug_order.getINGREDIENT_STD());
-            // channel	给药途径
-            chemotherapy.setChannel(drug_order.getADMINISTRATION());
-            // dose	药物剂量
-            chemotherapy.setDose(drug_order.getDOSAGE());
-            // unit	剂量单位
-            chemotherapy.setUnit(drug_order.getDOSAGE_UNITS());
-            // rate	用药频率
-            chemotherapy.setRate(drug_order.getFREQUENCY());
-            // start_date	用药开始日期
-            chemotherapy.setStartDate(drug_order.getENTER_DATE_TIME());
-            // end_date	用药结束日期
-            chemotherapy.setEndDate(drug_order.getSTOP_ORDER_DATE_TIME());
-            // data_version	数据版本
-            chemotherapy.setDataVersion(drug_order.getDATA_VERSION());
-            // data_db_source	数据库来源
-            chemotherapy.setDataDbSource(drug_order.getDATA_DB_SOURCE());
-            // data_table_source	数据表来源
-            chemotherapy.setDataTableSource(drug_order.getDATA_TABLE_SOURCE());
-            // data_field_source	数据项来源
-            chemotherapy.setDataFieldSource(drug_order.getDATA_FIELD_SOURCE());
-            // created_at	创建时间
-            chemotherapy.setCreatedAt(drug_order.getCREATED_AT());
-            // creator	创建人
-            chemotherapy.setCreator(drug_order.getCREATOR());
-            // updated_at	修改时间
-            chemotherapy.setUpdatedAt(drug_order.getUPDATED_AT());
-            chemotherapyService.saveChemotherapy(chemotherapy);
-            log.info("保存化疗：" + chemotherapy.getUniqueId());
         }
     }
 
