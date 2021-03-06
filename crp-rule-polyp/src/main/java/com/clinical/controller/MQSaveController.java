@@ -21,6 +21,7 @@ public class MQSaveController {
     ExamMasterService examMasterService;
     @Autowired
     BeforeTreatmentService beforeTreatmentService;
+
     @RequestMapping("/followUp")
     public void ruleRun(){
 

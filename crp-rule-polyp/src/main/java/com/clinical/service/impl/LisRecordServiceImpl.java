@@ -27,7 +27,6 @@ public class LisRecordServiceImpl implements LisRecordService {
     public void inLisRecord() {
        // List<com.clinical.model.cluster.LisRecord> list=new ArrayList<com.clinical.model.cluster.LisRecord>();
         List<LIS_RECORD> zjLisRecordByALL = zjLisRecordMapper.findZjLisRecordByALL();
-
         for (LIS_RECORD lis_record:zjLisRecordByALL ) {
             LisRecord lisRecord = new LisRecord();
             lisRecord.setUniqueId(lis_record.getUNIQUE_ID());
@@ -38,7 +37,6 @@ public class LisRecordServiceImpl implements LisRecordService {
             lisRecord.setVisitType(lis_record.getVISIT_TYPE());
             lisRecord.setVisitId(lis_record.getVISIT_ID());
             lisRecord.setAdmissionNumber(lis_record.getADMISSION_NUMBER());
-
             lisRecord.setTestNo(lis_record.getTEST_NO());
             lisRecord.setSpcmType(lis_record.getSPCM_TYPE());
             lisRecord.setSpcmReceivedDateTime(lis_record.getSPCM_RECEIVED_DATE_TIME());
@@ -55,7 +53,6 @@ public class LisRecordServiceImpl implements LisRecordService {
             lisRecord.setReferenceInterval(lis_record.getREFERENCE_INTERVAL());
             lisRecord.setSpcmTypeStd(lis_record.getSPCM_TYPE_STD());
             lisRecord.setTestItemNameStd(lis_record.getTEST_ITEM_NAME_STD());
-
             lisRecord.setDataVersion(lis_record.getDATA_VERSION());
             lisRecord.setDataDbSource(lis_record.getDATA_DB_SOURCE());
             lisRecord.setDataTableSource(lis_record.getDATA_TABLE_SOURCE());
