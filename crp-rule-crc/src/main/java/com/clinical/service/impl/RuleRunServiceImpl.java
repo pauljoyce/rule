@@ -1,5 +1,6 @@
 package com.clinical.service.impl;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import com.clinical.dao.cluster.*;
@@ -14,9 +15,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class RuleRunServiceImpl implements RuleRunService {
@@ -225,6 +231,59 @@ public class RuleRunServiceImpl implements RuleRunService {
     @Autowired
     HisFamilyService hisFamilyService;
 
+    // ----------------------------------------------------------wang
+
+    @Autowired
+    ZjBasyNstdMapper zjBasyNstdMapper;
+    @Autowired
+    ZjBasyOpStdMapper zjBasyOpStdMapper;
+    @Autowired
+    ZjBasyDiagStdMapper zjBasyDiagStdMapper;
+    @Autowired
+    ZjNursingRecordMapper zjNursingRecordMapper;
+    @Autowired
+    ZjVitalRecordMapper zjVitalRecordMapper;
+    @Autowired
+    IndexOperationService indexOperationService;
+    @Autowired
+    IndexDiagnosisClinicIcdService indexDiagnosisClinicIcdService;
+    @Autowired
+    IndexDiagnosisMainIcdService indexDiagnosisMainIcdService;
+    @Autowired
+    IndexDiagnosisOtherIcdService indexDiagnosisOtherIcdService;
+    @Autowired
+    IndexPathologyIcdService indexPathologyIcdService;
+    @Autowired
+    IndexDiagnosisOtherService indexDiagnosisOtherService;
+    @Autowired
+    IndexDiagnosisAdmitService indexDiagnosisAdmitService;
+    @Autowired
+    IndexOperationIcdService indexOperationIcdService;
+    @Autowired
+    IndexPathologyService indexPathologyService;
+    @Autowired
+    IndexIcuService indexIcuService;
+    @Autowired
+    IndexDiagnosisAdmitIcdService indexDiagnosisAdmitIcdService;
+    @Autowired
+    IndexInjuryService indexInjuryService;
+    @Autowired
+    TemInpAdmissionStatusService temInpAdmissionStatusService;
+    @Autowired
+    IndexPersonService indexPersonService;
+    @Autowired
+    PersonGeneralService personGeneralService;
+    @Autowired
+    IndexDiagnosisMainService indexDiagnosisMainService;
+    @Autowired
+    PersonService personService;
+    @Autowired
+    IndexDiagnosisClinicService indexDiagnosisClinicService;
+    @Autowired
+    VisitRecordService visitRecordService;
+    @Autowired
+    ZjTemInpAdmissionStatusMapper zjTemInpAdmissionStatusMapper;
+
     @Override
     public void saveRuleRun(Integer pageNo, Integer pageSize, String flag) {
 
@@ -237,7 +296,7 @@ public class RuleRunServiceImpl implements RuleRunService {
 
         for(TEM_PAT_MASTER_INDEX index: zj_TEM_PAT_MASTER_INDEX) {
             //保存患者--------------------------------------------------
-            //savePerson(index);
+            savePerson(index);
 
             //患者就诊列表
             List<PAT_VISIT_MASTER> zj_PAT_VISIT_MASTER = zjPatVisitMasterMapper.findZjPatVisitMasterByUniqueId(index.getUNIQUE_ID());
@@ -245,12 +304,101 @@ public class RuleRunServiceImpl implements RuleRunService {
             for (PAT_VISIT_MASTER master : zj_PAT_VISIT_MASTER) {
 
                 //保存就诊----------------------------------------------------
-                //saveVisitRecord(master);
+                saveVisitRecord(master);
 
                 String uniqueId = master.getUNIQUE_ID();
                 Date visitdate=master.getADMISSION_DATE_TIME();
 
+                //病案首页
+                List<BASY_NSTD> zj_BASY_NSTDs=zjBasyNstdMapper.findZjBasyNstdsByUniqueId(uniqueId);
+                BASY_NSTD zj_BASY_NSTD;
+                if (zj_BASY_NSTDs.size()==1){
+                    zj_BASY_NSTD = zj_BASY_NSTDs.get(0);
+                }else {
+                    zj_BASY_NSTD=  zjBasyNstdMapper.findZjBasyNstdByUniqueId(uniqueId);
+                }
+
+                List<BASY_OP_STD> zj_BASY_OP_STDs=zjBasyOpStdMapper.findZjBasyOpStdsByUniqueId(uniqueId);
+                BASY_OP_STD zj_BASY_OP_STD;
+                if (zj_BASY_OP_STDs.size()==1){
+                    zj_BASY_OP_STD = zj_BASY_OP_STDs.get(0);
+                }else {
+                    zj_BASY_OP_STD = zjBasyOpStdMapper.findZjBasyOpStdByUniqueId(uniqueId);
+                }
+
+                List<BASY_DIAG_STD> zj_BASY_DIAG_STDs=zjBasyDiagStdMapper.findZjBasyDiagStdsByUniqueId(uniqueId);
+                BASY_DIAG_STD  zj_BASY_DIAG_STD;
+                if (zj_BASY_DIAG_STDs.size()==1){
+                    zj_BASY_DIAG_STD = zj_BASY_DIAG_STDs.get(0);
+                }else {
+                    zj_BASY_DIAG_STD =  zjBasyDiagStdMapper.findZjBasyDiagStdByUniqueId(uniqueId);
+                }
+
                 List<INP_DIAGNOSIS>  zj_INP_DIAGNOSIS =  zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
+                List<NURSING_RECORD>  zj_NURSING_RECORD =  zjNursingRecordMapper.findZjNursingRecordByUniqueId(uniqueId);
+                List<VITAL_RECORD>  zj_VITAL_RECORD =  zjVitalRecordMapper.findZjVitalRecordByUniqueId(uniqueId);
+                List<TEM_INP_ADMISSION_STATUS>  zj_TEM_INP_ADMISSION_STATUS =  zjTemInpAdmissionStatusMapper.findZjTemInpAdmissionStatusByUniqueId(uniqueId);
+
+
+                if(zj_BASY_NSTD!=null){
+                    saveIndexPerson(zj_BASY_NSTD,zj_BASY_DIAG_STD);
+                    saveIndexIcu(zj_BASY_NSTD);
+                }
+                if(zj_BASY_DIAG_STD!=null){
+
+                    Date admitdate=null;
+                    Date maindate=null;
+                    Date clinicdate=null;
+                    Date pathdate=null;
+                    for(INP_DIAGNOSIS diagnosis: zj_INP_DIAGNOSIS){
+                        if(diagnosis.getDIAGNOSIS_TYPE()!=null){
+                            if(diagnosis.getDIAGNOSIS_TYPE().contains("出院主要诊断")){
+                                maindate=diagnosis.getDIAGNOSIS_DATE();
+                            }
+                            if(diagnosis.getDIAGNOSIS_TYPE().contains("门诊诊断")){
+                                clinicdate=diagnosis.getDIAGNOSIS_DATE();
+                            }
+                            if(diagnosis.getDIAGNOSIS_TYPE().contains("入院初诊")){
+                                admitdate=diagnosis.getDIAGNOSIS_DATE();
+                            }
+                            if(diagnosis.getDIAGNOSIS_TYPE().contains("病理诊断")){
+                                pathdate=diagnosis.getDIAGNOSIS_DATE();
+                            }
+                        }
+
+                    }
+
+                    if (zj_BASY_NSTD==null){
+                        zj_BASY_NSTD = new BASY_NSTD();
+                        zj_BASY_NSTD.setDOP3("");
+                    }
+                    saveIndexDiagnosisAdmit(zj_BASY_DIAG_STD,visitdate,admitdate,zj_BASY_NSTD);
+                    saveIndexDiagnosisClinic(zj_BASY_DIAG_STD,visitdate,clinicdate,zj_BASY_NSTD);
+                    saveIndexDiagnosisMain(zj_BASY_DIAG_STD,visitdate,maindate,zj_BASY_NSTD);
+                    saveIndexDiagnosisOther(zj_BASY_DIAG_STD,visitdate,maindate,zj_BASY_NSTD);
+                    saveIndexInjury(zj_BASY_DIAG_STD,zj_BASY_NSTD);
+                    saveIndexPathology(zj_BASY_DIAG_STD,visitdate,pathdate,zj_BASY_NSTD);
+                }
+
+                if(zj_BASY_OP_STD!=null){
+                    saveIndexOperation(zj_BASY_OP_STD,zj_BASY_NSTD);
+                }
+
+
+                if(zj_NURSING_RECORD!=null&&zj_NURSING_RECORD.size()>0){
+                    savePersonGeneral(zj_NURSING_RECORD, zj_VITAL_RECORD);
+                }
+
+                if(zj_TEM_INP_ADMISSION_STATUS!=null&&zj_TEM_INP_ADMISSION_STATUS.size()>0){
+                    for(TEM_INP_ADMISSION_STATUS tem_inp_admission_status:zj_TEM_INP_ADMISSION_STATUS){
+                        saveInpAdmissionStatus(tem_inp_admission_status);
+                    }
+
+                }
+
+                // ------------------------------------------wang
+
+//                List<INP_DIAGNOSIS>  zj_INP_DIAGNOSIS =  zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
                 List<SMOKE_AND_DRINK>  zj_smoke_and_drink =  zjSmokeAndDrinkMapper.findZjSmokeAndDrinkByUniqueId(uniqueId);
                 List<PRIOR_DISEASE_AND_SURGERY>  zj_prior_disease_and_surgery =  zjPriorDiseaseAndSurgeryMapper.findZjPriorDiseaseAndSurgeryByUniqueId(uniqueId);
                 List<FAMILY_HISTORY>  zj_family_history =  zjFamilyHistoryMapper.findZjFamilyHistoryByUniqueId(uniqueId);
@@ -394,6 +542,5615 @@ public class RuleRunServiceImpl implements RuleRunService {
             }
         }
     }
+
+    public void savePerson(TEM_PAT_MASTER_INDEX index){
+        Person person = new Person();
+        //患者身份标识
+        person.setUniqueId(index.getUNIQUE_ID());
+        //医疗机构代码
+        person.setP900(index.getP900());
+        //患者id
+        person.setPatientId(index.getPATIENT_ID());
+        //住院号
+        person.setVisitId(index.getVISIT_ID());
+        //姓名
+        person.setName(index.getNAME());
+        //性别
+        person.setSex(index.getSEX());
+        //出生日期
+        person.setDateOfBirth(index.getDATE_OF_BIRTH());
+        //出生地
+        person.setBirthPlace(index.getBIRTH_PLACE());
+        //国籍
+        person.setCitizenship(index.getCITIZENSHIP());
+        //民族
+        person.setNation(index.getNATION());
+        //身份证号
+        person.setIdNo(index.getID_NO());
+        //合同单位
+        person.setUnitInContract(index.getUNIT_IN_CONTRACT());
+        //住址
+        person.setMailingAddress(index.getMAILING_ADDRESS());
+        //联系人
+        person.setNextOfKin(index.getNEXT_OF_KIN());
+        //联系电话
+        person.setTelephone(index.getTELEPHONE());
+        //与联系人关系
+        person.setRelationship(index.getRELATIONSHIP());
+        //入院来源
+        person.setPatientClass(index.getPATIENT_CLASS());
+   /*     //数据版本
+        person.setDataVersion();
+        //数据库来源
+        person.setDataDbSource();
+        //数据表来源
+        person.setDataTableSource();
+        //数据项来源
+        person.setDataFieldSource();
+        //创建时间
+        person.setCreatedAt();
+        //创建人
+        person.setCreator();
+        //修改时间
+        person.setUpdatedAt();*/
+
+        List<String> neededDiagList = Arrays.asList(
+                "盲肠恶性肿瘤",
+                "回盲部恶性肿瘤",
+                "阑尾恶性肿瘤",
+                "升结肠恶性肿瘤",
+                "结肠肝曲恶性肿瘤",
+                "横结肠恶性肿瘤",
+                "结肠脾曲恶性肿瘤",
+                "降结肠恶性肿瘤",
+                "乙状结肠恶性肿瘤",
+                "结肠交搭跨越恶性肿瘤的损害",
+                "盲肠及升结肠恶性肿瘤",
+                "降结肠乙状结肠恶性肿瘤",
+                "升结肠横结肠恶性肿瘤",
+                "横结肠降结肠恶性肿瘤",
+                "结肠恶性肿瘤",
+                "结肠多处恶性肿瘤",
+                "结肠腺瘤恶变",
+                "直肠乙状结肠连接处恶性肿瘤",
+                "直肠乙状结肠连接部恶性肿瘤",
+                "结肠和直肠恶性肿瘤",
+                "直肠恶性肿瘤",
+                "直肠多处恶性肿瘤",
+                "直肠壶腹部恶性肿瘤",
+                "直肠、肛门和肛管交搭跨越恶性肿瘤的损害",
+                "肛门直肠连接部恶性肿瘤",
+                "直肠肛管恶性肿瘤",
+                "直肠肛门恶性肿瘤",
+                "肠道部位的恶性肿瘤",
+                "肠道恶性肿瘤",
+                "消化系统交搭跨越恶性肿瘤的损害",
+                "小肠及结肠恶性肿瘤",
+                "胃体及横结肠恶性肿瘤",
+                "消化系统部位不明确的恶性肿瘤",
+                "消化道恶性肿瘤",
+                "胃肠道恶性肿瘤",
+                "大肠和直肠继发性恶性肿瘤",
+                "乙状结肠继发恶性肿瘤",
+                "直肠乙状结肠连接部继发恶性肿瘤",
+                "直肠继发恶性肿瘤",
+                "盲肠继发恶性肿瘤",
+                "结肠继发恶性肿瘤",
+                "肠系膜继发恶性肿瘤",
+                "胃肠道继发恶性肿瘤",
+                "盲肠恶性肿瘤个人史",
+                "结肠恶性肿瘤个人史",
+                "直肠恶性肿瘤个人史",
+                "胃肠道恶性肿瘤家族史",
+                "大肠恶性肿瘤家族史"
+        );
+        List<String> visits = new ArrayList<>();
+        //患者就诊列表
+        List<PAT_VISIT_MASTER> zj_PAT_VISIT_MASTER = zjPatVisitMasterMapper.findZjPatVisitMasterByUniqueId(index.getUNIQUE_ID());
+        zj_PAT_VISIT_MASTER.forEach(master -> visits.add(master.getUNIQUE_ID()));
+        List<INP_DIAGNOSIS> diagnosisList = new ArrayList<>();
+        List<INP_DIAGNOSIS> finalDiagnosisList = new ArrayList<>();
+        List<Date> diagnosisDateList = new ArrayList<>();
+        visits.forEach(visit -> diagnosisList.addAll(zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(visit)));
+        finalDiagnosisList=diagnosisList.stream().filter(diagnosis -> diagnosis != null && diagnosis.getDIAGNOSIS_DATE() != null&&diagnosis.getDIAGNOSIS_DESC()!=null)
+                .filter(diagnosis -> neededDiagList.contains(diagnosis.getDIAGNOSIS_DESC()))
+                .collect(Collectors.toList());
+        finalDiagnosisList.forEach(diag -> diagnosisDateList.add(diag.getDIAGNOSIS_DATE()));
+
+        Date birthDate = index.getDATE_OF_BIRTH();
+        if (diagnosisDateList.size()==0||birthDate==null){
+            personService.savePerson(person);
+            log.info("无法计算首次诊断日期，保存患者："+person.getUniqueId());
+        }else {
+            Date firstDiagDate = Collections.min(diagnosisDateList);
+
+            DateTime birthDateTime = DateTime.of(birthDate);
+            DateTime firstDiagDateTime = DateTime.of(firstDiagDate);
+            log.info("id:" + index.getUNIQUE_ID());
+            log.info("出生日期：" + birthDateTime.toString());
+            log.info("首次诊断日期：" + firstDiagDateTime.toString());
+            long betweenDays = birthDateTime.between(firstDiagDateTime, DateUnit.DAY);
+            double betweenYears = betweenDays / 365;
+            log.info("日期相差天数：" + betweenDays + "，年数：" + new BigDecimal(betweenYears).setScale(0, RoundingMode.DOWN).toString());
+            person.setFirstVisitAge(new BigDecimal(betweenYears).setScale(0, RoundingMode.DOWN).toString());
+
+            personService.savePerson(person);
+            log.info("保存患者："+person.getUniqueId());
+        }
+
+    }
+    public void saveVisitRecord(PAT_VISIT_MASTER master) {
+        VisitRecord visitRecord = new VisitRecord();
+        //患者身份标识
+        visitRecord.setUniqueIdLv1(master.getUNIQUE_ID_LV1());
+        //唯一标识
+        visitRecord.setUniqueId(master.getUNIQUE_ID());
+        //医疗机构代码
+        visitRecord.setP900(master.getP900());
+        //患者id
+        visitRecord.setPatientId(master.getPATIENT_ID());
+        //就诊类型
+        visitRecord.setVisitType(Integer.valueOf(master.getVISIT_TYPE()));
+        //住院号
+        visitRecord.setVisitId(master.getVISIT_ID());
+        //入院日期
+        visitRecord.setAdmissionDateTime(master.getADMISSION_DATE_TIME());
+        //出院日期
+        visitRecord.setDischargeDateTime(master.getDISCHARGE_DATE_TIME());
+        //入院科室
+        visitRecord.setDeptAdmissionTo(master.getDEPT_ADMISSION_TO());
+        //出院科室
+        visitRecord.setDeptDischargeFrom(master.getDEPT_DISCHARGE_FROM());
+        //住院次数
+        visitRecord.setAdmissionNumber(master.getADMISSION_NUMBER());
+        //就诊医院
+        visitRecord.setP900Name(master.getP900());
+        //就诊类型汉字
+        if (master.getVISIT_TYPE().equals("1")) {
+            visitRecord.setVisitSourceValue("住院");
+        } else if (master.getVISIT_TYPE().equals("2")) {
+            visitRecord.setVisitSourceValue("门诊");
+        } else if (master.getVISIT_TYPE().equals("3")) {
+            visitRecord.setVisitSourceValue("急诊");
+        } else if (master.getVISIT_TYPE().equals("4")) {
+            visitRecord.setVisitSourceValue("体检");
+        }
+       /* //数据版本
+        visitRecord.setDataVersion();
+        //数据库来源
+        visitRecord.setDataDbSource();
+        //数据表来源
+        visitRecord.setDataTableSource();
+        //数据项来源
+        visitRecord.setDataFieldSource();
+        //创建时间
+        visitRecord.setCreatedAt();
+        //创建人
+        visitRecord.setCreator();
+        //修改时间
+        visitRecord.setUpdatedAt();*/
+        visitRecordService.saveVisitRecord(visitRecord);
+        log.info("保存就诊："+visitRecord.getUniqueId());
+    }
+    public void saveIndexOperation(BASY_OP_STD zj_BASY_STD,BASY_NSTD basy_nstd){
+        log.info("保存病案首页手术："+zj_BASY_STD.getUNIQUE_ID());
+        if (zj_BASY_STD.getP490()!=null&&zj_BASY_STD.getP492()!=null) {
+
+            IndexOperation indexOperation = new IndexOperation();
+            //unique_id
+            indexOperation.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexOperation.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexOperation.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexOperation.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexOperation.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexOperation.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexOperation.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //手术/操作日期
+            indexOperation.setP491(zj_BASY_STD.getP491());
+            //手术级别
+            indexOperation.setP820(zj_BASY_STD.getP820());
+            //手术/操作部位
+            indexOperation.setP493(zj_BASY_STD.getP493());
+            //手术持续时间
+            indexOperation.setP494(String.valueOf(zj_BASY_STD.getP494()));
+            //术者
+            indexOperation.setP495(zj_BASY_STD.getP495());
+            //Ⅰ助
+            indexOperation.setP496(zj_BASY_STD.getP496());
+            //Ⅱ助
+            indexOperation.setP497(zj_BASY_STD.getP497());
+            //麻醉方式
+            indexOperation.setP498(zj_BASY_STD.getP498());
+            //麻醉分级
+            indexOperation.setP4981(zj_BASY_STD.getP4981());
+            //切口愈合等级
+            indexOperation.setP499(zj_BASY_STD.getP499());
+            //麻醉医师
+            indexOperation.setP4910(zj_BASY_STD.getP4910());
+            //手术/操作编码
+            indexOperation.setP490(zj_BASY_STD.getP490());
+            //手术/操作名称
+            indexOperation.setP492(zj_BASY_STD.getP492());
+            indexOperationService.saveIndexOperation(indexOperation);
+
+
+            if(zj_BASY_STD.getP492_ICD9_NAME1()!=null){
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+
+                //unique_id
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP492_ICD9_ID1());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP492_ICD9_NAME1());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+
+
+            }
+            if(zj_BASY_STD.getP492_ICD9_NAME2()!=null){
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP492_ICD9_ID2());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP492_ICD9_NAME2());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+
+
+        }
+        if (zj_BASY_STD.getP4911()!=null&&zj_BASY_STD.getP4913()!=null) {
+
+            IndexOperation indexOperation = new IndexOperation();
+            indexOperation.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexOperation.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexOperation.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexOperation.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexOperation.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexOperation.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexOperation.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //手术/操作日期
+            indexOperation.setP491(zj_BASY_STD.getP4912());
+            //手术级别
+            indexOperation.setP820(zj_BASY_STD.getP821());
+            //手术/操作部位
+            indexOperation.setP493(zj_BASY_STD.getP4914());
+            //手术持续时间
+            indexOperation.setP494(String.valueOf(zj_BASY_STD.getP4915()));
+            //术者
+            indexOperation.setP495(zj_BASY_STD.getP4916());
+            //Ⅰ助
+            indexOperation.setP496(zj_BASY_STD.getP4917());
+            //Ⅱ助
+            indexOperation.setP497(zj_BASY_STD.getP4918());
+            //麻醉方式
+            indexOperation.setP498(zj_BASY_STD.getP4919());
+            //麻醉分级
+            indexOperation.setP4981(zj_BASY_STD.getP4982());
+            //切口愈合等级
+            indexOperation.setP499(zj_BASY_STD.getP4920());
+            //麻醉医师
+            indexOperation.setP4910(zj_BASY_STD.getP4921());
+            //手术/操作编码
+            indexOperation.setP490(zj_BASY_STD.getP4911());
+            //手术/操作名称
+            indexOperation.setP492(zj_BASY_STD.getP4913());
+            indexOperationService.saveIndexOperation(indexOperation);
+
+            if(zj_BASY_STD.getP4913_ICD9_NAME1()!=null){
+
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP4913_ICD9_ID1());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP4913_ICD9_NAME1());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+
+            }
+            if(zj_BASY_STD.getP4913_ICD9_NAME2()!=null){
+
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP4913_ICD9_ID2());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP4913_ICD9_NAME2());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+
+
+        }
+        if (zj_BASY_STD.getP4922()!=null&&zj_BASY_STD.getP4924()!=null){
+            IndexOperation indexOperation = new IndexOperation();
+            indexOperation.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexOperation.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexOperation.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexOperation.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexOperation.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexOperation.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexOperation.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //手术/操作日期
+            indexOperation.setP491(zj_BASY_STD.getP4923());
+            //手术级别
+            indexOperation.setP820(zj_BASY_STD.getP822());
+            //手术/操作部位
+            indexOperation.setP493(zj_BASY_STD.getP4925());
+            //手术持续时间
+            indexOperation.setP494(String.valueOf(zj_BASY_STD.getP4526()));
+            //术者
+            indexOperation.setP495(zj_BASY_STD.getP4527());
+            //Ⅰ助
+            indexOperation.setP496(zj_BASY_STD.getP4528());
+            //Ⅱ助
+            indexOperation.setP497(zj_BASY_STD.getP4529());
+            //麻醉方式
+            indexOperation.setP498(zj_BASY_STD.getP4530());
+            //麻醉分级
+            indexOperation.setP4981(zj_BASY_STD.getP4983());
+            //切口愈合等级
+            indexOperation.setP499(zj_BASY_STD.getP4531());
+            //麻醉医师
+            indexOperation.setP4910(zj_BASY_STD.getP4532());
+            //手术/操作编码
+            indexOperation.setP490(zj_BASY_STD.getP4922());
+            //手术/操作名称
+            indexOperation.setP492(zj_BASY_STD.getP4924());
+            indexOperationService.saveIndexOperation(indexOperation);
+
+            if (zj_BASY_STD.getP4924_ICD9_NAME1() != null) {
+
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP4924_ICD9_ID1());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP4924_ICD9_NAME1());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+            if (zj_BASY_STD.getP4924_ICD9_NAME2() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP4924_ICD9_ID2());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP4924_ICD9_NAME2());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+        }
+        if (zj_BASY_STD.getP4533()!=null&&zj_BASY_STD.getP4535()!=null){
+            IndexOperation indexOperation = new IndexOperation();
+            indexOperation.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+
+            //标识患者身份唯一标识
+            indexOperation.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexOperation.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexOperation.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexOperation.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexOperation.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexOperation.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //手术/操作日期
+            indexOperation.setP491(zj_BASY_STD.getP4534());
+            //手术级别
+            indexOperation.setP820(zj_BASY_STD.getP823());
+            //手术/操作部位
+            indexOperation.setP493(zj_BASY_STD.getP4535());
+            //手术持续时间
+            indexOperation.setP494(String.valueOf(zj_BASY_STD.getP4537()));
+            //术者
+            indexOperation.setP495(zj_BASY_STD.getP4538());
+            //Ⅰ助
+            indexOperation.setP496(zj_BASY_STD.getP4539());
+            //Ⅱ助
+            indexOperation.setP497(zj_BASY_STD.getP4540());
+            //麻醉方式
+            indexOperation.setP498(zj_BASY_STD.getP4541());
+            //麻醉分级
+            indexOperation.setP4981(zj_BASY_STD.getP4984());
+            //切口愈合等级
+            indexOperation.setP499(zj_BASY_STD.getP4542());
+            //麻醉医师
+            indexOperation.setP4910(zj_BASY_STD.getP4543());
+            //手术/操作编码
+            indexOperation.setP490(zj_BASY_STD.getP4533());
+            //手术/操作名称
+            indexOperation.setP492(zj_BASY_STD.getP4535());
+            indexOperationService.saveIndexOperation(indexOperation);
+
+            if (zj_BASY_STD.getP4535_ICD9_NAME1() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP4535_ICD9_ID1());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP4535_ICD9_NAME1());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+            if (zj_BASY_STD.getP4535_ICD9_NAME2() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP4535_ICD9_ID2());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP4535_ICD9_NAME2());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+        }
+        if (zj_BASY_STD.getP4544()!=null&&zj_BASY_STD.getP4546()!=null){
+            IndexOperation indexOperation = new IndexOperation();
+            indexOperation.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexOperation.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexOperation.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexOperation.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexOperation.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexOperation.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexOperation.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //手术/操作日期
+            indexOperation.setP491(zj_BASY_STD.getP4545());
+            //手术级别
+            indexOperation.setP820(zj_BASY_STD.getP824());
+            //手术/操作部位
+            indexOperation.setP493(zj_BASY_STD.getP4547());
+            //手术持续时间
+            indexOperation.setP494(String.valueOf(zj_BASY_STD.getP4548()));
+            //术者
+            indexOperation.setP495(zj_BASY_STD.getP4549());
+            //Ⅰ助
+            indexOperation.setP496(zj_BASY_STD.getP4550());
+            //Ⅱ助
+            indexOperation.setP497(zj_BASY_STD.getP4551());
+            //麻醉方式
+            indexOperation.setP498(zj_BASY_STD.getP4552());
+            //麻醉分级
+            indexOperation.setP4981(zj_BASY_STD.getP4985());
+            //切口愈合等级
+            indexOperation.setP499(zj_BASY_STD.getP4553());
+            //麻醉医师
+            indexOperation.setP4910(zj_BASY_STD.getP4554());
+            //手术/操作编码
+            indexOperation.setP490(zj_BASY_STD.getP4544());
+            //手术/操作名称
+            indexOperation.setP492(zj_BASY_STD.getP4546());
+            indexOperationService.saveIndexOperation(indexOperation);
+            if (zj_BASY_STD.getP4546_ICD9_NAME1() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP4546_ICD9_ID1());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP4546_ICD9_NAME1());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+
+            }
+            if( zj_BASY_STD.getP4546_ICD9_NAME2() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP4546_ICD9_ID2());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP4546_ICD9_NAME2());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+        }
+        if (zj_BASY_STD.getP45002()!=null&&zj_BASY_STD.getP45004()!=null){
+            IndexOperation indexOperation = new IndexOperation();
+            indexOperation.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexOperation.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexOperation.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexOperation.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexOperation.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexOperation.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexOperation.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //手术/操作日期
+            indexOperation.setP491(zj_BASY_STD.getP45003());
+            //手术级别
+            indexOperation.setP820(zj_BASY_STD.getP825());
+            //手术/操作部位
+            indexOperation.setP493(zj_BASY_STD.getP45005());
+            //手术持续时间
+            indexOperation.setP494(String.valueOf(zj_BASY_STD.getP45006()));
+            //术者
+            indexOperation.setP495(zj_BASY_STD.getP45007());
+            //Ⅰ助
+            indexOperation.setP496(zj_BASY_STD.getP45008());
+            //Ⅱ助
+            indexOperation.setP497(zj_BASY_STD.getP45009());
+            //麻醉方式
+            indexOperation.setP498(zj_BASY_STD.getP45010());
+            //麻醉分级
+            indexOperation.setP4981(zj_BASY_STD.getP45011());
+            //切口愈合等级
+            indexOperation.setP499(zj_BASY_STD.getP45012());
+            //麻醉医师
+            indexOperation.setP4910(zj_BASY_STD.getP45013());
+            //手术/操作编码
+            indexOperation.setP490(zj_BASY_STD.getP45002());
+            //手术/操作名称
+            indexOperation.setP492(zj_BASY_STD.getP45004());
+            indexOperationService.saveIndexOperation(indexOperation);
+
+            if (zj_BASY_STD.getP45004_ICD9_NAME1() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP45004_ICD9_ID1());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP45004_ICD9_NAME1());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+            if ( zj_BASY_STD.getP45004_ICD9_NAME2() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP45004_ICD9_ID2());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP45004_ICD9_NAME2());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+        }
+        if (zj_BASY_STD.getP45014()!=null&&zj_BASY_STD.getP45016()!=null){
+            IndexOperation indexOperation = new IndexOperation();
+            indexOperation.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexOperation.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexOperation.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexOperation.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexOperation.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexOperation.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexOperation.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //手术/操作日期
+            indexOperation.setP491(zj_BASY_STD.getP45015());
+            //手术级别
+            indexOperation.setP820(zj_BASY_STD.getP826());
+            //手术/操作部位
+            indexOperation.setP493(zj_BASY_STD.getP45017());
+            //手术持续时间
+            indexOperation.setP494(String.valueOf(zj_BASY_STD.getP45018()));
+            //术者
+            indexOperation.setP495(zj_BASY_STD.getP45019());
+            //Ⅰ助
+            indexOperation.setP496(zj_BASY_STD.getP45020());
+            //Ⅱ助
+            indexOperation.setP497(zj_BASY_STD.getP45021());
+            //麻醉方式
+            indexOperation.setP498(zj_BASY_STD.getP45022());
+            //麻醉分级
+            indexOperation.setP4981(zj_BASY_STD.getP45023());
+            //切口愈合等级
+            indexOperation.setP499(zj_BASY_STD.getP45024());
+            //麻醉医师
+            indexOperation.setP4910(zj_BASY_STD.getP45025());
+
+            //手术/操作编码
+            indexOperation.setP490(zj_BASY_STD.getP45014());
+            //手术/操作名称
+            indexOperation.setP492(zj_BASY_STD.getP45016());
+            indexOperationService.saveIndexOperation(indexOperation);
+            if ( zj_BASY_STD.getP45016_ICD9_NAME1() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP45016_ICD9_ID1());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP45016_ICD9_NAME1());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+            if (zj_BASY_STD.getP45016_ICD9_NAME2() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP45016_ICD9_ID2());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP45016_ICD9_NAME2());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+        }
+        if (zj_BASY_STD.getP45026()!=null&&zj_BASY_STD.getP45028()!=null){
+            IndexOperation indexOperation = new IndexOperation();
+            indexOperation.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexOperation.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexOperation.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexOperation.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexOperation.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexOperation.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexOperation.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //手术/操作编码
+            indexOperation.setP490(zj_BASY_STD.getP45026());
+            //手术/操作日期
+            indexOperation.setP491(zj_BASY_STD.getP45027());
+            //手术级别
+            indexOperation.setP820(zj_BASY_STD.getP827());
+            //手术/操作名称
+            indexOperation.setP492(zj_BASY_STD.getP45028());
+            //手术/操作部位
+            indexOperation.setP493(zj_BASY_STD.getP45029());
+            //手术持续时间
+            indexOperation.setP494(String.valueOf(zj_BASY_STD.getP45030()));
+            //术者
+            indexOperation.setP495(zj_BASY_STD.getP45031());
+            //Ⅰ助
+            indexOperation.setP496(zj_BASY_STD.getP45032());
+            //Ⅱ助
+            indexOperation.setP497(zj_BASY_STD.getP45033());
+            //麻醉方式
+            indexOperation.setP498(zj_BASY_STD.getP45034());
+            //麻醉分级
+            indexOperation.setP4981(zj_BASY_STD.getP45035());
+            //切口愈合等级
+            indexOperation.setP499(zj_BASY_STD.getP45036());
+            //麻醉医师
+            indexOperation.setP4910(zj_BASY_STD.getP45037());
+            //手术/操作编码
+            indexOperation.setP490(zj_BASY_STD.getP45026());
+            //手术/操作名称
+            indexOperation.setP492(zj_BASY_STD.getP45028());
+            indexOperationService.saveIndexOperation(indexOperation);
+
+            if (zj_BASY_STD.getP45028_ICD9_NAME1() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP45028_ICD9_ID1());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP45028_ICD9_NAME1());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+            if ( zj_BASY_STD.getP45028_ICD9_NAME2() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP45028_ICD9_ID2());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP45028_ICD9_NAME2());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+        }
+        if (zj_BASY_STD.getP45038()!=null&&zj_BASY_STD.getP45040()!=null){
+            IndexOperation indexOperation = new IndexOperation();
+            indexOperation.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexOperation.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexOperation.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexOperation.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexOperation.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexOperation.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexOperation.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //手术/操作日期
+            indexOperation.setP491(zj_BASY_STD.getP45039());
+            //手术级别
+            indexOperation.setP820(zj_BASY_STD.getP828());
+            //手术/操作部位
+            indexOperation.setP493(zj_BASY_STD.getP45041());
+            //手术持续时间
+            indexOperation.setP494(String.valueOf(zj_BASY_STD.getP45042()));
+            //术者
+            indexOperation.setP495(zj_BASY_STD.getP45043());
+            //Ⅰ助
+            indexOperation.setP496(zj_BASY_STD.getP45044());
+            //Ⅱ助
+            indexOperation.setP497(zj_BASY_STD.getP45045());
+            //麻醉方式
+            indexOperation.setP498(zj_BASY_STD.getP45046());
+            //麻醉分级
+            indexOperation.setP4981(zj_BASY_STD.getP45047());
+            //切口愈合等级
+            indexOperation.setP499(zj_BASY_STD.getP45048());
+            //麻醉医师
+            indexOperation.setP4910(zj_BASY_STD.getP45049());
+            //手术/操作编码
+            indexOperation.setP490(zj_BASY_STD.getP45038());
+            //手术/操作名称
+            indexOperation.setP492(zj_BASY_STD.getP45040());
+            indexOperationService.saveIndexOperation(indexOperation);
+            if (zj_BASY_STD.getP45040_ICD9_NAME1() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP45040_ICD9_ID1());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP45040_ICD9_NAME1());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+            if (zj_BASY_STD.getP45040_ICD9_NAME2() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP45040_ICD9_ID2());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP45040_ICD9_NAME2());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+        }
+        if (zj_BASY_STD.getP45050()!=null&&zj_BASY_STD.getP45052()!=null){
+            IndexOperation indexOperation = new IndexOperation();
+            indexOperation.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexOperation.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexOperation.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexOperation.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexOperation.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexOperation.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexOperation.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //手术/操作编码
+            indexOperation.setP490(zj_BASY_STD.getP45050());
+            //手术/操作日期
+            indexOperation.setP491(zj_BASY_STD.getP45051());
+            //手术级别
+            indexOperation.setP820(zj_BASY_STD.getP829());
+            //手术/操作名称
+            indexOperation.setP492(zj_BASY_STD.getP45052());
+            //手术/操作部位
+            indexOperation.setP493(zj_BASY_STD.getP45053());
+            //手术持续时间
+            indexOperation.setP494(String.valueOf(zj_BASY_STD.getP45054()));
+            //术者
+            indexOperation.setP495(zj_BASY_STD.getP45055());
+            //Ⅰ助
+            indexOperation.setP496(zj_BASY_STD.getP45056());
+            //Ⅱ助
+            indexOperation.setP497(zj_BASY_STD.getP45057());
+            //麻醉方式
+            indexOperation.setP498(zj_BASY_STD.getP45058());
+            //麻醉分级
+            indexOperation.setP4981(zj_BASY_STD.getP45059());
+            //切口愈合等级
+            indexOperation.setP499(zj_BASY_STD.getP45060());
+            //麻醉医师
+            indexOperation.setP4910(zj_BASY_STD.getP45061());
+            //手术/操作编码
+            indexOperation.setP490(zj_BASY_STD.getP45050());
+            //手术/操作名称
+            indexOperation.setP492(zj_BASY_STD.getP45052());
+            indexOperationService.saveIndexOperation(indexOperation);
+            if (zj_BASY_STD.getP45052_ICD9_NAME1() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP45052_ICD9_ID1());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP45052_ICD9_NAME1());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+            if ( zj_BASY_STD.getP45052_ICD9_NAME2() != null) {
+                IndexOperationIcd indexOperationIcd =new IndexOperationIcd();
+                indexOperationIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+
+                //标识患者身份唯一标识
+                indexOperationIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexOperationIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexOperationIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexOperationIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexOperationIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexOperationIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexOperationIcd.setOptId(indexOperation.getId());
+                //手术/操作编码
+                indexOperationIcd.setOptIcdcode(zj_BASY_STD.getP45052_ICD9_ID1());
+                //手术/操作名称
+                indexOperationIcd.setOptIcddesc(zj_BASY_STD.getP45052_ICD9_NAME1());
+                indexOperationIcdService.saveIndexOperationIcd(indexOperationIcd);
+            }
+        }
+
+
+
+
+      /*  //数据版本
+        indexOperation.setDataVersion();
+        //数据库来源
+        indexOperation.setDataDbSource();
+        //数据表来源
+        indexOperation.setDataTableSource();
+        //数据项来源
+        indexOperation.setDataFieldSource();
+        //创建时间
+        indexOperation.setCreatedAt();
+        //创建人
+        indexOperation.setCreator();
+        //修改时间
+        indexOperation.setUpdatedAt();*/
+
+    }
+    public void saveIndexDiagnosisAdmit(BASY_DIAG_STD zj_BASY_STD,Date visitDate,Date diagnosisDate,BASY_NSTD basy_nstd){
+        if(zj_BASY_STD.getP30()!=null&&zj_BASY_STD.getP301()!=null){
+            IndexDiagnosisAdmit indexDiagnosisAdmit = new IndexDiagnosisAdmit();
+            indexDiagnosisAdmit.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexDiagnosisAdmit.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexDiagnosisAdmit.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexDiagnosisAdmit.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexDiagnosisAdmit.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexDiagnosisAdmit.setPatientId(basy_nstd.getDOP3());
+            }
+
+            //住院号
+            indexDiagnosisAdmit.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //入院诊断编码
+            indexDiagnosisAdmit.setP30(zj_BASY_STD.getP30());
+            //入院诊断描述名称
+            indexDiagnosisAdmit.setP301(zj_BASY_STD.getP301());
+            indexDiagnosisAdmit.setVisitDate(visitDate);
+            indexDiagnosisAdmit.setDiagnosisDate(diagnosisDate);
+            indexDiagnosisAdmitService.saveIndexDiagnosisAdmit(indexDiagnosisAdmit);
+            log.info("保存病案入院诊断"+zj_BASY_STD.getUNIQUE_ID_LV2()+"---"+zj_BASY_STD.getP301()+"--"+zj_BASY_STD.getP30());
+
+            if(zj_BASY_STD.getP301_ICD10_NAME1()!=null&&zj_BASY_STD.getP301_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP301_ICD10_ID1())){
+                IndexDiagnosisAdmitIcd indexDiagnosisAdmitIcd = new IndexDiagnosisAdmitIcd();
+                indexDiagnosisAdmitIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisAdmitIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisAdmitIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisAdmitIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisAdmitIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisAdmitIcd.setAdmitId(indexDiagnosisAdmit.getId());
+                //入院诊断编码
+                indexDiagnosisAdmitIcd.setDiagnosisIcdcode(zj_BASY_STD.getP301_ICD10_ID1());
+                //入院诊断描述名称
+                indexDiagnosisAdmitIcd.setDiagnosisIcddesc(zj_BASY_STD.getP301_ICD10_NAME1());
+                indexDiagnosisAdmitIcdService.saveIndexDiagnosisAdmitIcd(indexDiagnosisAdmitIcd);
+            }
+            if(zj_BASY_STD.getP301_ICD10_NAME2()!=null&&zj_BASY_STD.getP301_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP301_ICD10_ID2())){
+                IndexDiagnosisAdmitIcd indexDiagnosisAdmitIcd = new IndexDiagnosisAdmitIcd();
+                indexDiagnosisAdmitIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisAdmitIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisAdmitIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisAdmitIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisAdmitIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //入院诊断编码
+                indexDiagnosisAdmitIcd.setAdmitId(indexDiagnosisAdmit.getId());
+                //入院诊断编码
+                indexDiagnosisAdmitIcd.setDiagnosisIcdcode(zj_BASY_STD.getP301_ICD10_ID2());
+                //入院诊断描述名称
+                indexDiagnosisAdmitIcd.setDiagnosisIcddesc(zj_BASY_STD.getP301_ICD10_NAME2());
+                indexDiagnosisAdmitIcdService.saveIndexDiagnosisAdmitIcd(indexDiagnosisAdmitIcd);
+            }
+            if(zj_BASY_STD.getP301_ICD10_NAME3()!=null&&zj_BASY_STD.getP301_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP301_ICD10_ID3())){
+                IndexDiagnosisAdmitIcd indexDiagnosisAdmitIcd = new IndexDiagnosisAdmitIcd();
+                indexDiagnosisAdmitIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisAdmitIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisAdmitIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisAdmitIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisAdmitIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //入院诊断编码
+                indexDiagnosisAdmitIcd.setAdmitId(indexDiagnosisAdmit.getId());
+                //入院诊断编码
+                indexDiagnosisAdmitIcd.setDiagnosisIcdcode(zj_BASY_STD.getP301_ICD10_ID3());
+                //入院诊断描述名称
+                indexDiagnosisAdmitIcd.setDiagnosisIcddesc(zj_BASY_STD.getP301_ICD10_NAME3());
+                indexDiagnosisAdmitIcdService.saveIndexDiagnosisAdmitIcd(indexDiagnosisAdmitIcd);
+            }
+            if(zj_BASY_STD.getP301_ICD10_NAME4()!=null&&zj_BASY_STD.getP301_ICD10_ID4()!=null&&!"".equals(zj_BASY_STD.getP301_ICD10_ID4())){
+                IndexDiagnosisAdmitIcd indexDiagnosisAdmitIcd = new IndexDiagnosisAdmitIcd();
+                indexDiagnosisAdmitIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisAdmitIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisAdmitIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisAdmitIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisAdmitIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //入院诊断编码
+                indexDiagnosisAdmitIcd.setAdmitId(indexDiagnosisAdmit.getId());
+                //入院诊断编码
+                indexDiagnosisAdmitIcd.setDiagnosisIcdcode(zj_BASY_STD.getP301_ICD10_ID4());
+                //入院诊断描述名称
+                indexDiagnosisAdmitIcd.setDiagnosisIcddesc(zj_BASY_STD.getP301_ICD10_NAME4());
+                indexDiagnosisAdmitIcdService.saveIndexDiagnosisAdmitIcd(indexDiagnosisAdmitIcd);
+            }
+            if(zj_BASY_STD.getP301_ICD10_NAME5()!=null&&zj_BASY_STD.getP301_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP301_ICD10_ID5())){
+                IndexDiagnosisAdmitIcd indexDiagnosisAdmitIcd = new IndexDiagnosisAdmitIcd();
+                indexDiagnosisAdmitIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisAdmitIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisAdmitIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisAdmitIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisAdmitIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //入院诊断编码
+                indexDiagnosisAdmitIcd.setAdmitId(indexDiagnosisAdmit.getId());
+                //入院诊断编码
+                indexDiagnosisAdmitIcd.setDiagnosisIcdcode(zj_BASY_STD.getP301_ICD10_ID5());
+                //入院诊断描述名称
+                indexDiagnosisAdmitIcd.setDiagnosisIcddesc(zj_BASY_STD.getP301_ICD10_NAME5());
+                indexDiagnosisAdmitIcdService.saveIndexDiagnosisAdmitIcd(indexDiagnosisAdmitIcd);
+            }
+            if(zj_BASY_STD.getP301_ICD10_NAME6()!=null&&zj_BASY_STD.getP301_ICD10_ID6()!=null&&!"".equals(zj_BASY_STD.getP301_ICD10_ID6())){
+                IndexDiagnosisAdmitIcd indexDiagnosisAdmitIcd = new IndexDiagnosisAdmitIcd();
+                indexDiagnosisAdmitIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisAdmitIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisAdmitIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisAdmitIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisAdmitIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //入院诊断编码
+                indexDiagnosisAdmitIcd.setAdmitId(indexDiagnosisAdmit.getId());
+                //入院诊断编码
+                indexDiagnosisAdmitIcd.setDiagnosisIcdcode(zj_BASY_STD.getP301_ICD10_ID6());
+                //入院诊断描述名称
+                indexDiagnosisAdmitIcd.setDiagnosisIcddesc(zj_BASY_STD.getP301_ICD10_NAME6());
+                indexDiagnosisAdmitIcdService.saveIndexDiagnosisAdmitIcd(indexDiagnosisAdmitIcd);
+            }
+            if(zj_BASY_STD.getP301_ICD10_NAME7()!=null&&zj_BASY_STD.getP301_ICD10_ID7()!=null&&!"".equals(zj_BASY_STD.getP301_ICD10_ID7())){
+                IndexDiagnosisAdmitIcd indexDiagnosisAdmitIcd = new IndexDiagnosisAdmitIcd();
+                indexDiagnosisAdmitIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisAdmitIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisAdmitIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisAdmitIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisAdmitIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisAdmitIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //入院诊断编码
+                indexDiagnosisAdmitIcd.setAdmitId(indexDiagnosisAdmit.getId());
+                //入院诊断编码
+                indexDiagnosisAdmitIcd.setDiagnosisIcdcode(zj_BASY_STD.getP301_ICD10_ID7());
+                //入院诊断描述名称
+                indexDiagnosisAdmitIcd.setDiagnosisIcddesc(zj_BASY_STD.getP301_ICD10_NAME7());
+                indexDiagnosisAdmitIcdService.saveIndexDiagnosisAdmitIcd(indexDiagnosisAdmitIcd);
+            }
+//            if(zj_BASY_STD.getP301_ICD10_NAME8()!=null&&zj_BASY_STD.getP301_ICD10_ID8()!=null&&!"".equals(zj_BASY_STD.getP301_ICD10_ID8())){
+//                IndexDiagnosisAdmitIcd indexDiagnosisAdmitIcd = new IndexDiagnosisAdmitIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisAdmitIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisAdmitIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisAdmitIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisAdmitIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisAdmitIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //入院诊断编码
+//                indexDiagnosisAdmitIcd.setAdmitId(indexDiagnosisAdmit.getId());
+//                //入院诊断编码
+//                indexDiagnosisAdmitIcd.setDiagnosisIcdcode(zj_BASY_STD.getP301_ICD10_ID8());
+//                //入院诊断描述名称
+//                indexDiagnosisAdmitIcd.setDiagnosisIcddesc(zj_BASY_STD.getP301_ICD10_NAME8());
+//                indexDiagnosisAdmitIcdService.saveIndexDiagnosisAdmitIcd(indexDiagnosisAdmitIcd);
+//            }
+//            if(zj_BASY_STD.getP301_ICD10_NAME9()!=null&&zj_BASY_STD.getP301_ICD10_ID9()!=null&&!"".equals(zj_BASY_STD.getP301_ICD10_ID9())){
+//                IndexDiagnosisAdmitIcd indexDiagnosisAdmitIcd = new IndexDiagnosisAdmitIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisAdmitIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisAdmitIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisAdmitIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisAdmitIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisAdmitIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //入院诊断编码
+//                indexDiagnosisAdmitIcd.setAdmitId(indexDiagnosisAdmit.getId());
+//                //入院诊断编码
+//                indexDiagnosisAdmitIcd.setDiagnosisIcdcode(zj_BASY_STD.getP301_ICD10_ID9());
+//                //入院诊断描述名称
+//                indexDiagnosisAdmitIcd.setDiagnosisIcddesc(zj_BASY_STD.getP301_ICD10_NAME9());
+//                indexDiagnosisAdmitIcdService.saveIndexDiagnosisAdmitIcd(indexDiagnosisAdmitIcd);
+//            }
+        }
+
+
+     /*   //数据版本
+        indexDiagnsisAdmit.setDataVersion();
+        //数据库来源
+        indexDiagnsisAdmit.setDataDbSource();
+        //数据表来源
+        indexDiagnsisAdmit.setDataTableSource();
+        //数据项来源
+        indexDiagnsisAdmit.setDataFieldSource();
+        //创建时间
+        indexDiagnsisAdmit.setCreatedAt();
+        //创建人
+        indexDiagnsisAdmit.setCreator();
+        //修改时间
+        indexDiagnsisAdmit.setUpdatedAt();*/
+
+    }
+    public void saveIndexDiagnosisClinic(BASY_DIAG_STD zj_BASY_STD,Date visitDate,Date diagnosisDate,BASY_NSTD basy_nstd){
+        log.info("保存病案首页门诊诊断："+zj_BASY_STD.getUNIQUE_ID()+"---"+zj_BASY_STD.getP281_ICD10_ID1()+"------"+zj_BASY_STD.getP281_ICD10_NAME1());
+        if(zj_BASY_STD.getP28()!=null&&zj_BASY_STD.getP281()!=null){
+
+            IndexDiagnosisClinic indexDiagnosisClinic = new IndexDiagnosisClinic();
+            indexDiagnosisClinic.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexDiagnosisClinic.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexDiagnosisClinic.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexDiagnosisClinic.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexDiagnosisClinic.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexDiagnosisClinic.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexDiagnosisClinic.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //门诊诊断编码
+            indexDiagnosisClinic.setP28(zj_BASY_STD.getP28());
+            //门诊诊断名称
+            indexDiagnosisClinic.setP281(zj_BASY_STD.getP281());
+            indexDiagnosisClinic.setVisitDate(visitDate);
+            indexDiagnosisClinic.setDiagnosisDate(diagnosisDate);
+            indexDiagnosisClinicService.saveIndexDiagnosisClinic(indexDiagnosisClinic);
+
+            if(zj_BASY_STD.getP281_ICD10_NAME1()!=null&&zj_BASY_STD.getP281_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP281_ICD10_ID1())){
+                IndexDiagnosisClinicIcd indexDiagnosisClinicIcd = new IndexDiagnosisClinicIcd();
+                indexDiagnosisClinicIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisClinicIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisClinicIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisClinicIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisClinicIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisClinicIcd.setClinicId(indexDiagnosisClinic.getId());
+                //门诊诊断编码
+                indexDiagnosisClinicIcd.setDiagnosisIcdcode(zj_BASY_STD.getP281_ICD10_ID1());
+                //门诊诊断名称
+                indexDiagnosisClinicIcd.setDiagnosisIcddesc(zj_BASY_STD.getP281_ICD10_NAME1());
+                indexDiagnosisClinicIcdService.saveIndexDiagnosisClinicIcd(indexDiagnosisClinicIcd);
+
+            }
+            if(zj_BASY_STD.getP281_ICD10_NAME2()!=null&&zj_BASY_STD.getP281_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP281_ICD10_ID2())){
+                IndexDiagnosisClinicIcd indexDiagnosisClinicIcd = new IndexDiagnosisClinicIcd();
+                indexDiagnosisClinicIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisClinicIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisClinicIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisClinicIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisClinicIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisClinicIcd.setClinicId(indexDiagnosisClinic.getId());
+                //门诊诊断编码
+                indexDiagnosisClinicIcd.setDiagnosisIcdcode(zj_BASY_STD.getP281_ICD10_ID2());
+                //门诊诊断名称
+                indexDiagnosisClinicIcd.setDiagnosisIcddesc(zj_BASY_STD.getP281_ICD10_NAME2());
+                indexDiagnosisClinicIcdService.saveIndexDiagnosisClinicIcd(indexDiagnosisClinicIcd);
+            }
+            if(zj_BASY_STD.getP281_ICD10_NAME3()!=null&&zj_BASY_STD.getP281_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP281_ICD10_ID3())){
+                IndexDiagnosisClinicIcd indexDiagnosisClinicIcd = new IndexDiagnosisClinicIcd();
+                indexDiagnosisClinicIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisClinicIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisClinicIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisClinicIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisClinicIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisClinicIcd.setClinicId(indexDiagnosisClinic.getId());
+                //门诊诊断编码
+                indexDiagnosisClinicIcd.setDiagnosisIcdcode(zj_BASY_STD.getP281_ICD10_ID3());
+                //门诊诊断名称
+                indexDiagnosisClinicIcd.setDiagnosisIcddesc(zj_BASY_STD.getP281_ICD10_NAME3());
+                indexDiagnosisClinicIcdService.saveIndexDiagnosisClinicIcd(indexDiagnosisClinicIcd);
+            }
+            if(zj_BASY_STD.getP281_ICD10_NAME4()!=null&&zj_BASY_STD.getP281_ICD10_ID4()!=null&&!"".equals(zj_BASY_STD.getP281_ICD10_ID4())){
+                IndexDiagnosisClinicIcd indexDiagnosisClinicIcd = new IndexDiagnosisClinicIcd();
+                indexDiagnosisClinicIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisClinicIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisClinicIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisClinicIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisClinicIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisClinicIcd.setClinicId(indexDiagnosisClinic.getId());
+                //门诊诊断编码
+                indexDiagnosisClinicIcd.setDiagnosisIcdcode(zj_BASY_STD.getP281_ICD10_ID4());
+                //门诊诊断名称
+                indexDiagnosisClinicIcd.setDiagnosisIcddesc(zj_BASY_STD.getP281_ICD10_NAME4());
+                indexDiagnosisClinicIcdService.saveIndexDiagnosisClinicIcd(indexDiagnosisClinicIcd);
+            }
+            if(zj_BASY_STD.getP281_ICD10_NAME5()!=null&&zj_BASY_STD.getP281_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP281_ICD10_ID5())){
+                IndexDiagnosisClinicIcd indexDiagnosisClinicIcd = new IndexDiagnosisClinicIcd();
+                indexDiagnosisClinicIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisClinicIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisClinicIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisClinicIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisClinicIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisClinicIcd.setClinicId(indexDiagnosisClinic.getId());
+                //门诊诊断编码
+                indexDiagnosisClinicIcd.setDiagnosisIcdcode(zj_BASY_STD.getP281_ICD10_ID5());
+                //门诊诊断名称
+                indexDiagnosisClinicIcd.setDiagnosisIcddesc(zj_BASY_STD.getP281_ICD10_NAME5());
+                indexDiagnosisClinicIcdService.saveIndexDiagnosisClinicIcd(indexDiagnosisClinicIcd);
+            }
+            if(zj_BASY_STD.getP281_ICD10_NAME6()!=null&&zj_BASY_STD.getP281_ICD10_ID6()!=null&&!"".equals(zj_BASY_STD.getP281_ICD10_ID6())){
+                IndexDiagnosisClinicIcd indexDiagnosisClinicIcd = new IndexDiagnosisClinicIcd();
+                indexDiagnosisClinicIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisClinicIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisClinicIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisClinicIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisClinicIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisClinicIcd.setClinicId(indexDiagnosisClinic.getId());
+                //门诊诊断编码
+                indexDiagnosisClinicIcd.setDiagnosisIcdcode(zj_BASY_STD.getP281_ICD10_ID6());
+                //门诊诊断名称
+                indexDiagnosisClinicIcd.setDiagnosisIcddesc(zj_BASY_STD.getP281_ICD10_NAME6());
+                indexDiagnosisClinicIcdService.saveIndexDiagnosisClinicIcd(indexDiagnosisClinicIcd);
+            }
+            if(zj_BASY_STD.getP281_ICD10_NAME7()!=null&&zj_BASY_STD.getP281_ICD10_ID7()!=null&&!"".equals(zj_BASY_STD.getP281_ICD10_ID7())){
+                IndexDiagnosisClinicIcd indexDiagnosisClinicIcd = new IndexDiagnosisClinicIcd();
+                indexDiagnosisClinicIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisClinicIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisClinicIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisClinicIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisClinicIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisClinicIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisClinicIcd.setClinicId(indexDiagnosisClinic.getId());
+                //门诊诊断编码
+                indexDiagnosisClinicIcd.setDiagnosisIcdcode(zj_BASY_STD.getP281_ICD10_ID7());
+                //门诊诊断名称
+                indexDiagnosisClinicIcd.setDiagnosisIcddesc(zj_BASY_STD.getP281_ICD10_NAME7());
+                indexDiagnosisClinicIcdService.saveIndexDiagnosisClinicIcd(indexDiagnosisClinicIcd);
+            }
+//            if(zj_BASY_STD.getP281_ICD10_NAME8()!=null&&zj_BASY_STD.getP281_ICD10_ID8()!=null&&!"".equals(zj_BASY_STD.getP281_ICD10_ID8())){
+//                IndexDiagnosisClinicIcd indexDiagnosisClinicIcd = new IndexDiagnosisClinicIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisClinicIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisClinicIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisClinicIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisClinicIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisClinicIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                indexDiagnosisClinicIcd.setClinicId(indexDiagnosisClinic.getId());
+//                //门诊诊断编码
+//                indexDiagnosisClinicIcd.setDiagnosisIcdcode(zj_BASY_STD.getP281_ICD10_ID8());
+//                //门诊诊断名称
+//                indexDiagnosisClinicIcd.setDiagnosisIcddesc(zj_BASY_STD.getP281_ICD10_NAME8());
+//                indexDiagnosisClinicIcdService.saveIndexDiagnosisClinicIcd(indexDiagnosisClinicIcd);
+//            }
+//            if(zj_BASY_STD.getP281_ICD10_NAME9()!=null&&zj_BASY_STD.getP281_ICD10_ID9()!=null&&!"".equals(zj_BASY_STD.getP281_ICD10_ID9())){
+//                IndexDiagnosisClinicIcd indexDiagnosisClinicIcd = new IndexDiagnosisClinicIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisClinicIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisClinicIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisClinicIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisClinicIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisClinicIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                indexDiagnosisClinicIcd.setClinicId(indexDiagnosisClinic.getId());
+//                //门诊诊断编码
+//                indexDiagnosisClinicIcd.setDiagnosisIcdcode(zj_BASY_STD.getP281_ICD10_ID9());
+//                //门诊诊断名称
+//                indexDiagnosisClinicIcd.setDiagnosisIcddesc(zj_BASY_STD.getP281_ICD10_NAME9());
+//                indexDiagnosisClinicIcdService.saveIndexDiagnosisClinicIcd(indexDiagnosisClinicIcd);
+//            }
+        }
+
+
+
+
+/*
+        //数据版本
+        indexDiagnosisClinic.setDataVersion();
+        //数据库来源
+        indexDiagnosisClinic.setDataDbSource();
+        //数据表来源
+        indexDiagnosisClinic.setDataTableSource();
+        //数据项来源
+        indexDiagnosisClinic.setDataFieldSource();
+        //创建时间
+        indexDiagnosisClinic.setCreatedAt();
+        //创建人
+        indexDiagnosisClinic.setCreator();
+        //修改时间
+        indexDiagnosisClinic.setUpdatedAt();*/
+    }
+    public void saveIndexDiagnosisMain(BASY_DIAG_STD zj_BASY_STD,Date visitDate,Date diagnosisDate,BASY_NSTD basy_nstd){
+        log.info("保存病案首页主要诊断："+zj_BASY_STD.getUNIQUE_ID());
+
+        if(zj_BASY_STD.getP321()!=null&&zj_BASY_STD.getP322()!=null){
+            IndexDiagnosisMain indexDiagnosisMain = new IndexDiagnosisMain();
+            indexDiagnosisMain.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexDiagnosisMain.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexDiagnosisMain.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexDiagnosisMain.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexDiagnosisMain.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexDiagnosisMain.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexDiagnosisMain.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //主要诊断入院病情
+            indexDiagnosisMain.setP805(zj_BASY_STD.getP805());
+            //主要诊断出院情况
+            indexDiagnosisMain.setP323(zj_BASY_STD.getP323());
+            //主要诊断编码
+            indexDiagnosisMain.setP321(zj_BASY_STD.getP321());
+            //主要诊断疾病描述
+            indexDiagnosisMain.setP322(zj_BASY_STD.getP322());
+            indexDiagnosisMain.setVisitDate(visitDate);
+            indexDiagnosisMain.setDiagnosisDate(diagnosisDate);
+            indexDiagnosisMainService.saveIndexDiagnosisMain(indexDiagnosisMain);
+
+
+            if(zj_BASY_STD.getP322_ICD10_NAME1()!=null&&zj_BASY_STD.getP322_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP322_ICD10_ID1())){
+                IndexDiagnosisMainIcd indexDiagnosisMainIcd = new IndexDiagnosisMainIcd();
+                indexDiagnosisMainIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisMainIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisMainIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisMainIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisMainIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisMainIcd.setMainId(indexDiagnosisMain.getId());
+                //主要诊断编码
+                indexDiagnosisMainIcd.setDiagnosisIcdcode(zj_BASY_STD.getP322_ICD10_ID1());
+                //主要诊断疾病描述
+                indexDiagnosisMainIcd.setDiagnosisIcddesc(zj_BASY_STD.getP322_ICD10_NAME1());
+                indexDiagnosisMainIcdService.saveIndexDiagnosisMainIcd(indexDiagnosisMainIcd);
+            }
+            if(zj_BASY_STD.getP322_ICD10_NAME2()!=null&&zj_BASY_STD.getP322_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP322_ICD10_ID2())){
+                IndexDiagnosisMainIcd indexDiagnosisMainIcd = new IndexDiagnosisMainIcd();
+                indexDiagnosisMainIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisMainIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisMainIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisMainIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisMainIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisMainIcd.setMainId(indexDiagnosisMain.getId());
+                //主要诊断编码
+                indexDiagnosisMainIcd.setDiagnosisIcdcode(zj_BASY_STD.getP322_ICD10_ID2());
+                //主要诊断疾病描述
+                indexDiagnosisMainIcd.setDiagnosisIcddesc(zj_BASY_STD.getP322_ICD10_NAME2());
+                indexDiagnosisMainIcdService.saveIndexDiagnosisMainIcd(indexDiagnosisMainIcd);
+            }
+            if(zj_BASY_STD.getP322_ICD10_NAME3()!=null&&zj_BASY_STD.getP322_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP322_ICD10_ID3())){
+                IndexDiagnosisMainIcd indexDiagnosisMainIcd = new IndexDiagnosisMainIcd();
+                indexDiagnosisMainIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisMainIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisMainIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisMainIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisMainIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisMainIcd.setMainId(indexDiagnosisMain.getId());
+                //主要诊断编码
+                indexDiagnosisMainIcd.setDiagnosisIcdcode(zj_BASY_STD.getP322_ICD10_ID3());
+                //主要诊断疾病描述
+                indexDiagnosisMainIcd.setDiagnosisIcddesc(zj_BASY_STD.getP322_ICD10_NAME3());
+                indexDiagnosisMainIcdService.saveIndexDiagnosisMainIcd(indexDiagnosisMainIcd);
+            }
+            if(zj_BASY_STD.getP322_ICD10_NAME4()!=null&&zj_BASY_STD.getP322_ICD10_ID4()!=null&&!"".equals(zj_BASY_STD.getP322_ICD10_ID4())){
+                IndexDiagnosisMainIcd indexDiagnosisMainIcd = new IndexDiagnosisMainIcd();
+                indexDiagnosisMainIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisMainIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisMainIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisMainIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisMainIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisMainIcd.setMainId(indexDiagnosisMain.getId());
+                //主要诊断编码
+                indexDiagnosisMainIcd.setDiagnosisIcdcode(zj_BASY_STD.getP322_ICD10_ID4());
+                //主要诊断疾病描述
+                indexDiagnosisMainIcd.setDiagnosisIcddesc(zj_BASY_STD.getP322_ICD10_NAME4());
+                indexDiagnosisMainIcdService.saveIndexDiagnosisMainIcd(indexDiagnosisMainIcd);
+            }
+            if(zj_BASY_STD.getP322_ICD10_NAME5()!=null&&zj_BASY_STD.getP322_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP322_ICD10_ID5())){
+                IndexDiagnosisMainIcd indexDiagnosisMainIcd = new IndexDiagnosisMainIcd();
+                indexDiagnosisMainIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisMainIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisMainIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisMainIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisMainIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisMainIcd.setMainId(indexDiagnosisMain.getId());
+                //主要诊断编码
+                indexDiagnosisMainIcd.setDiagnosisIcdcode(zj_BASY_STD.getP322_ICD10_ID5());
+                //主要诊断疾病描述
+                indexDiagnosisMainIcd.setDiagnosisIcddesc(zj_BASY_STD.getP322_ICD10_NAME5());
+                indexDiagnosisMainIcdService.saveIndexDiagnosisMainIcd(indexDiagnosisMainIcd);
+            }
+            if(zj_BASY_STD.getP322_ICD10_NAME6()!=null&&zj_BASY_STD.getP322_ICD10_ID6()!=null&&!"".equals(zj_BASY_STD.getP322_ICD10_ID6())){
+                IndexDiagnosisMainIcd indexDiagnosisMainIcd = new IndexDiagnosisMainIcd();
+                indexDiagnosisMainIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisMainIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisMainIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisMainIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisMainIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisMainIcd.setMainId(indexDiagnosisMain.getId());
+                //主要诊断编码
+                indexDiagnosisMainIcd.setDiagnosisIcdcode(zj_BASY_STD.getP322_ICD10_ID6());
+                //主要诊断疾病描述
+                indexDiagnosisMainIcd.setDiagnosisIcddesc(zj_BASY_STD.getP322_ICD10_NAME6());
+                indexDiagnosisMainIcdService.saveIndexDiagnosisMainIcd(indexDiagnosisMainIcd);
+            }
+            if(zj_BASY_STD.getP322_ICD10_NAME7()!=null&&zj_BASY_STD.getP322_ICD10_ID7()!=null&&!"".equals(zj_BASY_STD.getP322_ICD10_ID7())){
+                IndexDiagnosisMainIcd indexDiagnosisMainIcd = new IndexDiagnosisMainIcd();
+                indexDiagnosisMainIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisMainIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisMainIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisMainIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisMainIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisMainIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisMainIcd.setMainId(indexDiagnosisMain.getId());
+                //主要诊断编码
+                indexDiagnosisMainIcd.setDiagnosisIcdcode(zj_BASY_STD.getP322_ICD10_ID7());
+                //主要诊断疾病描述
+                indexDiagnosisMainIcd.setDiagnosisIcddesc(zj_BASY_STD.getP322_ICD10_NAME7());
+                indexDiagnosisMainIcdService.saveIndexDiagnosisMainIcd(indexDiagnosisMainIcd);
+            }
+//            if(zj_BASY_STD.getP322_ICD10_NAME8()!=null&&zj_BASY_STD.getP322_ICD10_ID8()!=null&&!"".equals(zj_BASY_STD.getP322_ICD10_ID8())){
+//                IndexDiagnosisMainIcd indexDiagnosisMainIcd = new IndexDiagnosisMainIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisMainIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisMainIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisMainIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisMainIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisMainIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                indexDiagnosisMainIcd.setMainId(indexDiagnosisMain.getId());
+//                //主要诊断编码
+//                indexDiagnosisMainIcd.setDiagnosisIcdcode(zj_BASY_STD.getP322_ICD10_ID8());
+//                //主要诊断疾病描述
+//                indexDiagnosisMainIcd.setDiagnosisIcddesc(zj_BASY_STD.getP322_ICD10_NAME8());
+//                indexDiagnosisMainIcdService.saveIndexDiagnosisMainIcd(indexDiagnosisMainIcd);
+//            }
+//            if(zj_BASY_STD.getP322_ICD10_NAME9()!=null&&zj_BASY_STD.getP322_ICD10_ID9()!=null&&!"".equals(zj_BASY_STD.getP322_ICD10_ID9())){
+//                IndexDiagnosisMainIcd indexDiagnosisMainIcd = new IndexDiagnosisMainIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisMainIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisMainIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisMainIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisMainIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisMainIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                indexDiagnosisMainIcd.setMainId(indexDiagnosisMain.getId());
+//                //主要诊断编码
+//                indexDiagnosisMainIcd.setDiagnosisIcdcode(zj_BASY_STD.getP322_ICD10_ID9());
+//                //主要诊断疾病描述
+//                indexDiagnosisMainIcd.setDiagnosisIcddesc(zj_BASY_STD.getP322_ICD10_NAME9());
+//                indexDiagnosisMainIcdService.saveIndexDiagnosisMainIcd(indexDiagnosisMainIcd);
+//            }
+
+
+
+
+        }
+
+
+     /*   //数据版本
+        indexDiagnosisMain.setDataVersion();
+        //数据库来源
+        indexDiagnosisMain.setDataDbSource();
+        //数据表来源
+        indexDiagnosisMain.setDataTableSource();
+        //数据项来源
+        indexDiagnosisMain.setDataFieldSource();
+        //创建时间
+        indexDiagnosisMain.setCreatedAt();
+        //创建人
+        indexDiagnosisMain.setCreator();
+        //修改时间
+        indexDiagnosisMain.setUpdatedAt();*/
+    }
+    public void saveIndexDiagnosisOther(BASY_DIAG_STD zj_BASY_STD,Date visitDate,Date diagnosisDate,BASY_NSTD basy_nstd){
+        log.info("保存病案首页其他诊断："+zj_BASY_STD.getUNIQUE_ID());
+
+        if(zj_BASY_STD.getP324()!=null&&zj_BASY_STD.getP325()!=null){
+
+            IndexDiagnosisOther indexDiagnosisOther = new IndexDiagnosisOther();
+            indexDiagnosisOther.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexDiagnosisOther.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexDiagnosisOther.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexDiagnosisOther.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexDiagnosisOther.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexDiagnosisOther.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexDiagnosisOther.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //诊断编码
+            indexDiagnosisOther.setP324(zj_BASY_STD.getP324());
+            //诊断疾病描述
+            indexDiagnosisOther.setP325(zj_BASY_STD.getP325());
+            //诊断入院病情
+            indexDiagnosisOther.setP806(zj_BASY_STD.getP806());
+            //诊断出院情况
+            indexDiagnosisOther.setP326(zj_BASY_STD.getP326());
+            indexDiagnosisOther.setVisitDate(visitDate);
+            indexDiagnosisOther.setDiagnosisDate(diagnosisDate);
+            indexDiagnosisOtherService.saveIndexDiagnosisOther(indexDiagnosisOther);
+
+
+            if(zj_BASY_STD.getP325_ICD10_NAME1()!=null&&zj_BASY_STD.getP325_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP325_ICD10_ID1())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP325_ICD10_ID1());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP325_ICD10_NAME1());
+
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP325_ICD10_NAME2()!=null&&zj_BASY_STD.getP325_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP325_ICD10_ID2())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP325_ICD10_ID2());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP325_ICD10_NAME2());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP325_ICD10_NAME3()!=null&&zj_BASY_STD.getP325_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP325_ICD10_ID3())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP325_ICD10_ID3());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP325_ICD10_NAME3());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP325_ICD10_NAME4()!=null&&zj_BASY_STD.getP325_ICD10_ID4()!=null&&!"".equals(zj_BASY_STD.getP325_ICD10_ID4())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP325_ICD10_ID4());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP325_ICD10_NAME4());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP325_ICD10_NAME5()!=null&&zj_BASY_STD.getP325_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP325_ICD10_ID5())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP325_ICD10_ID5());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP325_ICD10_NAME5());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP325_ICD10_NAME6()!=null&&zj_BASY_STD.getP325_ICD10_ID6()!=null&&!"".equals(zj_BASY_STD.getP325_ICD10_ID6())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP325_ICD10_ID6());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP325_ICD10_NAME6());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP325_ICD10_NAME7()!=null&&zj_BASY_STD.getP325_ICD10_ID7()!=null&&!"".equals(zj_BASY_STD.getP325_ICD10_ID7())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP325_ICD10_ID7());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP325_ICD10_NAME7());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+//            if(zj_BASY_STD.getP325_ICD10_NAME8()!=null&&zj_BASY_STD.getP325_ICD10_ID8()!=null&&!"".equals(zj_BASY_STD.getP325_ICD10_ID8())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP325_ICD10_ID8());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP325_ICD10_NAME8());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+//            if(zj_BASY_STD.getP325_ICD10_NAME9()!=null&&zj_BASY_STD.getP325_ICD10_ID9()!=null&&!"".equals(zj_BASY_STD.getP325_ICD10_ID9())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP325_ICD10_ID9());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP325_ICD10_NAME9());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+        }
+        if(zj_BASY_STD.getP327()!=null&&zj_BASY_STD.getP328()!=null){
+
+            IndexDiagnosisOther indexDiagnosisOther = new IndexDiagnosisOther();
+            indexDiagnosisOther.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexDiagnosisOther.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexDiagnosisOther.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexDiagnosisOther.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexDiagnosisOther.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexDiagnosisOther.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexDiagnosisOther.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //诊断编码
+            indexDiagnosisOther.setP324(zj_BASY_STD.getP327());
+            //诊断疾病描述
+            indexDiagnosisOther.setP325(zj_BASY_STD.getP328());
+            //诊断入院病情
+            indexDiagnosisOther.setP806(zj_BASY_STD.getP807());
+            //诊断出院情况
+            indexDiagnosisOther.setP326(zj_BASY_STD.getP329());
+            indexDiagnosisOther.setVisitDate(visitDate);
+            indexDiagnosisOther.setDiagnosisDate(diagnosisDate);
+            indexDiagnosisOtherService.saveIndexDiagnosisOther(indexDiagnosisOther);
+
+            if(zj_BASY_STD.getP328_ICD10_NAME1()!=null&&zj_BASY_STD.getP328_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP328_ICD10_ID1())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP328_ICD10_ID1());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP328_ICD10_NAME1());
+
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP328_ICD10_NAME2()!=null&&zj_BASY_STD.getP328_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP328_ICD10_ID2())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP328_ICD10_ID2());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP328_ICD10_NAME2());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP328_ICD10_NAME3()!=null&&zj_BASY_STD.getP328_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP328_ICD10_ID3())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP328_ICD10_ID3());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP328_ICD10_NAME3());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP328_ICD10_NAME4()!=null&&zj_BASY_STD.getP328_ICD10_ID4()!=null&&!"".equals(zj_BASY_STD.getP328_ICD10_ID4())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP328_ICD10_ID4());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP328_ICD10_NAME4());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP328_ICD10_NAME5()!=null&&zj_BASY_STD.getP328_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP328_ICD10_ID5())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP328_ICD10_ID5());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP328_ICD10_NAME5());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP328_ICD10_NAME6()!=null&&zj_BASY_STD.getP328_ICD10_ID6()!=null&&!"".equals(zj_BASY_STD.getP328_ICD10_ID6())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP328_ICD10_ID6());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP328_ICD10_NAME6());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP328_ICD10_NAME7()!=null&&zj_BASY_STD.getP328_ICD10_ID7()!=null&&!"".equals(zj_BASY_STD.getP328_ICD10_ID7())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP328_ICD10_ID7());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP328_ICD10_NAME7());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+//            if(zj_BASY_STD.getP328_ICD10_NAME8()!=null&&zj_BASY_STD.getP328_ICD10_ID8()!=null&&!"".equals(zj_BASY_STD.getP328_ICD10_ID8())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP328_ICD10_ID8());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP328_ICD10_NAME8());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+//            if(zj_BASY_STD.getP328_ICD10_NAME9()!=null&&zj_BASY_STD.getP328_ICD10_ID9()!=null&&!"".equals(zj_BASY_STD.getP328_ICD10_ID9())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP328_ICD10_ID9());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP328_ICD10_NAME9());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+
+        }
+        if(zj_BASY_STD.getP3291()!=null&&zj_BASY_STD.getP3292()!=null){
+
+            IndexDiagnosisOther indexDiagnosisOther = new IndexDiagnosisOther();
+            indexDiagnosisOther.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexDiagnosisOther.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexDiagnosisOther.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexDiagnosisOther.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexDiagnosisOther.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexDiagnosisOther.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexDiagnosisOther.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //诊断编码
+            indexDiagnosisOther.setP324(zj_BASY_STD.getP3291());
+            //诊断疾病描述
+            indexDiagnosisOther.setP325(zj_BASY_STD.getP3292());
+            //诊断入院病情
+            indexDiagnosisOther.setP806(zj_BASY_STD.getP808());
+            //诊断出院情况
+            indexDiagnosisOther.setP326(zj_BASY_STD.getP3293());
+            indexDiagnosisOther.setVisitDate(visitDate);
+            indexDiagnosisOther.setDiagnosisDate(diagnosisDate);
+            indexDiagnosisOtherService.saveIndexDiagnosisOther(indexDiagnosisOther);
+
+
+
+            if(zj_BASY_STD.getP3292_ICD10_NAME1()!=null&&zj_BASY_STD.getP3292_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP3292_ICD10_ID1())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3292_ICD10_ID1());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3292_ICD10_NAME1());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3292_ICD10_NAME2()!=null&&zj_BASY_STD.getP3292_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP3292_ICD10_ID2())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3292_ICD10_ID2());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3292_ICD10_NAME2());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3292_ICD10_NAME3()!=null&&zj_BASY_STD.getP3292_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP3292_ICD10_ID3())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3292_ICD10_ID3());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3292_ICD10_NAME3());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3292_ICD10_NAME4()!=null&&zj_BASY_STD.getP3292_ICD10_ID4()!=null&&!"".equals(zj_BASY_STD.getP3292_ICD10_ID4())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3292_ICD10_ID4());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3292_ICD10_NAME4());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3292_ICD10_NAME5()!=null&&zj_BASY_STD.getP3292_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP3292_ICD10_ID5())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3292_ICD10_ID5());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3292_ICD10_NAME5());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3292_ICD10_NAME6()!=null&&zj_BASY_STD.getP3292_ICD10_ID6()!=null&&!"".equals(zj_BASY_STD.getP3292_ICD10_ID6())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3292_ICD10_ID6());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3292_ICD10_NAME6());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3292_ICD10_NAME7()!=null&&zj_BASY_STD.getP3292_ICD10_ID7()!=null&&!"".equals(zj_BASY_STD.getP3292_ICD10_ID7())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3292_ICD10_ID7());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3292_ICD10_NAME7());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+//            if(zj_BASY_STD.getP3292_ICD10_NAME8()!=null&&zj_BASY_STD.getP3292_ICD10_ID8()!=null&&!"".equals(zj_BASY_STD.getP3292_ICD10_ID8())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3292_ICD10_ID8());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3292_ICD10_NAME8());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+//            if(zj_BASY_STD.getP3292_ICD10_NAME9()!=null&&zj_BASY_STD.getP3292_ICD10_ID9()!=null&&!"".equals(zj_BASY_STD.getP3292_ICD10_ID9())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3292_ICD10_ID9());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3292_ICD10_NAME9());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+        }
+        if(zj_BASY_STD.getP3294()!=null&&zj_BASY_STD.getP3295()!=null){
+
+            IndexDiagnosisOther indexDiagnosisOther = new IndexDiagnosisOther();
+            indexDiagnosisOther.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexDiagnosisOther.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexDiagnosisOther.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexDiagnosisOther.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexDiagnosisOther.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexDiagnosisOther.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexDiagnosisOther.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //诊断编码
+            indexDiagnosisOther.setP324(zj_BASY_STD.getP3294());
+            //诊断疾病描述
+            indexDiagnosisOther.setP325(zj_BASY_STD.getP3295());
+            //诊断入院病情
+            indexDiagnosisOther.setP806(zj_BASY_STD.getP809());
+            //诊断出院情况
+            indexDiagnosisOther.setP326(zj_BASY_STD.getP3296());
+            indexDiagnosisOther.setVisitDate(visitDate);
+            indexDiagnosisOther.setDiagnosisDate(diagnosisDate);
+            indexDiagnosisOtherService.saveIndexDiagnosisOther(indexDiagnosisOther);
+
+            if(zj_BASY_STD.getP3295_ICD10_NAME1()!=null&&zj_BASY_STD.getP3295_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP3295_ICD10_ID1())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3295_ICD10_ID1());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3295_ICD10_NAME1());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3295_ICD10_NAME2()!=null&&zj_BASY_STD.getP3295_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP3295_ICD10_ID2())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3295_ICD10_ID2());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3295_ICD10_NAME2());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3295_ICD10_NAME3()!=null&&zj_BASY_STD.getP3295_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP3295_ICD10_ID3())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3295_ICD10_ID3());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3295_ICD10_NAME3());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3295_ICD10_NAME4()!=null&&zj_BASY_STD.getP3295_ICD10_ID4()!=null&&!"".equals(zj_BASY_STD.getP3295_ICD10_ID4())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3295_ICD10_ID4());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3295_ICD10_NAME4());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3295_ICD10_NAME5()!=null&&zj_BASY_STD.getP3295_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP3295_ICD10_ID5())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3295_ICD10_ID5());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3295_ICD10_NAME5());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3295_ICD10_NAME6()!=null&&zj_BASY_STD.getP3295_ICD10_ID6()!=null&&!"".equals(zj_BASY_STD.getP3295_ICD10_ID6())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3295_ICD10_ID6());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3295_ICD10_NAME6());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3295_ICD10_NAME7()!=null&&zj_BASY_STD.getP3295_ICD10_ID7()!=null&&!"".equals(zj_BASY_STD.getP3295_ICD10_ID7())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3295_ICD10_ID7());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3295_ICD10_NAME7());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+//            if(zj_BASY_STD.getP3295_ICD10_NAME8()!=null&&zj_BASY_STD.getP3295_ICD10_ID8()!=null&&!"".equals(zj_BASY_STD.getP3295_ICD10_ID8())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3295_ICD10_ID8());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3295_ICD10_NAME8());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+//            if(zj_BASY_STD.getP3295_ICD10_NAME9()!=null&&zj_BASY_STD.getP3295_ICD10_ID9()!=null&&!"".equals(zj_BASY_STD.getP3295_ICD10_ID9())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3295_ICD10_ID9());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3295_ICD10_NAME9());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+        }
+        if(zj_BASY_STD.getP3297()!=null&&zj_BASY_STD.getP3298()!=null){
+
+            IndexDiagnosisOther indexDiagnosisOther = new IndexDiagnosisOther();
+            indexDiagnosisOther.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexDiagnosisOther.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexDiagnosisOther.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexDiagnosisOther.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexDiagnosisOther.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexDiagnosisOther.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexDiagnosisOther.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //诊断编码
+            indexDiagnosisOther.setP324(zj_BASY_STD.getP3297());
+            //诊断疾病描述
+            indexDiagnosisOther.setP325(zj_BASY_STD.getP3298());
+            //诊断入院病情
+            indexDiagnosisOther.setP806(zj_BASY_STD.getP810());
+            //诊断出院情况
+            indexDiagnosisOther.setP326(zj_BASY_STD.getP3299());
+            indexDiagnosisOther.setVisitDate(visitDate);
+            indexDiagnosisOther.setDiagnosisDate(diagnosisDate);
+            indexDiagnosisOtherService.saveIndexDiagnosisOther(indexDiagnosisOther);
+
+
+            if(zj_BASY_STD.getP3298_ICD10_NAME1()!=null&&zj_BASY_STD.getP3298_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP3298_ICD10_ID1())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3298_ICD10_ID1());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3298_ICD10_NAME1());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3298_ICD10_NAME2()!=null&&zj_BASY_STD.getP3298_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP3298_ICD10_ID2())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3298_ICD10_ID2());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3298_ICD10_NAME2());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3298_ICD10_NAME3()!=null&&zj_BASY_STD.getP3298_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP3298_ICD10_ID3())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3298_ICD10_ID3());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3298_ICD10_NAME3());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3298_ICD10_NAME4()!=null&&zj_BASY_STD.getP3298_ICD10_ID4()!=null&&!"".equals(zj_BASY_STD.getP3298_ICD10_ID4())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3298_ICD10_ID4());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3298_ICD10_NAME4());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3298_ICD10_NAME5()!=null&&zj_BASY_STD.getP3298_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP3298_ICD10_ID5())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3298_ICD10_ID5());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3298_ICD10_NAME5());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3298_ICD10_NAME6()!=null&&zj_BASY_STD.getP3298_ICD10_ID6()!=null&&!"".equals(zj_BASY_STD.getP3298_ICD10_ID6())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3298_ICD10_ID6());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3298_ICD10_NAME6());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3298_ICD10_NAME7()!=null&&zj_BASY_STD.getP3298_ICD10_ID7()!=null&&!"".equals(zj_BASY_STD.getP3298_ICD10_ID7())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3298_ICD10_ID7());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3298_ICD10_NAME7());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+//            if(zj_BASY_STD.getP3298_ICD10_NAME8()!=null&&zj_BASY_STD.getP3298_ICD10_ID8()!=null&&!"".equals(zj_BASY_STD.getP3298_ICD10_ID8())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3298_ICD10_ID8());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3298_ICD10_NAME8());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+//            if(zj_BASY_STD.getP3298_ICD10_NAME9()!=null&&zj_BASY_STD.getP3298_ICD10_ID9()!=null&&!"".equals(zj_BASY_STD.getP3298_ICD10_ID9())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3298_ICD10_ID9());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3298_ICD10_NAME9());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+
+        }
+        if(zj_BASY_STD.getP3281()!=null&&zj_BASY_STD.getP3282()!=null){
+            IndexDiagnosisOther indexDiagnosisOther = new IndexDiagnosisOther();
+            indexDiagnosisOther.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexDiagnosisOther.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexDiagnosisOther.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexDiagnosisOther.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexDiagnosisOther.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexDiagnosisOther.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexDiagnosisOther.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //诊断编码
+            indexDiagnosisOther.setP324(zj_BASY_STD.getP3281());
+            //诊断疾病描述
+            indexDiagnosisOther.setP325(zj_BASY_STD.getP3282());
+            //诊断入院病情
+            indexDiagnosisOther.setP806(zj_BASY_STD.getP811());
+            //诊断出院情况
+            indexDiagnosisOther.setP326(zj_BASY_STD.getP3283());
+            indexDiagnosisOther.setVisitDate(visitDate);
+            indexDiagnosisOther.setDiagnosisDate(diagnosisDate);
+            indexDiagnosisOtherService.saveIndexDiagnosisOther(indexDiagnosisOther);
+
+
+
+
+            if(zj_BASY_STD.getP3282_ICD10_NAME1()!=null&&zj_BASY_STD.getP3282_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP3282_ICD10_ID1())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3282_ICD10_ID1());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3282_ICD10_NAME1());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3282_ICD10_NAME2()!=null&&zj_BASY_STD.getP3282_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP3282_ICD10_ID2())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3282_ICD10_ID2());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3282_ICD10_NAME2());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3282_ICD10_NAME3()!=null&&zj_BASY_STD.getP3282_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP3282_ICD10_ID3())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3282_ICD10_ID3());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3282_ICD10_NAME3());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3282_ICD10_NAME4()!=null&&zj_BASY_STD.getP3282_ICD10_ID4()!=null&&!"".equals(zj_BASY_STD.getP3282_ICD10_ID4())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3282_ICD10_ID4());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3282_ICD10_NAME4());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3282_ICD10_NAME5()!=null&&zj_BASY_STD.getP3282_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP3282_ICD10_ID5())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3282_ICD10_ID5());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3282_ICD10_NAME5());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3282_ICD10_NAME5()!=null&&zj_BASY_STD.getP3282_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP3282_ICD10_ID5())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3282_ICD10_ID5());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3282_ICD10_NAME5());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+
+        }
+        if(zj_BASY_STD.getP3284()!=null&&zj_BASY_STD.getP3285()!=null){
+
+
+            IndexDiagnosisOther indexDiagnosisOther = new IndexDiagnosisOther();
+            indexDiagnosisOther.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexDiagnosisOther.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexDiagnosisOther.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexDiagnosisOther.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexDiagnosisOther.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexDiagnosisOther.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexDiagnosisOther.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //诊断编码
+            indexDiagnosisOther.setP324(zj_BASY_STD.getP3284());
+            //诊断疾病描述
+            indexDiagnosisOther.setP325(zj_BASY_STD.getP3285());
+            //诊断入院病情
+            indexDiagnosisOther.setP806(zj_BASY_STD.getP812());
+            //诊断出院情况
+            indexDiagnosisOther.setP326(zj_BASY_STD.getP3286());
+            indexDiagnosisOther.setVisitDate(visitDate);
+            indexDiagnosisOther.setDiagnosisDate(diagnosisDate);
+            indexDiagnosisOtherService.saveIndexDiagnosisOther(indexDiagnosisOther);
+
+            if(zj_BASY_STD.getP3285_ICD10_NAME1()!=null&&zj_BASY_STD.getP3285_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP3285_ICD10_ID1())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3285_ICD10_ID1());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3285_ICD10_NAME1());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3285_ICD10_NAME2()!=null&&zj_BASY_STD.getP3285_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP3285_ICD10_ID2())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3285_ICD10_ID2());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3285_ICD10_NAME2());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3285_ICD10_NAME3()!=null&&zj_BASY_STD.getP3285_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP3285_ICD10_ID3())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3285_ICD10_ID3());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3285_ICD10_NAME3());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3285_ICD10_NAME4()!=null&&zj_BASY_STD.getP3285_ICD10_ID4()!=null&&!"".equals(zj_BASY_STD.getP3285_ICD10_ID4())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3285_ICD10_ID4());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3285_ICD10_NAME4());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3285_ICD10_NAME5()!=null&&zj_BASY_STD.getP3285_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP3285_ICD10_ID5())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3285_ICD10_ID5());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3285_ICD10_NAME5());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3285_ICD10_NAME6()!=null&&zj_BASY_STD.getP3285_ICD10_ID6()!=null&&!"".equals(zj_BASY_STD.getP3285_ICD10_ID6())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3285_ICD10_ID6());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3285_ICD10_NAME6());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3285_ICD10_NAME7()!=null&&zj_BASY_STD.getP3285_ICD10_ID7()!=null&&!"".equals(zj_BASY_STD.getP3285_ICD10_ID7())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3285_ICD10_ID7());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3285_ICD10_NAME7());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+//            if(zj_BASY_STD.getP3285_ICD10_NAME8()!=null&&zj_BASY_STD.getP3285_ICD10_ID8()!=null&&!"".equals(zj_BASY_STD.getP3285_ICD10_ID8())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3285_ICD10_ID8());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3285_ICD10_NAME8());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+//            if(zj_BASY_STD.getP3285_ICD10_NAME9()!=null&&zj_BASY_STD.getP3285_ICD10_ID9()!=null&&!"".equals(zj_BASY_STD.getP3285_ICD10_ID9())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3285_ICD10_ID9());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3285_ICD10_NAME9());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+        }
+        if(zj_BASY_STD.getP3287()!=null&&zj_BASY_STD.getP3288()!=null){
+
+            IndexDiagnosisOther indexDiagnosisOther = new IndexDiagnosisOther();
+            indexDiagnosisOther.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexDiagnosisOther.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexDiagnosisOther.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexDiagnosisOther.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexDiagnosisOther.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexDiagnosisOther.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexDiagnosisOther.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //诊断编码
+            indexDiagnosisOther.setP324(zj_BASY_STD.getP3287());
+            //诊断疾病描述
+            indexDiagnosisOther.setP325(zj_BASY_STD.getP3288());
+            //诊断入院病情
+            indexDiagnosisOther.setP806(zj_BASY_STD.getP813());
+            //诊断出院情况
+            indexDiagnosisOther.setP326(zj_BASY_STD.getP3289());
+            indexDiagnosisOther.setVisitDate(visitDate);
+            indexDiagnosisOther.setDiagnosisDate(diagnosisDate);
+            indexDiagnosisOtherService.saveIndexDiagnosisOther(indexDiagnosisOther);
+
+
+            if(zj_BASY_STD.getP3288_ICD10_NAME1()!=null&&zj_BASY_STD.getP3288_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP3288_ICD10_ID1())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3288_ICD10_ID1());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3288_ICD10_NAME1());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3288_ICD10_NAME2()!=null&&zj_BASY_STD.getP3288_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP3288_ICD10_ID2())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3288_ICD10_ID2());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3288_ICD10_NAME2());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3288_ICD10_NAME3()!=null&&zj_BASY_STD.getP3288_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP3288_ICD10_ID3())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3288_ICD10_ID3());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3288_ICD10_NAME3());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3288_ICD10_NAME4()!=null&&zj_BASY_STD.getP3288_ICD10_ID4()!=null&&!"".equals(zj_BASY_STD.getP3288_ICD10_ID4())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3288_ICD10_ID4());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3288_ICD10_NAME4());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3288_ICD10_NAME5()!=null&&zj_BASY_STD.getP3288_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP3288_ICD10_ID5())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3288_ICD10_ID5());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3288_ICD10_NAME5());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3288_ICD10_NAME6()!=null&&zj_BASY_STD.getP3288_ICD10_ID6()!=null&&!"".equals(zj_BASY_STD.getP3288_ICD10_ID6())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3288_ICD10_ID6());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3288_ICD10_NAME6());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3288_ICD10_NAME7()!=null&&zj_BASY_STD.getP3288_ICD10_ID7()!=null&&!"".equals(zj_BASY_STD.getP3288_ICD10_ID7())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3288_ICD10_ID7());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3288_ICD10_NAME7());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+//            if(zj_BASY_STD.getP3288_ICD10_NAME8()!=null&&zj_BASY_STD.getP3288_ICD10_ID8()!=null&&!"".equals(zj_BASY_STD.getP3288_ICD10_ID8())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3288_ICD10_ID8());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3288_ICD10_NAME8());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+//            if(zj_BASY_STD.getP3288_ICD10_NAME9()!=null&&zj_BASY_STD.getP3288_ICD10_ID9()!=null&&!"".equals(zj_BASY_STD.getP3288_ICD10_ID9())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3288_ICD10_ID9());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3288_ICD10_NAME9());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+
+
+        }
+        if(zj_BASY_STD.getP3271()!=null&&zj_BASY_STD.getP3272()!=null){
+            IndexDiagnosisOther indexDiagnosisOther = new IndexDiagnosisOther();
+            indexDiagnosisOther.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexDiagnosisOther.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexDiagnosisOther.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexDiagnosisOther.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexDiagnosisOther.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexDiagnosisOther.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexDiagnosisOther.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //诊断编码
+            indexDiagnosisOther.setP324(zj_BASY_STD.getP3271());
+            //诊断疾病描述
+            indexDiagnosisOther.setP325(zj_BASY_STD.getP3272());
+            //诊断入院病情
+            indexDiagnosisOther.setP806(zj_BASY_STD.getP814());
+            //诊断出院情况
+            indexDiagnosisOther.setP326(zj_BASY_STD.getP3273());
+            indexDiagnosisOther.setVisitDate(visitDate);
+            indexDiagnosisOther.setDiagnosisDate(diagnosisDate);
+            indexDiagnosisOtherService.saveIndexDiagnosisOther(indexDiagnosisOther);
+
+
+            if(zj_BASY_STD.getP3272_ICD10_NAME1()!=null&&zj_BASY_STD.getP3272_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP3272_ICD10_ID1())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3272_ICD10_ID1());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3272_ICD10_NAME1());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3272_ICD10_NAME2()!=null&&zj_BASY_STD.getP3272_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP3272_ICD10_ID2())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3272_ICD10_ID2());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3272_ICD10_NAME2());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3272_ICD10_NAME3()!=null&&zj_BASY_STD.getP3272_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP3272_ICD10_ID3())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3272_ICD10_ID3());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3272_ICD10_NAME3());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3272_ICD10_NAME4()!=null&&zj_BASY_STD.getP3272_ICD10_ID4()!=null&&!"".equals(zj_BASY_STD.getP3272_ICD10_ID4())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3272_ICD10_ID4());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3272_ICD10_NAME4());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3272_ICD10_NAME5()!=null&&zj_BASY_STD.getP3272_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP3272_ICD10_ID5())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3272_ICD10_ID5());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3272_ICD10_NAME5());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3272_ICD10_NAME6()!=null&&zj_BASY_STD.getP3272_ICD10_ID6()!=null&&!"".equals(zj_BASY_STD.getP3272_ICD10_ID6())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3272_ICD10_ID6());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3272_ICD10_NAME6());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3272_ICD10_NAME7()!=null&&zj_BASY_STD.getP3272_ICD10_ID7()!=null&&!"".equals(zj_BASY_STD.getP3272_ICD10_ID7())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3272_ICD10_ID7());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3272_ICD10_NAME7());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+//            if(zj_BASY_STD.getP3272_ICD10_NAME8()!=null&&zj_BASY_STD.getP3272_ICD10_ID8()!=null&&!"".equals(zj_BASY_STD.getP3272_ICD10_ID8())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3272_ICD10_ID8());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3272_ICD10_NAME8());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+//            if(zj_BASY_STD.getP3272_ICD10_NAME9()!=null&&zj_BASY_STD.getP3272_ICD10_ID9()!=null&&!"".equals(zj_BASY_STD.getP3272_ICD10_ID9())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3272_ICD10_ID9());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3272_ICD10_NAME9());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+
+        }
+        if(zj_BASY_STD.getP3274()!=null&&zj_BASY_STD.getP3275()!=null){
+            IndexDiagnosisOther indexDiagnosisOther = new IndexDiagnosisOther();
+            indexDiagnosisOther.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexDiagnosisOther.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexDiagnosisOther.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexDiagnosisOther.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexDiagnosisOther.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexDiagnosisOther.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexDiagnosisOther.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //诊断编码
+            indexDiagnosisOther.setP324(zj_BASY_STD.getP3274());
+            //诊断疾病描述
+            indexDiagnosisOther.setP325(zj_BASY_STD.getP3275());
+            //诊断入院病情
+            indexDiagnosisOther.setP806(zj_BASY_STD.getP815());
+            //诊断出院情况
+            indexDiagnosisOther.setP326(zj_BASY_STD.getP3276());
+            indexDiagnosisOther.setVisitDate(visitDate);
+            indexDiagnosisOther.setDiagnosisDate(diagnosisDate);
+            indexDiagnosisOtherService.saveIndexDiagnosisOther(indexDiagnosisOther);
+
+
+
+            if(zj_BASY_STD.getP3275_ICD10_NAME1()!=null&&zj_BASY_STD.getP3275_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP3275_ICD10_ID1())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3275_ICD10_ID1());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3275_ICD10_NAME1());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3275_ICD10_NAME2()!=null&&zj_BASY_STD.getP3275_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP3275_ICD10_ID2())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3275_ICD10_ID2());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3275_ICD10_NAME2());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3275_ICD10_NAME3()!=null&&zj_BASY_STD.getP3275_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP3275_ICD10_ID3())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3275_ICD10_ID3());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3275_ICD10_NAME3());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3275_ICD10_NAME4()!=null&&zj_BASY_STD.getP3275_ICD10_ID4()!=null&&!"".equals(zj_BASY_STD.getP3275_ICD10_ID4())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3275_ICD10_ID4());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3275_ICD10_NAME4());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3275_ICD10_NAME5()!=null&&zj_BASY_STD.getP3275_ICD10_ID5()!=null&&!"".equals(zj_BASY_STD.getP3275_ICD10_ID5())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3275_ICD10_ID5());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3275_ICD10_NAME5());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3275_ICD10_NAME6()!=null&&zj_BASY_STD.getP3275_ICD10_ID6()!=null&&!"".equals(zj_BASY_STD.getP3275_ICD10_ID6())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3275_ICD10_ID6());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3275_ICD10_NAME6());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+            if(zj_BASY_STD.getP3275_ICD10_NAME7()!=null&&zj_BASY_STD.getP3275_ICD10_ID7()!=null&&!"".equals(zj_BASY_STD.getP3275_ICD10_ID7())){
+                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexDiagnosisOtherIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexDiagnosisOtherIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //诊断编码
+                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+                //诊断编码
+                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3275_ICD10_ID7());
+                //诊断疾病描述
+                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3275_ICD10_NAME7());
+                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+            }
+//            if(zj_BASY_STD.getP3275_ICD10_NAME8()!=null&&zj_BASY_STD.getP3275_ICD10_ID8()!=null&&!"".equals(zj_BASY_STD.getP3275_ICD10_ID8())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3275_ICD10_ID8());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3275_ICD10_NAME8());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+//            if(zj_BASY_STD.getP3275_ICD10_NAME9()!=null&&zj_BASY_STD.getP3275_ICD10_ID9()!=null&&!"".equals(zj_BASY_STD.getP3275_ICD10_ID9())){
+//                IndexDiagnosisOtherIcd indexDiagnosisOtherIcd = new IndexDiagnosisOtherIcd();
+//                //标识患者身份唯一标识
+//                indexDiagnosisOtherIcd.setPersonId(zj_BASY_STD.getUNIQUE_ID_LV1());
+//                //唯一标识
+//                indexDiagnosisOtherIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID_LV2());
+//                //医疗机构代码
+//                indexDiagnosisOtherIcd.setP900(zj_BASY_STD.getP900());
+//                //患者id
+//                indexDiagnosisOtherIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+//                //住院号
+//                indexDiagnosisOtherIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setOtherId(indexDiagnosisOther.getId());
+//                //诊断编码
+//                indexDiagnosisOtherIcd.setDiagnosisIcdcode(zj_BASY_STD.getP3275_ICD10_ID9());
+//                //诊断疾病描述
+//                indexDiagnosisOtherIcd.setDiagnosisIcddesc(zj_BASY_STD.getP3275_ICD10_NAME9());
+//                indexDiagnosisOtherIcdService.saveIndexDiagnosisOtherIcd(indexDiagnosisOtherIcd);
+//            }
+
+        }
+
+
+
+
+
+     /*   //数据版本
+        indexDiagnosisOther.setDataVersion();
+        //数据库来源
+        indexDiagnosisOther.setDataDbSource();
+        //数据表来源
+        indexDiagnosisOther.setDataTableSource();
+        //数据项来源
+        indexDiagnosisOther.setDataFieldSource();
+        //创建时间
+        indexDiagnosisOther.setCreatedAt();
+        //创建人
+        indexDiagnosisOther.setCreator();
+        //修改时间
+        indexDiagnosisOther.setUpdatedAt();*/
+    }
+    public void saveIndexIcu(BASY_NSTD zj_BASY_NSTD){
+        log.info("保存病案首页重症监护："+zj_BASY_NSTD.getUNIQUE_ID());
+        if(zj_BASY_NSTD.getP6911()!=null&&!"".equals(zj_BASY_NSTD.getP6911())){
+            IndexIcu indexIcu = new IndexIcu();
+            indexIcu.setUniqueId(zj_BASY_NSTD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexIcu.setUniqueIdLv1(zj_BASY_NSTD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexIcu.setUniqueIdLv2(zj_BASY_NSTD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexIcu.setP900(zj_BASY_NSTD.getP900());
+            //患者id
+            if (zj_BASY_NSTD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_NSTD.getPATIENT_ID())){
+                indexIcu.setPatientId(zj_BASY_NSTD.getPATIENT_ID());
+            }else {
+                indexIcu.setPatientId(zj_BASY_NSTD.getDOP3());
+            }
+            //住院号
+            indexIcu.setVisitId(zj_BASY_NSTD.getVISIT_ID());
+            //重症监护室名称
+            indexIcu.setP6911(zj_BASY_NSTD.getP6911());
+            //进入时间
+            indexIcu.setP6912(zj_BASY_NSTD.getP6912());
+            //退出时间
+            indexIcu.setP6913(zj_BASY_NSTD.getP6913());
+            indexIcuService.saveIndexIcu(indexIcu);
+
+        }
+        if(zj_BASY_NSTD.getP6914()!=null&&!"".equals(zj_BASY_NSTD.getP6914())){
+            IndexIcu indexIcu = new IndexIcu();
+
+            indexIcu.setUniqueId(zj_BASY_NSTD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexIcu.setUniqueIdLv1(zj_BASY_NSTD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexIcu.setUniqueIdLv2(zj_BASY_NSTD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexIcu.setP900(zj_BASY_NSTD.getP900());
+            //患者id
+            if (zj_BASY_NSTD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_NSTD.getPATIENT_ID())){
+                indexIcu.setPatientId(zj_BASY_NSTD.getPATIENT_ID());
+            }else {
+                indexIcu.setPatientId(zj_BASY_NSTD.getDOP3());
+            }
+            //住院号
+            indexIcu.setVisitId(zj_BASY_NSTD.getVISIT_ID());
+            //重症监护室名称
+            indexIcu.setP6911(zj_BASY_NSTD.getP6914());
+            //进入时间
+            indexIcu.setP6912(zj_BASY_NSTD.getP6915());
+            //退出时间
+            indexIcu.setP6913(zj_BASY_NSTD.getP6916());
+            indexIcuService.saveIndexIcu(indexIcu);
+
+        }
+        if(zj_BASY_NSTD.getP6917()!=null&&!"".equals(zj_BASY_NSTD.getP6917())){
+            IndexIcu indexIcu = new IndexIcu();
+
+            indexIcu.setUniqueId(zj_BASY_NSTD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexIcu.setUniqueIdLv1(zj_BASY_NSTD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexIcu.setUniqueIdLv2(zj_BASY_NSTD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexIcu.setP900(zj_BASY_NSTD.getP900());
+            //患者id
+            if (zj_BASY_NSTD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_NSTD.getPATIENT_ID())){
+                indexIcu.setPatientId(zj_BASY_NSTD.getPATIENT_ID());
+            }else {
+                indexIcu.setPatientId(zj_BASY_NSTD.getDOP3());
+            }
+            //住院号
+            indexIcu.setVisitId(zj_BASY_NSTD.getVISIT_ID());
+            //重症监护室名称
+            indexIcu.setP6911(zj_BASY_NSTD.getP6917());
+            //进入时间
+            indexIcu.setP6912(zj_BASY_NSTD.getP6918());
+            //退出时间
+            indexIcu.setP6913(zj_BASY_NSTD.getP6919());
+            indexIcuService.saveIndexIcu(indexIcu);
+
+        }
+        if(zj_BASY_NSTD.getP6920()!=null&&!"".equals(zj_BASY_NSTD.getP6920())){
+            IndexIcu indexIcu = new IndexIcu();
+
+            indexIcu.setUniqueId(zj_BASY_NSTD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexIcu.setUniqueIdLv1(zj_BASY_NSTD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexIcu.setUniqueIdLv2(zj_BASY_NSTD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexIcu.setP900(zj_BASY_NSTD.getP900());
+            //患者id
+            if (zj_BASY_NSTD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_NSTD.getPATIENT_ID())){
+                indexIcu.setPatientId(zj_BASY_NSTD.getPATIENT_ID());
+            }else {
+                indexIcu.setPatientId(zj_BASY_NSTD.getDOP3());
+            }
+            //住院号
+            indexIcu.setVisitId(zj_BASY_NSTD.getVISIT_ID());
+            //重症监护室名称
+            indexIcu.setP6911(zj_BASY_NSTD.getP6920());
+            //进入时间
+            indexIcu.setP6912(zj_BASY_NSTD.getP6921());
+            //退出时间
+            indexIcu.setP6913(zj_BASY_NSTD.getP6922());
+            indexIcuService.saveIndexIcu(indexIcu);
+
+        }
+        if(zj_BASY_NSTD.getP6923()!=null&&!"".equals(zj_BASY_NSTD.getP6923())){
+            IndexIcu indexIcu = new IndexIcu();
+
+            indexIcu.setUniqueId(zj_BASY_NSTD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexIcu.setUniqueIdLv1(zj_BASY_NSTD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexIcu.setUniqueIdLv2(zj_BASY_NSTD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexIcu.setP900(zj_BASY_NSTD.getP900());
+            //患者id
+            if (zj_BASY_NSTD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_NSTD.getPATIENT_ID())){
+                indexIcu.setPatientId(zj_BASY_NSTD.getPATIENT_ID());
+            }else {
+                indexIcu.setPatientId(zj_BASY_NSTD.getDOP3());
+            }
+            //住院号
+            indexIcu.setVisitId(zj_BASY_NSTD.getVISIT_ID());
+            //重症监护室名称
+            indexIcu.setP6911(zj_BASY_NSTD.getP6923());
+            //进入时间
+            indexIcu.setP6912(zj_BASY_NSTD.getP6924());
+            //退出时间
+            indexIcu.setP6913(zj_BASY_NSTD.getP6925());
+            indexIcuService.saveIndexIcu(indexIcu);
+
+        }
+
+
+
+/*
+        //数据版本
+        indexIcu.setDataVersion();
+        //数据库来源
+        indexIcu.setDataDbSource();
+        //数据表来源
+        indexIcu.setDataTableSource();
+        //数据项来源
+        indexIcu.setDataFieldSource();
+        //创建时间
+        indexIcu.setCreatedAt();
+        //创建人
+        indexIcu.setCreator();
+        //修改时间
+        indexIcu.setUpdatedAt();*/
+    }
+    public void saveIndexPathology(BASY_DIAG_STD zj_BASY_STD,Date visitDate,Date diagnosisDate,BASY_NSTD basy_nstd){
+        log.info("保存病案首页病理诊断："+zj_BASY_STD.getUNIQUE_ID());
+
+        if(zj_BASY_STD.getP351()!=null&&zj_BASY_STD.getP352()!=null){
+
+            IndexPathology indexPathology = new IndexPathology();
+            indexPathology.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexPathology.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexPathology.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexPathology.setP900(zj_BASY_STD.getP900());
+            //患者id
+            indexPathology.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            //住院号
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexPathology.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexPathology.setPatientId(basy_nstd.getDOP3());
+            }
+            indexPathology.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //病理号
+            indexPathology.setP816(zj_BASY_STD.getP816());
+            //病理诊断编码
+            indexPathology.setP351(zj_BASY_STD.getP351());
+            //病理诊断名称
+            indexPathology.setP352(zj_BASY_STD.getP352());
+            indexPathology.setVisitDate(visitDate);
+            indexPathology.setDiagnosisDate(diagnosisDate);
+            indexPathologyService.saveIndexPathology(indexPathology);
+
+            if(zj_BASY_STD.getP352_ICD10_NAME1()!=null&&zj_BASY_STD.getP352_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP352_ICD10_ID1())){
+                IndexPathologyIcd indexPathologyIcd = new IndexPathologyIcd();
+                indexPathologyIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexPathologyIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexPathologyIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexPathologyIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexPathologyIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexPathologyIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexPathologyIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+
+                //病理诊断编码
+                indexPathologyIcd.setPathologyId(indexPathology.getId());
+                //病理诊断编码
+                indexPathologyIcd.setDiagnosisIcdcode(zj_BASY_STD.getP352_ICD10_ID1());
+                //病理诊断名称
+                indexPathologyIcd.setDiagnosisIcddesc(zj_BASY_STD.getP352_ICD10_NAME1());
+                indexPathologyIcdService.saveIndexPathologyIcd(indexPathologyIcd);
+            }
+            if(zj_BASY_STD.getP352_ICD10_NAME2()!=null&&zj_BASY_STD.getP352_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP352_ICD10_ID2())){
+                IndexPathologyIcd indexPathologyIcd = new IndexPathologyIcd();
+                indexPathologyIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexPathologyIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexPathologyIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexPathologyIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexPathologyIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexPathologyIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexPathologyIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //病理诊断编码
+                indexPathologyIcd.setPathologyId(indexPathology.getId());
+                //病理诊断编码
+                indexPathologyIcd.setDiagnosisIcdcode(zj_BASY_STD.getP352_ICD10_ID2());
+                //病理诊断名称
+                indexPathologyIcd.setDiagnosisIcddesc(zj_BASY_STD.getP352_ICD10_NAME2());
+                indexPathologyIcdService.saveIndexPathologyIcd(indexPathologyIcd);
+            }
+            if(zj_BASY_STD.getP352_ICD10_NAME3()!=null&&zj_BASY_STD.getP352_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP352_ICD10_ID3())){
+                IndexPathologyIcd indexPathologyIcd = new IndexPathologyIcd();
+                indexPathologyIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexPathologyIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexPathologyIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexPathologyIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexPathologyIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexPathologyIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexPathologyIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //病理诊断编码
+                indexPathologyIcd.setPathologyId(indexPathology.getId());
+                //病理诊断编码
+                indexPathologyIcd.setDiagnosisIcdcode(zj_BASY_STD.getP352_ICD10_ID3());
+                //病理诊断名称
+                indexPathologyIcd.setDiagnosisIcddesc(zj_BASY_STD.getP352_ICD10_NAME3());
+                indexPathologyIcdService.saveIndexPathologyIcd(indexPathologyIcd);
+            }
+        }
+
+
+        if(zj_BASY_STD.getP353()!=null&&zj_BASY_STD.getP354()!=null){
+
+            IndexPathology indexPathology = new IndexPathology();
+            indexPathology.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexPathology.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexPathology.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexPathology.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexPathology.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexPathology.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexPathology.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //病理号
+            indexPathology.setP816(zj_BASY_STD.getP817());
+            //病理诊断编码
+            indexPathology.setP351(zj_BASY_STD.getP353());
+            //病理诊断名称
+            indexPathology.setP352(zj_BASY_STD.getP354());
+            indexPathology.setVisitDate(visitDate);
+            indexPathology.setDiagnosisDate(diagnosisDate);
+            indexPathologyService.saveIndexPathology(indexPathology);
+
+            if(zj_BASY_STD.getP354_ICD10_NAME1()!=null&&zj_BASY_STD.getP354_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP354_ICD10_ID1())){
+                IndexPathologyIcd indexPathologyIcd = new IndexPathologyIcd();
+                indexPathologyIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexPathologyIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexPathologyIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexPathologyIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexPathologyIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexPathologyIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexPathologyIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //病理诊断编码
+                indexPathologyIcd.setPathologyId(indexPathology.getId());
+                //病理诊断编码
+                indexPathologyIcd.setDiagnosisIcdcode(zj_BASY_STD.getP354_ICD10_ID1());
+                //病理诊断名称
+                indexPathologyIcd.setDiagnosisIcddesc(zj_BASY_STD.getP354_ICD10_NAME1());
+                indexPathologyIcdService.saveIndexPathologyIcd(indexPathologyIcd);
+            }
+            if(zj_BASY_STD.getP354_ICD10_NAME2()!=null&&zj_BASY_STD.getP354_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP354_ICD10_ID2())){
+                IndexPathologyIcd indexPathologyIcd = new IndexPathologyIcd();
+                indexPathologyIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexPathologyIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexPathologyIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexPathologyIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexPathologyIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexPathologyIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexPathologyIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //病理诊断编码
+                indexPathologyIcd.setPathologyId(indexPathology.getId());
+                //病理诊断编码
+                indexPathologyIcd.setDiagnosisIcdcode(zj_BASY_STD.getP354_ICD10_ID2());
+                //病理诊断名称
+                indexPathologyIcd.setDiagnosisIcddesc(zj_BASY_STD.getP354_ICD10_NAME2());
+                indexPathologyIcdService.saveIndexPathologyIcd(indexPathologyIcd);
+            }
+            if(zj_BASY_STD.getP354_ICD10_NAME3()!=null&&zj_BASY_STD.getP354_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP354_ICD10_ID3())){
+                IndexPathologyIcd indexPathologyIcd = new IndexPathologyIcd();
+                indexPathologyIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexPathologyIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexPathologyIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexPathologyIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexPathologyIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexPathologyIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexPathologyIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //病理诊断编码
+                indexPathologyIcd.setPathologyId(indexPathology.getId());
+                //病理诊断编码
+                indexPathologyIcd.setDiagnosisIcdcode(zj_BASY_STD.getP354_ICD10_ID3());
+                //病理诊断名称
+                indexPathologyIcd.setDiagnosisIcddesc(zj_BASY_STD.getP354_ICD10_NAME3());
+                indexPathologyIcdService.saveIndexPathologyIcd(indexPathologyIcd);
+            }
+
+
+
+        }
+
+        if(zj_BASY_STD.getP355()!=null&&zj_BASY_STD.getP356()!=null){
+
+            IndexPathology indexPathology = new IndexPathology();
+            indexPathology.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexPathology.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexPathology.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexPathology.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexPathology.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexPathology.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexPathology.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //病理号
+            indexPathology.setP816(zj_BASY_STD.getP818());
+            //病理诊断编码
+            indexPathology.setP351(zj_BASY_STD.getP355());
+            //病理诊断名称
+            indexPathology.setP352(zj_BASY_STD.getP356());
+            indexPathology.setVisitDate(visitDate);
+            indexPathology.setDiagnosisDate(diagnosisDate);
+            indexPathologyService.saveIndexPathology(indexPathology);
+
+
+            if(zj_BASY_STD.getP356_ICD10_NAME1()!=null&&zj_BASY_STD.getP356_ICD10_ID1()!=null&&!"".equals(zj_BASY_STD.getP356_ICD10_ID1())){
+                IndexPathologyIcd indexPathologyIcd = new IndexPathologyIcd();
+                indexPathologyIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexPathologyIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexPathologyIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexPathologyIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexPathologyIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexPathologyIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexPathologyIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //病理诊断编码
+                indexPathologyIcd.setPathologyId(indexPathology.getId());
+                //病理诊断编码
+                indexPathologyIcd.setDiagnosisIcdcode(zj_BASY_STD.getP356_ICD10_ID1());
+                //病理诊断名称
+                indexPathologyIcd.setDiagnosisIcddesc(zj_BASY_STD.getP356_ICD10_NAME1());
+                indexPathologyIcdService.saveIndexPathologyIcd(indexPathologyIcd);
+            }
+            if(zj_BASY_STD.getP356_ICD10_NAME2()!=null&&zj_BASY_STD.getP356_ICD10_ID2()!=null&&!"".equals(zj_BASY_STD.getP356_ICD10_ID2())){
+                IndexPathologyIcd indexPathologyIcd = new IndexPathologyIcd();
+                indexPathologyIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexPathologyIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexPathologyIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexPathologyIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexPathologyIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexPathologyIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexPathologyIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //病理诊断编码
+                indexPathologyIcd.setPathologyId(indexPathology.getId());
+                //病理诊断编码
+                indexPathologyIcd.setDiagnosisIcdcode(zj_BASY_STD.getP356_ICD10_ID2());
+                //病理诊断名称
+                indexPathologyIcd.setDiagnosisIcddesc(zj_BASY_STD.getP356_ICD10_NAME2());
+                indexPathologyIcdService.saveIndexPathologyIcd(indexPathologyIcd);
+            }
+            if(zj_BASY_STD.getP356_ICD10_NAME3()!=null&&zj_BASY_STD.getP356_ICD10_ID3()!=null&&!"".equals(zj_BASY_STD.getP356_ICD10_ID3())){
+                IndexPathologyIcd indexPathologyIcd = new IndexPathologyIcd();
+                indexPathologyIcd.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                indexPathologyIcd.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+                //唯一标识
+                indexPathologyIcd.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                indexPathologyIcd.setP900(zj_BASY_STD.getP900());
+                //患者id
+                if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                    indexPathologyIcd.setPatientId(zj_BASY_STD.getPATIENT_ID());
+                }else {
+                    indexPathologyIcd.setPatientId(basy_nstd.getDOP3());
+                }
+                //住院号
+                indexPathologyIcd.setVisitId(zj_BASY_STD.getVISIT_ID());
+                //病理诊断编码
+                indexPathologyIcd.setPathologyId(indexPathology.getId());
+                //病理诊断编码
+                indexPathologyIcd.setDiagnosisIcdcode(zj_BASY_STD.getP356_ICD10_ID3());
+                //病理诊断名称
+                indexPathologyIcd.setDiagnosisIcddesc(zj_BASY_STD.getP356_ICD10_NAME3());
+                indexPathologyIcdService.saveIndexPathologyIcd(indexPathologyIcd);
+            }
+
+        }
+
+
+            /*//数据版本
+            indexPathology.setDataVersion();
+            //数据库来源
+            indexPathology.setDataDbSource();
+            //数据表来源
+            indexPathology.setDataTableSource();
+            //数据项来源
+            indexPathology.setDataFieldSource();
+            //创建时间
+            indexPathology.setCreatedAt();
+            //创建人
+            indexPathology.setCreator();
+            //修改时间
+            indexPathology.setUpdatedAt();*/
+    }
+    public void saveIndexInjury(BASY_DIAG_STD zj_BASY_STD,BASY_NSTD basy_nstd){
+        log.info("保存病案首页中毒损伤："+zj_BASY_STD.getUNIQUE_ID());
+        if(zj_BASY_STD.getP362()!=null&&!"".equals(zj_BASY_STD.getP362())){
+            IndexInjury indexInjury = new IndexInjury();
+            indexInjury.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexInjury.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexInjury.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexInjury.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexInjury.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexInjury.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexInjury.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //损伤、中毒的外部因素编码
+            indexInjury.setP361(zj_BASY_STD.getP361());
+            //损伤、中毒的外部因素名称
+            indexInjury.setP362(zj_BASY_STD.getP362());
+
+            indexInjuryService.saveIndexInjury(indexInjury);
+        }
+        if(zj_BASY_STD.getP364()!=null&&!"".equals(zj_BASY_STD.getP364())){
+            IndexInjury indexInjury = new IndexInjury();
+            indexInjury.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexInjury.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexInjury.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexInjury.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexInjury.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexInjury.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexInjury.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //损伤、中毒的外部因素编码
+            indexInjury.setP361(zj_BASY_STD.getP363());
+            //损伤、中毒的外部因素名称
+            indexInjury.setP362(zj_BASY_STD.getP364());
+
+            indexInjuryService.saveIndexInjury(indexInjury);
+        }
+        if(zj_BASY_STD.getP366()!=null&&!"".equals(zj_BASY_STD.getP366())){
+            IndexInjury indexInjury = new IndexInjury();
+            indexInjury.setUniqueId(zj_BASY_STD.getUNIQUE_ID());
+            //标识患者身份唯一标识
+            indexInjury.setUniqueIdLv1(zj_BASY_STD.getUNIQUE_ID_LV1());
+            //唯一标识
+            indexInjury.setUniqueIdLv2(zj_BASY_STD.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            indexInjury.setP900(zj_BASY_STD.getP900());
+            //患者id
+            if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+                indexInjury.setPatientId(zj_BASY_STD.getPATIENT_ID());
+            }else {
+                indexInjury.setPatientId(basy_nstd.getDOP3());
+            }
+            //住院号
+            indexInjury.setVisitId(zj_BASY_STD.getVISIT_ID());
+            //损伤、中毒的外部因素编码
+            indexInjury.setP361(zj_BASY_STD.getP365());
+            //损伤、中毒的外部因素名称
+            indexInjury.setP362(zj_BASY_STD.getP366());
+
+            indexInjuryService.saveIndexInjury(indexInjury);
+        }
+
+/*
+
+        //数据版本
+        indexInjury.setDataVersion();
+        //数据库来源
+        indexInjury.setDataDbSource();
+        //数据表来源
+        indexInjury.setDataTableSource();
+        //数据项来源
+        indexInjury.setDataFieldSource();
+        //创建时间
+        indexInjury.setCreatedAt();
+        //创建人
+        indexInjury.setCreator();
+        //修改时间
+        indexInjury.setUpdatedAt();*/
+
+    }
+    public void saveIndexPerson(BASY_NSTD zj_BASY_NSTD,BASY_DIAG_STD zj_BASY_STD){
+        log.info("保存病案首页基本信息"+zj_BASY_NSTD.getUNIQUE_ID());
+        IndexPerson indexPerson = new IndexPerson();
+        indexPerson.setUniqueId(zj_BASY_NSTD.getUNIQUE_ID());
+        //标识患者身份唯一标识
+        indexPerson.setUniqueIdLv1(zj_BASY_NSTD.getUNIQUE_ID_LV1());
+        //唯一标识
+        indexPerson.setUniqueIdLv2(zj_BASY_NSTD.getUNIQUE_ID_LV2());
+        //患者ID
+        if (zj_BASY_STD.getPATIENT_ID()!=null&&!"".equals(zj_BASY_STD.getPATIENT_ID())){
+            indexPerson.setPatientId(zj_BASY_STD.getPATIENT_ID());
+        }else {
+            indexPerson.setPatientId(zj_BASY_NSTD.getDOP3());
+        }
+        //住院号
+        indexPerson.setVisitId(zj_BASY_NSTD.getVISIT_ID());
+        //医疗机构代码
+        indexPerson.setP900(zj_BASY_NSTD.getP900());
+        //机构名称
+        indexPerson.setP6891(zj_BASY_NSTD.getP6891());
+        //医疗保险手册（卡）号
+        indexPerson.setP686(zj_BASY_NSTD.getP686());
+        //健康卡号
+        indexPerson.setP800("─".equals(zj_BASY_NSTD.getP800()) ? null : zj_BASY_NSTD.getP800());
+        //医疗付款方式
+        indexPerson.setP1(zj_BASY_NSTD.getP1());
+        //住院次数
+        indexPerson.setP2(zj_BASY_NSTD.getP2());
+        //病案号
+        indexPerson.setP3(zj_BASY_NSTD.getP3());
+        //姓名
+        indexPerson.setP4(zj_BASY_NSTD.getP4());
+        //性别
+        indexPerson.setP5(zj_BASY_NSTD.getP5());
+        //出生日期
+        indexPerson.setP6(zj_BASY_NSTD.getP6());
+        //年龄
+        indexPerson.setP7(zj_BASY_NSTD.getP7());
+        //婚姻状况
+        indexPerson.setP8(zj_BASY_NSTD.getP8());
+        //职业
+        indexPerson.setP9(zj_BASY_NSTD.getP9());
+        //出生省份
+        indexPerson.setP101(zj_BASY_NSTD.getP101());
+        //出生地市
+        indexPerson.setP102(zj_BASY_NSTD.getP102());
+        //出生地县
+        indexPerson.setP103("─".equals(zj_BASY_NSTD.getP103()) ? null : zj_BASY_NSTD.getP103());
+        //民族
+        indexPerson.setP11(zj_BASY_NSTD.getP11());
+        //国籍
+        indexPerson.setP12(zj_BASY_NSTD.getP12());
+        //身份证号
+        indexPerson.setP13(zj_BASY_NSTD.getP13());
+        //现住址
+        indexPerson.setP801(zj_BASY_NSTD.getP801());
+        //住宅电话
+        indexPerson.setP802(zj_BASY_NSTD.getP802());
+        //现住址邮政编码
+        indexPerson.setP803(zj_BASY_NSTD.getP803());
+        //工作单位及地址
+        indexPerson.setP14(zj_BASY_NSTD.getP14());
+        //电话
+        indexPerson.setP15(zj_BASY_NSTD.getP15());
+        //工作单位邮政编码
+        indexPerson.setP16("─".equals(zj_BASY_NSTD.getP16()) ? null : zj_BASY_NSTD.getP16());
+        //户口地址
+        indexPerson.setP17(zj_BASY_NSTD.getP17());
+        //户口所在地邮政编码
+        indexPerson.setP171(zj_BASY_NSTD.getP171());
+        //联系人姓名
+        indexPerson.setP18(zj_BASY_NSTD.getP18());
+        //关系
+        indexPerson.setP19(zj_BASY_NSTD.getP19());
+        //联系人地址
+        indexPerson.setP20(zj_BASY_NSTD.getP20());
+        //入院途径
+        indexPerson.setP804(zj_BASY_NSTD.getP804());
+        //联系人电话
+        indexPerson.setP21(zj_BASY_NSTD.getP21());
+        //入院日期
+        indexPerson.setP22(zj_BASY_NSTD.getP22());
+        //入院科室
+        indexPerson.setP23(zj_BASY_NSTD.getP23());
+        //入院病室
+        indexPerson.setP231(zj_BASY_NSTD.getP231());
+        //转科科室
+        indexPerson.setP24(zj_BASY_NSTD.getP24());
+        //出院日期
+        indexPerson.setP25(zj_BASY_NSTD.getP25());
+        //出院科室
+        indexPerson.setP26(zj_BASY_NSTD.getP26());
+        //出院病室
+        indexPerson.setP261(zj_BASY_NSTD.getP261());
+        //实际住院天数
+        indexPerson.setP27(zj_BASY_NSTD.getP27());
+        //--------
+        //入院时情况
+        indexPerson.setP29(zj_BASY_STD.getP29());
+        //入院后确诊日期
+        indexPerson.setP31(zj_BASY_STD.getP31());
+        //医院感染总次数
+        indexPerson.setP689(zj_BASY_NSTD.getP689());
+        //过敏源
+        indexPerson.setP371(zj_BASY_NSTD.getP371());
+        //过敏药物名称
+        indexPerson.setP372(zj_BASY_NSTD.getP372());
+        //HBsAg
+        indexPerson.setP38(zj_BASY_NSTD.getP38());
+        //HCV-Ab
+        indexPerson.setP39(zj_BASY_NSTD.getP39());
+        //HIV-Ab
+        indexPerson.setP40(zj_BASY_NSTD.getP40());
+        //门诊与出院诊断符合情况
+        indexPerson.setP411(zj_BASY_STD.getP411());
+        //入院与出院诊断符合情况
+        indexPerson.setP412(zj_BASY_STD.getP412());
+        //术前与术后诊断符合情况
+        indexPerson.setP413(zj_BASY_STD.getP413());
+        //临床与病理诊断符合情况
+        indexPerson.setP414(zj_BASY_STD.getP414());
+        //放射与病理诊断符合情况
+        indexPerson.setP415(zj_BASY_STD.getP415());
+        //抢救次数
+        indexPerson.setP421(zj_BASY_NSTD.getP421());
+        //抢救成功次数
+        indexPerson.setP422(zj_BASY_NSTD.getP422());
+        //最高诊断依据
+        indexPerson.setP687(zj_BASY_NSTD.getP687());
+        //分化程度
+        indexPerson.setP688(zj_BASY_NSTD.getP688());
+        //科主任
+        indexPerson.setP431(zj_BASY_NSTD.getP431());
+        //主(副主)任医师
+        indexPerson.setP432(zj_BASY_NSTD.getP432());
+        //主治医师
+        indexPerson.setP433(zj_BASY_NSTD.getP433());
+        //住院医师
+        indexPerson.setP434(zj_BASY_NSTD.getP434());
+        //责任护士
+        indexPerson.setP819(zj_BASY_NSTD.getP819());
+        //进修医师
+        indexPerson.setP435(zj_BASY_NSTD.getP435());
+        //研究生实习医师
+        indexPerson.setP436(zj_BASY_NSTD.getP436());
+        //实习医师
+        indexPerson.setP437(zj_BASY_NSTD.getP437());
+        //编码员
+        indexPerson.setP438(zj_BASY_NSTD.getP438());
+        //病案质量
+        indexPerson.setP44(zj_BASY_NSTD.getP44());
+        //质控医师
+        indexPerson.setP45(zj_BASY_NSTD.getP45());
+        //质控护师
+        indexPerson.setP46(zj_BASY_NSTD.getP46());
+        //质控日期
+        indexPerson.setP47(zj_BASY_NSTD.getP47());
+        //特级护理天数
+        indexPerson.setP561(zj_BASY_NSTD.getP561());
+        //一级护理天数
+        indexPerson.setP562(zj_BASY_NSTD.getP562());
+        //二级护理天数
+        indexPerson.setP563(zj_BASY_NSTD.getP563());
+        //三级护理天数
+        indexPerson.setP564(zj_BASY_NSTD.getP564());
+        //死亡患者尸检
+        indexPerson.setP57(zj_BASY_NSTD.getP57());
+        //手术、治疗、检查、诊断为本院第一例
+        indexPerson.setP58(zj_BASY_NSTD.getP58());
+        //手术患者类型
+        indexPerson.setP581(zj_BASY_NSTD.getP581());
+        //随诊
+        indexPerson.setP60(zj_BASY_NSTD.getP60());
+        //随诊周数
+        indexPerson.setP611(zj_BASY_NSTD.getP611());
+        //随诊月数
+        indexPerson.setP612(zj_BASY_NSTD.getP612());
+        //随诊年数
+        indexPerson.setP613(zj_BASY_NSTD.getP613());
+        //示教病例
+        indexPerson.setP59(zj_BASY_NSTD.getP59());
+        //ABO血型
+        indexPerson.setP62(zj_BASY_NSTD.getP62());
+        //Rh血型
+        indexPerson.setP63(zj_BASY_NSTD.getP63());
+        //输血反应
+        indexPerson.setP64(zj_BASY_NSTD.getP64());
+        //红细胞
+        indexPerson.setP651(zj_BASY_NSTD.getP651());
+        //血小板
+        indexPerson.setP652(zj_BASY_NSTD.getP652());
+        //血浆
+        indexPerson.setP653(zj_BASY_NSTD.getP653());
+        //全血
+        indexPerson.setP654(zj_BASY_NSTD.getP654());
+        //自体回收
+        indexPerson.setP655(zj_BASY_NSTD.getP655());
+        //其它
+        indexPerson.setP656(zj_BASY_NSTD.getP656());
+        //（年龄不足1周岁的）年龄
+        indexPerson.setP66(zj_BASY_NSTD.getP66());
+        //新生儿出生体重
+        indexPerson.setP681(zj_BASY_NSTD.getP681());
+        //新生儿入院体重
+        indexPerson.setP67(zj_BASY_NSTD.getP67());
+        //入院前多少小时(颅脑损伤患者昏迷时间)
+        indexPerson.setP731(zj_BASY_NSTD.getP731());
+        //入院前多少分钟(颅脑损伤患者昏迷时间)
+        indexPerson.setP732(zj_BASY_NSTD.getP732());
+        //入院后多少小时(颅脑损伤患者昏迷时间)
+        indexPerson.setP733(zj_BASY_NSTD.getP733());
+        //入院后多少分钟(颅脑损伤患者昏迷时间)
+        indexPerson.setP734(zj_BASY_NSTD.getP734());
+        //呼吸机使用时间
+        indexPerson.setP72(zj_BASY_NSTD.getP72());
+        //是否有出院31天内再住院计划
+        indexPerson.setP830(zj_BASY_NSTD.getP830());
+        //出院31天再住院计划目的
+        indexPerson.setP831(zj_BASY_NSTD.getP831());
+        //离院方式
+        indexPerson.setP741(zj_BASY_NSTD.getP741());
+        //转入医院名称
+        indexPerson.setP742(zj_BASY_NSTD.getP742());
+        //转入社区服务机构/乡镇卫生院名称
+        indexPerson.setP743(zj_BASY_NSTD.getP743());
+        //住院总费用
+        indexPerson.setP782(zj_BASY_NSTD.getP782());
+        //住院总费用其中自付金额
+        indexPerson.setP751(zj_BASY_NSTD.getP751());
+        //一般医疗服务费
+        indexPerson.setP752(zj_BASY_NSTD.getP752());
+        //一般治疗操作费
+        indexPerson.setP754(zj_BASY_NSTD.getP754());
+        //护理费
+        indexPerson.setP755(zj_BASY_NSTD.getP755());
+        //综合医疗服务类其他费用
+        indexPerson.setP756(zj_BASY_NSTD.getP756());
+        //病理诊断费
+        indexPerson.setP757(zj_BASY_NSTD.getP757());
+        //实验室诊断费
+        indexPerson.setP758(zj_BASY_NSTD.getP758());
+        //影像学诊断费
+        indexPerson.setP759(zj_BASY_NSTD.getP759());
+        //临床诊断项目费
+        indexPerson.setP760(zj_BASY_NSTD.getP760());
+        //非手术治疗项目费
+        indexPerson.setP761(zj_BASY_NSTD.getP761());
+        //临床物理治疗费
+        indexPerson.setP762(zj_BASY_NSTD.getP762());
+        //手术治疗费
+        indexPerson.setP763(zj_BASY_NSTD.getP763());
+        //麻醉费
+        indexPerson.setP764(zj_BASY_NSTD.getP764());
+        //手术费
+        indexPerson.setP765(zj_BASY_NSTD.getP765());
+        //康复费
+        indexPerson.setP767(zj_BASY_NSTD.getP767());
+        //中医治疗费
+        indexPerson.setP768(zj_BASY_NSTD.getP768());
+        //西药费
+        indexPerson.setP769(zj_BASY_NSTD.getP769());
+        //抗菌药物费用
+        indexPerson.setP770(zj_BASY_NSTD.getP770());
+        //中成药费
+        indexPerson.setP771(zj_BASY_NSTD.getP771());
+        //中草药费
+        indexPerson.setP772(zj_BASY_NSTD.getP772());
+        //血费
+        indexPerson.setP773(zj_BASY_NSTD.getP773());
+        //白蛋白类制品费
+        indexPerson.setP774(zj_BASY_NSTD.getP774());
+        //球蛋白类制品费
+        indexPerson.setP775(zj_BASY_NSTD.getP775());
+        //凝血因子类制品费
+        indexPerson.setP776(zj_BASY_NSTD.getP776());
+        //细胞因子类制品费
+        indexPerson.setP777(zj_BASY_NSTD.getP777());
+        //检查用一次性医用材料费
+        indexPerson.setP778(zj_BASY_NSTD.getP778());
+        //治疗用一次性医用材料费
+        indexPerson.setP779(zj_BASY_NSTD.getP779());
+        //手术用一次性医用材料费
+        indexPerson.setP780(zj_BASY_NSTD.getP780());
+        //其他费
+        indexPerson.setP781(zj_BASY_NSTD.getP781());
+        /*//数据版本
+        indexPerson.setDataVersion();
+        //数据库来源
+        indexPerson.setDataDbSource();
+        //数据表来源
+        indexPerson.setDataTableSource();
+        //数据项来源
+        indexPerson.setDataFieldSource();
+        //创建时间
+        indexPerson.setCreatedAt();
+        //创建人
+        indexPerson.setCreator();
+        //修改时间
+        indexPerson.setUpdatedAt();*/
+        indexPersonService.saveIndexPerson(indexPerson);
+    }
+    public void saveInpAdmissionStatus(TEM_INP_ADMISSION_STATUS zj_TEM_INP_ADMISSION_STATUS){
+        TemInpAdmissionStatus temInpAdmissionStatus = new TemInpAdmissionStatus();
+        //标识患者身份唯一标识
+        temInpAdmissionStatus.setUniqueIdLv1(zj_TEM_INP_ADMISSION_STATUS.getunique_id_lv1());
+        //唯一标识
+        temInpAdmissionStatus.setUniqueIdLv2(zj_TEM_INP_ADMISSION_STATUS.getunique_id_lv2());
+        //中间库unique_id
+        temInpAdmissionStatus.setUniqueId(zj_TEM_INP_ADMISSION_STATUS.getunique_id());
+        //医疗机构代码
+        temInpAdmissionStatus.setP900(zj_TEM_INP_ADMISSION_STATUS.getp900());
+        //患者id
+        temInpAdmissionStatus.setPatientId(zj_TEM_INP_ADMISSION_STATUS.getpatient_id());
+        //住院号
+        temInpAdmissionStatus.setVisitId(zj_TEM_INP_ADMISSION_STATUS.getvisit_id());
+        //病房号
+        temInpAdmissionStatus.setRoomNo(zj_TEM_INP_ADMISSION_STATUS.getroom_no());
+        //病床号
+        temInpAdmissionStatus.setBedNo(zj_TEM_INP_ADMISSION_STATUS.getbed_no());
+        //活动记录状态
+        temInpAdmissionStatus.setRecordStatus(zj_TEM_INP_ADMISSION_STATUS.getrecord_status());
+        //就诊类型
+        temInpAdmissionStatus.setVisitType(zj_TEM_INP_ADMISSION_STATUS.getvisit_type());
+        //科室名称
+        temInpAdmissionStatus.setDepartmentName(zj_TEM_INP_ADMISSION_STATUS.getdepartment_name());
+        //病区
+        temInpAdmissionStatus.setInpatientArea(zj_TEM_INP_ADMISSION_STATUS.getinpatient_area());
+        //病人姓名
+        temInpAdmissionStatus.setTpatname(zj_TEM_INP_ADMISSION_STATUS.gettpatname());
+        //就诊时间
+        temInpAdmissionStatus.setAdmissionDateTime(zj_TEM_INP_ADMISSION_STATUS.getadmission_date_time());
+        //住院次数
+        temInpAdmissionStatus.setAdmissionNumber(zj_TEM_INP_ADMISSION_STATUS.getadmission_number());
+        //病案号
+        temInpAdmissionStatus.setTpatno(zj_TEM_INP_ADMISSION_STATUS.gettpatno());
+        //临床初步诊断
+        temInpAdmissionStatus.setPreliminaryClinicalDiagnosis(zj_TEM_INP_ADMISSION_STATUS.getpreliminary_clinical_diagnosis());
+        //临床初步诊断日期
+        temInpAdmissionStatus.setPreliminaryDiagnosisDate(zj_TEM_INP_ADMISSION_STATUS.getpreliminary_diagnosis_date());
+        //医生签名_初步诊断
+        temInpAdmissionStatus.setDoctorPreliminaryDiagnosis(zj_TEM_INP_ADMISSION_STATUS.getdoctor_preliminary_diagnosis());
+        //临床确定诊断
+        temInpAdmissionStatus.setClinicalDefiniteDiagnosis(zj_TEM_INP_ADMISSION_STATUS.getclinical_definite_diagnosis());
+        //临床确定诊断日期
+        temInpAdmissionStatus.setDefiniteDiagnosisDate(zj_TEM_INP_ADMISSION_STATUS.getdefinite_diagnosis_date());
+        //医生签名_确定诊断
+        temInpAdmissionStatus.setDoctorDefiniteDiagnosis(zj_TEM_INP_ADMISSION_STATUS.getdoctor_definite_diagnosis());
+        //现病史
+        temInpAdmissionStatus.setHyPresent(zj_TEM_INP_ADMISSION_STATUS.gethy_present());
+        //既往史
+        temInpAdmissionStatus.setHyPats(zj_TEM_INP_ADMISSION_STATUS.gethy_pats());
+        //个人史
+        temInpAdmissionStatus.setHyIndividual(zj_TEM_INP_ADMISSION_STATUS.gethy_individual());
+        //月经史
+        temInpAdmissionStatus.setMenstrualHistorySta(zj_TEM_INP_ADMISSION_STATUS.getmenstrual_history_sta());
+        //身高
+        temInpAdmissionStatus.setByHeight(zj_TEM_INP_ADMISSION_STATUS.getby_height());
+        //体重
+        temInpAdmissionStatus.setByWeight(zj_TEM_INP_ADMISSION_STATUS.getby_weight());
+        //肥胖
+        temInpAdmissionStatus.setFat("");
+        //体表面积
+        temInpAdmissionStatus.setBySurfaceArea(zj_TEM_INP_ADMISSION_STATUS.getby_surface_area());
+        //ecog_whops评分
+        temInpAdmissionStatus.setTEcogWhops(zj_TEM_INP_ADMISSION_STATUS.gett_ecog_whops());
+        //kps评分
+        temInpAdmissionStatus.setTKps(zj_TEM_INP_ADMISSION_STATUS.gett_kps());
+        //疼痛评分_nrs法
+        temInpAdmissionStatus.setTNrs(zj_TEM_INP_ADMISSION_STATUS.gett_nrs());
+        //家族史
+        temInpAdmissionStatus.setHyFamily(zj_TEM_INP_ADMISSION_STATUS.gethy_family());
+        //体格检查
+        temInpAdmissionStatus.setPhysicalExam(zj_TEM_INP_ADMISSION_STATUS.getphysical_exam());
+        //主诉
+        temInpAdmissionStatus.setChiefComplaint(zj_TEM_INP_ADMISSION_STATUS.getchief_complaint());
+        //专科检查
+        temInpAdmissionStatus.setSpecialityExam(zj_TEM_INP_ADMISSION_STATUS.getspeciality_exam());
+        //辅助检查
+        temInpAdmissionStatus.setSupplementaryExam(zj_TEM_INP_ADMISSION_STATUS.getsupplementary_exam());
+        //婚姻状况
+        temInpAdmissionStatus.setMarriage(zj_TEM_INP_ADMISSION_STATUS.getmarriage());
+        //性别
+        temInpAdmissionStatus.setSex(zj_TEM_INP_ADMISSION_STATUS.getsex());
+        //年龄
+        temInpAdmissionStatus.setAge(zj_TEM_INP_ADMISSION_STATUS.getage());
+        //民族
+        temInpAdmissionStatus.setNation(zj_TEM_INP_ADMISSION_STATUS.getnation());
+        //职业
+        temInpAdmissionStatus.setOccupation(zj_TEM_INP_ADMISSION_STATUS.getoccupation());
+        //记录时间
+        temInpAdmissionStatus.setRecordTime(zj_TEM_INP_ADMISSION_STATUS.getrecord_time());
+        //病史陈述者
+        temInpAdmissionStatus.setMedicalHistoryNarrator(zj_TEM_INP_ADMISSION_STATUS.getmedical_history_narrator());
+        //患者病史陈述者与患者关系
+        temInpAdmissionStatus.setRelationshipBetweenPatient(zj_TEM_INP_ADMISSION_STATUS.getrelationship_between_patient());
+        //婚育史
+        temInpAdmissionStatus.setHistoryOfMarrChild(zj_TEM_INP_ADMISSION_STATUS.gethistory_of_marr_child());
+        //哺乳史
+        temInpAdmissionStatus.setReproductiveHistory(zj_TEM_INP_ADMISSION_STATUS.getreproductive_history());
+        //过敏史
+        temInpAdmissionStatus.setAllergyHistory(zj_TEM_INP_ADMISSION_STATUS.getallergy_history());
+        //暴露史
+        temInpAdmissionStatus.setExposureHistory(zj_TEM_INP_ADMISSION_STATUS.getexposure_history());
+        //母孕史
+        temInpAdmissionStatus.setMotherFertileHistory(zj_TEM_INP_ADMISSION_STATUS.getmother_fertile_history());
+        //修正诊断
+        temInpAdmissionStatus.setCorrectDiagnosis(zj_TEM_INP_ADMISSION_STATUS.getcorrect_diagnosis());
+        //修正诊断时间
+        temInpAdmissionStatus.setCorrectDiagnosisTime(zj_TEM_INP_ADMISSION_STATUS.getcorrect_diagnosis_time());
+        //修正诊断医师签名
+        temInpAdmissionStatus.setCorrectDiagnosisDoctor(zj_TEM_INP_ADMISSION_STATUS.getcorrect_diagnosis_doctor());
+        //补充诊断
+        temInpAdmissionStatus.setSupDiagnosis(zj_TEM_INP_ADMISSION_STATUS.getsup_diagnosis());
+        //补充诊断时间
+        temInpAdmissionStatus.setSupDiagnosisTime(zj_TEM_INP_ADMISSION_STATUS.getsup_diagnosis_time());
+        //补充诊断医师签名
+        temInpAdmissionStatus.setSupDiagnosisDoctor(zj_TEM_INP_ADMISSION_STATUS.getsup_diagnosis_doctor());
+        //病历小结
+        temInpAdmissionStatus.setRecordSummary(zj_TEM_INP_ADMISSION_STATUS.getrecord_summary());
+        //数据版本
+        temInpAdmissionStatus.setDataVersion(zj_TEM_INP_ADMISSION_STATUS.getdata_version());
+        //数据库来源
+        temInpAdmissionStatus.setDataDbSource(zj_TEM_INP_ADMISSION_STATUS.getdata_db_source());
+        //数据表来源
+        temInpAdmissionStatus.setDataTableSource(zj_TEM_INP_ADMISSION_STATUS.getdata_table_source());
+        //数据项来源
+        temInpAdmissionStatus.setDataFieldSource(zj_TEM_INP_ADMISSION_STATUS.getdata_field_source());
+        //创建时间
+        temInpAdmissionStatus.setCreatedAt(zj_TEM_INP_ADMISSION_STATUS.getcreated_at());
+        //创建人
+        temInpAdmissionStatus.setCreator(zj_TEM_INP_ADMISSION_STATUS.getcreator());
+        //修改时间
+        temInpAdmissionStatus.setUpdatedAt(zj_TEM_INP_ADMISSION_STATUS.getupdated_at());
+        temInpAdmissionStatusService.saveTemInpAdmissionStatus(temInpAdmissionStatus);
+    }
+
+
+    public void savePersonGeneral(List<NURSING_RECORD> zj_NURSING_RECORD,List<VITAL_RECORD> zj_VITAL_RECORD){
+
+        DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        Map<String,String> map=new HashMap<>();
+        if(zj_VITAL_RECORD!=null&&zj_VITAL_RECORD.size()>0){
+            for(VITAL_RECORD vital_record:zj_VITAL_RECORD){
+                if(vital_record.getEXAM_TIME()!=null&&vital_record.getEXAM_RESULT()!=null){
+                    if ("体温(℃)".equals(vital_record.getITEM_NAME())) {
+                        String date= format.format( vital_record.getEXAM_TIME());
+                        map.put(date,vital_record.getEXAM_RESULT());
+                    }
+                }
+
+            }
+        }
+        if (zj_NURSING_RECORD.size()!=0&&zj_NURSING_RECORD.get(0).getNURSE_SIGNATURE_TIME()!=null){
+            for(NURSING_RECORD nursing_record:zj_NURSING_RECORD){
+                PersonGeneral personGeneral = new PersonGeneral();
+                log.info("保存患者一般情况"+nursing_record.getUNIQUE_ID_LV2());
+                personGeneral.setUniqueId(nursing_record.getUNIQUE_ID());
+                //标识患者身份唯一标识
+                personGeneral.setUniqueIdLv1(nursing_record.getUNIQUE_ID_LV1());
+                //唯一标识
+                personGeneral.setUniqueIdLv2(nursing_record.getUNIQUE_ID_LV2());
+                //医疗机构代码
+                personGeneral.setP900(nursing_record.getP900());
+                //患者id
+                personGeneral.setPatientId(nursing_record.getPATIENT_ID());
+                //住院号
+                personGeneral.setVisitId(nursing_record.getVISIT_ID());
+                //日期
+                personGeneral.setRecordTime(nursing_record.getNURSE_SIGNATURE_TIME());
+//                if (zj_VITAL_RECORD.size()!=0){
+//                    log.info("保存患者一般情况"+zj_VITAL_RECORD.get(0).getUNIQUE_ID_LV2());
+//                    personGeneral.setUniqueId(nursing_record.getUNIQUE_ID());
+//                    //标识患者身份唯一标识
+//                    personGeneral.setUniqueIdLv1(zj_VITAL_RECORD.get(0).getUNIQUE_ID_LV1());
+//                    //唯一标识
+//                    personGeneral.setUniqueIdLv2(zj_VITAL_RECORD.get(0).getUNIQUE_ID_LV2());
+//                    //医疗机构代码
+//                    personGeneral.setP900(zj_VITAL_RECORD.get(0).getP900());
+//                    //患者id
+//                    personGeneral.setPatientId(zj_VITAL_RECORD.get(0).getPATIENT_ID());
+//                    //住院号
+//                    personGeneral.setVisitId(zj_VITAL_RECORD.get(0).getVISIT_ID());
+//                    //日期
+//                    personGeneral.setRecordTime(nursing_record.getNURSE_SIGNATURE_TIME());
+//                }
+                if(nursing_record!=null&&nursing_record.getNURSE_SIGNATURE_TIME()!=null){
+
+                    //体温
+                    try {
+                        Double temp = Double.parseDouble(nursing_record.getBODY_TEMPERATURE());
+                        personGeneral.setBodyTemperature(temp);
+                    }catch (Exception e){
+                        if (nursing_record.getNURSE_SIGNATURE_TIME()!=null){
+                            String date =format.format(nursing_record.getNURSE_SIGNATURE_TIME());
+                            String temperature=  map.get(date);
+                            try{
+                                Double temp = Double.parseDouble(temperature);
+                                personGeneral.setBodyTemperature(temp);
+                            }catch (Exception e1){
+                            }
+                        }
+                    }
+
+                    //呼吸
+                    try {
+                        Integer temp = Integer.parseInt(nursing_record.getBREATHING_FREQUENCY());
+                        personGeneral.setBreathingFrequency(temp);
+                    }catch (Exception e){
+
+                    }
+
+                    //脉搏
+                    try {
+                        Integer temp = Integer.parseInt(nursing_record.getPULSE());
+                        personGeneral.setHeartRate(temp);
+                    }catch (Exception e){
+
+                    }
+
+                    personGeneral.setRecordTime(nursing_record.getNURSE_SIGNATURE_TIME());
+
+                    //舒张压(低压)，收缩压(高压)
+                    String lowPressure = nursing_record.getDIASTOLIC_BLOOD_PRESSURE();
+                    if (lowPressure==null){
+                        lowPressure = "";
+                    }
+                    String[] lowPressures=lowPressure.split("/");
+                    int lowInt=-1;
+                    int highInt =-1;
+                    if (lowPressures.length==2){
+                        String highString = lowPressures[0];
+                        String lowString = lowPressures[1];
+
+                        try{
+                            lowInt = Integer.parseInt(lowString);
+                            highInt = Integer.parseInt(highString);
+                        }catch (Exception e){
+                        }
+                        if (lowInt>highInt){
+                            int temp;
+                            temp = lowInt;
+                            lowInt = highInt;
+                            highInt = lowInt;
+                        }
+                        if (lowInt>=0&&lowInt<300&&highInt>=0&&highInt<300){
+                            personGeneral.setDiastolicBloodPressure(lowInt);
+                            personGeneral.setSystolicBloodPressure(highInt);
+                        }
+                    }else {
+                    }
+                    personGeneralService.savePersonGeneral(personGeneral);
+                }
+
+            }
+        }else if (zj_NURSING_RECORD.size()!=0&&zj_NURSING_RECORD.get(0).getRECORD_TIME()!=null){
+            log.info("保存患者一般情况"+zj_NURSING_RECORD.get(0).getUNIQUE_ID_LV2());
+            PersonGeneral personGeneral = new PersonGeneral();
+            personGeneral.setUniqueId(zj_NURSING_RECORD.get(0).getUNIQUE_ID());
+            //标识患者身份唯一标识
+            personGeneral.setUniqueIdLv1(zj_NURSING_RECORD.get(0).getUNIQUE_ID_LV1());
+            //唯一标识
+            personGeneral.setUniqueIdLv2(zj_NURSING_RECORD.get(0).getUNIQUE_ID_LV2());
+            //医疗机构代码
+            personGeneral.setP900(zj_NURSING_RECORD.get(0).getP900());
+            //患者id
+            personGeneral.setPatientId(zj_NURSING_RECORD.get(0).getPATIENT_ID());
+            //住院号
+            personGeneral.setVisitId(zj_NURSING_RECORD.get(0).getVISIT_ID());
+            //日期
+            personGeneral.setRecordTime(zj_NURSING_RECORD.get(0).getRECORD_TIME());
+
+            for(NURSING_RECORD nursing_record:zj_NURSING_RECORD){
+                if (personGeneral.getBreathingFrequency()==null&&nursing_record.getBREATHING_FREQUENCY()!=null&&!nursing_record.getBREATHING_FREQUENCY().equals("")){
+                    try {
+                        Integer temp = Integer.parseInt(nursing_record.getBREATHING_FREQUENCY());
+                        personGeneral.setBreathingFrequency(temp);
+                    }catch (Exception e){
+
+                    }
+                }
+                if (personGeneral.getHeartRate()==null&&nursing_record.getPULSE()!=null&&!nursing_record.getPULSE().equals("")){
+                    try {
+                        Integer temp1 = Integer.parseInt(nursing_record.getPULSE());
+                        personGeneral.setHeartRate(temp1);
+                    }catch (Exception e){
+
+                    }
+
+                }
+                if (personGeneral.getBodyTemperature()==null&&nursing_record.getBODY_TEMPERATURE()!=null&&!nursing_record.getBODY_TEMPERATURE().equals("")){
+                    try {
+                        Double temp = Double.parseDouble(nursing_record.getBODY_TEMPERATURE());
+                        personGeneral.setBodyTemperature(temp);
+                    }catch (Exception e){
+
+                    }
+                }else {
+                    String date =format.format(nursing_record.getRECORD_TIME());
+                    String temperature=  map.get(date);
+                    if (temperature!=null){
+                        try{
+                            Double temp = Double.parseDouble(temperature);
+                            personGeneral.setBodyTemperature(temp);
+                        }catch (Exception e1){
+                        }
+                    }
+                }
+                if (personGeneral.getDiastolicBloodPressure()==null&&nursing_record.getDIASTOLIC_BLOOD_PRESSURE()!=null&&!nursing_record.getDIASTOLIC_BLOOD_PRESSURE().equals("")){
+                    try {
+                        Integer temp2 = Integer.parseInt(nursing_record.getDIASTOLIC_BLOOD_PRESSURE());
+                        personGeneral.setDiastolicBloodPressure(temp2);
+                    }catch (Exception e){
+
+                    }
+                }
+                if (personGeneral.getSystolicBloodPressure()==null&&nursing_record.getSYSTOLIC_BLOOD_PRESSURE()!=null&&!nursing_record.getSYSTOLIC_BLOOD_PRESSURE().equals("")){
+                    try {
+                        Integer temp2 = Integer.parseInt(nursing_record.getSYSTOLIC_BLOOD_PRESSURE());
+                        personGeneral.setSystolicBloodPressure(temp2);
+                    }catch (Exception e){
+
+                    }
+
+                }
+            }
+            personGeneralService.savePersonGeneral(personGeneral);
+        }
+
+
+    }
+
+    // ---------------------------------wang
 
     public void saveSymptom(List<SYMP_PRESENT> zj_SYMPTOMS){
         for(SYMP_PRESENT symp_present : zj_SYMPTOMS) {
