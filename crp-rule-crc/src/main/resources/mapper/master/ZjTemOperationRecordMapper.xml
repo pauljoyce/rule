@@ -5,13 +5,15 @@
 <select id="findZjTemOperationRecordByUniqueId"  resultType="com.clinical.model.master.TEM_OPERATION_RECORD">
        SELECT * FROM TEM_OPERATION_RECORD WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
+       <select id="findZjTemOperationRecordByALL"  resultType="com.clinical.model.master.TEM_OPERATION_RECORD">
+       SELECT * FROM TEM_OPERATION_RECORD
+</select>
 
-<select id="findZjTemOperationRecordByUniqueIdOrderByItemEndDate"  resultType="com.clinical.model.master.TEM_OPERATION_RECORD">
+       <select id="findZjTemOperationRecordByUniqueIdOrderByItemEndDate"  resultType="com.clinical.model.master.TEM_OPERATION_RECORD">
        SELECT * FROM TEM_OPERATION_RECORD WHERE unique_id_lv2 = #{unique_id_lv2} order by ITEM_END_DATE
 </select>
 
-<select id="findZjTemOperationRecordByUniqueId2"  resultType="com.clinical.model.master.TEM_OPERATION_RECORD">
+       <select id="findZjTemOperationRecordByUniqueId2"  resultType="com.clinical.model.master.TEM_OPERATION_RECORD">
        SELECT * FROM TEM_OPERATION_RECORD WHERE unique_id = #{unique_id}
 </select>
-
 </mapper>

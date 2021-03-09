@@ -7,5 +7,7 @@ public interface RabatService {
 
 
     public  void saveRabat(Rabat rabat);
+    public  void add();
+
 
 }

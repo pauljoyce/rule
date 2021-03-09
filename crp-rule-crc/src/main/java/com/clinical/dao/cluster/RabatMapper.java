@@ -5,5 +5,6 @@ public interface RabatMapper {
     List<Rabat>  findRabat(String uniqueId);
     void   saveRabat(Rabat rabat);
     void   updateRabat(Rabat rabat);
+    void   add();
 
 }

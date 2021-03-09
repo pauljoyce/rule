@@ -4,5 +4,6 @@ import java.util.List;
 
 public interface ZjColonEsDescriptionMapper {
     List<COLON_ES_DESCRIPTION>  findZjColonEsDescriptionByUniqueId(String unique_id_lv2);
+    List<COLON_ES_DESCRIPTION>  findZjColonEsDescriptionByALL();
 
 }

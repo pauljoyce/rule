@@ -7,5 +7,6 @@ public interface PreoperativePreparationService {
 
 
     public  void savePreoperativePreparation(PreoperativePreparation preoperativePreparation);
+    public  void add();
 
 }

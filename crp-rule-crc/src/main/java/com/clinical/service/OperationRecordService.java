@@ -7,5 +7,6 @@ public interface OperationRecordService {
 
 
     public  void saveOperationRecord(OperationRecord operationRecord);
+    public  void add();
 
 }

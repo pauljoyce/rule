@@ -5,5 +5,10 @@
 <select id="findZjAbdomCtDescriptionByUniqueId"  resultType="com.clinical.model.master.ABDOM_CT_DESCRIPTION">
        SELECT * FROM ABDOM_CT_DESCRIPTION WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
-
+       <select id="findZjAbdomCtDescriptionByALL"  resultType="com.clinical.model.master.ABDOM_CT_DESCRIPTION">
+       SELECT * FROM ABDOM_CT_DESCRIPTION
+</select>
+       <select id="findZjAbdomCtDescriptionById"  resultType="com.clinical.model.master.ABDOM_CT_DESCRIPTION">
+       SELECT * FROM ABDOM_CT_DESCRIPTION WHERE unique_id = #{unique_id}
+</select>
 </mapper>

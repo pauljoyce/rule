@@ -2,7 +2,7 @@ package com.clinical.model.master;
 import java.util.Date;
 public class BASY_OP_STD{
     //主键id
-    private Integer ID;
+    private String ID;
     //唯一标识
     private String UNIQUE_ID;
     //关联1级表unique_id
@@ -478,10 +478,10 @@ public class BASY_OP_STD{
     //手术/操作名称10标准化手术操作名称4
     private String P45052_ICD9_NAME4;
 
-    public Integer getID(){
+    public String getID(){
         return ID;
     } 
-    public void setID(Integer ID) {
+    public void setID(String ID) {
          this.ID = ID;
     } 
     public String getUNIQUE_ID(){

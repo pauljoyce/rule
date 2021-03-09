@@ -7,5 +7,6 @@ public interface AbdomenCtResultService {
 
 
     public  void saveAbdomenCtResult(AbdomenCtResult abdomenCtResult);
+    public  void add();
 
 }

@@ -2,7 +2,7 @@ package com.clinical.model.master;
 import java.util.Date;
 public class HISTOLOGY_REPORT{
     //主键id
-    private Integer ID;
+    private String ID;
     //唯一标识
     private String UNIQUE_ID;
     //关联1级表unique_id
@@ -90,12 +90,14 @@ public class HISTOLOGY_REPORT{
     //MD5标识
     private String MD5;
 
-    public Integer getID(){
+    public String getID() {
         return ID;
-    } 
-    public void setID(Integer ID) {
-         this.ID = ID;
-    } 
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
     public String getUNIQUE_ID(){
         return UNIQUE_ID;
     } 

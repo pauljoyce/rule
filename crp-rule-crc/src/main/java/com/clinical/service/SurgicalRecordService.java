@@ -7,5 +7,6 @@ public interface SurgicalRecordService {
 
 
     public  void saveSurgicalRecord(SurgicalRecord surgicalRecord);
+    public  void add();
 
 }

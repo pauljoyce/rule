@@ -5,5 +5,7 @@
 <select id="findZjSurgicalRecordByUniqueId"  resultType="com.clinical.model.master.SURGICAL_RECORD">
        SELECT * FROM SURGICAL_RECORD WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
-
+       <select id="findZjSurgicalRecordByALL"  resultType="com.clinical.model.master.SURGICAL_RECORD">
+       SELECT * FROM SURGICAL_RECORD
+</select>
 </mapper>

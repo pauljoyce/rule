@@ -7,5 +7,6 @@ public interface ChectCtResultService {
 
 
     public  void saveChectCtResult(ChectCtResult chectCtResult);
+    public  void add();
 
 }

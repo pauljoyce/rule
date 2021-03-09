@@ -2,7 +2,7 @@ package com.clinical.model.master;
 import java.util.Date;
 public class TEM_OPERATION_RECORD{
     //主键id
-    private Integer ID;
+    private String ID;
     //唯一标识
     private String UNIQUE_ID;
     //关联1级表unique_id
@@ -180,12 +180,14 @@ public class TEM_OPERATION_RECORD{
     //术中诊断
     private String IN_OP_DIAGNOSIS;
 
-    public Integer getID(){
+    public String getID() {
         return ID;
-    } 
-    public void setID(Integer ID) {
-         this.ID = ID;
-    } 
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
     public String getUNIQUE_ID(){
         return UNIQUE_ID;
     } 

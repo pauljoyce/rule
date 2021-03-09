@@ -2,7 +2,7 @@ package com.clinical.model.master;
 import java.util.Date;
 public class TEM_COURSE_DIS{
     //主键
-    private Integer id;
+    private String id;
     //唯一标识
     private String unique_id;
     //关联1级表unique_id
@@ -86,10 +86,10 @@ public class TEM_COURSE_DIS{
     //解析md5
     private String ana_md5;
 
-    public Integer getid(){
+    public String getid(){
         return id;
     } 
-    public void setid(Integer id) {
+    public void setid(String id) {
          this.id = id;
     } 
     public String getunique_id(){

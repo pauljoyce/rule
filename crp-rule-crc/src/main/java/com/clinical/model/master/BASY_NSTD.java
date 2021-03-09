@@ -3,7 +3,7 @@ import java.util.Date;
 
 public class BASY_NSTD {
     //主键id
-    private Integer ID;
+    private String ID;
     //唯一标识
     private String UNIQUE_ID;
     //关联1级表unique_id
@@ -357,10 +357,10 @@ public class BASY_NSTD {
     //出院科室标准名称
     private String P26_STD;
 
-    public Integer getID(){
+    public String getID(){
         return ID;
     } 
-    public void setID(Integer ID) {
+    public void setID(String ID) {
          this.ID = ID;
     } 
     public String getUNIQUE_ID(){

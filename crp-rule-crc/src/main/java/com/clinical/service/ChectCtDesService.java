@@ -7,5 +7,6 @@ public interface ChectCtDesService {
 
 
     public  void saveChectCtDes(ChectCtDes chectCtDes);
+    public  void add();
 
 }

@@ -4,5 +4,6 @@ import java.util.List;
 
 public interface ZjSurgicalRecordMapper {
     List<SURGICAL_RECORD>  findZjSurgicalRecordByUniqueId(String unique_id_lv2);
+    List<SURGICAL_RECORD>  findZjSurgicalRecordByALL();
 
 }

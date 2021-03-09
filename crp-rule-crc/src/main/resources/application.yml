@@ -12,10 +12,10 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://192.168.129.14:3306/dmp_std_crc?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
-    url: jdbc:mysql://192.168.129.14:3306/crc?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    url: jdbc:mysql://192.168.129.14:3306/crc_full?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
     username: root
     password: 123456
 
-    url2: jdbc:mysql://192.168.129.14:3306/dmp_zbk_crc?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    url2: jdbc:mysql://192.168.129.14:3306/dmp_zbk_crc_plus?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
     username2: root
     password2: 123456

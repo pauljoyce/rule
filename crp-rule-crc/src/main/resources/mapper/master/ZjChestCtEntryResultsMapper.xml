@@ -5,5 +5,7 @@
 <select id="findZjChestCtEntryResultsByUniqueId"  resultType="com.clinical.model.master.CHEST_CT_ENTRY_RESULTS">
        SELECT * FROM CHEST_CT_ENTRY_RESULTS WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
-
+       <select id="findZjChestCtEntryResultsByALL"  resultType="com.clinical.model.master.CHEST_CT_ENTRY_RESULTS">
+       SELECT * FROM CHEST_CT_ENTRY_RESULTS
+</select>
 </mapper>

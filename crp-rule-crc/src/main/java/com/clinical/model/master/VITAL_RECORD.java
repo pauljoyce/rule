@@ -3,7 +3,7 @@ import java.util.Date;
 
 public class VITAL_RECORD{
     //主键id
-    private Integer ID;
+    private String ID;
     //唯一标识
     private String UNIQUE_ID;
     //关联1级表unique_id
@@ -73,10 +73,10 @@ public class VITAL_RECORD{
     //MD5标识
     private String MD5;
 
-    public Integer getID(){
+    public String getID(){
         return ID;
     } 
-    public void setID(Integer ID) {
+    public void setID(String ID) {
          this.ID = ID;
     } 
     public String getUNIQUE_ID(){

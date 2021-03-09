@@ -7,5 +7,6 @@ public interface AbdomenMriDesService {
 
 
     public  void saveAbdomenMriDes(AbdomenMriDes abdomenMriDes);
+    public  void add();
 
 }

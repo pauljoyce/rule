@@ -7,5 +7,7 @@ public interface ColonoscopyService {
 
 
     public  void saveColonoscopy(Colonoscopy colonoscopy);
+    public  void add();
+
 
 }

@@ -4,5 +4,6 @@ import java.util.List;
 
 public interface ZjChestXrEntryResultsMapper {
     List<CHEST_XR_ENTRY_RESULTS>  findZjChestXrEntryResultsByUniqueId(String unique_id_lv2);
+    List<CHEST_XR_ENTRY_RESULTS>  findZjChestXrEntryResultsByALL();
 
 }

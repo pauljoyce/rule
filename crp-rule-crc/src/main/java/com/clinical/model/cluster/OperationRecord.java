@@ -30,7 +30,7 @@ public class OperationRecord{
     //淋巴结清扫
     private String lymphDissection;
     //术中出血量
-    private Double mabl;
+    private String mabl;
     //手术开始时间
     private Date startTime;
     //手术结束时间
@@ -148,10 +148,10 @@ public class OperationRecord{
     public void setLymphDissection(String lymphDissection) {
          this.lymphDissection = lymphDissection;
     } 
-    public Double getMabl(){
+    public String getMabl(){
         return mabl;
     } 
-    public void setMabl(Double mabl) {
+    public void setMabl(String mabl) {
          this.mabl = mabl;
     } 
     public Date getStartTime(){

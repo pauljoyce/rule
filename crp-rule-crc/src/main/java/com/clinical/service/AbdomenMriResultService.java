@@ -7,5 +7,6 @@ public interface AbdomenMriResultService {
 
 
     public  void saveAbdomenMriResult(AbdomenMriResult abdomenMriResult);
+    public  void add();
 
 }

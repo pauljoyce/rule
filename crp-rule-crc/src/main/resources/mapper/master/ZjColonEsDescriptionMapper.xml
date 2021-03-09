@@ -5,5 +5,8 @@
 <select id="findZjColonEsDescriptionByUniqueId"  resultType="com.clinical.model.master.COLON_ES_DESCRIPTION">
        SELECT * FROM COLON_ES_DESCRIPTION WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
+       <select id="findZjColonEsDescriptionByALL"  resultType="com.clinical.model.master.COLON_ES_DESCRIPTION">
+       SELECT * FROM COLON_ES_DESCRIPTION
+</select>
 
 </mapper>

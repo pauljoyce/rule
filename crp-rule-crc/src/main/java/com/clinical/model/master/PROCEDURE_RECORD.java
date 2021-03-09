@@ -2,7 +2,7 @@ package com.clinical.model.master;
 import java.util.Date;
 public class PROCEDURE_RECORD{
     //主键id
-    private Integer id;
+    private String id;
     //唯一标识
     private String unique_id;
     //关联1级表unique_id
@@ -94,10 +94,10 @@ public class PROCEDURE_RECORD{
     //MD5标识
     private String md5;
 
-    public Integer getid(){
+    public String getid(){
         return id;
     } 
-    public void setid(Integer id) {
+    public void setid(String id) {
          this.id = id;
     } 
     public String getunique_id(){

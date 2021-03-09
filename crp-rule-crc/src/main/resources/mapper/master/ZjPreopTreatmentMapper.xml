@@ -5,5 +5,10 @@
 <select id="findZjPreopTreatmentByUniqueId"  resultType="com.clinical.model.master.PREOP_TREATMENT">
        SELECT * FROM PREOP_TREATMENT WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
-
+       <select id="findZjPreopTreatmentById"  resultType="com.clinical.model.master.PREOP_TREATMENT">
+       SELECT * FROM PREOP_TREATMENT WHERE unique_id = #{unique_id}
+</select>
+       <select id="findZjPreopTreatmentByALL"  resultType="com.clinical.model.master.PREOP_TREATMENT">
+       SELECT * FROM PREOP_TREATMENT
+</select>
 </mapper>
