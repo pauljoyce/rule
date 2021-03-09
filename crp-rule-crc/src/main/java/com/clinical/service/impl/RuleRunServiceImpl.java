@@ -198,6 +198,33 @@ public class RuleRunServiceImpl implements RuleRunService {
     @Autowired
     ColonoscopyMapper colonoscopyMapper;
 
+    // -----------------------------------ma
+
+    @Autowired
+    ZjInpDiagnosisMapper zjInpDiagnosisMapper;
+    @Autowired
+    ZjSmokeAndDrinkMapper zjSmokeAndDrinkMapper;
+    @Autowired
+    ZjFamilyHistoryMapper zjFamilyHistoryMapper;
+    @Autowired
+    ZjPriorDiseaseAndSurgeryMapper zjPriorDiseaseAndSurgeryMapper;
+    @Autowired
+    ZjClinicalDiagMapper zjClinicalDiagMapper;
+    @Autowired
+    ZjSympPresentMapper zjSympPresentMapper;
+    @Autowired
+    SymptomService symptomService;
+    @Autowired
+    HisPersonService hisPersonService;
+    @Autowired
+    PrimaryDiagnosisService primaryDiagnosisService;
+    @Autowired
+    DiagnosisStageService diagnosisStageService;
+    @Autowired
+    HisPastService hisPastService;
+    @Autowired
+    HisFamilyService hisFamilyService;
+
     @Override
     public void saveRuleRun(Integer pageNo, Integer pageSize, String flag) {
 
@@ -222,6 +249,37 @@ public class RuleRunServiceImpl implements RuleRunService {
 
                 String uniqueId = master.getUNIQUE_ID();
                 Date visitdate=master.getADMISSION_DATE_TIME();
+
+                List<INP_DIAGNOSIS>  zj_INP_DIAGNOSIS =  zjInpDiagnosisMapper.findZjInpDiagnosisByUniqueId(uniqueId);
+                List<SMOKE_AND_DRINK>  zj_smoke_and_drink =  zjSmokeAndDrinkMapper.findZjSmokeAndDrinkByUniqueId(uniqueId);
+                List<PRIOR_DISEASE_AND_SURGERY>  zj_prior_disease_and_surgery =  zjPriorDiseaseAndSurgeryMapper.findZjPriorDiseaseAndSurgeryByUniqueId(uniqueId);
+                List<FAMILY_HISTORY>  zj_family_history =  zjFamilyHistoryMapper.findZjFamilyHistoryByUniqueId(uniqueId);
+                List<CLINICAL_DIAG>  zj_clinical_diag =  zjClinicalDiagMapper.findZjClinicalDiagByUniqueId(uniqueId);
+                List<SYMP_PRESENT> zj_SYMPTOMS= zjSympPresentMapper.findZjSympPresentByUniqueId(uniqueId);
+
+
+                if(zj_INP_DIAGNOSIS!=null&&zj_INP_DIAGNOSIS.size()>0){
+                    savePrimaryDiagnosis(zj_INP_DIAGNOSIS);
+                }
+
+
+                if (zj_SYMPTOMS!=null&&zj_SYMPTOMS.size()!=0){
+                    saveSymptom(zj_SYMPTOMS);
+                }
+                if (zj_smoke_and_drink!=null&&zj_smoke_and_drink.size()!=0){
+                    saveHisPerson(zj_smoke_and_drink);
+                }
+                if (zj_family_history!=null&&zj_family_history.size()!=0){
+                    saveHisFamily(zj_family_history);
+                }
+                if (zj_clinical_diag!=null&&zj_clinical_diag.size()!=0){
+                    saveDiagnosisStage(zj_clinical_diag);
+                }
+                if (zj_prior_disease_and_surgery!=null&&zj_prior_disease_and_surgery.size()!=0){
+                    saveHisPast(zj_prior_disease_and_surgery);
+                }
+
+                // ---------------------------------------------------ma
 
                 List<CHEST_XR_ENTRY_RESULTS> zjChestXrEntryResultsByALL = zjChestXrEntryResultsMapper.findZjChestXrEntryResultsByUniqueId(uniqueId);
                 System.out.println("1");
@@ -336,6 +394,974 @@ public class RuleRunServiceImpl implements RuleRunService {
             }
         }
     }
+
+    public void saveSymptom(List<SYMP_PRESENT> zj_SYMPTOMS){
+        for(SYMP_PRESENT symp_present : zj_SYMPTOMS) {
+            log.info("保存症状体征：" + symp_present.getunique_id());
+
+            Symptom symptom = new Symptom();
+            //标识患者身份唯一标识
+            symptom.setUniqueId(symp_present.getunique_id());
+            //唯一标识
+            symptom.setUniqueIdLv1(symp_present.getunique_id_lv1());
+            symptom.setUniqueIdLv2(symp_present.getunique_id_lv2());
+            //医疗机构代码
+            symptom.setP900(symp_present.getp900());
+            //患者id
+            symptom.setPatientId(symp_present.getpatient_id());
+            //门诊/住院号
+            symptom.setVisitId(symp_present.getvisit_id());
+            //    String nlpTableJson = this.selectStandardResultById(symp_present.getneg_std());
+            System.out.println("错误的key...."+symp_present.getfinding_std());
+            String nlpTableJson2 = this.selectStandardResultById(symp_present.getfinding_std());
+            String findingjson = JSONUtils.getAllFieldGroupByObj(nlpTableJson2, "afterType1", ",", "");
+            if (symp_present.getneg_std() == null || "".equals(symp_present.getneg_std())) {
+                symptom.setSymptoms(findingjson);
+            }
+
+//        Set<String> set = new HashSet<>();
+//
+//        for (SYMP_PRESENT symp_present:zj_SYMPTOMS
+//             ) {
+//            if (symp_present.getneg()==null||symp_present.getneg().equals("")){
+//                if (symp_present.getfinding1_std()!=null&&!symp_present.getfinding1_std().equals("")){
+//                    set.add(symp_present.getfinding1_std());
+//                }
+//                if (symp_present.getfinding2_std()!=null&&!symp_present.getfinding2_std().equals("")){
+//                    set.add(symp_present.getfinding2_std());
+//                }
+//                if (symp_present.getfinding3_std()!=null&&!symp_present.getfinding3_std().equals("")){
+//                    set.add(symp_present.getfinding3_std());
+//                }
+//                if (symp_present.getfinding4_std()!=null&&!symp_present.getfinding4_std().equals("")){
+//                    set.add(symp_present.getfinding4_std());
+//                }
+//                if (symp_present.getfinding5_std()!=null&&!symp_present.getfinding5_std().equals("")){
+//                    set.add(symp_present.getfinding5_std());
+//                }
+//                if (symp_present.getfinding6_std()!=null&&!symp_present.getfinding6_std().equals("")){
+//                    set.add(symp_present.getfinding6_std());
+//                }
+//            }
+//        }
+//        String s = set.stream().reduce("", (a, b) -> a + b + ",");
+//        if (s.endsWith(",")){
+//            s = s.substring(0, s.length() - 1);
+//        }
+//        symptom.setSymptoms(s);
+//
+//        for (SPECIALITY_EXAM sp:speciality_exams
+//             ) {
+//            //左上肢肌力
+//            if ("肌力".equals(sp.getforce_entity_std())){
+//                List<String> list = Arrays.asList(
+//                    "左上肢", "左侧上肢","双上肢前臂肌群","双上肢上臂肌群","双上肢","上肢","左侧肢体","四肢","肢体", "双侧肢体","两侧肢体"
+//                );
+//                int i = containsStructure(list, sp.getstructure1_std(), sp.getstructure2_std(), sp.getstructure3_std());
+//                if (i != -1) {
+//                    StringBuilder sb = new StringBuilder();
+//                    sb.append(i == 0 ? sp.getstructure1_std() : i == 1 ? sp.getstructure2_std() : i == 2 ? sp.getstructure3_std() : "");
+//                    sb.append(sp.getforce_entity_std());
+//                    if (sp.getpara_value_std()!=null){
+//                        sb.append(sp.getpara_value_std());
+//                    }
+//                    symptom.setLeftUpMuscle(sb.toString());
+//                }
+//            }
+//            //左下肢肌力
+//            if ("肌力".equals(sp.getforce_entity_std())){
+//                List<String> list = Arrays.asList(
+//                        "左下肢", "左侧肢体","双下肢肌群","双下肢","双下肢肌群","下肢","四肢","肢体","双侧肢体", "两侧肢体"
+//                );
+//                int i = containsStructure(list, sp.getstructure1_std(), sp.getstructure2_std(), sp.getstructure3_std());
+//                if (i != -1) {
+//                    StringBuilder sb = new StringBuilder();
+//                    sb.append(i == 0 ? sp.getstructure1_std() : i == 1 ? sp.getstructure2_std() : i == 2 ? sp.getstructure3_std() : "");
+//                    sb.append(sp.getforce_entity_std());
+//                    if (sp.getpara_value_std()!=null){
+//                        sb.append(sp.getpara_value_std());
+//                    }
+//                    symptom.setLeftDownMuscle(sb.toString());
+//                }
+//            }
+//            //右上肢肌力
+//            if ("肌力".equals(sp.getforce_entity_std())){
+//                List<String> list = Arrays.asList(
+//                        "右上肢", "双上肢前臂肌群","双上肢上臂肌群","双上肢","上肢","右侧肢体","四肢","肢体","双侧肢体", "两侧肢体"
+//                );
+//                int i = containsStructure(list, sp.getstructure1_std(), sp.getstructure2_std(), sp.getstructure3_std());
+//                if (i != -1) {
+//                    StringBuilder sb = new StringBuilder();
+//                    sb.append(i == 0 ? sp.getstructure1_std() : i == 1 ? sp.getstructure2_std() : i == 2 ? sp.getstructure3_std() : "");
+//                    sb.append(sp.getforce_entity_std());
+//                    if (sp.getpara_value_std()!=null){
+//                        sb.append(sp.getpara_value_std());
+//                    }
+//                    symptom.setRightUpMuscle(sb.toString());
+//                }
+//            }
+//            //右下肢肌力
+//            if ("肌力".equals(sp.getforce_entity_std())){
+//                List<String> list = Arrays.asList(
+//                        "右下肢", "右侧肢体","双下肢肌群","双下肢","双下肢肌群","下肢","四肢","肢体","双侧肢体", "两侧肢体"
+//                );
+//                int i = containsStructure(list, sp.getstructure1_std(), sp.getstructure2_std(), sp.getstructure3_std());
+//                if (i != -1) {
+//                    StringBuilder sb = new StringBuilder();
+//                    sb.append(i == 0 ? sp.getstructure1_std() : i == 1 ? sp.getstructure2_std() : i == 2 ? sp.getstructure3_std() : "");
+//                    sb.append(sp.getforce_entity_std());
+//                    if (sp.getpara_value_std()!=null){
+//                        sb.append(sp.getpara_value_std());
+//                    }
+//                    symptom.setRightDownMuscle(sb.toString());
+//                }
+//            }
+//
+//
+//
+//            //左上肢肌张力
+//            if ("肌张力".equals(sp.gettension_entity_std())){
+//                List<String> list = Arrays.asList(
+//                        "左上肢", "左侧上肢","双上肢前臂肌群","双上肢上臂肌群","双上肢","上肢","左侧肢体","四肢","肢体", "双侧肢体","两侧肢体"
+//                );
+//                int i = containsStructure(list, sp.getstructure1_std(), sp.getstructure2_std(), sp.getstructure3_std());
+//                if (i != -1) {
+//                    StringBuilder sb = new StringBuilder();
+//                    sb.append(i == 0 ? sp.getstructure1_std() : i == 1 ? sp.getstructure2_std() : i == 2 ? sp.getstructure3_std() : "");
+//                    sb.append(sp.gettension_entity_std());
+//                    if (sp.getpara_value_std()!=null){
+//                        sb.append(sp.getpara_value_std());
+//                    }
+//                    symptom.setLeftUpMuscleTone(sb.toString());
+//                }
+//            }
+//            //左下肢肌张力
+//            if ("肌张力".equals(sp.gettension_entity_std())){
+//                List<String> list = Arrays.asList(
+//                        "左下肢", "左侧肢体","双下肢肌群","双下肢","双下肢肌群","下肢","四肢","肢体","双侧肢体", "两侧肢体"
+//                );
+//                int i = containsStructure(list, sp.getstructure1_std(), sp.getstructure2_std(), sp.getstructure3_std());
+//                if (i != -1) {
+//                    StringBuilder sb = new StringBuilder();
+//                    sb.append(i == 0 ? sp.getstructure1_std() : i == 1 ? sp.getstructure2_std() : i == 2 ? sp.getstructure3_std() : "");
+//                    sb.append(sp.gettension_entity_std());
+//                    if (sp.getpara_value_std()!=null){
+//                        sb.append(sp.getpara_value_std());
+//                    }
+//                    symptom.setLeftDownMuscleTone(sb.toString());
+//                }
+//            }
+//            //右上肢肌张力
+//            if ("肌张力".equals(sp.gettension_entity_std())){
+//                List<String> list = Arrays.asList(
+//                        "右上肢", "双上肢前臂肌群","双上肢上臂肌群","双上肢","上肢","右侧肢体","四肢","肢体","双侧肢体", "两侧肢体"
+//                );
+//                int i = containsStructure(list, sp.getstructure1_std(), sp.getstructure2_std(), sp.getstructure3_std());
+//                if (i != -1) {
+//                    StringBuilder sb = new StringBuilder();
+//                    sb.append(i == 0 ? sp.getstructure1_std() : i == 1 ? sp.getstructure2_std() : i == 2 ? sp.getstructure3_std() : "");
+//                    sb.append(sp.gettension_entity_std());
+//                    if (sp.getpara_value_std()!=null){
+//                        sb.append(sp.getpara_value_std());
+//                    }
+//                    symptom.setRightUpMuscleTone(sb.toString());
+//                }
+//            }
+//            //右下肢肌张力
+//            if ("肌张力".equals(sp.gettension_entity_std())){
+//                List<String> list = Arrays.asList(
+//                        "右下肢", "右侧肢体","双下肢肌群","双下肢","双下肢肌群","下肢","四肢","肢体","双侧肢体", "两侧肢体"
+//                );
+//                int i = containsStructure(list, sp.getstructure1_std(), sp.getstructure2_std(), sp.getstructure3_std());
+//                if (i != -1) {
+//                    StringBuilder sb = new StringBuilder();
+//                    sb.append(i == 0 ? sp.getstructure1_std() : i == 1 ? sp.getstructure2_std() : i == 2 ? sp.getstructure3_std() : "");
+//                    sb.append(sp.gettension_entity_std());
+//                    if (sp.getpara_value_std()!=null){
+//                        sb.append(sp.getpara_value_std());
+//                    }
+//                    symptom.setRightDownMuscleTone(sb.toString());
+//                }
+//            }
+//
+//        }
+            symptomService.saveSymptom(symptom);
+        }
+    }
+
+
+
+    public void saveHisPerson(List<SMOKE_AND_DRINK> zj_SMOKE_AND_DRINK){
+        for (SMOKE_AND_DRINK smoke_and_drink:zj_SMOKE_AND_DRINK
+                ) {
+            log.info("保存个人史：" + smoke_and_drink.getunique_id());
+            //获取字典表个人史标化json
+
+            HisPerson hisPerson = new HisPerson();
+            //唯一标识
+            hisPerson.setUniqueId(smoke_and_drink.getunique_id());
+            hisPerson.setUniqueIdLv1(smoke_and_drink.getunique_id_lv1());
+            hisPerson.setUniqueIdLv2(smoke_and_drink.getunique_id_lv2());
+            //医疗机构代码
+            hisPerson.setP900(smoke_and_drink.getp900());
+            //患者id
+            hisPerson.setPatientId(smoke_and_drink.getpatient_id());
+            //住院号
+            hisPerson.setVisitId(smoke_and_drink.getvisit_id());
+
+//        if(zj_TEM_INP_ADMISSION_STATUS!=null){
+//            BigDecimal wight=new BigDecimal(zj_TEM_INP_ADMISSION_STATUS.get(0).getby_weight());
+//            BigDecimal height=new BigDecimal(zj_TEM_INP_ADMISSION_STATUS.get(0).getby_height());
+//
+//            if(wight!=null&&height!=null){
+//                BigDecimal fat=   wight.divide((height.multiply(height)));
+//                //肥胖
+//                hisPerson.(fat.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+//
+//                Double area=((0.61*height.doubleValue())+((0.0128*wight.doubleValue()))-0.1529);
+//
+//                //体表面积
+//                hisPerson.setBodyarea(area);
+//
+//            }
+//
+//        }
+            //   for (SMOKE_AND_DRINK smoke_and_drink : zj_SMOKE_AND_DRINK) {
+            //吸烟
+            if (smoke_and_drink.getsmoker_std() != null && !smoke_and_drink.getsmoker_std().equals("")) {
+                String nlpTableJson = this.selectStandardResultById(smoke_and_drink.getsmoker_std());
+                String jso = JSONUtils.getOne2(nlpTableJson, "afterType1", "smoker_std");
+                hisPerson.setSmoke(jso);
+            }
+            if (smoke_and_drink.getyear_of_smoke_std() != null && !smoke_and_drink.getyear_of_smoke_std().equals("")) {
+                String nlpTableJson = this.selectStandardResultById(smoke_and_drink.getyear_of_smoke_std());
+                String jso = JSONUtils.getOne2(nlpTableJson, "afterType1", "year_of_smoke_std");
+                String jsountil = JSONUtils.getOne2(nlpTableJson, "afterType1", "year_of_smoke_unit_std");
+                if(!jso.contains("无效")){
+                    hisPerson.setSmokeYear(jso + jsountil);
+                }
+                //      hisPerson.setSmokeYear(smoke_and_drink.getyear_of_smoke_std());
+            }
+            if (smoke_and_drink.getconsumption_smoke_std() != null && !smoke_and_drink.getconsumption_smoke_std().equals("")
+                    && !smoke_and_drink.getconsumption_smoke_std().equals("无效")) {
+                String nlpTableJson = this.selectStandardResultById(smoke_and_drink.getconsumption_smoke_std());
+                Optional<String> jsotype = JSONUtils.getOne(nlpTableJson, "afterType1", "smoke_type_std");
+                String jso = JSONUtils.getOne2(nlpTableJson, "afterType1", "consumption_smoke_std");
+                String jsountil = JSONUtils.getOne2(nlpTableJson, "afterType1", "consumption_smoke_unit_std");
+                String jsountil2 = JSONUtils.getOne2(nlpTableJson, "afterType1", "smoke_freq_std");
+                String jsountil3 = JSONUtils.getOne2(nlpTableJson, "afterType1", "smoke_freq_unit_std");
+                hisPerson.setDailySmoke(jso + jsountil + jsountil2 + jsountil3);
+                //   hisPerson.setDailySmoke(smoke_and_drink.getconsumption_smoke_std());
+            }
+            if (smoke_and_drink.getsmoke_quitter_std() != null && !smoke_and_drink.getsmoke_quitter_std().equals("")) {
+                String nlpTableJson = this.selectStandardResultById(smoke_and_drink.getsmoke_quitter_std());
+                String jso = JSONUtils.getOne2(nlpTableJson, "afterType1", "smoke_quitter_std");
+                hisPerson.setStopSmoke(jso);
+                //hisPerson.setStopSmoke(smoke_and_drink.getsmoke_quitter_std());
+            }
+            if (smoke_and_drink.getyear_of_smoke_std() != null && !smoke_and_drink.getyear_of_smoke_std().equals("")
+                    && !smoke_and_drink.getyear_of_smoke_std().equals("无效")) {
+                String nlpTableJson = this.selectStandardResultById(smoke_and_drink.getyear_of_smoke_std());
+                String jso = JSONUtils.getOne2(nlpTableJson, "afterType1", "year_of_smoke_std");
+                String jsounit = JSONUtils.getOne2(nlpTableJson, "afterType1", "year_of_smoke_unit_std");
+                hisPerson.setStopSmokeYear(jso + jsounit);
+                //  hisPerson.setStopSmokeYear(smoke_and_drink.getyear_of_smoke_std());
+            }
+
+            if((hisPerson.getSmokeYear()!=null &&!"".equals(hisPerson.getSmokeYear())) || (hisPerson.getDailySmoke()!=null &&!"".equals(hisPerson.getDailySmoke()))){
+                hisPerson.setSmoke("是");
+            }
+
+            //饮酒
+            if (smoke_and_drink.getdrinker_std() != null && !smoke_and_drink.getdrinker_std().equals("")) {
+                String nlpTableJson = this.selectStandardResultById(smoke_and_drink.getdrinker_std());
+                String jso = JSONUtils.getOne2(nlpTableJson, "afterType1", "drinker_std");
+                hisPerson.setDrink(jso);
+                //     hisPerson.setDrink(smoke_and_drink.getdrinker_std());
+            }
+            if (smoke_and_drink.getyear_of_drink_std() != null && !smoke_and_drink.getyear_of_drink_std().equals("")
+                    && !smoke_and_drink.getyear_of_drink_std().equals("无效")) {
+                String nlpTableJson = this.selectStandardResultById(smoke_and_drink.getyear_of_drink_std());
+                String drinktype = JSONUtils.getOne2(nlpTableJson, "afterType1", "drink_type1_std");
+                String jso = JSONUtils.getOne2(nlpTableJson, "afterType1", "year_of_drink_std");
+                String jsounit = JSONUtils.getOne2(nlpTableJson, "afterType1", "year_of_drink_unit_std");
+                hisPerson.setDrinkYear(jso + jsounit);
+                //   hisPerson.setDrinkYear(smoke_and_drink.getyear_of_drink_std());
+            }
+//            StringBuilder stringBuilder = new StringBuilder();
+//            if (smoke_and_drink.getconsumption_drink_std() != null && !smoke_and_drink.getconsumption_drink_std().equals("")) {
+//                stringBuilder
+//                        .append(smoke_and_drink.getdrink_type_std() == null ? "" : smoke_and_drink.getdrink_type_std())
+//                        .append(smoke_and_drink.getconsumption_drink_std() == null ? "" : smoke_and_drink.getconsumption_drink_std())
+//                        .append(smoke_and_drink.getconsumption_drink_unit_std() == null ? "" : smoke_and_drink.getconsumption_drink_unit_std())
+//                        .append(smoke_and_drink.getdrink_freq_std() == null ? "" : smoke_and_drink.getdrink_freq_std())
+//                        .append(smoke_and_drink.getdrink_freq_unit_std() == null ? "" : smoke_and_drink.getdrink_freq_unit_std());
+//            }
+
+//            if (smoke_and_drink.getconsumption_drink1_std() != null && !smoke_and_drink.getconsumption_drink1_std().equals("")) {
+//                stringBuilder
+//                        .append(smoke_and_drink.getdrink_type1_std()==null?"":smoke_and_drink.getdrink_type1_std())
+//                        .append(smoke_and_drink.getconsumption_drink1_std()==null?"":smoke_and_drink.getconsumption_drink1_std())
+//                        .append(smoke_and_drink.getconsumption_drink_unit1_std()==null?"":smoke_and_drink.getconsumption_drink_unit1_std())
+//                        .append(smoke_and_drink.getdrink_freq1_std()==null?"":smoke_and_drink.getdrink_freq1_std())
+//                        .append(smoke_and_drink.getdrink_freq_unit1_std()==null?"":smoke_and_drink.getdrink_freq_unit1_std());
+//                if (smoke_and_drink.getconsumption_drink2_std() != null && !smoke_and_drink.getconsumption_drink2_std().equals("")){
+//                    stringBuilder
+//                            .append(",")
+//                            .append(smoke_and_drink.getdrink_type2_std()==null?"":smoke_and_drink.getdrink_type2_std())
+//                            .append(smoke_and_drink.getconsumption_drink2_std()==null?"":smoke_and_drink.getconsumption_drink2_std())
+//                            .append(smoke_and_drink.getconsumption_drink_unit2_std()==null?"":smoke_and_drink.getconsumption_drink_unit2_std())
+//                            .append(smoke_and_drink.getdrink_freq2_std()==null?"":smoke_and_drink.getdrink_freq2_std())
+//                            .append(smoke_and_drink.getdrink_freq_unit2_std()==null?"":smoke_and_drink.getdrink_freq_unit2_std());
+//                }
+//            }
+//            if (stringBuilder.length()!=0){
+//                hisPerson.setDailyDrink(stringBuilder.toString());
+//            }
+            if (smoke_and_drink.getconsumption_drink_std() != null && !smoke_and_drink.getconsumption_drink_std().equals("")
+                    && !smoke_and_drink.getconsumption_drink_std().equals("无效")) {
+                String nlpTableJson2 = this.selectStandardResultById(smoke_and_drink.getconsumption_drink_std());
+                System.out.println("json....." + nlpTableJson2);
+                String relationjson2 = JSONUtils.getAllFieldGroupByObj2(nlpTableJson2, "afterType1", "", ";");
+                System.out.println("json解析后....." + relationjson2);
+                if (!relationjson2.contains("无效")) {
+                    hisPerson.setDailyDrink(relationjson2);
+                }
+
+            }
+            if (smoke_and_drink.getdrink_quitter_std() != null && !smoke_and_drink.getdrink_quitter_std().equals("")) {
+                String nlpTableJson = this.selectStandardResultById(smoke_and_drink.getdrink_quitter_std());
+                String relationjson = JSONUtils.getAllFieldGroupByObj(nlpTableJson, "afterType1", "", "");
+                System.out.println(relationjson);
+                hisPerson.setStopDrink(relationjson);
+            }
+            if (smoke_and_drink.getyear_of_drink_quitting_std() != null && !smoke_and_drink.getyear_of_drink_quitting_std().equals("")
+                    && !smoke_and_drink.getyear_of_drink_quitting_std().equals("无效")) {
+                String nlpTableJson = this.selectStandardResultById(smoke_and_drink.getyear_of_drink_quitting_std());
+                String jso = JSONUtils.getOne2(nlpTableJson, "afterType1", "year_of_drink_q_std");
+                String jsounit = JSONUtils.getOne2(nlpTableJson, "afterType1", "year_of_drink_q_unit__std");
+                String relationjson = JSONUtils.getAllFieldGroupByObj(nlpTableJson, "afterType1", "", "");
+                hisPerson.setStopDrinkYear(relationjson);
+            }
+
+            if((hisPerson.getDrinkYear()!=null &&!"".equals(hisPerson.getDrinkYear())) || (hisPerson.getDailyDrink()!=null &&!"".equals(hisPerson.getDailyDrink()))){
+                hisPerson.setDrink("是");
+            }
+
+            //   }
+            //修改时间
+            hisPerson.setUpdatedAt(new Date());
+            hisPersonService.saveHisPerson(hisPerson);
+        }
+    }
+
+    public void saveHisFamily( List<FAMILY_HISTORY> zj_FAMILY_HISTORY ){
+
+        for (FAMILY_HISTORY family_history:zj_FAMILY_HISTORY
+                ) {
+            log.info("保存家族史："+ family_history.getunique_id());
+            HisFamily hisFamily = new HisFamily();
+            hisFamily.setUniqueId(family_history.getunique_id());
+            //唯一标识
+            hisFamily.setUniqueIdLv1(family_history.getunique_id_lv1());
+            hisFamily.setUniqueIdLv2(family_history.getunique_id_lv2());
+            //医疗机构代码
+            hisFamily.setP900(family_history.getp900());
+            //患者id
+            hisFamily.setPatientId(family_history.getpatient_id());
+            //住院号
+            hisFamily.setVisitId(family_history.getvisit_id());
+
+            //肿瘤家族史
+            String  nlpTableJson =  this.selectStandardResultById(family_history.getneg_std());
+            String  nlpTableJson2 =  this.selectStandardResultById(family_history.getdiag_std());
+            String  nlpTableJson3 =  this.selectStandardResultById(family_history.getrelation_std());
+            String  nlpTableJson4 =  this.selectStandardResultById(family_history.getdiag_std());
+            String  diagjson=JSONUtils.getAllFieldGroupByObj(nlpTableJson2,"afterType1","","");
+            String  relajson=JSONUtils.getAllFieldGroupByObj(nlpTableJson3,"afterType1","","");
+            String  tumojson=JSONUtils.getAllFieldGroupByObj(nlpTableJson4,"afterType1","","");
+            hisFamily.setFamilyTumour("否");
+            if((family_history.getneg_std()==null || "".equals(family_history.getneg_std()))&& diagjson!=null && !"".equals(diagjson)){
+                if((diagjson.contains("白血病") ||diagjson.contains("肿瘤"))){
+                    hisFamily.setFamilyTumour("是");
+                    hisFamily.setTumourRelative(relajson);
+                    hisFamily.setRelativeTumourName(tumojson);
+                }else{
+                    hisFamily.setFamilyTumour("否");
+                }
+            }else{
+                hisFamily.setFamilyTumour("否");
+            }
+            String  nlpTableJson5 =  this.selectStandardResultById(family_history.getrelation_std());
+            String  relationjson=JSONUtils.getAllFieldGroupByObj(nlpTableJson5,"afterType1","","");
+            if((family_history.getneg_std()==null || "".equals(family_history.getneg_std()))&& diagjson!=null && !"".equals(diagjson)){
+                if(diagjson.contains("循环") ||diagjson.contains("脑卒中")||diagjson.contains("冠心病")||diagjson.contains("高血压")||diagjson.contains("中风")){
+                    hisFamily.setFamilyCcvd("是");
+                    hisFamily.setCcvdRelative(relationjson);
+                    hisFamily.setRelativeCcvdName(diagjson);
+                }else{
+                    hisFamily.setFamilyCcvd("否");
+                }
+            }else{
+                hisFamily.setFamilyCcvd("否");
+            }
+
+
+            hisFamilyService.saveHisFamily(hisFamily);
+        }
+
+
+
+    }
+
+
+
+    //既往史
+    public void saveHisPast(List<PRIOR_DISEASE_AND_SURGERY> zj_PRIOR_DISEASE_AND_SURGERY) {
+        log.info("保存既往史："+zj_PRIOR_DISEASE_AND_SURGERY.get(0).getunique_id());
+        HisPast hisPast = new HisPast();
+        hisPast.setUniqueId(zj_PRIOR_DISEASE_AND_SURGERY.get(0).getunique_id());
+        //标识患者身份唯一标识
+        hisPast.setUniqueIdLv1(zj_PRIOR_DISEASE_AND_SURGERY.get(0).getunique_id_lv1());
+        //唯一标识
+        hisPast.setUniqueIdLv2(zj_PRIOR_DISEASE_AND_SURGERY.get(0).getunique_id_lv2());
+        //医疗机构代码
+        hisPast.setP900(zj_PRIOR_DISEASE_AND_SURGERY.get(0).getp900());
+        //患者id
+        hisPast.setPatientId(zj_PRIOR_DISEASE_AND_SURGERY.get(0).getpatient_id());
+        //住院号
+        hisPast.setVisitId(zj_PRIOR_DISEASE_AND_SURGERY.get(0).getvisit_id());
+        //记录neg_std不为空的seq_id
+        int index = 0;
+        hisPast.setHypertension("否");
+        hisPast.setGlycuresis("否");
+        hisPast.setCopd("否");
+        hisPast.setEmphysema("否");
+        hisPast.setAsthma("否");
+        hisPast.setBronchitis("否");
+        hisPast.setThyroid("否");
+        hisPast.setHeartDisease("否");
+        hisPast.setChronicAnemia("否");
+        hisPast.setRheumaticFever("否");
+        hisPast.setBloodFat("否");
+        hisPast.setChronicKidney("否");
+        hisPast.setCerebralInfarction("否");
+        hisPast.setCerebralHemorrhage("否");
+        hisPast.setLupusErythematosus("否");
+        hisPast.setArthritis("否");
+        hisPast.setRheumatoidArthritis("否");
+        hisPast.setHepatitisB("否");
+        hisPast.setHcv("否");
+        hisPast.setTuberculosis("否");
+        hisPast.setHiv("否");
+        hisPast.setIntestinalObstruction("否");
+        hisPast.setGastrointestinalBleeding("否");
+        hisPast.setGastrointestinalPerforation("否");
+        hisPast.setHypoproteinemia("否");
+        hisPast.setAbdominalSurgery("否");
+
+        for (PRIOR_DISEASE_AND_SURGERY prior:zj_PRIOR_DISEASE_AND_SURGERY
+                ) {
+            String diagJson = this.standardResultMapper.selectStandardResultById(prior.getdiag_name_std());
+            String surgeryJson = this.standardResultMapper.selectStandardResultById(prior.getsurgery_name_std());
+            String diagName = JSONUtils.getAllFieldGroupByObj(diagJson,"afterType1","","");
+            String surgeryName = "";
+            if(!"".equals(surgeryJson)&&surgeryJson!=null){
+                if(surgeryJson.contains("icd9_name2") || surgeryJson.contains("icd9_name3") || surgeryJson.contains("icd9_name4") || surgeryJson.contains("icd9_name5") || surgeryJson.contains("icd9_name6")){
+                    surgeryName = JSONUtils.getAllFieldGroupByObj(surgeryJson,"afterType1","",",");
+                }else if(surgeryJson.contains("surgery_name_std\":\"0")){
+                    surgeryJson = surgeryJson.replace(",{\"surgery_name_std\":\"0\"}","");
+                    surgeryName = JSONUtils.getAllFieldGroupByObj(surgeryJson,"afterType1","",",");
+                    if(surgeryName.substring(surgeryName.length()-1,surgeryName.length()).contains(",")){
+                        surgeryName = surgeryName.substring(0,surgeryName.length()-1);
+                    }
+                }else{
+                    surgeryName = JSONUtils.getAllFieldGroupByObj(surgeryJson,"afterType1","0","");
+                }
+            }
+            if(!"".equals(prior.getneg_std()) && prior.getneg_std()!=null && prior.getneg_std().length()!=0){
+                index = prior.getseq_id();//153340
+            }
+            //System.out.println(index);
+            if(!"".equals(diagName)&&diagName!=null){
+                int diagSeq = prior.getseq_id();
+                //System.out.println(diagSeq);
+                if(diagSeq != index){
+                    //高血压
+                    if(diagName.contains("高血压")){
+                        hisPast.setHypertension("是");
+                    }
+                    //hisPast.setHypertension(parsePast1(Constant.gxyKeyword,diagName));
+                    //糖尿病
+                    if(diagName.contains("糖尿病")){
+                        hisPast.setGlycuresis("是");
+                    }
+                    //hisPast.setGlycuresis(parsePast1(Constant.tnbKeyword,diagName));
+                    //慢性阻塞性肺病(COPD)
+                    if(diagName.contains("慢性阻塞性肺病")){
+                        hisPast.setCopd("是");
+                    }
+                    //hisPast.setCopd(parsePast1(Arrays.asList("慢性阻塞性肺病"),diagName));
+                    //肺气肿
+                    if(diagName.contains("肺气肿")){
+                        hisPast.setEmphysema("是");
+                    }
+                    //hisPast.setEmphysema(parsePast1(Arrays.asList("肺气肿"),diagName));
+                    //哮喘
+                    if(diagName.contains("哮喘")){
+                        hisPast.setAsthma("是");
+                    }
+                    //hisPast.setAsthma(parsePast1(Constant.xcKeyword,diagName));
+                    //支气管肺炎
+                    if(diagName.contains("支气管肺炎")){
+                        hisPast.setBronchitis("是");
+                    }
+                    //hisPast.setBronchitis(parsePast1(Constant.fyKeyword,diagName));
+                    //甲状腺疾病
+                    if(diagName.contains("甲状腺")){
+                        hisPast.setThyroid("是");
+                    }
+                    //hisPast.setThyroid(parsePast1(Constant.jzxKeyword,diagName));
+                    //心脏病
+                    if(diagName.contains("心")){
+                        hisPast.setHeartDisease("是");
+                    }
+                    //hisPast.setHeartDisease(parsePast1(Constant.xzbKeyword,diagName));
+                    //慢性贫血
+                    if(diagName.contains("贫血")){
+                        hisPast.setChronicAnemia("是");
+                    }
+                    //hisPast.setChronicAnemia(parsePast1(Constant.mxpxKeyword,diagName));
+                    //风湿热病史
+                    if(diagName.contains("风湿热")){
+                        hisPast.setRheumaticFever("是");
+                    }
+                    //hisPast.setRheumaticFever(parsePast1(Arrays.asList("风湿病"),diagName));
+                    //血脂异常
+                    if(diagName.contains("脂血") || diagName.contains("血脂")){
+                        hisPast.setBloodFat("是");
+                    }
+                    //hisPast.setBloodFat(parsePast1(Arrays.asList("高脂血症"),diagName));
+                    //慢性肾脏病
+                    if(diagName.contains("膜性肾病") || diagName.contains("慢性肾炎") || diagName.contains("肾炎") || diagName.contains("肾病") || diagName.contains("囊性肾病") || diagName.contains("肾病综合征")
+                            || diagName.contains("糖尿病伴有肾的并发症") || diagName.contains("肾功能不全") || diagName.contains("慢性肾功能不全") || diagName.contains("慢性肾病") || diagName.contains("慢性肾小球肾炎")
+                            || diagName.contains("慢性肾炎综合征") || diagName.contains("肾病综合征伴有局灶性和节段性肾小球损害") || diagName.contains("慢性肾衰竭") || diagName.contains("梗阻性肾病") || diagName.contains("狼疮性肾炎")
+                            || diagName.contains("高血压性肾病") || diagName.contains("肾炎综合征") || diagName.contains("慢性肾脏病5期") || diagName.contains("慢性肾衰竭尿毒症期") || diagName.contains("肾功能不全氮质血症期")
+                            || diagName.contains("慢性肾盂肾炎") || diagName.contains("肾萎缩(终末期)") || diagName.contains("慢性肾功能不全尿毒症期") || diagName.contains("慢性肾脏病4期") || diagName.contains("肾盂肾炎")
+                            || diagName.contains("糖尿病性肾病") || diagName.contains("尿酸性肾病") || diagName.contains("肾小球肾炎") || diagName.contains("糖尿病肾病IV期") || diagName.contains("肾衰竭")){
+                        hisPast.setChronicKidney("是");
+                    }
+                    //hisPast.setChronicKidney(parsePast1(Constant.mxszbKeyword,diagName));
+                    //脑梗塞
+                    if((diagName.contains("脑") && diagName.contains("塞")) || diagName.contains("脑") && diagName.contains("梗")){
+                        hisPast.setCerebralInfarction("是");
+                    }
+                    //脑出血
+                    if(diagName.contains("脑") && diagName.contains("出血")){
+                        hisPast.setCerebralHemorrhage("是");
+                    }
+                    //系统性红斑狼疮
+                    if(diagName.contains("系统性红斑狼疮")){
+                        hisPast.setLupusErythematosus("是");
+                    }
+                    //风湿性关节炎
+                    if(diagName.equals("风湿性关节炎")){
+                        hisPast.setArthritis("是");
+                    }
+                    //类风湿关节炎
+                    if(diagName.equals("类风湿关节炎")){
+                        hisPast.setRheumatoidArthritis("是");
+                    }
+                    //乙肝
+                    if(diagName.contains("乙型")){
+                        hisPast.setHepatitisB("是");
+                    }
+                    //hisPast.setHepatitisB(parsePast1(Constant.ygKeyword,diagName));
+                    //丙肝
+                    if(diagName.contains("丙型")){
+                        hisPast.setHcv("是");
+                    }
+                    //hisPast.setHcv(parsePast1(Arrays.asList("慢性丙型病毒性肝炎"),diagName));
+                    //结核
+                    if(diagName.contains("结核")){
+                        hisPast.setTuberculosis("是");
+                    }
+                    //hisPast.setTuberculosis(parsePast1(Constant.jhKeyword,diagName));
+                    //HIV感染病史
+                    if(diagName.contains("艾滋病")){
+                        hisPast.setHiv("是");
+                    }
+                    //hisPast.setHiv(parsePast1(Arrays.asList("艾滋病"),diagName));
+                    //肠梗阻
+                    if(diagName.contains("肠梗阻")){
+                        hisPast.setIntestinalObstruction("是");
+                    }
+                    //消化道出血
+                    if(diagName.contains("胃出血")
+                            || diagName.contains("胃溃疡伴出血") || diagName.contains("消化道出血") || diagName.contains("慢性胃溃疡不伴有出血或穿孔") || diagName.contains("上消化道出血")
+                            || diagName.contains("十二指肠球部溃疡伴出血") || diagName.contains("下消化道出血") || diagName.contains("十二指肠溃疡伴出血") || diagName.contains("十二指肠出血")
+                            || diagName.contains("急性上消化道出血") || diagName.contains("尺骨桡骨闭合性骨折") || diagName.contains("出血性胃炎") || diagName.contains("食管静脉曲张破裂出血")
+                            || diagName.contains("胃底静脉曲张破裂出血")){
+                        hisPast.setGastrointestinalBleeding("是");
+                    }
+                    //消化道穿孔
+                    if(diagName.contains("乙状结肠穿孔") || diagName.contains("胃穿孔") || diagName.contains("慢性胃溃疡不伴有出血或穿孔") || diagName.contains("消化道穿孔")
+                            || diagName.contains("肠穿孔") || diagName.contains("急性化脓性阑尾炎伴穿孔") || diagName.contains("阑尾穿孔") || diagName.contains("十二指肠球部溃疡伴穿孔")
+                            || diagName.contains("上消化道穿孔")){
+                        hisPast.setGastrointestinalPerforation("是");
+                    }
+                    //低蛋白血症
+                    if(diagName.equals("低蛋白血症")){
+                        hisPast.setHypoproteinemia("是");
+                    }
+                }
+            }
+            if(!"".equals(surgeryName) && surgeryName!=null) {
+                int surgerySeq = prior.getseq_id();
+                if(surgerySeq != index){
+                    //既往腹腔内手术史
+                    if(surgeryName.contains("胃") || surgeryName.contains("肝") || surgeryName.contains("肠") || surgeryName.contains("阑尾") || surgeryName.contains("脾")
+                            || surgeryName.contains("胰") || surgeryName.contains("胆囊") || surgeryName.contains("肾") || surgeryName.contains("肾上腺")
+                            || surgeryName.contains("子宫") || surgeryName.contains("卵巢") || surgeryName.contains("输卵管切除") || surgeryName.contains("腹部手术")){
+                        hisPast.setAbdominalSurgery("是");
+                        //既往手术名称
+                        hisPast.setOperationName(surgeryName);
+                    }
+                }
+            }
+
+        }
+        hisPast.setUpdatedAt(new Date());
+        hisPastService.saveHisPast(hisPast);
+
+    }
+
+
+
+    public void savePrimaryDiagnosis(List<INP_DIAGNOSIS>  zj_INP_DIAGNOSIS){
+
+
+        for(INP_DIAGNOSIS inp_diagnosis : zj_INP_DIAGNOSIS){
+            log.info("保存诊断："+inp_diagnosis.getUNIQUE_ID());
+            PrimaryDiagnosis primaryDiagnosis = new PrimaryDiagnosis();
+            //标识患者身份唯一标识
+            primaryDiagnosis.setUniqueId(inp_diagnosis.getUNIQUE_ID());
+            //唯一标识
+            primaryDiagnosis.setUniqueIdLv1(inp_diagnosis.getUNIQUE_ID_LV1());
+            primaryDiagnosis.setUniqueIdLv2(inp_diagnosis.getUNIQUE_ID_LV2());
+            //医疗机构代码
+            primaryDiagnosis.setP900(inp_diagnosis.getP900());
+            //患者id
+            primaryDiagnosis.setPatientId(inp_diagnosis.getPATIENT_ID());
+            //门诊/住院号
+            primaryDiagnosis.setVisitId(inp_diagnosis.getVISIT_ID());
+            //诊断名称原文
+            primaryDiagnosis.setDiagnosisName(inp_diagnosis.getDIAGNOSIS_DESC());
+            //诊断编码
+            primaryDiagnosis.setDiagnosisCode(inp_diagnosis.getDIAGNOSIS_CODE());
+            //诊断日期
+            primaryDiagnosis.setDiagnosisDate(inp_diagnosis.getDIAGNOSIS_DATE());
+            int icdindex=0;
+            //诊断名称
+            if((StringUtils.isNotEmpty(inp_diagnosis.getICD10_ID1()))){
+                if(inp_diagnosis.getICD10_ID1().substring(0,1).contains("c")||inp_diagnosis.getICD10_ID1().substring(0,1).contains("C")
+                        ){
+                    if(Integer.parseInt(inp_diagnosis.getICD10_ID1().substring(1,3))<100){
+                        if(Integer.parseInt(inp_diagnosis.getICD10_ID1().substring(1,3))<76 || Integer.parseInt(inp_diagnosis.getICD10_ID1().substring(1,3))>80){
+                            primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME1());
+                            icdindex=1;
+                        }
+                    }
+                }else if(inp_diagnosis.getICD10_ID1().substring(0,1).contains("d")||inp_diagnosis.getICD10_ID1().substring(0,1).contains("D")){
+                    if(Integer.parseInt(inp_diagnosis.getICD10_ID1().substring(1,3))>9 && Integer.parseInt(inp_diagnosis.getICD10_ID1().substring(1,3))<37){
+                        primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME1());
+                        icdindex=1;
+                    }
+                }
+            }
+            if((StringUtils.isNotEmpty(inp_diagnosis.getICD10_ID2()))) {
+                if (inp_diagnosis.getICD10_ID2().substring(0, 1).contains("c") || inp_diagnosis.getICD10_ID2().substring(0, 1).contains("C")
+                        ) {
+                    if (Integer.parseInt(inp_diagnosis.getICD10_ID2().substring(1, 3)) < 100) {
+                        if (Integer.parseInt(inp_diagnosis.getICD10_ID2().substring(1, 3)) < 76 || Integer.parseInt(inp_diagnosis.getICD10_ID2().substring(1, 3)) > 80) {
+                            primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME2());
+                            icdindex = 1;
+                        }
+                    }
+                } else if (inp_diagnosis.getICD10_ID2().substring(0, 1).contains("d") || inp_diagnosis.getICD10_ID2().substring(0, 1).contains("D")) {
+                    if (Integer.parseInt(inp_diagnosis.getICD10_ID2().substring(1, 3)) > 9 && Integer.parseInt(inp_diagnosis.getICD10_ID2().substring(1, 3)) < 37) {
+                        primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME2());
+                        icdindex = 1;
+                    }
+                }
+            }
+            if((StringUtils.isNotEmpty(inp_diagnosis.getICD10_ID3()))) {
+                if (inp_diagnosis.getICD10_ID3().substring(0, 1).contains("c") || inp_diagnosis.getICD10_ID3().substring(0, 1).contains("C")
+                        ) {
+                    if (Integer.parseInt(inp_diagnosis.getICD10_ID3().substring(1, 3)) < 100) {
+                        if (Integer.parseInt(inp_diagnosis.getICD10_ID3().substring(1, 3)) < 76 || Integer.parseInt(inp_diagnosis.getICD10_ID3().substring(1, 3)) > 80) {
+                            primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME3());
+                            icdindex = 1;
+                        }
+                    }
+                } else if (inp_diagnosis.getICD10_ID3().substring(0, 1).contains("d") || inp_diagnosis.getICD10_ID3().substring(0, 1).contains("D")) {
+                    if (Integer.parseInt(inp_diagnosis.getICD10_ID3().substring(1, 3)) > 9 && Integer.parseInt(inp_diagnosis.getICD10_ID3().substring(1, 3)) < 37) {
+                        primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME3());
+                        icdindex = 1;
+                    }
+                }
+            }
+            if((StringUtils.isNotEmpty(inp_diagnosis.getICD10_ID4()))) {
+                if (inp_diagnosis.getICD10_ID4().substring(0, 1).contains("c") || inp_diagnosis.getICD10_ID4().substring(0, 1).contains("C")
+                        ) {
+                    if (Integer.parseInt(inp_diagnosis.getICD10_ID4().substring(1, 3)) < 100) {
+                        if (Integer.parseInt(inp_diagnosis.getICD10_ID4().substring(1, 3)) < 76 || Integer.parseInt(inp_diagnosis.getICD10_ID4().substring(1, 3)) > 80) {
+                            primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME4());
+                            icdindex = 1;
+                        }
+                    }
+                } else if (inp_diagnosis.getICD10_ID4().substring(0, 1).contains("d") || inp_diagnosis.getICD10_ID4().substring(0, 1).contains("D")) {
+                    if (Integer.parseInt(inp_diagnosis.getICD10_ID4().substring(1, 3)) > 9 && Integer.parseInt(inp_diagnosis.getICD10_ID4().substring(1, 3)) < 37) {
+                        primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME4());
+                        icdindex = 1;
+                    }
+                }
+            }
+            if((StringUtils.isNotEmpty(inp_diagnosis.getICD10_ID5()))) {
+                if (inp_diagnosis.getICD10_ID5().substring(0, 1).contains("c") || inp_diagnosis.getICD10_ID5().substring(0, 1).contains("C")
+                        ) {
+                    if (Integer.parseInt(inp_diagnosis.getICD10_ID5().substring(1, 3)) < 100) {
+                        if (Integer.parseInt(inp_diagnosis.getICD10_ID5().substring(1, 3)) < 76 || Integer.parseInt(inp_diagnosis.getICD10_ID5().substring(1, 3)) > 80) {
+                            primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME5());
+                            icdindex = 1;
+                        }
+                    }
+                } else if (inp_diagnosis.getICD10_ID5().substring(0, 1).contains("d") || inp_diagnosis.getICD10_ID5().substring(0, 1).contains("D")) {
+                    if (Integer.parseInt(inp_diagnosis.getICD10_ID5().substring(1, 3)) > 9 && Integer.parseInt(inp_diagnosis.getICD10_ID5().substring(1, 3)) < 37) {
+                        primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME5());
+                        icdindex = 1;
+                    }
+                }
+            }
+            if((StringUtils.isNotEmpty(inp_diagnosis.getICD10_ID6()))) {
+                if (inp_diagnosis.getICD10_ID6().substring(0, 1).contains("c") || inp_diagnosis.getICD10_ID6().substring(0, 1).contains("C")
+                        ) {
+                    if (Integer.parseInt(inp_diagnosis.getICD10_ID6().substring(1, 3)) < 100) {
+                        if (Integer.parseInt(inp_diagnosis.getICD10_ID6().substring(1, 3)) < 76 || Integer.parseInt(inp_diagnosis.getICD10_ID6().substring(1, 3)) > 80) {
+                            primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME6());
+                            icdindex = 1;
+                        }
+                    }
+                } else if (inp_diagnosis.getICD10_ID6().substring(0, 1).contains("d") || inp_diagnosis.getICD10_ID6().substring(0, 1).contains("D")) {
+                    if (Integer.parseInt(inp_diagnosis.getICD10_ID6().substring(1, 3)) > 9 && Integer.parseInt(inp_diagnosis.getICD10_ID6().substring(1, 3)) < 37) {
+                        primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME6());
+                        icdindex = 1;
+                    }
+                }
+            }
+            if((StringUtils.isNotEmpty(inp_diagnosis.getICD10_ID7()))) {
+                if (inp_diagnosis.getICD10_ID7().substring(0, 1).contains("c") || inp_diagnosis.getICD10_ID7().substring(0, 1).contains("C")
+                        ) {
+                    if (Integer.parseInt(inp_diagnosis.getICD10_ID7().substring(1, 3)) < 100) {
+                        if (Integer.parseInt(inp_diagnosis.getICD10_ID7().substring(1, 3)) < 76 || Integer.parseInt(inp_diagnosis.getICD10_ID7().substring(1, 3)) > 80) {
+                            primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME7());
+                            icdindex = 1;
+                        }
+                    }
+                } else if (inp_diagnosis.getICD10_ID7().substring(0, 1).contains("d") || inp_diagnosis.getICD10_ID7().substring(0, 1).contains("D")) {
+                    if (Integer.parseInt(inp_diagnosis.getICD10_ID7().substring(1, 3)) > 9 && Integer.parseInt(inp_diagnosis.getICD10_ID7().substring(1, 3)) < 37) {
+                        primaryDiagnosis.setDiagnosisNameIcd(inp_diagnosis.getICD10_NAME7());
+                        icdindex = 1;
+                    }
+                }
+            }
+            //诊断类型
+            primaryDiagnosis.setDiagnosisType(inp_diagnosis.getDIAGNOSIS_TYPE());
+            //出现转移
+            if(inp_diagnosis.getICD10_NAME1()==null){
+                inp_diagnosis.setICD10_NAME1("");
+            }
+            if(inp_diagnosis.getICD10_NAME2()==null){
+                inp_diagnosis.setICD10_NAME2("");
+            }
+            if(inp_diagnosis.getICD10_NAME3()==null){
+                inp_diagnosis.setICD10_NAME3("");
+            }
+            if(inp_diagnosis.getICD10_NAME4()==null){
+                inp_diagnosis.setICD10_NAME4("");
+            }
+            if(inp_diagnosis.getICD10_NAME5()==null){
+                inp_diagnosis.setICD10_NAME5("");
+            }
+            if(inp_diagnosis.getICD10_NAME6()==null){
+                inp_diagnosis.setICD10_NAME6("");
+            }
+            if(inp_diagnosis.getICD10_NAME7()==null){
+                inp_diagnosis.setICD10_NAME7("");
+            }
+            if(inp_diagnosis.getICD10_NAME1().contains("继发")|| inp_diagnosis.getICD10_NAME2().contains("继发")
+                    ||inp_diagnosis.getICD10_NAME3().contains("继发") ||inp_diagnosis.getICD10_NAME4().contains("继发")
+                    ||inp_diagnosis.getICD10_NAME5().contains("继发") || inp_diagnosis.getICD10_NAME6().contains("继发")
+                    || inp_diagnosis.getICD10_NAME7().contains("继发")){
+                if(inp_diagnosis.getICD10_NAME1().contains("可疑") || inp_diagnosis.getICD10_NAME2().contains("可疑")
+                        || inp_diagnosis.getICD10_NAME3().contains("可疑")|| inp_diagnosis.getICD10_NAME4().contains("可疑")
+                        || inp_diagnosis.getICD10_NAME5().contains("可疑")|| inp_diagnosis.getICD10_NAME6().contains("可疑")
+                        || inp_diagnosis.getICD10_NAME7().contains("可疑")){
+                    primaryDiagnosis.setIfTransfer("未知");
+                }else{
+                    primaryDiagnosis.setIfTransfer("是");
+                    //转移部位
+                    if(inp_diagnosis.getICD10_NAME1().contains("继发")&&(inp_diagnosis.getICD10_NAME1().contains("脑") ||
+                            inp_diagnosis.getICD10_NAME1().contains("肺")||inp_diagnosis.getICD10_NAME1().contains("肝")||
+                            inp_diagnosis.getICD10_NAME1().contains("骨")||inp_diagnosis.getICD10_NAME1().contains("淋巴结")||
+                            inp_diagnosis.getICD10_NAME1().contains("肾"))){
+                        primaryDiagnosis.setTransferPosition(inp_diagnosis.getICD10_NAME1()
+                                .substring(0,inp_diagnosis.getICD10_NAME1().indexOf("继")));
+                    }
+                    if(inp_diagnosis.getICD10_NAME2().contains("继发")&&(inp_diagnosis.getICD10_NAME2().contains("脑") ||
+                            inp_diagnosis.getICD10_NAME2().contains("肺")||inp_diagnosis.getICD10_NAME2().contains("肝")||
+                            inp_diagnosis.getICD10_NAME2().contains("骨")||inp_diagnosis.getICD10_NAME2().contains("淋巴结")||
+                            inp_diagnosis.getICD10_NAME2().contains("肾"))){
+                        primaryDiagnosis.setTransferPosition(inp_diagnosis.getICD10_NAME2()
+                                .substring(0,inp_diagnosis.getICD10_NAME2().indexOf("继")));
+                    }
+                    if(inp_diagnosis.getICD10_NAME3().contains("继发")&&(inp_diagnosis.getICD10_NAME3().contains("脑") ||
+                            inp_diagnosis.getICD10_NAME3().contains("肺")||inp_diagnosis.getICD10_NAME3().contains("肝")||
+                            inp_diagnosis.getICD10_NAME3().contains("骨")||inp_diagnosis.getICD10_NAME3().contains("淋巴结")||
+                            inp_diagnosis.getICD10_NAME3().contains("肾"))){
+                        primaryDiagnosis.setTransferPosition(inp_diagnosis.getICD10_NAME3()
+                                .substring(0,inp_diagnosis.getICD10_NAME3().indexOf("继")));
+                    }
+                    if(inp_diagnosis.getICD10_NAME4().contains("继发")&&(inp_diagnosis.getICD10_NAME4().contains("脑") ||
+                            inp_diagnosis.getICD10_NAME4().contains("肺")||inp_diagnosis.getICD10_NAME4().contains("肝")||
+                            inp_diagnosis.getICD10_NAME4().contains("骨")||inp_diagnosis.getICD10_NAME4().contains("淋巴结")||
+                            inp_diagnosis.getICD10_NAME4().contains("肾"))){
+                        primaryDiagnosis.setTransferPosition(inp_diagnosis.getICD10_NAME4()
+                                .substring(0,inp_diagnosis.getICD10_NAME4().indexOf("继")));
+                    }
+                    if(inp_diagnosis.getICD10_NAME5().contains("继发")&&(inp_diagnosis.getICD10_NAME5().contains("脑") ||
+                            inp_diagnosis.getICD10_NAME5().contains("肺")||inp_diagnosis.getICD10_NAME5().contains("肝")||
+                            inp_diagnosis.getICD10_NAME5().contains("骨")||inp_diagnosis.getICD10_NAME5().contains("淋巴结")||
+                            inp_diagnosis.getICD10_NAME5().contains("肾"))){
+                        primaryDiagnosis.setTransferPosition(inp_diagnosis.getICD10_NAME5()
+                                .substring(0,inp_diagnosis.getICD10_NAME5().indexOf("继")));
+                    }
+                    if(inp_diagnosis.getICD10_NAME6().contains("继发")&&(inp_diagnosis.getICD10_NAME6().contains("脑") ||
+                            inp_diagnosis.getICD10_NAME6().contains("肺")||inp_diagnosis.getICD10_NAME6().contains("肝")||
+                            inp_diagnosis.getICD10_NAME6().contains("骨")||inp_diagnosis.getICD10_NAME6().contains("淋巴结")||
+                            inp_diagnosis.getICD10_NAME6().contains("肾"))){
+                        primaryDiagnosis.setTransferPosition(inp_diagnosis.getICD10_NAME6()
+                                .substring(0,inp_diagnosis.getICD10_NAME6().indexOf("继")));
+                    }
+                    if(inp_diagnosis.getICD10_NAME7().contains("继发")&&(inp_diagnosis.getICD10_NAME7().contains("脑") ||
+                            inp_diagnosis.getICD10_NAME7().contains("肺")||inp_diagnosis.getICD10_NAME7().contains("肝")||
+                            inp_diagnosis.getICD10_NAME7().contains("骨")||inp_diagnosis.getICD10_NAME7().contains("淋巴结")||
+                            inp_diagnosis.getICD10_NAME7().contains("肾"))){
+                        primaryDiagnosis.setTransferPosition(inp_diagnosis.getICD10_NAME7()
+                                .substring(0,inp_diagnosis.getICD10_NAME7().indexOf("继")));
+                    }
+                }
+            }else{
+                primaryDiagnosis.setIfTransfer("否");
+            }
+            //复发
+            if(inp_diagnosis.getICD10_NAME1().contains("复发") || inp_diagnosis.getICD10_NAME1().contains("复发")
+                    || inp_diagnosis.getICD10_NAME1().contains("复发")|| inp_diagnosis.getICD10_NAME1().contains("复发")
+                    || inp_diagnosis.getICD10_NAME1().contains("复发")|| inp_diagnosis.getICD10_NAME1().contains("复发")
+                    || inp_diagnosis.getICD10_NAME1().contains("复发")){
+
+                primaryDiagnosis.setIfRecrudescence("是");
+                //复发形式
+                if((inp_diagnosis.getICD10_NAME1().contains("继发") || inp_diagnosis.getICD10_NAME1().contains("继发")
+                        || inp_diagnosis.getICD10_NAME1().contains("继发")|| inp_diagnosis.getICD10_NAME1().contains("继发")
+                        || inp_diagnosis.getICD10_NAME1().contains("继发")|| inp_diagnosis.getICD10_NAME1().contains("继发")
+                        || inp_diagnosis.getICD10_NAME1().contains("继发")) &&
+                        (!inp_diagnosis.getICD10_NAME1().contains("肺") || !inp_diagnosis.getICD10_NAME1().contains("肺")
+                                || !inp_diagnosis.getICD10_NAME1().contains("肺")|| !inp_diagnosis.getICD10_NAME1().contains("肺")
+                                || !inp_diagnosis.getICD10_NAME1().contains("肺")|| !inp_diagnosis.getICD10_NAME1().contains("肺")
+                                || !inp_diagnosis.getICD10_NAME1().contains("肺"))){
+                    primaryDiagnosis.setRecrudescenceType("远处转移");
+                }else{
+                    primaryDiagnosis.setRecrudescenceType("局部复发");
+                }
+            }else{
+                primaryDiagnosis.setIfRecrudescence("否");
+            }
+            //复发或转移时间
+            if(inp_diagnosis.getICD10_NAME1().contains("继发")||inp_diagnosis.getICD10_NAME1().contains("复发")||
+                    inp_diagnosis.getICD10_NAME2().contains("继发")||inp_diagnosis.getICD10_NAME2().contains("复发")||
+                    inp_diagnosis.getICD10_NAME3().contains("继发")||inp_diagnosis.getICD10_NAME3().contains("复发")||
+                    inp_diagnosis.getICD10_NAME4().contains("继发")||inp_diagnosis.getICD10_NAME4().contains("复发")||
+                    inp_diagnosis.getICD10_NAME5().contains("继发")||inp_diagnosis.getICD10_NAME5().contains("复发")||
+                    inp_diagnosis.getICD10_NAME6().contains("继发")||inp_diagnosis.getICD10_NAME6().contains("复发")||
+                    inp_diagnosis.getICD10_NAME7().contains("继发")||inp_diagnosis.getICD10_NAME7().contains("复发")){
+                primaryDiagnosis.setRecrudescenceDate(inp_diagnosis.getDIAGNOSIS_DATE());
+            }
+            if(icdindex==1){
+                primaryDiagnosisService.savePrimaryDiagnosis(primaryDiagnosis);
+
+            }
+        }
+
+    }
+
+
+    public void saveDiagnosisStage(List<CLINICAL_DIAG> zj_clinical_diag) {
+        for(CLINICAL_DIAG clinical_diag:zj_clinical_diag){
+            log.info("保存诊断分期："+clinical_diag.getunique_id());
+            DiagnosisStage diagnosisStage = new DiagnosisStage();
+            //标识患者身份唯一标识
+            //   diagnosisStage.setPersonId(clinical_diag.get);
+            //唯一标识
+            diagnosisStage.setUniqueId(clinical_diag.getunique_id());
+            //中间库unique_id
+            diagnosisStage.setUniqueIdLv1(clinical_diag.getunique_id_lv1());
+            diagnosisStage.setUniqueIdLv2(clinical_diag.getunique_id_lv2());
+            //医疗机构代码
+            diagnosisStage.setP900(clinical_diag.getp900());
+            //患者id
+            diagnosisStage.setPatientId(clinical_diag.getpatient_id());
+            //住院门诊号
+            diagnosisStage.setVisitId(clinical_diag.getvisit_id());
+            //诊断名称
+            diagnosisStage.setDiagName(clinical_diag.getdiag());
+            //诊断名称标化结果合并
+            String nlpTableJson = this.selectStandardResultById(clinical_diag.getdiag_std());
+            String nlpTableJson2 = JSONUtils.getAllFieldGroupByObj(nlpTableJson, "afterType1", ",",";");
+            diagnosisStage.setDiagNameStd(nlpTableJson2);
+            //T分期
+            if(clinical_diag.getstage_std()!=null){
+                String tstageJson = this.selectStandardResultById(clinical_diag.getstage_std());
+                String tstageJson2 = JSONUtils.getDuplicatedConcatOne(tstageJson, "afterType1", "stage_t_std");
+                diagnosisStage.setTStage(tstageJson2);
+                //N分期
+                String nstageJson = this.selectStandardResultById(clinical_diag.getstage_std());
+                String nstageJson2 = JSONUtils.getDuplicatedConcatOne(nstageJson, "afterType1", "stage_n_std");
+                diagnosisStage.setNStage(nstageJson2);
+                //M分期
+                String mstageJson = this.selectStandardResultById(clinical_diag.getstage_std());
+                String mstageJson2 = JSONUtils.getDuplicatedConcatOne(mstageJson, "afterType1", "stage_m_std");
+                diagnosisStage.setMStage(mstageJson2);
+                //TNM综合分期
+                String tnmstageJson = this.selectStandardResultById(clinical_diag.getstage_std());
+                String tnmstageJson2 = JSONUtils.getDuplicatedConcatOne(tnmstageJson, "afterType1", "stage_tnm_std");
+                diagnosisStage.setTnmStage(tnmstageJson2);
+            }
+
+
+
+            diagnosisStageService.saveDiagnosisStage(diagnosisStage);
+        }
+
+    }
+
+
+    public String  selectStandardResultById(String tableId){
+        String  nlpTable =  standardResultMapper.selectStandardResultById(tableId);
+        return nlpTable;
+    }
+
+    // ----------------------------------------ma
 
     public void addrabat(List<CHEST_XR_ENTRY_RESULTS> zjChestXrEntryResultsByALL) {
 
@@ -1754,7 +2780,7 @@ public class RuleRunServiceImpl implements RuleRunService {
             List<INP_ORDERS> zjInpOrdersByUniqueId = zjInpOrdersMapper.findZjInpOrdersByUniqueId(tem_operation_record.getUNIQUE_ID_LV2());
             for (INP_ORDERS inp_orders: zjInpOrdersByUniqueId) {
                 if (tem_operation_record.getITEM_BEGIN_DATE()!=null&&inp_orders.getENTER_DATE_TIME()!=null) {
-                    if (inp_orders.getORDER_CLASS().contains("临时医嘱") &&
+                    if (StringUtils.isNotEmpty(inp_orders.getORDER_CLASS()) && inp_orders.getORDER_CLASS().contains("临时医嘱") &&
                             (inp_orders.getORDER_TEXT().contains("肠道准备") || inp_orders.getORDER_TEXT().contains("机械灌肠") ||
                                     inp_orders.getORDER_TEXT().contains("机械清肠"))) {
                         if (tem_operation_record.getITEM_BEGIN_DATE().compareTo(inp_orders.getENTER_DATE_TIME()) == 1) {
@@ -2017,7 +3043,7 @@ public class RuleRunServiceImpl implements RuleRunService {
                 List<INP_ORDERS> zjInpOrdersByUniqueId = zjInpOrdersMapper.findZjInpOrdersByUniqueId(surgery_ln_blood.getunique_id_lv2());
                 for (INP_ORDERS inp_orders: zjInpOrdersByUniqueId) {
                     if (tem_operation_record.getITEM_BEGIN_DATE()!=null&&inp_orders.getENTER_DATE_TIME()!=null) {
-                        if (inp_orders.getORDER_CLASS().contains("临时医嘱") &&
+                        if (StringUtils.isNotEmpty(inp_orders.getORDER_CLASS()) && inp_orders.getORDER_CLASS().contains("临时医嘱") &&
                                 (inp_orders.getORDER_TEXT().contains("输血"))) {
                             if (tem_operation_record.getITEM_END_DATE().compareTo(inp_orders.getENTER_DATE_TIME()) == 1) {
                                 if(surgery_ln_blood.gettransfusion_entity_std()!=null) {

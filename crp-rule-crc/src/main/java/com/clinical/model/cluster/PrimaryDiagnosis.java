@@ -2,7 +2,7 @@ package com.clinical.model.cluster;
 import java.util.Date;
 public class PrimaryDiagnosis{
     //主键id
-    private Integer id;
+    private String id;
     //unique_id
     private String uniqueId;
     //标识患者身份唯一标识
@@ -17,6 +17,8 @@ public class PrimaryDiagnosis{
     private String visitId;
     //诊断名称原文
     private String diagnosisName;
+    //诊断编码
+    private String diagnosisCode;
     //诊断日期
     private Date diagnosisDate;
     //诊断名称
@@ -48,10 +50,10 @@ public class PrimaryDiagnosis{
     //修改时间
     private Date updatedAt;
 
-    public Integer getId(){
+    public String getId(){
         return id;
     } 
-    public void setId(Integer id) {
+    public void setId(String id) {
          this.id = id;
     } 
     public String getUniqueId(){
@@ -95,7 +97,13 @@ public class PrimaryDiagnosis{
     } 
     public void setDiagnosisName(String diagnosisName) {
          this.diagnosisName = diagnosisName;
-    } 
+    }
+    public String getDiagnosisCode(){
+        return diagnosisCode;
+    }
+    public void setDiagnosisCode(String diagnosisCode) {
+        this.diagnosisCode = diagnosisCode;
+    }
     public Date getDiagnosisDate(){
         return diagnosisDate;
     } 

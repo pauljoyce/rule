@@ -269,6 +269,53 @@ public class JSONUtils {
         return null;
     }
 
+    public static String getAllFieldGroupByObj2(String jsonText, String arrayField, String fieldSeparate, String objSeparate) {
+        JSONObject root = JSONObject.parseObject(jsonText);
+        if(jsonText!=null &&!"".equals(jsonText)){
+            JSONArray jsonArray = findJSONArray(root, arrayField);
+            String allText = "";
+            for (Object obj : jsonArray
+                    ) {
+                Map<String, String> objMap = (Map<String, String>) obj;
+                Set<String> keySet = objMap.keySet();
+
+                String objText = "";
+                String num1="";
+                String num2="";
+                String num3="";
+                String num4="";
+                String num5="";
+                for (String key : keySet
+                        ) {
+
+                    if(key.contains("drink_type")){
+                        num1=objMap.get(key);
+                    }
+                    if(key.contains("consumption_drink") && !key.contains("consumption_drink_")){
+                        num2=objMap.get(key);
+                    }
+                    if(key.contains("consumption_drink_unit")){
+                        num3=objMap.get(key);
+                    }
+                    if(key.contains("drink_freq")&& !key.contains("drink_freq_")){
+                        num4=objMap.get(key);
+                    }
+                    if(key.contains("drink_freq_unit")){
+                        num5=objMap.get(key);
+                    }
+                    //    String value = objMap.get(key);
+                    //  objText += value + fieldSeparate;
+
+                }
+                objText=num1+num2+num3+num4+num5;
+                allText += objText + objSeparate;
+            }
+            return allText.replace(fieldSeparate + objSeparate, objSeparate);
+        }else{
+            return null;
+        }
+    }
+
     /**
      * 解析json中的标化字段，返回指定标化字段的values list
      * @param text json原文
@@ -295,6 +342,17 @@ public class JSONUtils {
     public static Optional<String> getOne(String text, String arrayField, String stdField){
         List<String> list = getList(text, arrayField, stdField);
         return Optional.ofNullable(list.size() != 0 ? list.get(0) : null);
+    }
+
+    public static String getOne2(String text, String arrayField, String stdField){
+        if(text!=null && !"".equals(text)){
+            List<String> list = getList(text, arrayField, stdField);
+            return list.size() != 0 ? list.get(0) : null;
+        }else{
+            return null;
+        }
+
+
     }
 
     /**
