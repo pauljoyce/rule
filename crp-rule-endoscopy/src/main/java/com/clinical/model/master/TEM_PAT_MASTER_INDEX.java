@@ -2,7 +2,7 @@ package com.clinical.model.master;
 import java.util.Date;
 public class TEM_PAT_MASTER_INDEX{
     //主键id
-    private Integer ID;
+    private String ID;
     //唯一标识
     private String UNIQUE_ID;
     //医疗机构代码
@@ -72,10 +72,10 @@ public class TEM_PAT_MASTER_INDEX{
     //MD5标识
     private String MD5;
 
-    public Integer getID(){
+    public String getID(){
         return ID;
     } 
-    public void setID(Integer ID) {
+    public void setID(String ID) {
          this.ID = ID;
     } 
     public String getUNIQUE_ID(){

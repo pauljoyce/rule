@@ -11,11 +11,14 @@ spring:
     # mysql 8.0 以上使用
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.129.1:3306/dmp_std_endoscopy?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
-    username: dmp_zb
-    password: dmp_zb@2020
+#    url: jdbc:mysql://192.168.129.1:3306/dmp_std_endoscopy?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+#    username: dmp_zb
+#    password: dmp_zb@2020
+    url: jdbc:mysql://192.168.129.14:3306/endoscopy_full?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    username: root
+    password: 123456
 
-    url2: jdbc:mysql://192.168.129.14:3306/dmp_zbk_endoscopy?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    url2: jdbc:mysql://192.168.129.14:3306/dmp_zbk_endoscopy_plus?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
     username2: root
     password2: 123456
 
