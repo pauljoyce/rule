@@ -6,4 +6,9 @@
        SELECT * FROM TEM_24H_IN_OUT WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
+<select id="findZjTem24hInOutByIncr"  resultType="java.lang.String">
+       select distinct(unique_id_lv2) FROM TEM_24H_IN_OUT where date(created_at) = date_sub(curdate(),interval 1 day) 
+</select>
+
+
 </mapper>

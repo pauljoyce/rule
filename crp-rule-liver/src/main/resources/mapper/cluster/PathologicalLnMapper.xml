@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clinical.dao.cluster.PathologicalLnMapper">
+<select id="findPathologicalLnByUniqueId"  resultType="com.clinical.model.cluster.PathologicalLn">
+       SELECT * FROM pathological_ln WHERE unique_id=#{unique_id}
+</select>
+
+ <insert id="savePathologicalLn"  parameterType="com.clinical.model.cluster.PathologicalLn">
+  insert into pathological_ln(       unique_id,
+       unique_id_lv1,
+       unique_id_lv2,
+       p900,
+       patient_id,
+       visit_id,
+       pathology_no,
+       inspect_time,
+       reprot_time,
+       lymph_node_total,
+       if_transfer,
+       transfer_number,
+       transfer_site,
+       data_version,
+       data_db_source,
+       data_table_source,
+       data_field_source,
+       created_at,
+       creator,
+       updated_at)
+values
+(       #{uniqueId},
+       #{uniqueIdLv1},
+       #{uniqueIdLv2},
+       #{p900},
+       #{patientId},
+       #{visitId},
+       #{pathologyNo},
+       #{inspectTime},
+       #{reprotTime},
+       #{lymphNodeTotal},
+       #{ifTransfer},
+       #{transferNumber},
+       #{transferSite},
+       #{dataVersion},
+       #{dataDbSource},
+       #{dataTableSource},
+       #{dataFieldSource},
+       #{createdAt},
+       #{creator},
+       #{updatedAt})
+</insert>
+
+ <delete id="deletePathologicalLn">
+   delete  from pathological_ln where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
+ <update id="updatePathologicalLn"  parameterType="com.clinical.model.cluster.PathologicalLn">
+      update   pathological_ln
+ set
+    unique_id = #{uniqueId},  
+    unique_id_lv1 = #{uniqueIdLv1},  
+    unique_id_lv2 = #{uniqueIdLv2},  
+    p900 = #{p900},  
+    patient_id = #{patientId},  
+    visit_id = #{visitId},  
+    pathology_no = #{pathologyNo},  
+    inspect_time = #{inspectTime},  
+    reprot_time = #{reprotTime},  
+    lymph_node_total = #{lymphNodeTotal},  
+    if_transfer = #{ifTransfer},  
+    transfer_number = #{transferNumber},  
+    transfer_site = #{transferSite},  
+    data_version = #{dataVersion},  
+    data_db_source = #{dataDbSource},  
+    data_table_source = #{dataTableSource},  
+    data_field_source = #{dataFieldSource},  
+    created_at = #{createdAt},  
+    creator = #{creator},  
+    updated_at = #{updatedAt}
+   where id = #{id}
+</update>
+</mapper>

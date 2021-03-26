@@ -5,4 +5,5 @@ import java.util.List;
 public interface ZjEmergencyRecordMapper {
     List<EMERGENCY_RECORD>  findZjEmergencyRecordByUniqueId(String unique_id_lv2);
 
+    List<String> findZjEmergencyRecordByIncr();
 }

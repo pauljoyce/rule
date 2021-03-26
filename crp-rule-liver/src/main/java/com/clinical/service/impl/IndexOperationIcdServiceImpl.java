@@ -4,6 +4,8 @@ import com.clinical.model.cluster.IndexOperationIcd;
 import org.springframework.beans.factory.annotation.Autowired;import com.clinical.service.IndexOperationIcdService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IndexOperationIcdServiceImpl implements IndexOperationIcdService {
 
@@ -15,6 +17,12 @@ public class IndexOperationIcdServiceImpl implements IndexOperationIcdService {
     @Override
     public  void saveIndexOperationIcd(IndexOperationIcd indexOperationIcd) {
          indexOperationIcdMapper.saveIndexOperationIcd(indexOperationIcd);
+
+     }
+
+    @Override
+    public  void deleteIndexOperationIcd(List<String> uniqueId) {
+         indexOperationIcdMapper.deleteIndexOperationIcd(uniqueId);
 
      }
 }

@@ -6,4 +6,9 @@
        SELECT * FROM HISTOLOGY_REPORT WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
+<select id="findZjHistologyReportByIncr"  resultType="java.lang.String">
+       select distinct(unique_id_lv2) FROM HISTOLOGY_REPORT where date(created_at) = date_sub(curdate(),interval 1 day) 
+</select>
+
+
 </mapper>

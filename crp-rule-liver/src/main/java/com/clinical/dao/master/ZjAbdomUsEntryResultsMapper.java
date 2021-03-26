@@ -5,4 +5,7 @@ import java.util.List;
 public interface ZjAbdomUsEntryResultsMapper {
     List<ABDOM_US_ENTRY_RESULTS>  findZjAbdomUsEntryResultsByUniqueId(String unique_id_lv2);
 
+    List<ABDOM_US_ENTRY_RESULTS>  findZjAbdomUsEntryResultsByUniqueId2(String unique_id);
+
+    List<String> findZjAbdomUsEntryResultsByIncr();
 }

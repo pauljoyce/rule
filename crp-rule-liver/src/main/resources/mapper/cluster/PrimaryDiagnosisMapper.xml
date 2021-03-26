@@ -13,8 +13,9 @@
        p900,
        patient_id,
        visit_id,
-       diagnosis_date,
        diagnosis_name,
+       diagnosis_date,
+       diagnosis_name_icd,
        diagnosis_type,
        if_transfer,
        transfer_position,
@@ -35,8 +36,9 @@ values
        #{p900},
        #{patientId},
        #{visitId},
-       #{diagnosisDate},
        #{diagnosisName},
+       #{diagnosisDate},
+       #{diagnosisNameIcd},
        #{diagnosisType},
        #{ifTransfer},
        #{transferPosition},
@@ -51,6 +53,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deletePrimaryDiagnosis">
+   delete  from primary_diagnosis where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updatePrimaryDiagnosis"  parameterType="com.clinical.model.cluster.PrimaryDiagnosis">
       update   primary_diagnosis
  set
@@ -60,8 +70,9 @@ values
     p900 = #{p900},  
     patient_id = #{patientId},  
     visit_id = #{visitId},  
-    diagnosis_date = #{diagnosisDate},  
     diagnosis_name = #{diagnosisName},  
+    diagnosis_date = #{diagnosisDate},  
+    diagnosis_name_icd = #{diagnosisNameIcd},  
     diagnosis_type = #{diagnosisType},  
     if_transfer = #{ifTransfer},  
     transfer_position = #{transferPosition},  

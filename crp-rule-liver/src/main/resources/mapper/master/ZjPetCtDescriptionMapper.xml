@@ -6,4 +6,13 @@
        SELECT * FROM PET_CT_DESCRIPTION WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
+       <select id="findZjPetCtDescriptionByUniqueId2"  resultType="com.clinical.model.master.PET_CT_DESCRIPTION">
+       SELECT * FROM PET_CT_DESCRIPTION WHERE unique_id = #{unique_id}
+</select>
+
+<select id="findZjPetCtDescriptionByIncr"  resultType="java.lang.String">
+       select distinct(unique_id_lv2) FROM PET_CT_DESCRIPTION where date(created_at) = date_sub(curdate(),interval 1 day) 
+</select>
+
+
 </mapper>

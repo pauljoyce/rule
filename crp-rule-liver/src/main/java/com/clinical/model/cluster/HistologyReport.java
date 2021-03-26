@@ -64,174 +64,174 @@ public class HistologyReport{
         return id;
     } 
     public void setId(Integer id) {
-         this.id = id;
+             this.id = id;
     } 
     public String getUniqueId(){
         return uniqueId;
     } 
     public void setUniqueId(String uniqueId) {
-         this.uniqueId = uniqueId;
+             this.uniqueId = uniqueId;
     } 
     public String getUniqueIdLv1(){
         return uniqueIdLv1;
     } 
     public void setUniqueIdLv1(String uniqueIdLv1) {
-         this.uniqueIdLv1 = uniqueIdLv1;
+             this.uniqueIdLv1 = uniqueIdLv1;
     } 
     public String getUniqueIdLv2(){
         return uniqueIdLv2;
     } 
     public void setUniqueIdLv2(String uniqueIdLv2) {
-         this.uniqueIdLv2 = uniqueIdLv2;
+             this.uniqueIdLv2 = uniqueIdLv2;
     } 
     public String getP900(){
         return p900;
     } 
     public void setP900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getPatientId(){
         return patientId;
     } 
     public void setPatientId(String patientId) {
-         this.patientId = patientId;
+             this.patientId = patientId;
     } 
     public String getVisitId(){
         return visitId;
     } 
     public void setVisitId(String visitId) {
-         this.visitId = visitId;
+             this.visitId = visitId;
     } 
     public String getPathologyNo(){
         return pathologyNo;
     } 
     public void setPathologyNo(String pathologyNo) {
-         this.pathologyNo = pathologyNo;
+             this.pathologyNo = pathologyNo;
     } 
     public String getInspectionHospital(){
         return inspectionHospital;
     } 
     public void setInspectionHospital(String inspectionHospital) {
-         this.inspectionHospital = inspectionHospital;
+             this.inspectionHospital = inspectionHospital;
     } 
     public String getInspectionDepartment(){
         return inspectionDepartment;
     } 
     public void setInspectionDepartment(String inspectionDepartment) {
-         this.inspectionDepartment = inspectionDepartment;
+             this.inspectionDepartment = inspectionDepartment;
     } 
     public String getInspectionPhysician(){
         return inspectionPhysician;
     } 
     public void setInspectionPhysician(String inspectionPhysician) {
-         this.inspectionPhysician = inspectionPhysician;
+             this.inspectionPhysician = inspectionPhysician;
     } 
     public Date getInspectionTime(){
         return inspectionTime;
     } 
     public void setInspectionTime(Date inspectionTime) {
-         this.inspectionTime = inspectionTime;
+             this.inspectionTime = inspectionTime;
     } 
     public String getInspectionSite(){
         return inspectionSite;
     } 
     public void setInspectionSite(String inspectionSite) {
-         this.inspectionSite = inspectionSite;
+             this.inspectionSite = inspectionSite;
     } 
     public String getClinicalDiagnosis(){
         return clinicalDiagnosis;
     } 
     public void setClinicalDiagnosis(String clinicalDiagnosis) {
-         this.clinicalDiagnosis = clinicalDiagnosis;
+             this.clinicalDiagnosis = clinicalDiagnosis;
     } 
     public String getName(){
         return name;
     } 
     public void setName(String name) {
-         this.name = name;
+             this.name = name;
     } 
     public Date getSpecimenReceivingTime(){
         return specimenReceivingTime;
     } 
     public void setSpecimenReceivingTime(Date specimenReceivingTime) {
-         this.specimenReceivingTime = specimenReceivingTime;
+             this.specimenReceivingTime = specimenReceivingTime;
     } 
     public Date getReportTime(){
         return reportTime;
     } 
     public void setReportTime(Date reportTime) {
-         this.reportTime = reportTime;
+             this.reportTime = reportTime;
     } 
     public Date getReviewTime(){
         return reviewTime;
     } 
     public void setReviewTime(Date reviewTime) {
-         this.reviewTime = reviewTime;
+             this.reviewTime = reviewTime;
     } 
     public String getPathEye(){
         return pathEye;
     } 
     public void setPathEye(String pathEye) {
-         this.pathEye = pathEye;
+             this.pathEye = pathEye;
     } 
     public String getPathMicroscope(){
         return pathMicroscope;
     } 
     public void setPathMicroscope(String pathMicroscope) {
-         this.pathMicroscope = pathMicroscope;
+             this.pathMicroscope = pathMicroscope;
     } 
     public String getPathDiag(){
         return pathDiag;
     } 
     public void setPathDiag(String pathDiag) {
-         this.pathDiag = pathDiag;
+             this.pathDiag = pathDiag;
     } 
     public String getPathDiagCode(){
         return pathDiagCode;
     } 
     public void setPathDiagCode(String pathDiagCode) {
-         this.pathDiagCode = pathDiagCode;
+             this.pathDiagCode = pathDiagCode;
     } 
     public String getDataVersion(){
         return dataVersion;
     } 
     public void setDataVersion(String dataVersion) {
-         this.dataVersion = dataVersion;
+             this.dataVersion = dataVersion;
     } 
     public String getDataDbSource(){
         return dataDbSource;
     } 
     public void setDataDbSource(String dataDbSource) {
-         this.dataDbSource = dataDbSource;
+             this.dataDbSource = dataDbSource;
     } 
     public String getDataTableSource(){
         return dataTableSource;
     } 
     public void setDataTableSource(String dataTableSource) {
-         this.dataTableSource = dataTableSource;
+             this.dataTableSource = dataTableSource;
     } 
     public String getDataFieldSource(){
         return dataFieldSource;
     } 
     public void setDataFieldSource(String dataFieldSource) {
-         this.dataFieldSource = dataFieldSource;
+             this.dataFieldSource = dataFieldSource;
     } 
     public Date getCreatedAt(){
         return createdAt;
     } 
     public void setCreatedAt(Date createdAt) {
-         this.createdAt = createdAt;
+             this.createdAt = createdAt;
     } 
     public String getCreator(){
         return creator;
     } 
     public void setCreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getUpdatedAt(){
         return updatedAt;
     } 
     public void setUpdatedAt(Date updatedAt) {
-         this.updatedAt = updatedAt;
+             this.updatedAt = updatedAt;
     } 
 }

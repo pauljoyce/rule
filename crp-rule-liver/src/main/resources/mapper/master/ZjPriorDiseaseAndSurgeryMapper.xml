@@ -6,4 +6,9 @@
        SELECT * FROM PRIOR_DISEASE_AND_SURGERY WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
+<select id="findZjPriorDiseaseAndSurgeryByIncr"  resultType="java.lang.String">
+       select distinct(unique_id_lv2) FROM PRIOR_DISEASE_AND_SURGERY where date(create_time) = date_sub(curdate(),interval 1 day)
+</select>
+
+
 </mapper>

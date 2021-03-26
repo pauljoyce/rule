@@ -5,4 +5,7 @@ import java.util.List;
 public interface ZjChestCtDescriptionMapper {
     List<CHEST_CT_DESCRIPTION>  findZjChestCtDescriptionByUniqueId(String unique_id_lv2);
 
+    List<CHEST_CT_DESCRIPTION>  findZjChestCtDescriptionByUniqueId2(String unique_id);
+
+    List<String> findZjChestCtDescriptionByIncr();
 }

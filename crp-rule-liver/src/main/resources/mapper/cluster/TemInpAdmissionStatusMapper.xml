@@ -139,6 +139,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteTemInpAdmissionStatus">
+   delete  from tem_inp_admission_status where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateTemInpAdmissionStatus"  parameterType="com.clinical.model.cluster.TemInpAdmissionStatus">
       update   tem_inp_admission_status
  set

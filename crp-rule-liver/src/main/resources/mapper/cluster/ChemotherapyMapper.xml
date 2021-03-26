@@ -13,6 +13,7 @@
        p900,
        patient_id,
        visit_id,
+       drug_type,
        drug_name,
        channel,
        dose,
@@ -34,6 +35,7 @@ values
        #{p900},
        #{patientId},
        #{visitId},
+       #{drugType},
        #{drugName},
        #{channel},
        #{dose},
@@ -49,6 +51,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteChemotherapy">
+   delete  from chemotherapy where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateChemotherapy"  parameterType="com.clinical.model.cluster.Chemotherapy">
       update   chemotherapy
  set
@@ -58,6 +68,7 @@ values
     p900 = #{p900},  
     patient_id = #{patientId},  
     visit_id = #{visitId},  
+    drug_type = #{drugType},  
     drug_name = #{drugName},  
     channel = #{channel},  
     dose = #{dose},  

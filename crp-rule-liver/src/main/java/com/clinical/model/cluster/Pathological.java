@@ -74,204 +74,204 @@ public class Pathological{
         return id;
     } 
     public void setId(Integer id) {
-         this.id = id;
+             this.id = id;
     } 
     public String getUniqueId(){
         return uniqueId;
     } 
     public void setUniqueId(String uniqueId) {
-         this.uniqueId = uniqueId;
+             this.uniqueId = uniqueId;
     } 
     public String getUniqueIdLv1(){
         return uniqueIdLv1;
     } 
     public void setUniqueIdLv1(String uniqueIdLv1) {
-         this.uniqueIdLv1 = uniqueIdLv1;
+             this.uniqueIdLv1 = uniqueIdLv1;
     } 
     public String getUniqueIdLv2(){
         return uniqueIdLv2;
     } 
     public void setUniqueIdLv2(String uniqueIdLv2) {
-         this.uniqueIdLv2 = uniqueIdLv2;
+             this.uniqueIdLv2 = uniqueIdLv2;
     } 
     public String getP900(){
         return p900;
     } 
     public void setP900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getPatientId(){
         return patientId;
     } 
     public void setPatientId(String patientId) {
-         this.patientId = patientId;
+             this.patientId = patientId;
     } 
     public String getVisitId(){
         return visitId;
     } 
     public void setVisitId(String visitId) {
-         this.visitId = visitId;
+             this.visitId = visitId;
     } 
     public String getPathologyNo(){
         return pathologyNo;
     } 
     public void setPathologyNo(String pathologyNo) {
-         this.pathologyNo = pathologyNo;
+             this.pathologyNo = pathologyNo;
     } 
     public Date getInspectTime(){
         return inspectTime;
     } 
     public void setInspectTime(Date inspectTime) {
-         this.inspectTime = inspectTime;
+             this.inspectTime = inspectTime;
     } 
     public Date getReprotTime(){
         return reprotTime;
     } 
     public void setReprotTime(Date reprotTime) {
-         this.reprotTime = reprotTime;
+             this.reprotTime = reprotTime;
     } 
     public String getOrigin(){
         return origin;
     } 
     public void setOrigin(String origin) {
-         this.origin = origin;
+             this.origin = origin;
     } 
     public String getHistologicalTypes(){
         return histologicalTypes;
     } 
     public void setHistologicalTypes(String histologicalTypes) {
-         this.histologicalTypes = histologicalTypes;
+             this.histologicalTypes = histologicalTypes;
     } 
     public String getDegree(){
         return degree;
     } 
     public void setDegree(String degree) {
-         this.degree = degree;
+             this.degree = degree;
     } 
     public String getPrimaryDegree(){
         return primaryDegree;
     } 
     public void setPrimaryDegree(String primaryDegree) {
-         this.primaryDegree = primaryDegree;
+             this.primaryDegree = primaryDegree;
     } 
     public String getRelationship(){
         return relationship;
     } 
     public void setRelationship(String relationship) {
-         this.relationship = relationship;
+             this.relationship = relationship;
     } 
     public String getInvadeBile(){
         return invadeBile;
     } 
     public void setInvadeBile(String invadeBile) {
-         this.invadeBile = invadeBile;
+             this.invadeBile = invadeBile;
     } 
     public String getInvadeLiver(){
         return invadeLiver;
     } 
     public void setInvadeLiver(String invadeLiver) {
-         this.invadeLiver = invadeLiver;
+             this.invadeLiver = invadeLiver;
     } 
     public String getInvadeNodule(){
         return invadeNodule;
     } 
     public void setInvadeNodule(String invadeNodule) {
-         this.invadeNodule = invadeNodule;
+             this.invadeNodule = invadeNodule;
     } 
     public String getInvadeLymphatic(){
         return invadeLymphatic;
     } 
     public void setInvadeLymphatic(String invadeLymphatic) {
-         this.invadeLymphatic = invadeLymphatic;
+             this.invadeLymphatic = invadeLymphatic;
     } 
     public String getInvadeVascular(){
         return invadeVascular;
     } 
     public void setInvadeVascular(String invadeVascular) {
-         this.invadeVascular = invadeVascular;
+             this.invadeVascular = invadeVascular;
     } 
     public String getInvadeNerve(){
         return invadeNerve;
     } 
     public void setInvadeNerve(String invadeNerve) {
-         this.invadeNerve = invadeNerve;
+             this.invadeNerve = invadeNerve;
     } 
     public String getCutEdge(){
         return cutEdge;
     } 
     public void setCutEdge(String cutEdge) {
-         this.cutEdge = cutEdge;
+             this.cutEdge = cutEdge;
     } 
     public String getEdgeDistance(){
         return edgeDistance;
     } 
     public void setEdgeDistance(String edgeDistance) {
-         this.edgeDistance = edgeDistance;
+             this.edgeDistance = edgeDistance;
     } 
     public Integer getLymphNodeTotal(){
         return lymphNodeTotal;
     } 
     public void setLymphNodeTotal(Integer lymphNodeTotal) {
-         this.lymphNodeTotal = lymphNodeTotal;
+             this.lymphNodeTotal = lymphNodeTotal;
     } 
     public String getIfTransfer(){
         return ifTransfer;
     } 
     public void setIfTransfer(String ifTransfer) {
-         this.ifTransfer = ifTransfer;
+             this.ifTransfer = ifTransfer;
     } 
     public Integer getTransferNumber(){
         return transferNumber;
     } 
     public void setTransferNumber(Integer transferNumber) {
-         this.transferNumber = transferNumber;
+             this.transferNumber = transferNumber;
     } 
     public String getTransferSite(){
         return transferSite;
     } 
     public void setTransferSite(String transferSite) {
-         this.transferSite = transferSite;
+             this.transferSite = transferSite;
     } 
     public String getDataVersion(){
         return dataVersion;
     } 
     public void setDataVersion(String dataVersion) {
-         this.dataVersion = dataVersion;
+             this.dataVersion = dataVersion;
     } 
     public String getDataDbSource(){
         return dataDbSource;
     } 
     public void setDataDbSource(String dataDbSource) {
-         this.dataDbSource = dataDbSource;
+             this.dataDbSource = dataDbSource;
     } 
     public String getDataTableSource(){
         return dataTableSource;
     } 
     public void setDataTableSource(String dataTableSource) {
-         this.dataTableSource = dataTableSource;
+             this.dataTableSource = dataTableSource;
     } 
     public String getDataFieldSource(){
         return dataFieldSource;
     } 
     public void setDataFieldSource(String dataFieldSource) {
-         this.dataFieldSource = dataFieldSource;
+             this.dataFieldSource = dataFieldSource;
     } 
     public Date getCreatedAt(){
         return createdAt;
     } 
     public void setCreatedAt(Date createdAt) {
-         this.createdAt = createdAt;
+             this.createdAt = createdAt;
     } 
     public String getCreator(){
         return creator;
     } 
     public void setCreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getUpdatedAt(){
         return updatedAt;
     } 
     public void setUpdatedAt(Date updatedAt) {
-         this.updatedAt = updatedAt;
+             this.updatedAt = updatedAt;
     } 
 }

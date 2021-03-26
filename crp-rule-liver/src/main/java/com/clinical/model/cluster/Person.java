@@ -37,8 +37,6 @@ public class Person{
     private String relationship;
     //入院来源
     private String patientClass;
-    //首诊年龄
-    private String firstVisitAge;
     //数据版本
     private String dataVersion;
     //数据库来源
@@ -58,158 +56,150 @@ public class Person{
         return id;
     } 
     public void setId(Integer id) {
-         this.id = id;
+             this.id = id;
     } 
     public String getUniqueId(){
         return uniqueId;
     } 
     public void setUniqueId(String uniqueId) {
-         this.uniqueId = uniqueId;
+             this.uniqueId = uniqueId;
     } 
     public String getP900(){
         return p900;
     } 
     public void setP900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getPatientId(){
         return patientId;
     } 
     public void setPatientId(String patientId) {
-         this.patientId = patientId;
+             this.patientId = patientId;
     } 
     public String getVisitId(){
         return visitId;
     } 
     public void setVisitId(String visitId) {
-         this.visitId = visitId;
+             this.visitId = visitId;
     } 
     public String getName(){
         return name;
     } 
     public void setName(String name) {
-         this.name = name;
+             this.name = name;
     } 
     public String getSex(){
         return sex;
     } 
     public void setSex(String sex) {
-         this.sex = sex;
+             this.sex = sex;
     } 
     public Date getDateOfBirth(){
         return dateOfBirth;
     } 
     public void setDateOfBirth(Date dateOfBirth) {
-         this.dateOfBirth = dateOfBirth;
+             this.dateOfBirth = dateOfBirth;
     } 
     public String getBirthPlace(){
         return birthPlace;
     } 
     public void setBirthPlace(String birthPlace) {
-         this.birthPlace = birthPlace;
+             this.birthPlace = birthPlace;
     } 
     public String getCitizenship(){
         return citizenship;
     } 
     public void setCitizenship(String citizenship) {
-         this.citizenship = citizenship;
+             this.citizenship = citizenship;
     } 
     public String getNation(){
         return nation;
     } 
     public void setNation(String nation) {
-         this.nation = nation;
+             this.nation = nation;
     } 
     public String getIdNo(){
         return idNo;
     } 
     public void setIdNo(String idNo) {
-         this.idNo = idNo;
+             this.idNo = idNo;
     } 
     public String getUnitInContract(){
         return unitInContract;
     } 
     public void setUnitInContract(String unitInContract) {
-         this.unitInContract = unitInContract;
+             this.unitInContract = unitInContract;
     } 
     public String getMailingAddress(){
         return mailingAddress;
     } 
     public void setMailingAddress(String mailingAddress) {
-         this.mailingAddress = mailingAddress;
+             this.mailingAddress = mailingAddress;
     } 
     public String getNextOfKin(){
         return nextOfKin;
     } 
     public void setNextOfKin(String nextOfKin) {
-         this.nextOfKin = nextOfKin;
+             this.nextOfKin = nextOfKin;
     } 
     public String getTelephone(){
         return telephone;
     } 
     public void setTelephone(String telephone) {
-         this.telephone = telephone;
+             this.telephone = telephone;
     } 
     public String getRelationship(){
         return relationship;
     } 
     public void setRelationship(String relationship) {
-         this.relationship = relationship;
+             this.relationship = relationship;
     } 
     public String getPatientClass(){
         return patientClass;
     } 
     public void setPatientClass(String patientClass) {
-         this.patientClass = patientClass;
+             this.patientClass = patientClass;
     } 
     public String getDataVersion(){
         return dataVersion;
     } 
     public void setDataVersion(String dataVersion) {
-         this.dataVersion = dataVersion;
+             this.dataVersion = dataVersion;
     } 
     public String getDataDbSource(){
         return dataDbSource;
     } 
     public void setDataDbSource(String dataDbSource) {
-         this.dataDbSource = dataDbSource;
+             this.dataDbSource = dataDbSource;
     } 
     public String getDataTableSource(){
         return dataTableSource;
     } 
     public void setDataTableSource(String dataTableSource) {
-         this.dataTableSource = dataTableSource;
+             this.dataTableSource = dataTableSource;
     } 
     public String getDataFieldSource(){
         return dataFieldSource;
     } 
     public void setDataFieldSource(String dataFieldSource) {
-         this.dataFieldSource = dataFieldSource;
+             this.dataFieldSource = dataFieldSource;
     } 
     public Date getCreatedAt(){
         return createdAt;
     } 
     public void setCreatedAt(Date createdAt) {
-         this.createdAt = createdAt;
+             this.createdAt = createdAt;
     } 
     public String getCreator(){
         return creator;
     } 
     public void setCreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getUpdatedAt(){
         return updatedAt;
     } 
     public void setUpdatedAt(Date updatedAt) {
-         this.updatedAt = updatedAt;
-    }
-
-    public String getFirstVisitAge() {
-        return firstVisitAge;
-    }
-
-    public void setFirstVisitAge(String firstVisitAge) {
-        this.firstVisitAge = firstVisitAge;
-    }
+             this.updatedAt = updatedAt;
+    } 
 }

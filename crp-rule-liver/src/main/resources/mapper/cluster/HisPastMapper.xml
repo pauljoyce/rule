@@ -71,6 +71,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteHisPast">
+   delete  from his_past where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateHisPast"  parameterType="com.clinical.model.cluster.HisPast">
       update   his_past
  set

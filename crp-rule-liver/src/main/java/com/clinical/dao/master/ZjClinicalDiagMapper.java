@@ -5,4 +5,5 @@ import java.util.List;
 public interface ZjClinicalDiagMapper {
     List<CLINICAL_DIAG>  findZjClinicalDiagByUniqueId(String unique_id_lv2);
 
+    List<String> findZjClinicalDiagByIncr();
 }

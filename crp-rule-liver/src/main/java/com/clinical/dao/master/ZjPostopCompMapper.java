@@ -5,4 +5,5 @@ import java.util.List;
 public interface ZjPostopCompMapper {
     List<POSTOP_COMP>  findZjPostopCompByUniqueId(String unique_id_lv2);
 
+    List<String> findZjPostopCompByIncr();
 }

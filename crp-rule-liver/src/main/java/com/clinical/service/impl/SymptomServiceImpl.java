@@ -4,6 +4,8 @@ import com.clinical.model.cluster.Symptom;
 import org.springframework.beans.factory.annotation.Autowired;import com.clinical.service.SymptomService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SymptomServiceImpl implements SymptomService {
 
@@ -15,6 +17,12 @@ public class SymptomServiceImpl implements SymptomService {
     @Override
     public  void saveSymptom(Symptom symptom) {
          symptomMapper.saveSymptom(symptom);
+
+     }
+
+    @Override
+    public  void deleteSymptom(List<String> uniqueId) {
+         symptomMapper.deleteSymptom(uniqueId);
 
      }
 }

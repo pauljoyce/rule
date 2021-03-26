@@ -72,198 +72,198 @@ public class INP_CONSULTATION_DOCTOR_DETAIL{
         return id;
     } 
     public void setid(Integer id) {
-         this.id = id;
+             this.id = id;
     } 
     public String getunique_id(){
         return unique_id;
     } 
     public void setunique_id(String unique_id) {
-         this.unique_id = unique_id;
+             this.unique_id = unique_id;
     } 
     public String getunique_id_lv1(){
         return unique_id_lv1;
     } 
     public void setunique_id_lv1(String unique_id_lv1) {
-         this.unique_id_lv1 = unique_id_lv1;
+             this.unique_id_lv1 = unique_id_lv1;
     } 
     public String getunique_id_lv2(){
         return unique_id_lv2;
     } 
     public void setunique_id_lv2(String unique_id_lv2) {
-         this.unique_id_lv2 = unique_id_lv2;
+             this.unique_id_lv2 = unique_id_lv2;
     } 
     public String getunique_id_lv3(){
         return unique_id_lv3;
     } 
     public void setunique_id_lv3(String unique_id_lv3) {
-         this.unique_id_lv3 = unique_id_lv3;
+             this.unique_id_lv3 = unique_id_lv3;
     } 
     public String getp900(){
         return p900;
     } 
     public void setp900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getconsultation_no(){
         return consultation_no;
     } 
     public void setconsultation_no(String consultation_no) {
-         this.consultation_no = consultation_no;
+             this.consultation_no = consultation_no;
     } 
     public String getsub_id(){
         return sub_id;
     } 
     public void setsub_id(String sub_id) {
-         this.sub_id = sub_id;
+             this.sub_id = sub_id;
     } 
     public String getconsultation_dept(){
         return consultation_dept;
     } 
     public void setconsultation_dept(String consultation_dept) {
-         this.consultation_dept = consultation_dept;
+             this.consultation_dept = consultation_dept;
     } 
     public String getconsultation_doctor(){
         return consultation_doctor;
     } 
     public void setconsultation_doctor(String consultation_doctor) {
-         this.consultation_doctor = consultation_doctor;
+             this.consultation_doctor = consultation_doctor;
     } 
     public Date getaffirm_date_time(){
         return affirm_date_time;
     } 
     public void setaffirm_date_time(Date affirm_date_time) {
-         this.affirm_date_time = affirm_date_time;
+             this.affirm_date_time = affirm_date_time;
     } 
     public Date getapply_date_time(){
         return apply_date_time;
     } 
     public void setapply_date_time(Date apply_date_time) {
-         this.apply_date_time = apply_date_time;
+             this.apply_date_time = apply_date_time;
     } 
     public String getmedical_history(){
         return medical_history;
     } 
     public void setmedical_history(String medical_history) {
-         this.medical_history = medical_history;
+             this.medical_history = medical_history;
     } 
     public String gettzl_process(){
         return tzl_process;
     } 
     public void settzl_process(String tzl_process) {
-         this.tzl_process = tzl_process;
+             this.tzl_process = tzl_process;
     } 
     public String getconsult_purpose(){
         return consult_purpose;
     } 
     public void setconsult_purpose(String consult_purpose) {
-         this.consult_purpose = consult_purpose;
+             this.consult_purpose = consult_purpose;
     } 
     public String getconsult_idea(){
         return consult_idea;
     } 
     public void setconsult_idea(String consult_idea) {
-         this.consult_idea = consult_idea;
+             this.consult_idea = consult_idea;
     } 
     public String getdata_version(){
         return data_version;
     } 
     public void setdata_version(String data_version) {
-         this.data_version = data_version;
+             this.data_version = data_version;
     } 
     public String getdata_db_source(){
         return data_db_source;
     } 
     public void setdata_db_source(String data_db_source) {
-         this.data_db_source = data_db_source;
+             this.data_db_source = data_db_source;
     } 
     public String getdata_table_source(){
         return data_table_source;
     } 
     public void setdata_table_source(String data_table_source) {
-         this.data_table_source = data_table_source;
+             this.data_table_source = data_table_source;
     } 
     public String getdata_field_source(){
         return data_field_source;
     } 
     public void setdata_field_source(String data_field_source) {
-         this.data_field_source = data_field_source;
+             this.data_field_source = data_field_source;
     } 
     public Date getcreated_at(){
         return created_at;
     } 
     public void setcreated_at(Date created_at) {
-         this.created_at = created_at;
+             this.created_at = created_at;
     } 
     public String getcreator(){
         return creator;
     } 
     public void setcreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getupdated_at(){
         return updated_at;
     } 
     public void setupdated_at(Date updated_at) {
-         this.updated_at = updated_at;
+             this.updated_at = updated_at;
     } 
     public String getupdator(){
         return updator;
     } 
     public void setupdator(String updator) {
-         this.updator = updator;
+             this.updator = updator;
     } 
     public String getupdated_note(){
         return updated_note;
     } 
     public void setupdated_note(String updated_note) {
-         this.updated_note = updated_note;
+             this.updated_note = updated_note;
     } 
     public String getdata_state(){
         return data_state;
     } 
     public void setdata_state(String data_state) {
-         this.data_state = data_state;
+             this.data_state = data_state;
     } 
     public Date getdisable_time(){
         return disable_time;
     } 
     public void setdisable_time(Date disable_time) {
-         this.disable_time = disable_time;
+             this.disable_time = disable_time;
     } 
     public String getdisable_operator(){
         return disable_operator;
     } 
     public void setdisable_operator(String disable_operator) {
-         this.disable_operator = disable_operator;
+             this.disable_operator = disable_operator;
     } 
     public String getdisable_note(){
         return disable_note;
     } 
     public void setdisable_note(String disable_note) {
-         this.disable_note = disable_note;
+             this.disable_note = disable_note;
     } 
     public String getdata_check(){
         return data_check;
     } 
     public void setdata_check(String data_check) {
-         this.data_check = data_check;
+             this.data_check = data_check;
     } 
     public Integer getdel_flag(){
         return del_flag;
     } 
     public void setdel_flag(Integer del_flag) {
-         this.del_flag = del_flag;
+             this.del_flag = del_flag;
     } 
     public String getbatch_number(){
         return batch_number;
     } 
     public void setbatch_number(String batch_number) {
-         this.batch_number = batch_number;
+             this.batch_number = batch_number;
     } 
     public String getmd5(){
         return md5;
     } 
     public void setmd5(String md5) {
-         this.md5 = md5;
+             this.md5 = md5;
     } 
 }

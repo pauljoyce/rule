@@ -4,6 +4,8 @@ import com.clinical.model.cluster.HistologyReport;
 import org.springframework.beans.factory.annotation.Autowired;import com.clinical.service.HistologyReportService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class HistologyReportServiceImpl implements HistologyReportService {
 
@@ -15,6 +17,12 @@ public class HistologyReportServiceImpl implements HistologyReportService {
     @Override
     public  void saveHistologyReport(HistologyReport histologyReport) {
          histologyReportMapper.saveHistologyReport(histologyReport);
+
+     }
+
+    @Override
+    public  void deleteHistologyReport(List<String> uniqueId) {
+         histologyReportMapper.deleteHistologyReport(uniqueId);
 
      }
 }

@@ -49,6 +49,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteAbdominalMriResult">
+   delete  from abdominal_mri_result where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateAbdominalMriResult"  parameterType="com.clinical.model.cluster.AbdominalMriResult">
       update   abdominal_mri_result
  set

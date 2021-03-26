@@ -4,6 +4,8 @@ import com.clinical.model.cluster.OperationRecord;
 import org.springframework.beans.factory.annotation.Autowired;import com.clinical.service.OperationRecordService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OperationRecordServiceImpl implements OperationRecordService {
 
@@ -15,6 +17,12 @@ public class OperationRecordServiceImpl implements OperationRecordService {
     @Override
     public  void saveOperationRecord(OperationRecord operationRecord) {
          operationRecordMapper.saveOperationRecord(operationRecord);
+
+     }
+
+    @Override
+    public  void deleteOperationRecord(List<String> uniqueId) {
+         operationRecordMapper.deleteOperationRecord(uniqueId);
 
      }
 }

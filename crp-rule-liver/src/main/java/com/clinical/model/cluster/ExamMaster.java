@@ -88,246 +88,246 @@ public class ExamMaster{
         return id;
     } 
     public void setId(Integer id) {
-         this.id = id;
+             this.id = id;
     } 
     public String getUniqueId(){
         return uniqueId;
     } 
     public void setUniqueId(String uniqueId) {
-         this.uniqueId = uniqueId;
+             this.uniqueId = uniqueId;
     } 
     public String getUniqueIdLv1(){
         return uniqueIdLv1;
     } 
     public void setUniqueIdLv1(String uniqueIdLv1) {
-         this.uniqueIdLv1 = uniqueIdLv1;
+             this.uniqueIdLv1 = uniqueIdLv1;
     } 
     public String getUniqueIdLv2(){
         return uniqueIdLv2;
     } 
     public void setUniqueIdLv2(String uniqueIdLv2) {
-         this.uniqueIdLv2 = uniqueIdLv2;
+             this.uniqueIdLv2 = uniqueIdLv2;
     } 
     public String getP900(){
         return p900;
     } 
     public void setP900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getPatientId(){
         return patientId;
     } 
     public void setPatientId(String patientId) {
-         this.patientId = patientId;
+             this.patientId = patientId;
     } 
     public String getVisitId(){
         return visitId;
     } 
     public void setVisitId(String visitId) {
-         this.visitId = visitId;
+             this.visitId = visitId;
     } 
     public String getExamNo(){
         return examNo;
     } 
     public void setExamNo(String examNo) {
-         this.examNo = examNo;
+             this.examNo = examNo;
     } 
     public String getExamClass(){
         return examClass;
     } 
     public void setExamClass(String examClass) {
-         this.examClass = examClass;
+             this.examClass = examClass;
     } 
     public String getClinSymp(){
         return clinSymp;
     } 
     public void setClinSymp(String clinSymp) {
-         this.clinSymp = clinSymp;
+             this.clinSymp = clinSymp;
     } 
     public String getPhysSign(){
         return physSign;
     } 
     public void setPhysSign(String physSign) {
-         this.physSign = physSign;
+             this.physSign = physSign;
     } 
     public String getRelevantLabTest(){
         return relevantLabTest;
     } 
     public void setRelevantLabTest(String relevantLabTest) {
-         this.relevantLabTest = relevantLabTest;
+             this.relevantLabTest = relevantLabTest;
     } 
     public String getRelevantDiag(){
         return relevantDiag;
     } 
     public void setRelevantDiag(String relevantDiag) {
-         this.relevantDiag = relevantDiag;
+             this.relevantDiag = relevantDiag;
     } 
     public String getClinDiag(){
         return clinDiag;
     } 
     public void setClinDiag(String clinDiag) {
-         this.clinDiag = clinDiag;
+             this.clinDiag = clinDiag;
     } 
     public String getExamMode(){
         return examMode;
     } 
     public void setExamMode(String examMode) {
-         this.examMode = examMode;
+             this.examMode = examMode;
     } 
     public String getDevice(){
         return device;
     } 
     public void setDevice(String device) {
-         this.device = device;
+             this.device = device;
     } 
     public String getPerformedBy(){
         return performedBy;
     } 
     public void setPerformedBy(String performedBy) {
-         this.performedBy = performedBy;
+             this.performedBy = performedBy;
     } 
     public String getPatientSource(){
         return patientSource;
     } 
     public void setPatientSource(String patientSource) {
-         this.patientSource = patientSource;
+             this.patientSource = patientSource;
     } 
     public Date getReqDateTime(){
         return reqDateTime;
     } 
     public void setReqDateTime(Date reqDateTime) {
-         this.reqDateTime = reqDateTime;
+             this.reqDateTime = reqDateTime;
     } 
     public String getReqDept(){
         return reqDept;
     } 
     public void setReqDept(String reqDept) {
-         this.reqDept = reqDept;
+             this.reqDept = reqDept;
     } 
     public String getReqPhysician(){
         return reqPhysician;
     } 
     public void setReqPhysician(String reqPhysician) {
-         this.reqPhysician = reqPhysician;
+             this.reqPhysician = reqPhysician;
     } 
     public String getNotice(){
         return notice;
     } 
     public void setNotice(String notice) {
-         this.notice = notice;
+             this.notice = notice;
     } 
     public Date getExamDateTime(){
         return examDateTime;
     } 
     public void setExamDateTime(Date examDateTime) {
-         this.examDateTime = examDateTime;
+             this.examDateTime = examDateTime;
     } 
     public Date getReportDateTime(){
         return reportDateTime;
     } 
     public void setReportDateTime(Date reportDateTime) {
-         this.reportDateTime = reportDateTime;
+             this.reportDateTime = reportDateTime;
     } 
     public String getExamPosition(){
         return examPosition;
     } 
     public void setExamPosition(String examPosition) {
-         this.examPosition = examPosition;
+             this.examPosition = examPosition;
     } 
     public String getDiagDoctor(){
         return diagDoctor;
     } 
     public void setDiagDoctor(String diagDoctor) {
-         this.diagDoctor = diagDoctor;
+             this.diagDoctor = diagDoctor;
     } 
     public String getReviewDoctor(){
         return reviewDoctor;
     } 
     public void setReviewDoctor(String reviewDoctor) {
-         this.reviewDoctor = reviewDoctor;
+             this.reviewDoctor = reviewDoctor;
     } 
     public String getEntryName(){
         return entryName;
     } 
     public void setEntryName(String entryName) {
-         this.entryName = entryName;
+             this.entryName = entryName;
     } 
     public String getEntryResults(){
         return entryResults;
     } 
     public void setEntryResults(String entryResults) {
-         this.entryResults = entryResults;
+             this.entryResults = entryResults;
     } 
     public String getExamPara(){
         return examPara;
     } 
     public void setExamPara(String examPara) {
-         this.examPara = examPara;
+             this.examPara = examPara;
     } 
     public String getDescription(){
         return description;
     } 
     public void setDescription(String description) {
-         this.description = description;
+             this.description = description;
     } 
     public String getIsAbnormal(){
         return isAbnormal;
     } 
     public void setIsAbnormal(String isAbnormal) {
-         this.isAbnormal = isAbnormal;
+             this.isAbnormal = isAbnormal;
     } 
     public String getUseImage(){
         return useImage;
     } 
     public void setUseImage(String useImage) {
-         this.useImage = useImage;
+             this.useImage = useImage;
     } 
     public String getMemo(){
         return memo;
     } 
     public void setMemo(String memo) {
-         this.memo = memo;
+             this.memo = memo;
     } 
     public String getDataVersion(){
         return dataVersion;
     } 
     public void setDataVersion(String dataVersion) {
-         this.dataVersion = dataVersion;
+             this.dataVersion = dataVersion;
     } 
     public String getDataDbSource(){
         return dataDbSource;
     } 
     public void setDataDbSource(String dataDbSource) {
-         this.dataDbSource = dataDbSource;
+             this.dataDbSource = dataDbSource;
     } 
     public String getDataTableSource(){
         return dataTableSource;
     } 
     public void setDataTableSource(String dataTableSource) {
-         this.dataTableSource = dataTableSource;
+             this.dataTableSource = dataTableSource;
     } 
     public String getDataFieldSource(){
         return dataFieldSource;
     } 
     public void setDataFieldSource(String dataFieldSource) {
-         this.dataFieldSource = dataFieldSource;
+             this.dataFieldSource = dataFieldSource;
     } 
     public Date getCreatedAt(){
         return createdAt;
     } 
     public void setCreatedAt(Date createdAt) {
-         this.createdAt = createdAt;
+             this.createdAt = createdAt;
     } 
     public String getCreator(){
         return creator;
     } 
     public void setCreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getUpdatedAt(){
         return updatedAt;
     } 
     public void setUpdatedAt(Date updatedAt) {
-         this.updatedAt = updatedAt;
+             this.updatedAt = updatedAt;
     } 
 }

@@ -41,6 +41,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteIndexPathologyIcd">
+   delete  from index_pathology_icd where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateIndexPathologyIcd"  parameterType="com.clinical.model.cluster.IndexPathologyIcd">
       update   index_pathology_icd
  set

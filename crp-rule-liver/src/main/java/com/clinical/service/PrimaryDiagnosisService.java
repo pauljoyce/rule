@@ -1,11 +1,15 @@
 package com.clinical.service;
 import com.clinical.model.cluster.PrimaryDiagnosis;
 
+import java.util.List;
+
 
 public interface PrimaryDiagnosisService {
 
 
 
     public  void savePrimaryDiagnosis(PrimaryDiagnosis primaryDiagnosis);
+
+    public  void deletePrimaryDiagnosis(List<String> uniqueId);
 
 }

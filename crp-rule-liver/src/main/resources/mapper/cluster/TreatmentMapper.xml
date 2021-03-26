@@ -51,6 +51,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteTreatment">
+   delete  from treatment where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateTreatment"  parameterType="com.clinical.model.cluster.Treatment">
       update   treatment
  set

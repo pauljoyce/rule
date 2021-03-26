@@ -5,4 +5,5 @@ import java.util.List;
 public interface ZjOutpRecordMapper {
     List<OUTP_RECORD>  findZjOutpRecordByUniqueId(String unique_id_lv2);
 
+    List<String> findZjOutpRecordByIncr();
 }

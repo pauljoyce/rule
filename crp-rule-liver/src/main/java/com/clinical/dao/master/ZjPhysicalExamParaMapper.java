@@ -5,4 +5,5 @@ import java.util.List;
 public interface ZjPhysicalExamParaMapper {
     List<PHYSICAL_EXAM_PARA>  findZjPhysicalExamParaByUniqueId(String unique_id_lv2);
 
+    List<String> findZjPhysicalExamParaByIncr();
 }

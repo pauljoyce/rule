@@ -6,4 +6,13 @@
        SELECT * FROM ABDOM_MR_DESCRIPTION WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
+       <select id="findZjAbdomMrDescriptionByUniqueId2"  resultType="com.clinical.model.master.ABDOM_MR_DESCRIPTION">
+       SELECT * FROM ABDOM_MR_DESCRIPTION WHERE unique_id = #{unique_id}
+</select>
+
+<select id="findZjAbdomMrDescriptionByIncr"  resultType="java.lang.String">
+       select distinct(unique_id_lv2) FROM ABDOM_MR_DESCRIPTION where date(created_at) = date_sub(curdate(),interval 1 day) 
+</select>
+
+
 </mapper>

@@ -5,4 +5,5 @@ import java.util.List;
 public interface ZjVitalRecordMapper {
     List<VITAL_RECORD>  findZjVitalRecordByUniqueId(String unique_id_lv2);
 
+    List<String> findZjVitalRecordByIncr();
 }

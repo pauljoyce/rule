@@ -15,6 +15,17 @@
        visit_id,
        exam_no,
        exam_name,
+       structure,
+       location,
+       lesion,
+       size,
+       quanity,
+       structure_std,
+       structure_site_std,
+       lesion_std,
+       lesion_type_std,
+       size_std,
+       quantity_std,
        tumor_count,
        tumor_size,
        transfer_count,
@@ -35,6 +46,17 @@ values
        #{visitId},
        #{examNo},
        #{examName},
+       #{structure},
+       #{location},
+       #{lesion},
+       #{size},
+       #{quanity},
+       #{structureStd},
+       #{structureSiteStd},
+       #{lesionStd},
+       #{lesionTypeStd},
+       #{sizeStd},
+       #{quantityStd},
        #{tumorCount},
        #{tumorSize},
        #{transferCount},
@@ -47,6 +69,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteAbdominalCtDes">
+   delete  from abdominal_ct_des where unique_id_lv1 in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateAbdominalCtDes"  parameterType="com.clinical.model.cluster.AbdominalCtDes">
       update   abdominal_ct_des
  set
@@ -58,6 +88,17 @@ values
     visit_id = #{visitId},  
     exam_no = #{examNo},  
     exam_name = #{examName},  
+    structure = #{structure},  
+    location = #{location},  
+    lesion = #{lesion},  
+    size = #{size},  
+    quanity = #{quanity},  
+    structure_std = #{structureStd},  
+    structure_site_std = #{structureSiteStd},  
+    lesion_std = #{lesionStd},  
+    lesion_type_std = #{lesionTypeStd},  
+    size_std = #{sizeStd},  
+    quantity_std = #{quantityStd},  
     tumor_count = #{tumorCount},  
     tumor_size = #{tumorSize},  
     transfer_count = #{transferCount},  

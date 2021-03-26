@@ -4,6 +4,8 @@ import com.clinical.model.cluster.AbdominalMriResult;
 import org.springframework.beans.factory.annotation.Autowired;import com.clinical.service.AbdominalMriResultService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AbdominalMriResultServiceImpl implements AbdominalMriResultService {
 
@@ -15,6 +17,12 @@ public class AbdominalMriResultServiceImpl implements AbdominalMriResultService 
     @Override
     public  void saveAbdominalMriResult(AbdominalMriResult abdominalMriResult) {
          abdominalMriResultMapper.saveAbdominalMriResult(abdominalMriResult);
+
+     }
+
+    @Override
+    public  void deleteAbdominalMriResult(List<String> uniqueId) {
+         abdominalMriResultMapper.deleteAbdominalMriResult(uniqueId);
 
      }
 }

@@ -61,6 +61,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteFollowUp">
+   delete  from follow_up where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateFollowUp"  parameterType="com.clinical.model.cluster.FollowUp">
       update   follow_up
  set

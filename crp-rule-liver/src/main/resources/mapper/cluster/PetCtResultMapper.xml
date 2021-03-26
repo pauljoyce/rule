@@ -17,8 +17,8 @@
        exam_name,
        tumor,
        recrudescence,
-       transfer,
        transfer_site,
+       ascites,
        data_version,
        data_db_source,
        data_table_source,
@@ -37,8 +37,8 @@ values
        #{examName},
        #{tumor},
        #{recrudescence},
-       #{transfer},
        #{transferSite},
+       #{ascites},
        #{dataVersion},
        #{dataDbSource},
        #{dataTableSource},
@@ -47,6 +47,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deletePetCtResult">
+   delete  from pet_ct_result where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updatePetCtResult"  parameterType="com.clinical.model.cluster.PetCtResult">
       update   pet_ct_result
  set
@@ -60,8 +68,8 @@ values
     exam_name = #{examName},  
     tumor = #{tumor},  
     recrudescence = #{recrudescence},  
-    transfer = #{transfer},  
     transfer_site = #{transferSite},  
+    ascites = #{ascites},  
     data_version = #{dataVersion},  
     data_db_source = #{dataDbSource},  
     data_table_source = #{dataTableSource},  

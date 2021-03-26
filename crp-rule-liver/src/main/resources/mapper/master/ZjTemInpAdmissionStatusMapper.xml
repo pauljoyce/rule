@@ -6,4 +6,9 @@
        SELECT * FROM TEM_INP_ADMISSION_STATUS WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
+<select id="findZjTemInpAdmissionStatusByIncr"  resultType="java.lang.String">
+       select distinct(unique_id_lv2) FROM TEM_INP_ADMISSION_STATUS where date(created_at) = date_sub(curdate(),interval 1 day) 
+</select>
+
+
 </mapper>

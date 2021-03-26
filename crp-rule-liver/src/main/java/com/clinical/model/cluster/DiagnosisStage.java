@@ -46,120 +46,120 @@ public class DiagnosisStage{
         return id;
     } 
     public void setId(Integer id) {
-         this.id = id;
+             this.id = id;
     } 
     public String getUniqueId(){
         return uniqueId;
     } 
     public void setUniqueId(String uniqueId) {
-         this.uniqueId = uniqueId;
+             this.uniqueId = uniqueId;
     } 
     public String getUniqueIdLv1(){
         return uniqueIdLv1;
     } 
     public void setUniqueIdLv1(String uniqueIdLv1) {
-         this.uniqueIdLv1 = uniqueIdLv1;
+             this.uniqueIdLv1 = uniqueIdLv1;
     } 
     public String getUniqueIdLv2(){
         return uniqueIdLv2;
     } 
     public void setUniqueIdLv2(String uniqueIdLv2) {
-         this.uniqueIdLv2 = uniqueIdLv2;
+             this.uniqueIdLv2 = uniqueIdLv2;
     } 
     public String getP900(){
         return p900;
     } 
     public void setP900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getPatientId(){
         return patientId;
     } 
     public void setPatientId(String patientId) {
-         this.patientId = patientId;
+             this.patientId = patientId;
     } 
     public String getVisitId(){
         return visitId;
     } 
     public void setVisitId(String visitId) {
-         this.visitId = visitId;
+             this.visitId = visitId;
     } 
     public String getDiagName(){
         return diagName;
     } 
     public void setDiagName(String diagName) {
-         this.diagName = diagName;
+             this.diagName = diagName;
     } 
     public String getDiagNameStd(){
         return diagNameStd;
     } 
     public void setDiagNameStd(String diagNameStd) {
-         this.diagNameStd = diagNameStd;
+             this.diagNameStd = diagNameStd;
     } 
     public String getTStage(){
         return tStage;
     } 
     public void setTStage(String tStage) {
-         this.tStage = tStage;
+             this.tStage = tStage;
     } 
     public String getNStage(){
         return nStage;
     } 
     public void setNStage(String nStage) {
-         this.nStage = nStage;
+             this.nStage = nStage;
     } 
     public String getMStage(){
         return mStage;
     } 
     public void setMStage(String mStage) {
-         this.mStage = mStage;
+             this.mStage = mStage;
     } 
     public String getTnmStage(){
         return tnmStage;
     } 
     public void setTnmStage(String tnmStage) {
-         this.tnmStage = tnmStage;
+             this.tnmStage = tnmStage;
     } 
     public String getDataVersion(){
         return dataVersion;
     } 
     public void setDataVersion(String dataVersion) {
-         this.dataVersion = dataVersion;
+             this.dataVersion = dataVersion;
     } 
     public String getDataDbSource(){
         return dataDbSource;
     } 
     public void setDataDbSource(String dataDbSource) {
-         this.dataDbSource = dataDbSource;
+             this.dataDbSource = dataDbSource;
     } 
     public String getDataTableSource(){
         return dataTableSource;
     } 
     public void setDataTableSource(String dataTableSource) {
-         this.dataTableSource = dataTableSource;
+             this.dataTableSource = dataTableSource;
     } 
     public String getDataFieldSource(){
         return dataFieldSource;
     } 
     public void setDataFieldSource(String dataFieldSource) {
-         this.dataFieldSource = dataFieldSource;
+             this.dataFieldSource = dataFieldSource;
     } 
     public Date getCreatedAt(){
         return createdAt;
     } 
     public void setCreatedAt(Date createdAt) {
-         this.createdAt = createdAt;
+             this.createdAt = createdAt;
     } 
     public String getCreator(){
         return creator;
     } 
     public void setCreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getUpdatedAt(){
         return updatedAt;
     } 
     public void setUpdatedAt(Date updatedAt) {
-         this.updatedAt = updatedAt;
+             this.updatedAt = updatedAt;
     } 
 }

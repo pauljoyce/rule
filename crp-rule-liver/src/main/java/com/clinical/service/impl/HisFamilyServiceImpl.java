@@ -4,6 +4,8 @@ import com.clinical.model.cluster.HisFamily;
 import org.springframework.beans.factory.annotation.Autowired;import com.clinical.service.HisFamilyService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class HisFamilyServiceImpl implements HisFamilyService {
 
@@ -15,6 +17,12 @@ public class HisFamilyServiceImpl implements HisFamilyService {
     @Override
     public  void saveHisFamily(HisFamily hisFamily) {
          hisFamilyMapper.saveHisFamily(hisFamily);
+
+     }
+
+    @Override
+    public  void deleteHisFamily(List<String> uniqueId) {
+         hisFamilyMapper.deleteHisFamily(uniqueId);
 
      }
 }

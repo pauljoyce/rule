@@ -43,6 +43,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteExamMasterStd">
+   delete  from exam_master_std where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateExamMasterStd"  parameterType="com.clinical.model.cluster.ExamMasterStd">
       update   exam_master_std
  set

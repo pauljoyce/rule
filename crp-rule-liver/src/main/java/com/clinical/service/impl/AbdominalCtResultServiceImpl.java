@@ -4,6 +4,8 @@ import com.clinical.model.cluster.AbdominalCtResult;
 import org.springframework.beans.factory.annotation.Autowired;import com.clinical.service.AbdominalCtResultService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AbdominalCtResultServiceImpl implements AbdominalCtResultService {
 
@@ -15,6 +17,12 @@ public class AbdominalCtResultServiceImpl implements AbdominalCtResultService {
     @Override
     public  void saveAbdominalCtResult(AbdominalCtResult abdominalCtResult) {
          abdominalCtResultMapper.saveAbdominalCtResult(abdominalCtResult);
+
+     }
+
+    @Override
+    public  void deleteAbdominalCtResult(List<String> uniqueId) {
+         abdominalCtResultMapper.deleteAbdominalCtResult(uniqueId);
 
      }
 }

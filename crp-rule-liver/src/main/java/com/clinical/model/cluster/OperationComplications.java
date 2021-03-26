@@ -17,80 +17,86 @@ public class OperationComplications{
     private String visitId;
     //脂肪液化
     private String fatLiquefaction;
-    //发热
-    private String fever;
-    //感染
-    private String infected;
-    //肝功能衰竭
-    private String liverFailure;
-    //消化道内出血
-    private String gastrointestinalBleeding;
-    //急腹症
-    private String acuteAbdomen;
-    //肌无力
-    private String myasthenia;
-    //无尿
-    private String anuria;
-    //腹腔感染
-    private String abdominalInfection;
+    //皮下积液
+    private String scalpHydrops;
+    //切口血肿
+    private String incisionHematoma;
+    //切口愈合不良
+    private String poorWoundHealing;
+    //切口感染
+    private String incisionInfection;
+    //切口裂开
+    private String woundDisruption;
+    //吻合口瘘
+    private String stomaFistula;
+    //肛瘘
+    private String analFistula;
+    //肠瘘                                                                                            
+    private String intestinalFistula;
+    //十二指肠残端瘘
+    private String duodenalStumpFistula;
+    //淋巴漏
+    private String lymphLeakage;
+    //胰瘘
+    private String pancreaticFistula;
     //腹腔内出血
-    private String intraperitonealHemorrhage;
-    //胆道感染
-    private String biliaryTractInfection;
-    //休克
-    private String shock;
-    //便秘
-    private String constipation;
-    //肝功能不全
-    private String liverDysfunction;
-    //腹泻
-    private String diarrhea;
-    //胸腔出血
-    private String pleuralHemorrhage;
-    //全身多器官功能衰竭
-    private String multipleOrganFailure;
-    //心脑血管意外
-    private String cerebrovascularAccident;
-    //下腔静脉狭窄
-    private String stenosisInferiorVenaCava;
-    //胆囊炎
-    private String cholecystitis;
-    //胸腔积液
-    private String pleuralEffusion;
-    //肾功能衰竭
-    private String renalFailure;
-    //肠梗阻
-    private String intestinalObstruction;
-    //腹腔积液
-    private String ascites;
-    //肺部感染
-    private String pulmonaryInfection;
-    //低蛋白血症
-    private String hypoproteinemia;
-    //胰腺炎
-    private String pancreatitis;
-    //肺栓塞
-    private String pulmonaryEmbolism;
-    //气胸
-    private String pneumothorax;
-    //癫痫大发作
-    private String grandMal;
-    //肝性脑病
-    private String hepaticEncephalopathy;
-    //胆漏
-    private String bileLeakage;
+    private String abdominalBleeding;
+    //消化道内出血（消化道溃疡并出血）
+    private String inAlimentaryBleeding;
+    //手术周围器官损伤出血
+    private String opsDamageBleeding;
+    //脾出血
+    private String splenorrhagia;
+    //胰腺出血
+    private String pancreasBleeding;
+    //肝出血
+    private String liverBleeding;
+    //肠出血
+    private String enterorrhagid;
+    //肾出血
+    private String nephrorrhagia;
     //吻合口瘘
     private String anastomoticLeakage;
-    //昏迷
-    private String coma;
-    //谵妄
-    private String delirium;
-    //眩晕
-    private String vertigo;
-    //恶心
-    private String nausea;
-    //晕厥
-    private String syncope;
+    //吻合口出血
+    private String anastomoticBleeding;
+    //吻合口狭窄
+    private String anastomoticStenosis;
+    //腹腔积液
+    private String ascites;
+    //腹腔脓肿
+    private String abdominalAbscess;
+    //腹腔感染
+    private String abdominalInfection;
+    //肠梗阻
+    private String intestinalObstruction;
+    //残胃炎（残胃溃疡）
+    private String remnantGastritis;
+    //胃瘫
+    private String gastroparesis;
+    //十二指肠球炎（十二指肠溃疡）
+    private String bulbarDuodenitis;
+    //胰腺炎
+    private String pancreatitis;
+    //肝炎
+    private String hepatitis;
+    //胆囊炎
+    private String cholecystitis;
+    //肺炎
+    private String pneumonia;
+    //胸腔积液
+    private String pleuralEffusion;
+    //肝衰竭
+    private String hepaticFailure;
+    //肾衰竭
+    private String renalFailure;
+    //心脑血管意外
+    private String cardiovascularAccident;
+    //深静脉血栓
+    private String deepVenousThrombosis;
+    //肺栓塞
+    private String pulmonaryEmbolism;
+    //并发症发生日期
+    private Date complicationDate;
     //数据版本
     private String dataVersion;
     //数据库来源
@@ -110,312 +116,330 @@ public class OperationComplications{
         return id;
     } 
     public void setId(Integer id) {
-         this.id = id;
+             this.id = id;
     } 
     public String getUniqueId(){
         return uniqueId;
     } 
     public void setUniqueId(String uniqueId) {
-         this.uniqueId = uniqueId;
+             this.uniqueId = uniqueId;
     } 
     public String getUniqueIdLv1(){
         return uniqueIdLv1;
     } 
     public void setUniqueIdLv1(String uniqueIdLv1) {
-         this.uniqueIdLv1 = uniqueIdLv1;
+             this.uniqueIdLv1 = uniqueIdLv1;
     } 
     public String getUniqueIdLv2(){
         return uniqueIdLv2;
     } 
     public void setUniqueIdLv2(String uniqueIdLv2) {
-         this.uniqueIdLv2 = uniqueIdLv2;
+             this.uniqueIdLv2 = uniqueIdLv2;
     } 
     public String getP900(){
         return p900;
     } 
     public void setP900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getPatientId(){
         return patientId;
     } 
     public void setPatientId(String patientId) {
-         this.patientId = patientId;
+             this.patientId = patientId;
     } 
     public String getVisitId(){
         return visitId;
     } 
     public void setVisitId(String visitId) {
-         this.visitId = visitId;
+             this.visitId = visitId;
     } 
     public String getFatLiquefaction(){
         return fatLiquefaction;
     } 
     public void setFatLiquefaction(String fatLiquefaction) {
-         this.fatLiquefaction = fatLiquefaction;
+             this.fatLiquefaction = fatLiquefaction;
     } 
-    public String getFever(){
-        return fever;
+    public String getScalpHydrops(){
+        return scalpHydrops;
     } 
-    public void setFever(String fever) {
-         this.fever = fever;
+    public void setScalpHydrops(String scalpHydrops) {
+             this.scalpHydrops = scalpHydrops;
     } 
-    public String getInfected(){
-        return infected;
+    public String getIncisionHematoma(){
+        return incisionHematoma;
     } 
-    public void setInfected(String infected) {
-         this.infected = infected;
+    public void setIncisionHematoma(String incisionHematoma) {
+             this.incisionHematoma = incisionHematoma;
     } 
-    public String getLiverFailure(){
-        return liverFailure;
+    public String getPoorWoundHealing(){
+        return poorWoundHealing;
     } 
-    public void setLiverFailure(String liverFailure) {
-         this.liverFailure = liverFailure;
+    public void setPoorWoundHealing(String poorWoundHealing) {
+             this.poorWoundHealing = poorWoundHealing;
     } 
-    public String getGastrointestinalBleeding(){
-        return gastrointestinalBleeding;
+    public String getIncisionInfection(){
+        return incisionInfection;
     } 
-    public void setGastrointestinalBleeding(String gastrointestinalBleeding) {
-         this.gastrointestinalBleeding = gastrointestinalBleeding;
+    public void setIncisionInfection(String incisionInfection) {
+             this.incisionInfection = incisionInfection;
     } 
-    public String getAcuteAbdomen(){
-        return acuteAbdomen;
+    public String getWoundDisruption(){
+        return woundDisruption;
     } 
-    public void setAcuteAbdomen(String acuteAbdomen) {
-         this.acuteAbdomen = acuteAbdomen;
+    public void setWoundDisruption(String woundDisruption) {
+             this.woundDisruption = woundDisruption;
     } 
-    public String getMyasthenia(){
-        return myasthenia;
+    public String getStomaFistula(){
+        return stomaFistula;
     } 
-    public void setMyasthenia(String myasthenia) {
-         this.myasthenia = myasthenia;
+    public void setStomaFistula(String stomaFistula) {
+             this.stomaFistula = stomaFistula;
     } 
-    public String getAnuria(){
-        return anuria;
+    public String getAnalFistula(){
+        return analFistula;
     } 
-    public void setAnuria(String anuria) {
-         this.anuria = anuria;
+    public void setAnalFistula(String analFistula) {
+             this.analFistula = analFistula;
     } 
-    public String getAbdominalInfection(){
-        return abdominalInfection;
+    public String getIntestinalFistula(){
+        return intestinalFistula;
     } 
-    public void setAbdominalInfection(String abdominalInfection) {
-         this.abdominalInfection = abdominalInfection;
+    public void setIntestinalFistula(String intestinalFistula) {
+             this.intestinalFistula = intestinalFistula;
     } 
-    public String getIntraperitonealHemorrhage(){
-        return intraperitonealHemorrhage;
+    public String getDuodenalStumpFistula(){
+        return duodenalStumpFistula;
     } 
-    public void setIntraperitonealHemorrhage(String intraperitonealHemorrhage) {
-         this.intraperitonealHemorrhage = intraperitonealHemorrhage;
+    public void setDuodenalStumpFistula(String duodenalStumpFistula) {
+             this.duodenalStumpFistula = duodenalStumpFistula;
     } 
-    public String getBiliaryTractInfection(){
-        return biliaryTractInfection;
+    public String getLymphLeakage(){
+        return lymphLeakage;
     } 
-    public void setBiliaryTractInfection(String biliaryTractInfection) {
-         this.biliaryTractInfection = biliaryTractInfection;
+    public void setLymphLeakage(String lymphLeakage) {
+             this.lymphLeakage = lymphLeakage;
     } 
-    public String getShock(){
-        return shock;
+    public String getPancreaticFistula(){
+        return pancreaticFistula;
     } 
-    public void setShock(String shock) {
-         this.shock = shock;
+    public void setPancreaticFistula(String pancreaticFistula) {
+             this.pancreaticFistula = pancreaticFistula;
     } 
-    public String getConstipation(){
-        return constipation;
+    public String getAbdominalBleeding(){
+        return abdominalBleeding;
     } 
-    public void setConstipation(String constipation) {
-         this.constipation = constipation;
+    public void setAbdominalBleeding(String abdominalBleeding) {
+             this.abdominalBleeding = abdominalBleeding;
     } 
-    public String getLiverDysfunction(){
-        return liverDysfunction;
+    public String getInAlimentaryBleeding(){
+        return inAlimentaryBleeding;
     } 
-    public void setLiverDysfunction(String liverDysfunction) {
-         this.liverDysfunction = liverDysfunction;
+    public void setInAlimentaryBleeding(String inAlimentaryBleeding) {
+             this.inAlimentaryBleeding = inAlimentaryBleeding;
     } 
-    public String getDiarrhea(){
-        return diarrhea;
+    public String getOpsDamageBleeding(){
+        return opsDamageBleeding;
     } 
-    public void setDiarrhea(String diarrhea) {
-         this.diarrhea = diarrhea;
+    public void setOpsDamageBleeding(String opsDamageBleeding) {
+             this.opsDamageBleeding = opsDamageBleeding;
     } 
-    public String getPleuralHemorrhage(){
-        return pleuralHemorrhage;
+    public String getSplenorrhagia(){
+        return splenorrhagia;
     } 
-    public void setPleuralHemorrhage(String pleuralHemorrhage) {
-         this.pleuralHemorrhage = pleuralHemorrhage;
+    public void setSplenorrhagia(String splenorrhagia) {
+             this.splenorrhagia = splenorrhagia;
     } 
-    public String getMultipleOrganFailure(){
-        return multipleOrganFailure;
+    public String getPancreasBleeding(){
+        return pancreasBleeding;
     } 
-    public void setMultipleOrganFailure(String multipleOrganFailure) {
-         this.multipleOrganFailure = multipleOrganFailure;
+    public void setPancreasBleeding(String pancreasBleeding) {
+             this.pancreasBleeding = pancreasBleeding;
     } 
-    public String getCerebrovascularAccident(){
-        return cerebrovascularAccident;
+    public String getLiverBleeding(){
+        return liverBleeding;
     } 
-    public void setCerebrovascularAccident(String cerebrovascularAccident) {
-         this.cerebrovascularAccident = cerebrovascularAccident;
+    public void setLiverBleeding(String liverBleeding) {
+             this.liverBleeding = liverBleeding;
     } 
-    public String getStenosisInferiorVenaCava(){
-        return stenosisInferiorVenaCava;
+    public String getEnterorrhagid(){
+        return enterorrhagid;
     } 
-    public void setStenosisInferiorVenaCava(String stenosisInferiorVenaCava) {
-         this.stenosisInferiorVenaCava = stenosisInferiorVenaCava;
+    public void setEnterorrhagid(String enterorrhagid) {
+             this.enterorrhagid = enterorrhagid;
     } 
-    public String getCholecystitis(){
-        return cholecystitis;
+    public String getNephrorrhagia(){
+        return nephrorrhagia;
     } 
-    public void setCholecystitis(String cholecystitis) {
-         this.cholecystitis = cholecystitis;
-    } 
-    public String getPleuralEffusion(){
-        return pleuralEffusion;
-    } 
-    public void setPleuralEffusion(String pleuralEffusion) {
-         this.pleuralEffusion = pleuralEffusion;
-    } 
-    public String getRenalFailure(){
-        return renalFailure;
-    } 
-    public void setRenalFailure(String renalFailure) {
-         this.renalFailure = renalFailure;
-    } 
-    public String getIntestinalObstruction(){
-        return intestinalObstruction;
-    } 
-    public void setIntestinalObstruction(String intestinalObstruction) {
-         this.intestinalObstruction = intestinalObstruction;
-    } 
-    public String getAscites(){
-        return ascites;
-    } 
-    public void setAscites(String ascites) {
-         this.ascites = ascites;
-    } 
-    public String getPulmonaryInfection(){
-        return pulmonaryInfection;
-    } 
-    public void setPulmonaryInfection(String pulmonaryInfection) {
-         this.pulmonaryInfection = pulmonaryInfection;
-    } 
-    public String getHypoproteinemia(){
-        return hypoproteinemia;
-    } 
-    public void setHypoproteinemia(String hypoproteinemia) {
-         this.hypoproteinemia = hypoproteinemia;
-    } 
-    public String getPancreatitis(){
-        return pancreatitis;
-    } 
-    public void setPancreatitis(String pancreatitis) {
-         this.pancreatitis = pancreatitis;
-    } 
-    public String getPulmonaryEmbolism(){
-        return pulmonaryEmbolism;
-    } 
-    public void setPulmonaryEmbolism(String pulmonaryEmbolism) {
-         this.pulmonaryEmbolism = pulmonaryEmbolism;
-    } 
-    public String getPneumothorax(){
-        return pneumothorax;
-    } 
-    public void setPneumothorax(String pneumothorax) {
-         this.pneumothorax = pneumothorax;
-    } 
-    public String getGrandMal(){
-        return grandMal;
-    } 
-    public void setGrandMal(String grandMal) {
-         this.grandMal = grandMal;
-    } 
-    public String getHepaticEncephalopathy(){
-        return hepaticEncephalopathy;
-    } 
-    public void setHepaticEncephalopathy(String hepaticEncephalopathy) {
-         this.hepaticEncephalopathy = hepaticEncephalopathy;
-    } 
-    public String getBileLeakage(){
-        return bileLeakage;
-    } 
-    public void setBileLeakage(String bileLeakage) {
-         this.bileLeakage = bileLeakage;
+    public void setNephrorrhagia(String nephrorrhagia) {
+             this.nephrorrhagia = nephrorrhagia;
     } 
     public String getAnastomoticLeakage(){
         return anastomoticLeakage;
     } 
     public void setAnastomoticLeakage(String anastomoticLeakage) {
-         this.anastomoticLeakage = anastomoticLeakage;
+             this.anastomoticLeakage = anastomoticLeakage;
     } 
-    public String getComa(){
-        return coma;
+    public String getAnastomoticBleeding(){
+        return anastomoticBleeding;
     } 
-    public void setComa(String coma) {
-         this.coma = coma;
+    public void setAnastomoticBleeding(String anastomoticBleeding) {
+             this.anastomoticBleeding = anastomoticBleeding;
     } 
-    public String getDelirium(){
-        return delirium;
+    public String getAnastomoticStenosis(){
+        return anastomoticStenosis;
     } 
-    public void setDelirium(String delirium) {
-         this.delirium = delirium;
+    public void setAnastomoticStenosis(String anastomoticStenosis) {
+             this.anastomoticStenosis = anastomoticStenosis;
     } 
-    public String getVertigo(){
-        return vertigo;
+    public String getAscites(){
+        return ascites;
     } 
-    public void setVertigo(String vertigo) {
-         this.vertigo = vertigo;
+    public void setAscites(String ascites) {
+             this.ascites = ascites;
     } 
-    public String getNausea(){
-        return nausea;
+    public String getAbdominalAbscess(){
+        return abdominalAbscess;
     } 
-    public void setNausea(String nausea) {
-         this.nausea = nausea;
+    public void setAbdominalAbscess(String abdominalAbscess) {
+             this.abdominalAbscess = abdominalAbscess;
     } 
-    public String getSyncope(){
-        return syncope;
+    public String getAbdominalInfection(){
+        return abdominalInfection;
     } 
-    public void setSyncope(String syncope) {
-         this.syncope = syncope;
+    public void setAbdominalInfection(String abdominalInfection) {
+             this.abdominalInfection = abdominalInfection;
+    } 
+    public String getIntestinalObstruction(){
+        return intestinalObstruction;
+    } 
+    public void setIntestinalObstruction(String intestinalObstruction) {
+             this.intestinalObstruction = intestinalObstruction;
+    } 
+    public String getRemnantGastritis(){
+        return remnantGastritis;
+    } 
+    public void setRemnantGastritis(String remnantGastritis) {
+             this.remnantGastritis = remnantGastritis;
+    } 
+    public String getGastroparesis(){
+        return gastroparesis;
+    } 
+    public void setGastroparesis(String gastroparesis) {
+             this.gastroparesis = gastroparesis;
+    } 
+    public String getBulbarDuodenitis(){
+        return bulbarDuodenitis;
+    } 
+    public void setBulbarDuodenitis(String bulbarDuodenitis) {
+             this.bulbarDuodenitis = bulbarDuodenitis;
+    } 
+    public String getPancreatitis(){
+        return pancreatitis;
+    } 
+    public void setPancreatitis(String pancreatitis) {
+             this.pancreatitis = pancreatitis;
+    } 
+    public String getHepatitis(){
+        return hepatitis;
+    } 
+    public void setHepatitis(String hepatitis) {
+             this.hepatitis = hepatitis;
+    } 
+    public String getCholecystitis(){
+        return cholecystitis;
+    } 
+    public void setCholecystitis(String cholecystitis) {
+             this.cholecystitis = cholecystitis;
+    } 
+    public String getPneumonia(){
+        return pneumonia;
+    } 
+    public void setPneumonia(String pneumonia) {
+             this.pneumonia = pneumonia;
+    } 
+    public String getPleuralEffusion(){
+        return pleuralEffusion;
+    } 
+    public void setPleuralEffusion(String pleuralEffusion) {
+             this.pleuralEffusion = pleuralEffusion;
+    } 
+    public String getHepaticFailure(){
+        return hepaticFailure;
+    } 
+    public void setHepaticFailure(String hepaticFailure) {
+             this.hepaticFailure = hepaticFailure;
+    } 
+    public String getRenalFailure(){
+        return renalFailure;
+    } 
+    public void setRenalFailure(String renalFailure) {
+             this.renalFailure = renalFailure;
+    } 
+    public String getCardiovascularAccident(){
+        return cardiovascularAccident;
+    } 
+    public void setCardiovascularAccident(String cardiovascularAccident) {
+             this.cardiovascularAccident = cardiovascularAccident;
+    } 
+    public String getDeepVenousThrombosis(){
+        return deepVenousThrombosis;
+    } 
+    public void setDeepVenousThrombosis(String deepVenousThrombosis) {
+             this.deepVenousThrombosis = deepVenousThrombosis;
+    } 
+    public String getPulmonaryEmbolism(){
+        return pulmonaryEmbolism;
+    } 
+    public void setPulmonaryEmbolism(String pulmonaryEmbolism) {
+             this.pulmonaryEmbolism = pulmonaryEmbolism;
+    } 
+    public Date getComplicationDate(){
+        return complicationDate;
+    } 
+    public void setComplicationDate(Date complicationDate) {
+             this.complicationDate = complicationDate;
     } 
     public String getDataVersion(){
         return dataVersion;
     } 
     public void setDataVersion(String dataVersion) {
-         this.dataVersion = dataVersion;
+             this.dataVersion = dataVersion;
     } 
     public String getDataDbSource(){
         return dataDbSource;
     } 
     public void setDataDbSource(String dataDbSource) {
-         this.dataDbSource = dataDbSource;
+             this.dataDbSource = dataDbSource;
     } 
     public String getDataTableSource(){
         return dataTableSource;
     } 
     public void setDataTableSource(String dataTableSource) {
-         this.dataTableSource = dataTableSource;
+             this.dataTableSource = dataTableSource;
     } 
     public String getDataFieldSource(){
         return dataFieldSource;
     } 
     public void setDataFieldSource(String dataFieldSource) {
-         this.dataFieldSource = dataFieldSource;
+             this.dataFieldSource = dataFieldSource;
     } 
     public Date getCreatedAt(){
         return createdAt;
     } 
     public void setCreatedAt(Date createdAt) {
-         this.createdAt = createdAt;
+             this.createdAt = createdAt;
     } 
     public String getCreator(){
         return creator;
     } 
     public void setCreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getUpdatedAt(){
         return updatedAt;
     } 
     public void setUpdatedAt(Date updatedAt) {
-         this.updatedAt = updatedAt;
+             this.updatedAt = updatedAt;
     } 
 }

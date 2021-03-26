@@ -24,7 +24,6 @@
        telephone,
        relationship,
        patient_class,
-        first_visit_age,
        data_version,
        data_db_source,
        data_table_source,
@@ -50,7 +49,6 @@ values
        #{telephone},
        #{relationship},
        #{patientClass},
-        #{firstVisitAge},
        #{dataVersion},
        #{dataDbSource},
        #{dataTableSource},
@@ -59,6 +57,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deletePerson">
+   delete  from person where unique_id   in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updatePerson"  parameterType="com.clinical.model.cluster.Person">
       update   person
  set
@@ -88,4 +94,10 @@ values
     updated_at = #{updatedAt}
    where id = #{id}
 </update>
+
+    <update id="truncateAllTable" parameterType="java.lang.String">
+        TRUNCATE table ${tableName}
+    </update>
+
+
 </mapper>

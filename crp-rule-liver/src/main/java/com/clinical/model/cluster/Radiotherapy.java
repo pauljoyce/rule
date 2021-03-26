@@ -19,20 +19,32 @@ public class Radiotherapy{
     private Date radioBeginTime;
     //放疗结束日期
     private Date radioEndTime;
-    //放射源
-    private String radioSource;
+    //放疗目的
+    private String purpose;
     //放疗模式
-    private String radioStyle;
-    //放疗射线能量
-    private String radioRayEnergy;
-    //放疗部位及剂量
-    private String radioSiteAndDose;
-    //放疗副反应与分级
-    private String radioLevel;
-    //责任医生
-    private String radioDoctor;
-    //疗效评估
-    private String efficacyEvaluation;
+    private String mode;
+    //放疗部位
+    private String site;
+    //放疗部位类型
+    private String siteType;
+    //靶区部位
+    private String targetSite;
+    //放疗方式
+    private String way;
+    //射线类型
+    private String rayType;
+    //放疗总量
+    private Double totalDose;
+    //放疗单次剂量
+    private Double singleDose;
+    //放疗次数
+    private String radioNumber;
+    //处方放疗总量
+    private String prescriptRadioTotal;
+    //处方放疗单次剂量
+    private String prescriptRadioSingle;
+    //处方放疗次数
+    private String prescriptRadioNumber;
     //数据版本
     private String dataVersion;
     //数据库来源
@@ -52,138 +64,174 @@ public class Radiotherapy{
         return id;
     } 
     public void setId(Integer id) {
-         this.id = id;
+             this.id = id;
     } 
     public String getUniqueId(){
         return uniqueId;
     } 
     public void setUniqueId(String uniqueId) {
-         this.uniqueId = uniqueId;
+             this.uniqueId = uniqueId;
     } 
     public String getUniqueIdLv1(){
         return uniqueIdLv1;
     } 
     public void setUniqueIdLv1(String uniqueIdLv1) {
-         this.uniqueIdLv1 = uniqueIdLv1;
+             this.uniqueIdLv1 = uniqueIdLv1;
     } 
     public String getUniqueIdLv2(){
         return uniqueIdLv2;
     } 
     public void setUniqueIdLv2(String uniqueIdLv2) {
-         this.uniqueIdLv2 = uniqueIdLv2;
+             this.uniqueIdLv2 = uniqueIdLv2;
     } 
     public String getP900(){
         return p900;
     } 
     public void setP900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getPatientId(){
         return patientId;
     } 
     public void setPatientId(String patientId) {
-         this.patientId = patientId;
+             this.patientId = patientId;
     } 
     public String getVisitId(){
         return visitId;
     } 
     public void setVisitId(String visitId) {
-         this.visitId = visitId;
+             this.visitId = visitId;
     } 
     public Date getRadioBeginTime(){
         return radioBeginTime;
     } 
     public void setRadioBeginTime(Date radioBeginTime) {
-         this.radioBeginTime = radioBeginTime;
+             this.radioBeginTime = radioBeginTime;
     } 
     public Date getRadioEndTime(){
         return radioEndTime;
     } 
     public void setRadioEndTime(Date radioEndTime) {
-         this.radioEndTime = radioEndTime;
+             this.radioEndTime = radioEndTime;
     } 
-    public String getRadioSource(){
-        return radioSource;
+    public String getPurpose(){
+        return purpose;
     } 
-    public void setRadioSource(String radioSource) {
-         this.radioSource = radioSource;
+    public void setPurpose(String purpose) {
+             this.purpose = purpose;
     } 
-    public String getRadioStyle(){
-        return radioStyle;
+    public String getMode(){
+        return mode;
     } 
-    public void setRadioStyle(String radioStyle) {
-         this.radioStyle = radioStyle;
+    public void setMode(String mode) {
+             this.mode = mode;
     } 
-    public String getRadioRayEnergy(){
-        return radioRayEnergy;
+    public String getSite(){
+        return site;
     } 
-    public void setRadioRayEnergy(String radioRayEnergy) {
-         this.radioRayEnergy = radioRayEnergy;
+    public void setSite(String site) {
+             this.site = site;
     } 
-    public String getRadioSiteAndDose(){
-        return radioSiteAndDose;
+    public String getSiteType(){
+        return siteType;
     } 
-    public void setRadioSiteAndDose(String radioSiteAndDose) {
-         this.radioSiteAndDose = radioSiteAndDose;
+    public void setSiteType(String siteType) {
+             this.siteType = siteType;
     } 
-    public String getRadioLevel(){
-        return radioLevel;
+    public String getTargetSite(){
+        return targetSite;
     } 
-    public void setRadioLevel(String radioLevel) {
-         this.radioLevel = radioLevel;
+    public void setTargetSite(String targetSite) {
+             this.targetSite = targetSite;
     } 
-    public String getRadioDoctor(){
-        return radioDoctor;
+    public String getWay(){
+        return way;
     } 
-    public void setRadioDoctor(String radioDoctor) {
-         this.radioDoctor = radioDoctor;
+    public void setWay(String way) {
+             this.way = way;
     } 
-    public String getEfficacyEvaluation(){
-        return efficacyEvaluation;
+    public String getRayType(){
+        return rayType;
     } 
-    public void setEfficacyEvaluation(String efficacyEvaluation) {
-         this.efficacyEvaluation = efficacyEvaluation;
+    public void setRayType(String rayType) {
+             this.rayType = rayType;
+    } 
+    public Double getTotalDose(){
+        return totalDose;
+    } 
+    public void setTotalDose(Double totalDose) {
+             this.totalDose = totalDose;
+    } 
+    public Double getSingleDose(){
+        return singleDose;
+    } 
+    public void setSingleDose(Double singleDose) {
+             this.singleDose = singleDose;
+    } 
+    public String getRadioNumber(){
+        return radioNumber;
+    } 
+    public void setRadioNumber(String radioNumber) {
+             this.radioNumber = radioNumber;
+    } 
+    public String getPrescriptRadioTotal(){
+        return prescriptRadioTotal;
+    } 
+    public void setPrescriptRadioTotal(String prescriptRadioTotal) {
+             this.prescriptRadioTotal = prescriptRadioTotal;
+    } 
+    public String getPrescriptRadioSingle(){
+        return prescriptRadioSingle;
+    } 
+    public void setPrescriptRadioSingle(String prescriptRadioSingle) {
+             this.prescriptRadioSingle = prescriptRadioSingle;
+    } 
+    public String getPrescriptRadioNumber(){
+        return prescriptRadioNumber;
+    } 
+    public void setPrescriptRadioNumber(String prescriptRadioNumber) {
+             this.prescriptRadioNumber = prescriptRadioNumber;
     } 
     public String getDataVersion(){
         return dataVersion;
     } 
     public void setDataVersion(String dataVersion) {
-         this.dataVersion = dataVersion;
+             this.dataVersion = dataVersion;
     } 
     public String getDataDbSource(){
         return dataDbSource;
     } 
     public void setDataDbSource(String dataDbSource) {
-         this.dataDbSource = dataDbSource;
+             this.dataDbSource = dataDbSource;
     } 
     public String getDataTableSource(){
         return dataTableSource;
     } 
     public void setDataTableSource(String dataTableSource) {
-         this.dataTableSource = dataTableSource;
+             this.dataTableSource = dataTableSource;
     } 
     public String getDataFieldSource(){
         return dataFieldSource;
     } 
     public void setDataFieldSource(String dataFieldSource) {
-         this.dataFieldSource = dataFieldSource;
+             this.dataFieldSource = dataFieldSource;
     } 
     public Date getCreatedAt(){
         return createdAt;
     } 
     public void setCreatedAt(Date createdAt) {
-         this.createdAt = createdAt;
+             this.createdAt = createdAt;
     } 
     public String getCreator(){
         return creator;
     } 
     public void setCreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getUpdatedAt(){
         return updatedAt;
     } 
     public void setUpdatedAt(Date updatedAt) {
-         this.updatedAt = updatedAt;
+             this.updatedAt = updatedAt;
     } 
 }

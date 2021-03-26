@@ -2,8 +2,9 @@ package com.clinical.dao.cluster;
 import java.util.List;
 import com.clinical.model.cluster.ExamMasterStd;
 public interface ExamMasterStdMapper {
-    List<ExamMasterStd>  findExamMasterStd(String uniqueId);
+    List<ExamMasterStd>  findExamMasterStdByUniqueId(String uniqueId);
     void   saveExamMasterStd(ExamMasterStd examMasterStd);
     void   updateExamMasterStd(ExamMasterStd examMasterStd);
+    void   deleteExamMasterStd(List<String> unique_id);
 
 }

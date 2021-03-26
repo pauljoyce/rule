@@ -65,6 +65,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteHistologyReport">
+   delete  from histology_report where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateHistologyReport"  parameterType="com.clinical.model.cluster.HistologyReport">
       update   histology_report
  set

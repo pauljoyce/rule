@@ -6,4 +6,9 @@
        SELECT * FROM SMOKE_AND_DRINK WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
+<select id="findZjSmokeAndDrinkByIncr"  resultType="java.lang.String">
+       select distinct(unique_id_lv2) FROM SMOKE_AND_DRINK where date(created_at) = date_sub(curdate(),interval 1 day) 
+</select>
+
+
 </mapper>

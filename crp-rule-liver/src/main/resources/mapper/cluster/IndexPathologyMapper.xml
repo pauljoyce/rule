@@ -6,8 +6,7 @@
        SELECT * FROM index_pathology WHERE unique_id=#{unique_id}
 </select>
 
- <insert id="saveIndexPathology"  parameterType="com.clinical.model.cluster.IndexPathology"
-         useGeneratedKeys="true" keyProperty="id">
+ <insert id="saveIndexPathology"  parameterType="com.clinical.model.cluster.IndexPathology" useGeneratedKeys="true" keyProperty="id">
   insert into index_pathology(       unique_id,
        unique_id_lv1,
        unique_id_lv2,
@@ -46,6 +45,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteIndexPathology">
+   delete  from index_pathology where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateIndexPathology"  parameterType="com.clinical.model.cluster.IndexPathology">
       update   index_pathology
  set

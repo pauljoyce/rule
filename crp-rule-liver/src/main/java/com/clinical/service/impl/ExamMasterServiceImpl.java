@@ -4,6 +4,8 @@ import com.clinical.model.cluster.ExamMaster;
 import org.springframework.beans.factory.annotation.Autowired;import com.clinical.service.ExamMasterService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ExamMasterServiceImpl implements ExamMasterService {
 
@@ -15,6 +17,12 @@ public class ExamMasterServiceImpl implements ExamMasterService {
     @Override
     public  void saveExamMaster(ExamMaster examMaster) {
          examMasterMapper.saveExamMaster(examMaster);
+
+     }
+
+    @Override
+    public  void deleteExamMaster(List<String> uniqueId) {
+         examMasterMapper.deleteExamMaster(uniqueId);
 
      }
 }

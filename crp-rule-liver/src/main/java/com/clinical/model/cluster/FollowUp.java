@@ -60,162 +60,162 @@ public class FollowUp{
         return id;
     } 
     public void setId(Integer id) {
-         this.id = id;
+             this.id = id;
     } 
     public String getUniqueId(){
         return uniqueId;
     } 
     public void setUniqueId(String uniqueId) {
-         this.uniqueId = uniqueId;
+             this.uniqueId = uniqueId;
     } 
     public String getUniqueIdLv1(){
         return uniqueIdLv1;
     } 
     public void setUniqueIdLv1(String uniqueIdLv1) {
-         this.uniqueIdLv1 = uniqueIdLv1;
+             this.uniqueIdLv1 = uniqueIdLv1;
     } 
     public String getUniqueIdLv2(){
         return uniqueIdLv2;
     } 
     public void setUniqueIdLv2(String uniqueIdLv2) {
-         this.uniqueIdLv2 = uniqueIdLv2;
+             this.uniqueIdLv2 = uniqueIdLv2;
     } 
     public String getP900(){
         return p900;
     } 
     public void setP900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getPatientId(){
         return patientId;
     } 
     public void setPatientId(String patientId) {
-         this.patientId = patientId;
+             this.patientId = patientId;
     } 
     public String getVisitId(){
         return visitId;
     } 
     public void setVisitId(String visitId) {
-         this.visitId = visitId;
+             this.visitId = visitId;
     } 
     public String getFollowUpType(){
         return followUpType;
     } 
     public void setFollowUpType(String followUpType) {
-         this.followUpType = followUpType;
+             this.followUpType = followUpType;
     } 
     public Date getFollowUpDate(){
         return followUpDate;
     } 
     public void setFollowUpDate(Date followUpDate) {
-         this.followUpDate = followUpDate;
+             this.followUpDate = followUpDate;
     } 
     public String getFollowUpState(){
         return followUpState;
     } 
     public void setFollowUpState(String followUpState) {
-         this.followUpState = followUpState;
+             this.followUpState = followUpState;
     } 
     public String getSituation(){
         return situation;
     } 
     public void setSituation(String situation) {
-         this.situation = situation;
+             this.situation = situation;
     } 
     public String getIfMedicine(){
         return ifMedicine;
     } 
     public void setIfMedicine(String ifMedicine) {
-         this.ifMedicine = ifMedicine;
+             this.ifMedicine = ifMedicine;
     } 
     public String getMedicineName(){
         return medicineName;
     } 
     public void setMedicineName(String medicineName) {
-         this.medicineName = medicineName;
+             this.medicineName = medicineName;
     } 
     public String getMedicineDose(){
         return medicineDose;
     } 
     public void setMedicineDose(String medicineDose) {
-         this.medicineDose = medicineDose;
+             this.medicineDose = medicineDose;
     } 
     public String getMedicineDuration(){
         return medicineDuration;
     } 
     public void setMedicineDuration(String medicineDuration) {
-         this.medicineDuration = medicineDuration;
+             this.medicineDuration = medicineDuration;
     } 
     public String getDeathCause (){
         return deathCause ;
     } 
     public void setDeathCause (String deathCause ) {
-         this.deathCause  = deathCause ;
+             this.deathCause  = deathCause ;
     } 
     public Date getDeathDate(){
         return deathDate;
     } 
     public void setDeathDate(Date deathDate) {
-         this.deathDate = deathDate;
+             this.deathDate = deathDate;
     } 
     public Date getLastDate(){
         return lastDate;
     } 
     public void setLastDate(Date lastDate) {
-         this.lastDate = lastDate;
+             this.lastDate = lastDate;
     } 
     public String getFollowItem(){
         return followItem;
     } 
     public void setFollowItem(String followItem) {
-         this.followItem = followItem;
+             this.followItem = followItem;
     } 
     public String getEfficacyEvaluation(){
         return efficacyEvaluation;
     } 
     public void setEfficacyEvaluation(String efficacyEvaluation) {
-         this.efficacyEvaluation = efficacyEvaluation;
+             this.efficacyEvaluation = efficacyEvaluation;
     } 
     public String getDataVersion(){
         return dataVersion;
     } 
     public void setDataVersion(String dataVersion) {
-         this.dataVersion = dataVersion;
+             this.dataVersion = dataVersion;
     } 
     public String getDataDbSource(){
         return dataDbSource;
     } 
     public void setDataDbSource(String dataDbSource) {
-         this.dataDbSource = dataDbSource;
+             this.dataDbSource = dataDbSource;
     } 
     public String getDataTableSource(){
         return dataTableSource;
     } 
     public void setDataTableSource(String dataTableSource) {
-         this.dataTableSource = dataTableSource;
+             this.dataTableSource = dataTableSource;
     } 
     public String getDataFieldSource(){
         return dataFieldSource;
     } 
     public void setDataFieldSource(String dataFieldSource) {
-         this.dataFieldSource = dataFieldSource;
+             this.dataFieldSource = dataFieldSource;
     } 
     public Date getCreatedAt(){
         return createdAt;
     } 
     public void setCreatedAt(Date createdAt) {
-         this.createdAt = createdAt;
+             this.createdAt = createdAt;
     } 
     public String getCreator(){
         return creator;
     } 
     public void setCreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getUpdatedAt(){
         return updatedAt;
     } 
     public void setUpdatedAt(Date updatedAt) {
-         this.updatedAt = updatedAt;
+             this.updatedAt = updatedAt;
     } 
 }

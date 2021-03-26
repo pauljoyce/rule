@@ -6,4 +6,9 @@
        SELECT * FROM INP_CONSULTATION_DOCTOR_MASTER WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
+<select id="findZjInpConsultationDoctorMasterByIncr"  resultType="java.lang.String">
+       select distinct(unique_id_lv2) FROM INP_CONSULTATION_DOCTOR_MASTER where date(created_at) = date_sub(curdate(),interval 1 day) 
+</select>
+
+
 </mapper>

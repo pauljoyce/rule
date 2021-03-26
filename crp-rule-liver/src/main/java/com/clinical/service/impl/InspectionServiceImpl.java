@@ -4,6 +4,8 @@ import com.clinical.model.cluster.Inspection;
 import org.springframework.beans.factory.annotation.Autowired;import com.clinical.service.InspectionService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class InspectionServiceImpl implements InspectionService {
 
@@ -15,6 +17,12 @@ public class InspectionServiceImpl implements InspectionService {
     @Override
     public  void saveInspection(Inspection inspection) {
          inspectionMapper.saveInspection(inspection);
+
+     }
+
+    @Override
+    public  void deleteInspection(List<String> uniqueId) {
+         inspectionMapper.deleteInspection(uniqueId);
 
      }
 }

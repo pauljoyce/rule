@@ -5,4 +5,7 @@ import java.util.List;
 public interface ZjAbdomCtDescriptionMapper {
     List<ABDOM_CT_DESCRIPTION>  findZjAbdomCtDescriptionByUniqueId(String unique_id_lv2);
 
+    List<ABDOM_CT_DESCRIPTION>  findZjAbdomCtDescriptionByUniqueId2(String unique_id);
+
+    List<String> findZjAbdomCtDescriptionByIncr();
 }

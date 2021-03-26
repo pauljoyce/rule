@@ -6,8 +6,7 @@
        SELECT * FROM index_diagnosis_clinic WHERE unique_id=#{unique_id}
 </select>
 
- <insert id="saveIndexDiagnosisClinic"  parameterType="com.clinical.model.cluster.IndexDiagnosisClinic"
-         useGeneratedKeys="true" keyProperty="id">
+ <insert id="saveIndexDiagnosisClinic"  parameterType="com.clinical.model.cluster.IndexDiagnosisClinic" useGeneratedKeys="true" keyProperty="id">
   insert into index_diagnosis_clinic(       unique_id,
        unique_id_lv1,
        unique_id_lv2,
@@ -44,6 +43,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteIndexDiagnosisClinic">
+   delete  from index_diagnosis_clinic where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateIndexDiagnosisClinic"  parameterType="com.clinical.model.cluster.IndexDiagnosisClinic">
       update   index_diagnosis_clinic
  set

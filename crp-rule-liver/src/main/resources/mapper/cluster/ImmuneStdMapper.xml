@@ -14,7 +14,6 @@
        patient_id,
        visit_id,
        marker_name,
-       mutation_site,
        marker_qualitative,
        marker_quantify,
        data_version,
@@ -32,7 +31,6 @@ values
        #{patientId},
        #{visitId},
        #{markerName},
-       #{mutationSite},
        #{markerQualitative},
        #{markerQuantify},
        #{dataVersion},
@@ -43,6 +41,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteImmuneStd">
+   delete  from immune_std where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateImmuneStd"  parameterType="com.clinical.model.cluster.ImmuneStd">
       update   immune_std
  set
@@ -53,7 +59,6 @@ values
     patient_id = #{patientId},  
     visit_id = #{visitId},  
     marker_name = #{markerName},  
-    mutation_site = #{mutationSite},  
     marker_qualitative = #{markerQualitative},  
     marker_quantify = #{markerQuantify},  
     data_version = #{dataVersion},  

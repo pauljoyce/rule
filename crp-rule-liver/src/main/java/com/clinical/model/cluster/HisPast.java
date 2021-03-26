@@ -70,192 +70,192 @@ public class HisPast{
         return id;
     } 
     public void setId(Integer id) {
-         this.id = id;
+             this.id = id;
     } 
     public String getUniqueId(){
         return uniqueId;
     } 
     public void setUniqueId(String uniqueId) {
-         this.uniqueId = uniqueId;
+             this.uniqueId = uniqueId;
     } 
     public String getUniqueIdLv1(){
         return uniqueIdLv1;
     } 
     public void setUniqueIdLv1(String uniqueIdLv1) {
-         this.uniqueIdLv1 = uniqueIdLv1;
+             this.uniqueIdLv1 = uniqueIdLv1;
     } 
     public String getUniqueIdLv2(){
         return uniqueIdLv2;
     } 
     public void setUniqueIdLv2(String uniqueIdLv2) {
-         this.uniqueIdLv2 = uniqueIdLv2;
+             this.uniqueIdLv2 = uniqueIdLv2;
     } 
     public String getP900(){
         return p900;
     } 
     public void setP900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getPatientId(){
         return patientId;
     } 
     public void setPatientId(String patientId) {
-         this.patientId = patientId;
+             this.patientId = patientId;
     } 
     public String getVisitId(){
         return visitId;
     } 
     public void setVisitId(String visitId) {
-         this.visitId = visitId;
+             this.visitId = visitId;
     } 
     public String getHypertension(){
         return hypertension;
     } 
     public void setHypertension(String hypertension) {
-         this.hypertension = hypertension;
+             this.hypertension = hypertension;
     } 
     public String getGlycuresis(){
         return glycuresis;
     } 
     public void setGlycuresis(String glycuresis) {
-         this.glycuresis = glycuresis;
+             this.glycuresis = glycuresis;
     } 
     public String getCopd(){
         return copd;
     } 
     public void setCopd(String copd) {
-         this.copd = copd;
+             this.copd = copd;
     } 
     public String getHeartDisease(){
         return heartDisease;
     } 
     public void setHeartDisease(String heartDisease) {
-         this.heartDisease = heartDisease;
+             this.heartDisease = heartDisease;
     } 
     public String getHepatitis(){
         return hepatitis;
     } 
     public void setHepatitis(String hepatitis) {
-         this.hepatitis = hepatitis;
+             this.hepatitis = hepatitis;
     } 
     public String getHepatitisA(){
         return hepatitisA;
     } 
     public void setHepatitisA(String hepatitisA) {
-         this.hepatitisA = hepatitisA;
+             this.hepatitisA = hepatitisA;
     } 
     public String getHepatitisB(){
         return hepatitisB;
     } 
     public void setHepatitisB(String hepatitisB) {
-         this.hepatitisB = hepatitisB;
+             this.hepatitisB = hepatitisB;
     } 
     public String getHepatitisC(){
         return hepatitisC;
     } 
     public void setHepatitisC(String hepatitisC) {
-         this.hepatitisC = hepatitisC;
+             this.hepatitisC = hepatitisC;
     } 
     public String getHepatitisD(){
         return hepatitisD;
     } 
     public void setHepatitisD(String hepatitisD) {
-         this.hepatitisD = hepatitisD;
+             this.hepatitisD = hepatitisD;
     } 
     public String getHepatitisE(){
         return hepatitisE;
     } 
     public void setHepatitisE(String hepatitisE) {
-         this.hepatitisE = hepatitisE;
+             this.hepatitisE = hepatitisE;
     } 
     public String getNewHepatitis(){
         return newHepatitis;
     } 
     public void setNewHepatitis(String newHepatitis) {
-         this.newHepatitis = newHepatitis;
+             this.newHepatitis = newHepatitis;
     } 
     public String getDurgHepatitis(){
         return durgHepatitis;
     } 
     public void setDurgHepatitis(String durgHepatitis) {
-         this.durgHepatitis = durgHepatitis;
+             this.durgHepatitis = durgHepatitis;
     } 
     public String getAlcoholicHepatitis(){
         return alcoholicHepatitis;
     } 
     public void setAlcoholicHepatitis(String alcoholicHepatitis) {
-         this.alcoholicHepatitis = alcoholicHepatitis;
+             this.alcoholicHepatitis = alcoholicHepatitis;
     } 
     public String getSteatohepatitis(){
         return steatohepatitis;
     } 
     public void setSteatohepatitis(String steatohepatitis) {
-         this.steatohepatitis = steatohepatitis;
+             this.steatohepatitis = steatohepatitis;
     } 
     public String getAutoimmuneHepatitis(){
         return autoimmuneHepatitis;
     } 
     public void setAutoimmuneHepatitis(String autoimmuneHepatitis) {
-         this.autoimmuneHepatitis = autoimmuneHepatitis;
+             this.autoimmuneHepatitis = autoimmuneHepatitis;
     } 
     public String getCirrhosis(){
         return cirrhosis;
     } 
     public void setCirrhosis(String cirrhosis) {
-         this.cirrhosis = cirrhosis;
+             this.cirrhosis = cirrhosis;
     } 
     public String getTuberculosis(){
         return tuberculosis;
     } 
     public void setTuberculosis(String tuberculosis) {
-         this.tuberculosis = tuberculosis;
+             this.tuberculosis = tuberculosis;
     } 
     public String getHiv(){
         return hiv;
     } 
     public void setHiv(String hiv) {
-         this.hiv = hiv;
+             this.hiv = hiv;
     } 
     public String getDataVersion(){
         return dataVersion;
     } 
     public void setDataVersion(String dataVersion) {
-         this.dataVersion = dataVersion;
+             this.dataVersion = dataVersion;
     } 
     public String getDataDbSource(){
         return dataDbSource;
     } 
     public void setDataDbSource(String dataDbSource) {
-         this.dataDbSource = dataDbSource;
+             this.dataDbSource = dataDbSource;
     } 
     public String getDataTableSource(){
         return dataTableSource;
     } 
     public void setDataTableSource(String dataTableSource) {
-         this.dataTableSource = dataTableSource;
+             this.dataTableSource = dataTableSource;
     } 
     public String getDataFieldSource(){
         return dataFieldSource;
     } 
     public void setDataFieldSource(String dataFieldSource) {
-         this.dataFieldSource = dataFieldSource;
+             this.dataFieldSource = dataFieldSource;
     } 
     public Date getCreatedAt(){
         return createdAt;
     } 
     public void setCreatedAt(Date createdAt) {
-         this.createdAt = createdAt;
+             this.createdAt = createdAt;
     } 
     public String getCreator(){
         return creator;
     } 
     public void setCreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getUpdatedAt(){
         return updatedAt;
     } 
     public void setUpdatedAt(Date updatedAt) {
-         this.updatedAt = updatedAt;
+             this.updatedAt = updatedAt;
     } 
 }

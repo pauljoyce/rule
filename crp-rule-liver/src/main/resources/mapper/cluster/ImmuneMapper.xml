@@ -45,6 +45,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteImmune">
+   delete  from immune where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateImmune"  parameterType="com.clinical.model.cluster.Immune">
       update   immune
  set

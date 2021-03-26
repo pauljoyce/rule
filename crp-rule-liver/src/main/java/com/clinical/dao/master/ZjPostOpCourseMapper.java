@@ -5,4 +5,5 @@ import java.util.List;
 public interface ZjPostOpCourseMapper {
     List<POST_OP_COURSE>  findZjPostOpCourseByUniqueId(String unique_id_lv2);
 
+    List<String> findZjPostOpCourseByIncr();
 }

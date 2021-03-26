@@ -6,4 +6,9 @@
        SELECT * FROM PAT_VISIT_MASTER WHERE unique_id_lv1 = #{unique_id_lv2}
 </select>
 
+<select id="findZjPatVisitMasterByIncr"  resultType="java.lang.String">
+       select distinct(unique_id_lv2) FROM PAT_VISIT_MASTER where date(created_at) = date_sub(curdate(),interval 1 day) 
+</select>
+
+
 </mapper>

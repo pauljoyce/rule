@@ -5,4 +5,5 @@ import java.util.List;
 public interface ZjFamilyHistoryMapper {
     List<FAMILY_HISTORY>  findZjFamilyHistoryByUniqueId(String unique_id_lv2);
 
+    List<String> findZjFamilyHistoryByIncr();
 }

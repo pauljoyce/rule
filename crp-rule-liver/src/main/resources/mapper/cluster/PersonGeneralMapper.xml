@@ -47,6 +47,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deletePersonGeneral">
+   delete  from person_general where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updatePersonGeneral"  parameterType="com.clinical.model.cluster.PersonGeneral">
       update   person_general
  set

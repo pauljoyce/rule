@@ -4,6 +4,8 @@ import com.clinical.model.cluster.FollowUp;
 import org.springframework.beans.factory.annotation.Autowired;import com.clinical.service.FollowUpService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FollowUpServiceImpl implements FollowUpService {
 
@@ -15,6 +17,12 @@ public class FollowUpServiceImpl implements FollowUpService {
     @Override
     public  void saveFollowUp(FollowUp followUp) {
          followUpMapper.saveFollowUp(followUp);
+
+     }
+
+    @Override
+    public  void deleteFollowUp(List<String> uniqueId) {
+         followUpMapper.deleteFollowUp(uniqueId);
 
      }
 }

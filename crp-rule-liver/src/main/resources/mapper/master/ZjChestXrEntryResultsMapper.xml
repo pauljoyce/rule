@@ -6,4 +6,13 @@
        SELECT * FROM CHEST_XR_ENTRY_RESULTS WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
+       <select id="findZjChestXrEntryResultsByUniqueId2"  resultType="com.clinical.model.master.CHEST_XR_ENTRY_RESULTS">
+       SELECT * FROM CHEST_XR_ENTRY_RESULTS WHERE unique_id = #{unique_id}
+</select>
+
+<select id="findZjChestXrEntryResultsByIncr"  resultType="java.lang.String">
+       select distinct(unique_id_lv2) FROM CHEST_XR_ENTRY_RESULTS where date(created_at) = date_sub(curdate(),interval 1 day) 
+</select>
+
+
 </mapper>

@@ -43,6 +43,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteChestCtResult">
+   delete  from chest_ct_result where unique_id_lv1   in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateChestCtResult"  parameterType="com.clinical.model.cluster.ChestCtResult">
       update   chest_ct_result
  set

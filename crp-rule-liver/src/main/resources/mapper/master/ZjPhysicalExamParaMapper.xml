@@ -6,4 +6,9 @@
        SELECT * FROM PHYSICAL_EXAM_PARA WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
+<select id="findZjPhysicalExamParaByIncr"  resultType="java.lang.String">
+       select distinct(unique_id_lv2) FROM PHYSICAL_EXAM_PARA where date(created_at) = date_sub(curdate(),interval 1 day) 
+</select>
+
+
 </mapper>

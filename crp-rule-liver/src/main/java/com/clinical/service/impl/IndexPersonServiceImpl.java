@@ -4,6 +4,8 @@ import com.clinical.model.cluster.IndexPerson;
 import org.springframework.beans.factory.annotation.Autowired;import com.clinical.service.IndexPersonService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IndexPersonServiceImpl implements IndexPersonService {
 
@@ -15,6 +17,12 @@ public class IndexPersonServiceImpl implements IndexPersonService {
     @Override
     public  void saveIndexPerson(IndexPerson indexPerson) {
          indexPersonMapper.saveIndexPerson(indexPerson);
+
+     }
+
+    @Override
+    public  void deleteIndexPerson(List<String> uniqueId) {
+         indexPersonMapper.deleteIndexPerson(uniqueId);
 
      }
 }

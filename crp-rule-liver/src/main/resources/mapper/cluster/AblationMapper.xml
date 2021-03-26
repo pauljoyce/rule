@@ -21,11 +21,11 @@
        therapy,
        therapy_start_date,
        therapy_end_date,
-       therapy_methods,
-       embolic,
-       drug,
-       site,
-       number,
+       therapy_methods_std,
+       embolic_std,
+       drug_std,
+       site_std,
+       number_std,
        data_version,
        data_db_source,
        data_table_source,
@@ -48,11 +48,11 @@ values
        #{therapy},
        #{therapyStartDate},
        #{therapyEndDate},
-       #{therapyMethods},
-       #{embolic},
-       #{drug},
-       #{site},
-       #{number},
+       #{therapyMethodsStd},
+       #{embolicStd},
+       #{drugStd},
+       #{siteStd},
+       #{numberStd},
        #{dataVersion},
        #{dataDbSource},
        #{dataTableSource},
@@ -61,6 +61,14 @@ values
        #{creator},
        #{updatedAt})
 </insert>
+
+ <delete id="deleteAblation">
+   delete  from ablation where unique_id_lv1  in
+     <foreach collection="list" open="(" separator="," close=")" item="uniqueId">
+         #{uniqueId}
+     </foreach>
+  </delete>
+
  <update id="updateAblation"  parameterType="com.clinical.model.cluster.Ablation">
       update   ablation
  set
@@ -78,11 +86,11 @@ values
     therapy = #{therapy},  
     therapy_start_date = #{therapyStartDate},  
     therapy_end_date = #{therapyEndDate},  
-    therapy_methods = #{therapyMethods},  
-    embolic = #{embolic},  
-    drug = #{drug},  
-    site = #{site},  
-    number = #{number},  
+    therapy_methods_std = #{therapyMethodsStd},  
+    embolic_std = #{embolicStd},  
+    drug_std = #{drugStd},  
+    site_std = #{siteStd},  
+    number_std = #{numberStd},  
     data_version = #{dataVersion},  
     data_db_source = #{dataDbSource},  
     data_table_source = #{dataTableSource},  

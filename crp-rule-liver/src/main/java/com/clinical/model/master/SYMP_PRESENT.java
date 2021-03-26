@@ -78,7 +78,7 @@ public class SYMP_PRESENT{
     //否定词-标准名称
     private String neg_std;
     //时长标准名称
-    private String time_length_std;
+    private Integer time_length_std;
     //时长标准单位
     private String time_length_unit_std;
 
@@ -86,240 +86,272 @@ public class SYMP_PRESENT{
         return seq_id;
     } 
     public void setseq_id(Integer seq_id) {
-         this.seq_id = seq_id;
+             this.seq_id = seq_id;
     } 
     public String getunique_id(){
         return unique_id;
     } 
     public void setunique_id(String unique_id) {
-         this.unique_id = unique_id;
+             this.unique_id = unique_id;
     } 
     public String getunique_id_lv1(){
         return unique_id_lv1;
     } 
     public void setunique_id_lv1(String unique_id_lv1) {
-         this.unique_id_lv1 = unique_id_lv1;
+             this.unique_id_lv1 = unique_id_lv1;
     } 
     public String getunique_id_lv2(){
         return unique_id_lv2;
     } 
     public void setunique_id_lv2(String unique_id_lv2) {
-         this.unique_id_lv2 = unique_id_lv2;
+             this.unique_id_lv2 = unique_id_lv2;
     } 
     public String getp900(){
         return p900;
     } 
     public void setp900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getpatient_id(){
         return patient_id;
     } 
     public void setpatient_id(String patient_id) {
-         this.patient_id = patient_id;
+             this.patient_id = patient_id;
     } 
     public String gettpatno(){
         return tpatno;
     } 
     public void settpatno(String tpatno) {
-         this.tpatno = tpatno;
+             this.tpatno = tpatno;
     } 
     public Integer getvisit_type(){
         return visit_type;
     } 
     public void setvisit_type(Integer visit_type) {
-         this.visit_type = visit_type;
+             this.visit_type = visit_type;
     } 
     public String getrecord_status(){
         return record_status;
     } 
     public void setrecord_status(String record_status) {
-         this.record_status = record_status;
+             this.record_status = record_status;
     } 
     public String getvisit_id(){
         return visit_id;
     } 
     public void setvisit_id(String visit_id) {
-         this.visit_id = visit_id;
+             this.visit_id = visit_id;
     } 
     public Integer getadmission_number(){
         return admission_number;
     } 
     public void setadmission_number(Integer admission_number) {
-         this.admission_number = admission_number;
+             this.admission_number = admission_number;
     } 
     public Date getadmission_date_time(){
         return admission_date_time;
     } 
     public void setadmission_date_time(Date admission_date_time) {
-         this.admission_date_time = admission_date_time;
+             this.admission_date_time = admission_date_time;
     } 
     public String getfinding(){
         return finding;
     } 
     public void setfinding(String finding) {
-         this.finding = finding;
+             this.finding = finding;
     } 
     public String getdate_time(){
         return date_time;
     } 
     public void setdate_time(String date_time) {
-         this.date_time = date_time;
+             this.date_time = date_time;
     } 
     public String gettime_length(){
         return time_length;
     } 
     public void settime_length(String time_length) {
-         this.time_length = time_length;
+             this.time_length = time_length;
     } 
     public String getneg(){
         return neg;
     } 
     public void setneg(String neg) {
-         this.neg = neg;
+             this.neg = neg;
     } 
     public String getfs_nlp(){
         return fs_nlp;
     } 
     public void setfs_nlp(String fs_nlp) {
-         this.fs_nlp = fs_nlp;
+             this.fs_nlp = fs_nlp;
     } 
     public String getfs_nlp_cn(){
         return fs_nlp_cn;
     } 
     public void setfs_nlp_cn(String fs_nlp_cn) {
-         this.fs_nlp_cn = fs_nlp_cn;
+             this.fs_nlp_cn = fs_nlp_cn;
     } 
     public Integer getfs_serial_number(){
         return fs_serial_number;
     } 
     public void setfs_serial_number(Integer fs_serial_number) {
-         this.fs_serial_number = fs_serial_number;
+             this.fs_serial_number = fs_serial_number;
     } 
     public Integer getfs_location(){
         return fs_location;
     } 
     public void setfs_location(Integer fs_location) {
-         this.fs_location = fs_location;
+             this.fs_location = fs_location;
     } 
     public String getdata_version(){
         return data_version;
     } 
     public void setdata_version(String data_version) {
-         this.data_version = data_version;
+             this.data_version = data_version;
     } 
     public String getdata_db_source(){
         return data_db_source;
     } 
     public void setdata_db_source(String data_db_source) {
-         this.data_db_source = data_db_source;
+             this.data_db_source = data_db_source;
     } 
     public String getdata_table_source(){
         return data_table_source;
     } 
     public void setdata_table_source(String data_table_source) {
-         this.data_table_source = data_table_source;
+             this.data_table_source = data_table_source;
     } 
     public String getdata_table_source_cn(){
         return data_table_source_cn;
     } 
     public void setdata_table_source_cn(String data_table_source_cn) {
-         this.data_table_source_cn = data_table_source_cn;
+             this.data_table_source_cn = data_table_source_cn;
     } 
     public String getdata_field_source(){
         return data_field_source;
     } 
     public void setdata_field_source(String data_field_source) {
-         this.data_field_source = data_field_source;
+             this.data_field_source = data_field_source;
     } 
     public Date getcreate_time(){
         return create_time;
     } 
     public void setcreate_time(Date create_time) {
-         this.create_time = create_time;
+             this.create_time = create_time;
     } 
     public String getcreator(){
         return creator;
     } 
     public void setcreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getrecord_time(){
         return record_time;
     } 
     public void setrecord_time(Date record_time) {
-         this.record_time = record_time;
+             this.record_time = record_time;
     } 
     public String getbatch_number(){
         return batch_number;
     } 
     public void setbatch_number(String batch_number) {
-         this.batch_number = batch_number;
+             this.batch_number = batch_number;
     } 
     public Date getdate_time_p(){
         return date_time_p;
     } 
     public void setdate_time_p(Date date_time_p) {
-         this.date_time_p = date_time_p;
+             this.date_time_p = date_time_p;
     } 
     public Date getdate_time_estimate(){
         return date_time_estimate;
     } 
     public void setdate_time_estimate(Date date_time_estimate) {
-         this.date_time_estimate = date_time_estimate;
+             this.date_time_estimate = date_time_estimate;
     } 
     public String getfinding1_std(){
         return finding1_std;
     } 
     public void setfinding1_std(String finding1_std) {
-         this.finding1_std = finding1_std;
+         if("无效".equals(finding1_std)){
+             this.finding1_std =""; 
+         }else{
+             this.finding1_std = finding1_std;
+         }
     } 
     public String getfinding2_std(){
         return finding2_std;
     } 
     public void setfinding2_std(String finding2_std) {
-         this.finding2_std = finding2_std;
+         if("无效".equals(finding2_std)){
+             this.finding2_std =""; 
+         }else{
+             this.finding2_std = finding2_std;
+         }
     } 
     public String getfinding3_std(){
         return finding3_std;
     } 
     public void setfinding3_std(String finding3_std) {
-         this.finding3_std = finding3_std;
+         if("无效".equals(finding3_std)){
+             this.finding3_std =""; 
+         }else{
+             this.finding3_std = finding3_std;
+         }
     } 
     public String getfinding4_std(){
         return finding4_std;
     } 
     public void setfinding4_std(String finding4_std) {
-         this.finding4_std = finding4_std;
+         if("无效".equals(finding4_std)){
+             this.finding4_std =""; 
+         }else{
+             this.finding4_std = finding4_std;
+         }
     } 
     public String getfinding5_std(){
         return finding5_std;
     } 
     public void setfinding5_std(String finding5_std) {
-         this.finding5_std = finding5_std;
+         if("无效".equals(finding5_std)){
+             this.finding5_std =""; 
+         }else{
+             this.finding5_std = finding5_std;
+         }
     } 
     public String getfinding6_std(){
         return finding6_std;
     } 
     public void setfinding6_std(String finding6_std) {
-         this.finding6_std = finding6_std;
+         if("无效".equals(finding6_std)){
+             this.finding6_std =""; 
+         }else{
+             this.finding6_std = finding6_std;
+         }
     } 
     public String getneg_std(){
         return neg_std;
     } 
     public void setneg_std(String neg_std) {
-         this.neg_std = neg_std;
+         if("无效".equals(neg_std)){
+             this.neg_std =""; 
+         }else{
+             this.neg_std = neg_std;
+         }
     } 
-    public String gettime_length_std(){
+    public Integer gettime_length_std(){
         return time_length_std;
     } 
-    public void settime_length_std(String time_length_std) {
-         this.time_length_std = time_length_std;
-    }
+    public void settime_length_std(Integer time_length_std) {
+             this.time_length_std = time_length_std;
+    } 
     public String gettime_length_unit_std(){
         return time_length_unit_std;
     } 
     public void settime_length_unit_std(String time_length_unit_std) {
-         this.time_length_unit_std = time_length_unit_std;
+         if("无效".equals(time_length_unit_std)){
+             this.time_length_unit_std =""; 
+         }else{
+             this.time_length_unit_std = time_length_unit_std;
+         }
     } 
 }

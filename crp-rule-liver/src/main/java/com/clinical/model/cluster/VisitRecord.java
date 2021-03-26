@@ -48,126 +48,126 @@ public class VisitRecord{
         return id;
     } 
     public void setId(Integer id) {
-         this.id = id;
+             this.id = id;
     } 
     public String getUniqueIdLv1(){
         return uniqueIdLv1;
     } 
     public void setUniqueIdLv1(String uniqueIdLv1) {
-         this.uniqueIdLv1 = uniqueIdLv1;
+             this.uniqueIdLv1 = uniqueIdLv1;
     } 
     public String getUniqueId(){
         return uniqueId;
     } 
     public void setUniqueId(String uniqueId) {
-         this.uniqueId = uniqueId;
+             this.uniqueId = uniqueId;
     } 
     public String getP900(){
         return p900;
     } 
     public void setP900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getPatientId(){
         return patientId;
     } 
     public void setPatientId(String patientId) {
-         this.patientId = patientId;
+             this.patientId = patientId;
     } 
     public Integer getVisitType(){
         return visitType;
     } 
     public void setVisitType(Integer visitType) {
-         this.visitType = visitType;
+             this.visitType = visitType;
     } 
     public String getVisitId(){
         return visitId;
     } 
     public void setVisitId(String visitId) {
-         this.visitId = visitId;
+             this.visitId = visitId;
     } 
     public Date getAdmissionDateTime(){
         return admissionDateTime;
     } 
     public void setAdmissionDateTime(Date admissionDateTime) {
-         this.admissionDateTime = admissionDateTime;
+             this.admissionDateTime = admissionDateTime;
     } 
     public Date getDischargeDateTime(){
         return dischargeDateTime;
     } 
     public void setDischargeDateTime(Date dischargeDateTime) {
-         this.dischargeDateTime = dischargeDateTime;
+             this.dischargeDateTime = dischargeDateTime;
     } 
     public String getDeptAdmissionTo(){
         return deptAdmissionTo;
     } 
     public void setDeptAdmissionTo(String deptAdmissionTo) {
-         this.deptAdmissionTo = deptAdmissionTo;
+             this.deptAdmissionTo = deptAdmissionTo;
     } 
     public String getDeptDischargeFrom(){
         return deptDischargeFrom;
     } 
     public void setDeptDischargeFrom(String deptDischargeFrom) {
-         this.deptDischargeFrom = deptDischargeFrom;
+             this.deptDischargeFrom = deptDischargeFrom;
     } 
     public Integer getAdmissionNumber(){
         return admissionNumber;
     } 
     public void setAdmissionNumber(Integer admissionNumber) {
-         this.admissionNumber = admissionNumber;
+             this.admissionNumber = admissionNumber;
     } 
     public String getP900Name(){
         return p900Name;
     } 
     public void setP900Name(String p900Name) {
-         this.p900Name = p900Name;
+             this.p900Name = p900Name;
     } 
     public String getVisitSourceValue(){
         return visitSourceValue;
     } 
     public void setVisitSourceValue(String visitSourceValue) {
-         this.visitSourceValue = visitSourceValue;
+             this.visitSourceValue = visitSourceValue;
     } 
     public String getDataVersion(){
         return dataVersion;
     } 
     public void setDataVersion(String dataVersion) {
-         this.dataVersion = dataVersion;
+             this.dataVersion = dataVersion;
     } 
     public String getDataDbSource(){
         return dataDbSource;
     } 
     public void setDataDbSource(String dataDbSource) {
-         this.dataDbSource = dataDbSource;
+             this.dataDbSource = dataDbSource;
     } 
     public String getDataTableSource(){
         return dataTableSource;
     } 
     public void setDataTableSource(String dataTableSource) {
-         this.dataTableSource = dataTableSource;
+             this.dataTableSource = dataTableSource;
     } 
     public String getDataFieldSource(){
         return dataFieldSource;
     } 
     public void setDataFieldSource(String dataFieldSource) {
-         this.dataFieldSource = dataFieldSource;
+             this.dataFieldSource = dataFieldSource;
     } 
     public Date getCreatedAt(){
         return createdAt;
     } 
     public void setCreatedAt(Date createdAt) {
-         this.createdAt = createdAt;
+             this.createdAt = createdAt;
     } 
     public String getCreator(){
         return creator;
     } 
     public void setCreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getUpdatedAt(){
         return updatedAt;
     } 
     public void setUpdatedAt(Date updatedAt) {
-         this.updatedAt = updatedAt;
+             this.updatedAt = updatedAt;
     } 
 }

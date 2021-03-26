@@ -2,7 +2,7 @@ package com.clinical.model.master;
 import java.util.Date;
 public class BASY_DIAG_STD{
     //主键id
-    private Integer ID;
+    private String ID;
     //唯一标识
     private String UNIQUE_ID;
     //关联1级表unique_id
@@ -198,2384 +198,3282 @@ public class BASY_DIAG_STD{
     //MD5标识
     private String MD5;
     //主要诊断标准化诊断编码1
-    private String P322_ICD10_ID1;
+    private String P322_ICD10_ID1_STD;
     //主要诊断标准化诊断名称1
-    private String P322_ICD10_NAME1;
+    private String P322_ICD10_NAME1_STD;
     //主要诊断标准化诊断编码2
-    private String P322_ICD10_ID2;
+    private String P322_ICD10_ID2_STD;
     //主要诊断标准化诊断名称2
-    private String P322_ICD10_NAME2;
+    private String P322_ICD10_NAME2_STD;
     //主要诊断标准化诊断编码3
-    private String P322_ICD10_ID3;
+    private String P322_ICD10_ID3_STD;
     //主要诊断标准化诊断名称3
-    private String P322_ICD10_NAME3;
+    private String P322_ICD10_NAME3_STD;
     //主要诊断标准化诊断编码4
-    private String P322_ICD10_ID4;
+    private String P322_ICD10_ID4_STD;
     //主要诊断标准化诊断名称4
-    private String P322_ICD10_NAME4;
+    private String P322_ICD10_NAME4_STD;
     //主要诊断标准化诊断编码5
-    private String P322_ICD10_ID5;
+    private String P322_ICD10_ID5_STD;
     //主要诊断标准化诊断名称5
-    private String P322_ICD10_NAME5;
+    private String P322_ICD10_NAME5_STD;
     //主要诊断标准化诊断编码6
-    private String P322_ICD10_ID6;
+    private String P322_ICD10_ID6_STD;
     //主要诊断标准化诊断名称6
-    private String P322_ICD10_NAME6;
+    private String P322_ICD10_NAME6_STD;
     //主要诊断标准化诊断编码7
-    private String P322_ICD10_ID7;
+    private String P322_ICD10_ID7_STD;
     //主要诊断标准化诊断名称7
-    private String P322_ICD10_NAME7;
+    private String P322_ICD10_NAME7_STD;
     //其他诊断1标准化诊断编码1
-    private String P325_ICD10_ID1;
+    private String P325_ICD10_ID1_STD;
     //其他诊断1标准化诊断名称1
-    private String P325_ICD10_NAME1;
+    private String P325_ICD10_NAME1_STD;
     //其他诊断1标准化诊断编码2
-    private String P325_ICD10_ID2;
+    private String P325_ICD10_ID2_STD;
     //其他诊断1标准化诊断名称2
-    private String P325_ICD10_NAME2;
+    private String P325_ICD10_NAME2_STD;
     //其他诊断1标准化诊断编码3
-    private String P325_ICD10_ID3;
+    private String P325_ICD10_ID3_STD;
     //其他诊断1标准化诊断名称3
-    private String P325_ICD10_NAME3;
+    private String P325_ICD10_NAME3_STD;
     //其他诊断1标准化诊断编码4
-    private String P325_ICD10_ID4;
+    private String P325_ICD10_ID4_STD;
     //其他诊断1标准化诊断名称4
-    private String P325_ICD10_NAME4;
+    private String P325_ICD10_NAME4_STD;
     //其他诊断1标准化诊断编码5
-    private String P325_ICD10_ID5;
+    private String P325_ICD10_ID5_STD;
     //其他诊断1标准化诊断名称5
-    private String P325_ICD10_NAME5;
+    private String P325_ICD10_NAME5_STD;
     //其他诊断1标准化诊断编码6
-    private String P325_ICD10_ID6;
+    private String P325_ICD10_ID6_STD;
     //其他诊断1标准化诊断名称6
-    private String P325_ICD10_NAME6;
+    private String P325_ICD10_NAME6_STD;
     //其他诊断1标准化诊断编码7
-    private String P325_ICD10_ID7;
+    private String P325_ICD10_ID7_STD;
     //其他诊断1标准化诊断名称7
-    private String P325_ICD10_NAME7;
+    private String P325_ICD10_NAME7_STD;
     //其他诊断2标准化诊断编码1
-    private String P328_ICD10_ID1;
+    private String P328_ICD10_ID1_STD;
     //其他诊断2标准化诊断名称1
-    private String P328_ICD10_NAME1;
+    private String P328_ICD10_NAME1_STD;
     //其他诊断2标准化诊断编码2
-    private String P328_ICD10_ID2;
+    private String P328_ICD10_ID2_STD;
     //其他诊断2标准化诊断名称2
-    private String P328_ICD10_NAME2;
+    private String P328_ICD10_NAME2_STD;
     //其他诊断2标准化诊断编码3
-    private String P328_ICD10_ID3;
+    private String P328_ICD10_ID3_STD;
     //其他诊断2标准化诊断名称3
-    private String P328_ICD10_NAME3;
+    private String P328_ICD10_NAME3_STD;
     //其他诊断2标准化诊断编码4
-    private String P328_ICD10_ID4;
+    private String P328_ICD10_ID4_STD;
     //其他诊断2标准化诊断名称4
-    private String P328_ICD10_NAME4;
+    private String P328_ICD10_NAME4_STD;
     //其他诊断2标准化诊断编码5
-    private String P328_ICD10_ID5;
+    private String P328_ICD10_ID5_STD;
     //其他诊断2标准化诊断名称5
-    private String P328_ICD10_NAME5;
+    private String P328_ICD10_NAME5_STD;
     //其他诊断2标准化诊断编码6
-    private String P328_ICD10_ID6;
+    private String P328_ICD10_ID6_STD;
     //其他诊断2标准化诊断名称6
-    private String P328_ICD10_NAME6;
+    private String P328_ICD10_NAME6_STD;
     //其他诊断2标准化诊断编码7
-    private String P328_ICD10_ID7;
+    private String P328_ICD10_ID7_STD;
     //其他诊断2标准化诊断名称7
-    private String P328_ICD10_NAME7;
+    private String P328_ICD10_NAME7_STD;
     //其他诊断3标准化诊断编码1
-    private String P3292_ICD10_ID1;
+    private String P3292_ICD10_ID1_STD;
     //其他诊断3标准化诊断名称1
-    private String P3292_ICD10_NAME1;
+    private String P3292_ICD10_NAME1_STD;
     //其他诊断3标准化诊断编码2
-    private String P3292_ICD10_ID2;
+    private String P3292_ICD10_ID2_STD;
     //其他诊断3标准化诊断名称2
-    private String P3292_ICD10_NAME2;
+    private String P3292_ICD10_NAME2_STD;
     //其他诊断3标准化诊断编码3
-    private String P3292_ICD10_ID3;
+    private String P3292_ICD10_ID3_STD;
     //其他诊断3标准化诊断名称3
-    private String P3292_ICD10_NAME3;
+    private String P3292_ICD10_NAME3_STD;
     //其他诊断3标准化诊断编码4
-    private String P3292_ICD10_ID4;
+    private String P3292_ICD10_ID4_STD;
     //其他诊断3标准化诊断名称4
-    private String P3292_ICD10_NAME4;
+    private String P3292_ICD10_NAME4_STD;
     //其他诊断3标准化诊断编码5
-    private String P3292_ICD10_ID5;
+    private String P3292_ICD10_ID5_STD;
     //其他诊断3标准化诊断名称5
-    private String P3292_ICD10_NAME5;
+    private String P3292_ICD10_NAME5_STD;
     //其他诊断3标准化诊断编码6
-    private String P3292_ICD10_ID6;
+    private String P3292_ICD10_ID6_STD;
     //其他诊断3标准化诊断名称6
-    private String P3292_ICD10_NAME6;
+    private String P3292_ICD10_NAME6_STD;
     //其他诊断3标准化诊断编码7
-    private String P3292_ICD10_ID7;
+    private String P3292_ICD10_ID7_STD;
     //其他诊断3标准化诊断名称7
-    private String P3292_ICD10_NAME7;
+    private String P3292_ICD10_NAME7_STD;
     //其他诊断4标准化诊断编码1
-    private String P3295_ICD10_ID1;
+    private String P3295_ICD10_ID1_STD;
     //其他诊断4标准化诊断名称1
-    private String P3295_ICD10_NAME1;
+    private String P3295_ICD10_NAME1_STD;
     //其他诊断4标准化诊断编码2
-    private String P3295_ICD10_ID2;
+    private String P3295_ICD10_ID2_STD;
     //其他诊断4标准化诊断名称2
-    private String P3295_ICD10_NAME2;
+    private String P3295_ICD10_NAME2_STD;
     //其他诊断4标准化诊断编码3
-    private String P3295_ICD10_ID3;
+    private String P3295_ICD10_ID3_STD;
     //其他诊断4标准化诊断名称3
-    private String P3295_ICD10_NAME3;
+    private String P3295_ICD10_NAME3_STD;
     //其他诊断4标准化诊断编码4
-    private String P3295_ICD10_ID4;
+    private String P3295_ICD10_ID4_STD;
     //其他诊断4标准化诊断名称4
-    private String P3295_ICD10_NAME4;
+    private String P3295_ICD10_NAME4_STD;
     //其他诊断4标准化诊断编码5
-    private String P3295_ICD10_ID5;
+    private String P3295_ICD10_ID5_STD;
     //其他诊断4标准化诊断名称5
-    private String P3295_ICD10_NAME5;
+    private String P3295_ICD10_NAME5_STD;
     //其他诊断4标准化诊断编码6
-    private String P3295_ICD10_ID6;
+    private String P3295_ICD10_ID6_STD;
     //其他诊断4标准化诊断名称6
-    private String P3295_ICD10_NAME6;
+    private String P3295_ICD10_NAME6_STD;
     //其他诊断4标准化诊断编码7
-    private String P3295_ICD10_ID7;
+    private String P3295_ICD10_ID7_STD;
     //其他诊断4标准化诊断名称7
-    private String P3295_ICD10_NAME7;
+    private String P3295_ICD10_NAME7_STD;
     //其他诊断5标准化诊断编码1
-    private String P3298_ICD10_ID1;
+    private String P3298_ICD10_ID1_STD;
     //其他诊断5标准化诊断名称1
-    private String P3298_ICD10_NAME1;
+    private String P3298_ICD10_NAME1_STD;
     //其他诊断5标准化诊断编码2
-    private String P3298_ICD10_ID2;
+    private String P3298_ICD10_ID2_STD;
     //其他诊断5标准化诊断名称2
-    private String P3298_ICD10_NAME2;
+    private String P3298_ICD10_NAME2_STD;
     //其他诊断5标准化诊断编码3
-    private String P3298_ICD10_ID3;
+    private String P3298_ICD10_ID3_STD;
     //其他诊断5标准化诊断名称3
-    private String P3298_ICD10_NAME3;
+    private String P3298_ICD10_NAME3_STD;
     //其他诊断5标准化诊断编码4
-    private String P3298_ICD10_ID4;
+    private String P3298_ICD10_ID4_STD;
     //其他诊断5标准化诊断名称4
-    private String P3298_ICD10_NAME4;
+    private String P3298_ICD10_NAME4_STD;
     //其他诊断5标准化诊断编码5
-    private String P3298_ICD10_ID5;
+    private String P3298_ICD10_ID5_STD;
     //其他诊断5标准化诊断名称5
-    private String P3298_ICD10_NAME5;
+    private String P3298_ICD10_NAME5_STD;
     //其他诊断5标准化诊断编码6
-    private String P3298_ICD10_ID6;
+    private String P3298_ICD10_ID6_STD;
     //其他诊断5标准化诊断名称6
-    private String P3298_ICD10_NAME6;
+    private String P3298_ICD10_NAME6_STD;
     //其他诊断5标准化诊断编码7
-    private String P3298_ICD10_ID7;
+    private String P3298_ICD10_ID7_STD;
     //其他诊断5标准化诊断名称7
-    private String P3298_ICD10_NAME7;
+    private String P3298_ICD10_NAME7_STD;
     //其他诊断6标准化诊断编码1
-    private String P3282_ICD10_ID1;
+    private String P3282_ICD10_ID1_STD;
     //其他诊断6标准化诊断名称1
-    private String P3282_ICD10_NAME1;
+    private String P3282_ICD10_NAME1_STD;
     //其他诊断6标准化诊断编码2
-    private String P3282_ICD10_ID2;
+    private String P3282_ICD10_ID2_STD;
     //其他诊断6标准化诊断名称2
-    private String P3282_ICD10_NAME2;
+    private String P3282_ICD10_NAME2_STD;
     //其他诊断6标准化诊断编码3
-    private String P3282_ICD10_ID3;
+    private String P3282_ICD10_ID3_STD;
     //其他诊断6标准化诊断名称3
-    private String P3282_ICD10_NAME3;
+    private String P3282_ICD10_NAME3_STD;
     //其他诊断6标准化诊断编码4
-    private String P3282_ICD10_ID4;
+    private String P3282_ICD10_ID4_STD;
     //其他诊断6标准化诊断名称4
-    private String P3282_ICD10_NAME4;
+    private String P3282_ICD10_NAME4_STD;
     //其他诊断6标准化诊断编码5
-    private String P3282_ICD10_ID5;
+    private String P3282_ICD10_ID5_STD;
     //其他诊断6标准化诊断名称5
-    private String P3282_ICD10_NAME5;
+    private String P3282_ICD10_NAME5_STD;
     //其他诊断6标准化诊断编码6
-    private String P3282_ICD10_ID6;
+    private String P3282_ICD10_ID6_STD;
     //其他诊断6标准化诊断名称6
-    private String P3282_ICD10_NAME6;
+    private String P3282_ICD10_NAME6_STD;
     //其他诊断6标准化诊断编码7
-    private String P3282_ICD10_ID7;
+    private String P3282_ICD10_ID7_STD;
     //其他诊断6标准化诊断名称7
-    private String P3282_ICD10_NAME7;
+    private String P3282_ICD10_NAME7_STD;
     //其他诊断7标准化诊断编码1
-    private String P3285_ICD10_ID1;
+    private String P3285_ICD10_ID1_STD;
     //其他诊断7标准化诊断名称1
-    private String P3285_ICD10_NAME1;
+    private String P3285_ICD10_NAME1_STD;
     //其他诊断7标准化诊断编码2
-    private String P3285_ICD10_ID2;
+    private String P3285_ICD10_ID2_STD;
     //其他诊断7标准化诊断名称2
-    private String P3285_ICD10_NAME2;
+    private String P3285_ICD10_NAME2_STD;
     //其他诊断7标准化诊断编码3
-    private String P3285_ICD10_ID3;
+    private String P3285_ICD10_ID3_STD;
     //其他诊断7标准化诊断名称3
-    private String P3285_ICD10_NAME3;
+    private String P3285_ICD10_NAME3_STD;
     //其他诊断7标准化诊断编码4
-    private String P3285_ICD10_ID4;
+    private String P3285_ICD10_ID4_STD;
     //其他诊断7标准化诊断名称4
-    private String P3285_ICD10_NAME4;
+    private String P3285_ICD10_NAME4_STD;
     //其他诊断7标准化诊断编码5
-    private String P3285_ICD10_ID5;
+    private String P3285_ICD10_ID5_STD;
     //其他诊断7标准化诊断名称5
-    private String P3285_ICD10_NAME5;
+    private String P3285_ICD10_NAME5_STD;
     //其他诊断7标准化诊断编码6
-    private String P3285_ICD10_ID6;
+    private String P3285_ICD10_ID6_STD;
     //其他诊断7标准化诊断名称6
-    private String P3285_ICD10_NAME6;
+    private String P3285_ICD10_NAME6_STD;
     //其他诊断7标准化诊断编码7
-    private String P3285_ICD10_ID7;
+    private String P3285_ICD10_ID7_STD;
     //其他诊断7标准化诊断名称7
-    private String P3285_ICD10_NAME7;
+    private String P3285_ICD10_NAME7_STD;
     //其他诊断8标准化诊断编码1
-    private String P3288_ICD10_ID1;
+    private String P3288_ICD10_ID1_STD;
     //其他诊断8标准化诊断名称1
-    private String P3288_ICD10_NAME1;
+    private String P3288_ICD10_NAME1_STD;
     //其他诊断8标准化诊断编码2
-    private String P3288_ICD10_ID2;
+    private String P3288_ICD10_ID2_STD;
     //其他诊断8标准化诊断名称2
-    private String P3288_ICD10_NAME2;
+    private String P3288_ICD10_NAME2_STD;
     //其他诊断8标准化诊断编码3
-    private String P3288_ICD10_ID3;
+    private String P3288_ICD10_ID3_STD;
     //其他诊断8标准化诊断名称3
-    private String P3288_ICD10_NAME3;
+    private String P3288_ICD10_NAME3_STD;
     //其他诊断8标准化诊断编码4
-    private String P3288_ICD10_ID4;
+    private String P3288_ICD10_ID4_STD;
     //其他诊断8标准化诊断名称4
-    private String P3288_ICD10_NAME4;
+    private String P3288_ICD10_NAME4_STD;
     //其他诊断8标准化诊断编码5
-    private String P3288_ICD10_ID5;
+    private String P3288_ICD10_ID5_STD;
     //其他诊断8标准化诊断名称5
-    private String P3288_ICD10_NAME5;
+    private String P3288_ICD10_NAME5_STD;
     //其他诊断8标准化诊断编码6
-    private String P3288_ICD10_ID6;
+    private String P3288_ICD10_ID6_STD;
     //其他诊断8标准化诊断名称6
-    private String P3288_ICD10_NAME6;
+    private String P3288_ICD10_NAME6_STD;
     //其他诊断8标准化诊断编码7
-    private String P3288_ICD10_ID7;
+    private String P3288_ICD10_ID7_STD;
     //其他诊断8标准化诊断名称7
-    private String P3288_ICD10_NAME7;
+    private String P3288_ICD10_NAME7_STD;
     //其他诊断9标准化诊断编码1
-    private String P3272_ICD10_ID1;
+    private String P3272_ICD10_ID1_STD;
     //其他诊断9标准化诊断名称1
-    private String P3272_ICD10_NAME1;
+    private String P3272_ICD10_NAME1_STD;
     //其他诊断9标准化诊断编码2
-    private String P3272_ICD10_ID2;
+    private String P3272_ICD10_ID2_STD;
     //其他诊断9标准化诊断名称2
-    private String P3272_ICD10_NAME2;
+    private String P3272_ICD10_NAME2_STD;
     //其他诊断9标准化诊断编码3
-    private String P3272_ICD10_ID3;
+    private String P3272_ICD10_ID3_STD;
     //其他诊断9标准化诊断名称3
-    private String P3272_ICD10_NAME3;
+    private String P3272_ICD10_NAME3_STD;
     //其他诊断9标准化诊断编码4
-    private String P3272_ICD10_ID4;
+    private String P3272_ICD10_ID4_STD;
     //其他诊断9标准化诊断名称4
-    private String P3272_ICD10_NAME4;
+    private String P3272_ICD10_NAME4_STD;
     //其他诊断9标准化诊断编码5
-    private String P3272_ICD10_ID5;
+    private String P3272_ICD10_ID5_STD;
     //其他诊断9标准化诊断名称5
-    private String P3272_ICD10_NAME5;
+    private String P3272_ICD10_NAME5_STD;
     //其他诊断9标准化诊断编码6
-    private String P3272_ICD10_ID6;
+    private String P3272_ICD10_ID6_STD;
     //其他诊断9标准化诊断名称6
-    private String P3272_ICD10_NAME6;
+    private String P3272_ICD10_NAME6_STD;
     //其他诊断9标准化诊断编码7
-    private String P3272_ICD10_ID7;
+    private String P3272_ICD10_ID7_STD;
     //其他诊断9标准化诊断名称7
-    private String P3272_ICD10_NAME7;
+    private String P3272_ICD10_NAME7_STD;
     //其他诊断10标准化诊断编码1
-    private String P3275_ICD10_ID1;
+    private String P3275_ICD10_ID1_STD;
     //其他诊断10标准化诊断名称1
-    private String P3275_ICD10_NAME1;
+    private String P3275_ICD10_NAME1_STD;
     //其他诊断10标准化诊断编码2
-    private String P3275_ICD10_ID2;
+    private String P3275_ICD10_ID2_STD;
     //其他诊断10标准化诊断名称2
-    private String P3275_ICD10_NAME2;
+    private String P3275_ICD10_NAME2_STD;
     //其他诊断10标准化诊断编码3
-    private String P3275_ICD10_ID3;
+    private String P3275_ICD10_ID3_STD;
     //其他诊断10标准化诊断名称3
-    private String P3275_ICD10_NAME3;
+    private String P3275_ICD10_NAME3_STD;
     //其他诊断10标准化诊断编码4
-    private String P3275_ICD10_ID4;
+    private String P3275_ICD10_ID4_STD;
     //其他诊断10标准化诊断名称4
-    private String P3275_ICD10_NAME4;
+    private String P3275_ICD10_NAME4_STD;
     //其他诊断10标准化诊断编码5
-    private String P3275_ICD10_ID5;
+    private String P3275_ICD10_ID5_STD;
     //其他诊断10标准化诊断名称5
-    private String P3275_ICD10_NAME5;
+    private String P3275_ICD10_NAME5_STD;
     //其他诊断10标准化诊断编码6
-    private String P3275_ICD10_ID6;
+    private String P3275_ICD10_ID6_STD;
     //其他诊断10标准化诊断名称6
-    private String P3275_ICD10_NAME6;
+    private String P3275_ICD10_NAME6_STD;
     //其他诊断10标准化诊断编码7
-    private String P3275_ICD10_ID7;
+    private String P3275_ICD10_ID7_STD;
     //其他诊断10标准化诊断名称7
-    private String P3275_ICD10_NAME7;
+    private String P3275_ICD10_NAME7_STD;
     //门诊诊断标准化诊断编码1
-    private String P281_ICD10_ID1;
+    private String P281_ICD10_ID1_STD;
     //门诊诊断标准化诊断名称1
-    private String P281_ICD10_NAME1;
+    private String P281_ICD10_NAME1_STD;
     //门诊诊断标准化诊断编码2
-    private String P281_ICD10_ID2;
+    private String P281_ICD10_ID2_STD;
     //门诊诊断标准化诊断名称2
-    private String P281_ICD10_NAME2;
+    private String P281_ICD10_NAME2_STD;
     //门诊诊断标准化诊断编码3
-    private String P281_ICD10_ID3;
+    private String P281_ICD10_ID3_STD;
     //门诊诊断标准化诊断名称3
-    private String P281_ICD10_NAME3;
+    private String P281_ICD10_NAME3_STD;
     //门诊诊断标准化诊断编码4
-    private String P281_ICD10_ID4;
+    private String P281_ICD10_ID4_STD;
     //门诊诊断标准化诊断名称4
-    private String P281_ICD10_NAME4;
+    private String P281_ICD10_NAME4_STD;
     //门诊诊断标准化诊断编码5
-    private String P281_ICD10_ID5;
+    private String P281_ICD10_ID5_STD;
     //门诊诊断标准化诊断名称5
-    private String P281_ICD10_NAME5;
+    private String P281_ICD10_NAME5_STD;
     //门诊诊断标准化诊断编码6
-    private String P281_ICD10_ID6;
+    private String P281_ICD10_ID6_STD;
     //门诊诊断标准化诊断名称6
-    private String P281_ICD10_NAME6;
+    private String P281_ICD10_NAME6_STD;
     //门诊诊断标准化诊断编码7
-    private String P281_ICD10_ID7;
+    private String P281_ICD10_ID7_STD;
     //门诊诊断标准化诊断名称7
-    private String P281_ICD10_NAME7;
+    private String P281_ICD10_NAME7_STD;
     //入院诊断标准化诊断编码1
-    private String P301_ICD10_ID1;
+    private String P301_ICD10_ID1_STD;
     //入院诊断标准化诊断名称1
-    private String P301_ICD10_NAME1;
+    private String P301_ICD10_NAME1_STD;
     //入院诊断标准化诊断编码2
-    private String P301_ICD10_ID2;
+    private String P301_ICD10_ID2_STD;
     //入院诊断标准化诊断名称2
-    private String P301_ICD10_NAME2;
+    private String P301_ICD10_NAME2_STD;
     //入院诊断标准化诊断编码3
-    private String P301_ICD10_ID3;
+    private String P301_ICD10_ID3_STD;
     //入院诊断标准化诊断名称3
-    private String P301_ICD10_NAME3;
+    private String P301_ICD10_NAME3_STD;
     //入院诊断标准化诊断编码4
-    private String P301_ICD10_ID4;
+    private String P301_ICD10_ID4_STD;
     //入院诊断标准化诊断名称4
-    private String P301_ICD10_NAME4;
+    private String P301_ICD10_NAME4_STD;
     //入院诊断标准化诊断编码5
-    private String P301_ICD10_ID5;
+    private String P301_ICD10_ID5_STD;
     //入院诊断标准化诊断名称5
-    private String P301_ICD10_NAME5;
+    private String P301_ICD10_NAME5_STD;
     //入院诊断标准化诊断编码6
-    private String P301_ICD10_ID6;
+    private String P301_ICD10_ID6_STD;
     //入院诊断标准化诊断名称6
-    private String P301_ICD10_NAME6;
+    private String P301_ICD10_NAME6_STD;
     //入院诊断标准化诊断编码7
-    private String P301_ICD10_ID7;
+    private String P301_ICD10_ID7_STD;
     //入院诊断标准化诊断名称7
-    private String P301_ICD10_NAME7;
+    private String P301_ICD10_NAME7_STD;
     //病理诊断名称1标准化诊断编码1
-    private String P352_ICD10_ID1;
+    private String P352_ICD10_ID1_STD;
     //病理诊断名称1标准化诊断名称1
-    private String P352_ICD10_NAME1;
+    private String P352_ICD10_NAME1_STD;
     //病理诊断名称1标准化诊断编码2
-    private String P352_ICD10_ID2;
+    private String P352_ICD10_ID2_STD;
     //病理诊断名称1标准化诊断名称2
-    private String P352_ICD10_NAME2;
+    private String P352_ICD10_NAME2_STD;
     //病理诊断名称1标准化诊断编码3
-    private String P352_ICD10_ID3;
+    private String P352_ICD10_ID3_STD;
     //病理诊断名称1标准化诊断名称3
-    private String P352_ICD10_NAME3;
+    private String P352_ICD10_NAME3_STD;
     //病理诊断名称1标准化诊断编码4
-    private String P352_ICD10_ID4;
+    private String P352_ICD10_ID4_STD;
     //病理诊断名称1标准化诊断名称4
-    private String P352_ICD10_NAME4;
+    private String P352_ICD10_NAME4_STD;
     //病理诊断名称1标准化诊断编码5
-    private String P352_ICD10_ID5;
+    private String P352_ICD10_ID5_STD;
     //病理诊断名称1标准化诊断名称5
-    private String P352_ICD10_NAME5;
+    private String P352_ICD10_NAME5_STD;
     //病理诊断名称1标准化诊断编码6
-    private String P352_ICD10_ID6;
+    private String P352_ICD10_ID6_STD;
     //病理诊断名称1标准化诊断名称6
-    private String P352_ICD10_NAME6;
+    private String P352_ICD10_NAME6_STD;
     //病理诊断名称1标准化诊断编码7
-    private String P352_ICD10_ID7;
+    private String P352_ICD10_ID7_STD;
     //病理诊断名称1标准化诊断名称7
-    private String P352_ICD10_NAME7;
+    private String P352_ICD10_NAME7_STD;
     //病理诊断名称2标准化诊断编码1
-    private String P354_ICD10_ID1;
+    private String P354_ICD10_ID1_STD;
     //病理诊断名称2标准化诊断名称1
-    private String P354_ICD10_NAME1;
+    private String P354_ICD10_NAME1_STD;
     //病理诊断名称2标准化诊断编码2
-    private String P354_ICD10_ID2;
+    private String P354_ICD10_ID2_STD;
     //病理诊断名称2标准化诊断名称2
-    private String P354_ICD10_NAME2;
+    private String P354_ICD10_NAME2_STD;
     //病理诊断名称2标准化诊断编码3
-    private String P354_ICD10_ID3;
+    private String P354_ICD10_ID3_STD;
     //病理诊断名称2标准化诊断名称3
-    private String P354_ICD10_NAME3;
+    private String P354_ICD10_NAME3_STD;
     //病理诊断名称2标准化诊断编码4
-    private String P354_ICD10_ID4;
+    private String P354_ICD10_ID4_STD;
     //病理诊断名称2标准化诊断名称4
-    private String P354_ICD10_NAME4;
+    private String P354_ICD10_NAME4_STD;
     //病理诊断名称2标准化诊断编码5
-    private String P354_ICD10_ID5;
+    private String P354_ICD10_ID5_STD;
     //病理诊断名称2标准化诊断名称5
-    private String P354_ICD10_NAME5;
+    private String P354_ICD10_NAME5_STD;
     //病理诊断名称2标准化诊断编码6
-    private String P354_ICD10_ID6;
+    private String P354_ICD10_ID6_STD;
     //病理诊断名称2标准化诊断名称6
-    private String P354_ICD10_NAME6;
+    private String P354_ICD10_NAME6_STD;
     //病理诊断名称2标准化诊断编码7
-    private String P354_ICD10_ID7;
+    private String P354_ICD10_ID7_STD;
     //病理诊断名称2标准化诊断名称7
-    private String P354_ICD10_NAME7;
+    private String P354_ICD10_NAME7_STD;
     //病理诊断名称3标准化诊断编码1
-    private String P356_ICD10_ID1;
+    private String P356_ICD10_ID1_STD;
     //病理诊断名称3标准化诊断名称1
-    private String P356_ICD10_NAME1;
+    private String P356_ICD10_NAME1_STD;
     //病理诊断名称3标准化诊断编码2
-    private String P356_ICD10_ID2;
+    private String P356_ICD10_ID2_STD;
     //病理诊断名称3标准化诊断名称2
-    private String P356_ICD10_NAME2;
+    private String P356_ICD10_NAME2_STD;
     //病理诊断名称3标准化诊断编码3
-    private String P356_ICD10_ID3;
+    private String P356_ICD10_ID3_STD;
     //病理诊断名称3标准化诊断名称3
-    private String P356_ICD10_NAME3;
+    private String P356_ICD10_NAME3_STD;
     //病理诊断名称3标准化诊断编码4
-    private String P356_ICD10_ID4;
+    private String P356_ICD10_ID4_STD;
     //病理诊断名称3标准化诊断名称4
-    private String P356_ICD10_NAME4;
+    private String P356_ICD10_NAME4_STD;
     //病理诊断名称3标准化诊断编码5
-    private String P356_ICD10_ID5;
+    private String P356_ICD10_ID5_STD;
     //病理诊断名称3标准化诊断名称5
-    private String P356_ICD10_NAME5;
+    private String P356_ICD10_NAME5_STD;
     //病理诊断名称3标准化诊断编码6
-    private String P356_ICD10_ID6;
+    private String P356_ICD10_ID6_STD;
     //病理诊断名称3标准化诊断名称6
-    private String P356_ICD10_NAME6;
+    private String P356_ICD10_NAME6_STD;
     //病理诊断名称3标准化诊断编码7
-    private String P356_ICD10_ID7;
+    private String P356_ICD10_ID7_STD;
     //病理诊断名称3标准化诊断名称7
-    private String P356_ICD10_NAME7;
+    private String P356_ICD10_NAME7_STD;
 
-    public Integer getID(){
+    public String getID() {
         return ID;
-    } 
-    public void setID(Integer ID) {
-         this.ID = ID;
-    } 
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
     public String getUNIQUE_ID(){
         return UNIQUE_ID;
-    } 
+    }
     public void setUNIQUE_ID(String UNIQUE_ID) {
-         this.UNIQUE_ID = UNIQUE_ID;
-    } 
+        this.UNIQUE_ID = UNIQUE_ID;
+    }
     public String getUNIQUE_ID_LV1(){
         return UNIQUE_ID_LV1;
-    } 
+    }
     public void setUNIQUE_ID_LV1(String UNIQUE_ID_LV1) {
-         this.UNIQUE_ID_LV1 = UNIQUE_ID_LV1;
-    } 
+        this.UNIQUE_ID_LV1 = UNIQUE_ID_LV1;
+    }
     public String getUNIQUE_ID_LV2(){
         return UNIQUE_ID_LV2;
-    } 
+    }
     public void setUNIQUE_ID_LV2(String UNIQUE_ID_LV2) {
-         this.UNIQUE_ID_LV2 = UNIQUE_ID_LV2;
-    } 
+        this.UNIQUE_ID_LV2 = UNIQUE_ID_LV2;
+    }
     public String getP900(){
         return P900;
-    } 
+    }
     public void setP900(String P900) {
-         this.P900 = P900;
-    } 
+        this.P900 = P900;
+    }
     public String getPATIENT_ID(){
         return PATIENT_ID;
-    } 
+    }
     public void setPATIENT_ID(String PATIENT_ID) {
-         this.PATIENT_ID = PATIENT_ID;
-    } 
+        this.PATIENT_ID = PATIENT_ID;
+    }
     public String getVISIT_ID(){
         return VISIT_ID;
-    } 
+    }
     public void setVISIT_ID(String VISIT_ID) {
-         this.VISIT_ID = VISIT_ID;
-    } 
+        this.VISIT_ID = VISIT_ID;
+    }
     public Integer getADMISSION_NUMBER(){
         return ADMISSION_NUMBER;
-    } 
+    }
     public void setADMISSION_NUMBER(Integer ADMISSION_NUMBER) {
-         this.ADMISSION_NUMBER = ADMISSION_NUMBER;
-    } 
+        this.ADMISSION_NUMBER = ADMISSION_NUMBER;
+    }
     public String getTPATNO(){
         return TPATNO;
-    } 
+    }
     public void setTPATNO(String TPATNO) {
-         this.TPATNO = TPATNO;
-    } 
+        this.TPATNO = TPATNO;
+    }
     public Integer getVISIT_TYPE(){
         return VISIT_TYPE;
-    } 
+    }
     public void setVISIT_TYPE(Integer VISIT_TYPE) {
-         this.VISIT_TYPE = VISIT_TYPE;
-    } 
+        this.VISIT_TYPE = VISIT_TYPE;
+    }
     public String getRECORD_STATUS(){
         return RECORD_STATUS;
-    } 
+    }
     public void setRECORD_STATUS(String RECORD_STATUS) {
-         this.RECORD_STATUS = RECORD_STATUS;
-    } 
+        this.RECORD_STATUS = RECORD_STATUS;
+    }
     public String getP28(){
         return P28;
-    } 
+    }
     public void setP28(String P28) {
-         this.P28 = P28;
-    } 
+        this.P28 = P28;
+    }
     public String getP281(){
         return P281;
-    } 
+    }
     public void setP281(String P281) {
-         this.P281 = P281;
-    } 
+        this.P281 = P281;
+    }
     public String getP29(){
         return P29;
-    } 
+    }
     public void setP29(String P29) {
-         this.P29 = P29;
-    } 
+        this.P29 = P29;
+    }
     public String getP30(){
         return P30;
-    } 
+    }
     public void setP30(String P30) {
-         this.P30 = P30;
-    } 
+        this.P30 = P30;
+    }
     public String getP301(){
         return P301;
-    } 
+    }
     public void setP301(String P301) {
-         this.P301 = P301;
-    } 
+        this.P301 = P301;
+    }
     public Date getP31(){
         return P31;
-    } 
+    }
     public void setP31(Date P31) {
-         this.P31 = P31;
-    } 
+        this.P31 = P31;
+    }
     public String getP321(){
         return P321;
-    } 
+    }
     public void setP321(String P321) {
-         this.P321 = P321;
-    } 
+        this.P321 = P321;
+    }
     public String getP322(){
         return P322;
-    } 
+    }
     public void setP322(String P322) {
-         this.P322 = P322;
-    } 
+        this.P322 = P322;
+    }
     public String getP805(){
         return P805;
-    } 
+    }
     public void setP805(String P805) {
-         this.P805 = P805;
-    } 
+        this.P805 = P805;
+    }
     public String getP323(){
         return P323;
-    } 
+    }
     public void setP323(String P323) {
-         this.P323 = P323;
-    } 
+        this.P323 = P323;
+    }
     public String getP324(){
         return P324;
-    } 
+    }
     public void setP324(String P324) {
-         this.P324 = P324;
-    } 
+        this.P324 = P324;
+    }
     public String getP325(){
         return P325;
-    } 
+    }
     public void setP325(String P325) {
-         this.P325 = P325;
-    } 
+        this.P325 = P325;
+    }
     public String getP806(){
         return P806;
-    } 
+    }
     public void setP806(String P806) {
-         this.P806 = P806;
-    } 
+        this.P806 = P806;
+    }
     public String getP326(){
         return P326;
-    } 
+    }
     public void setP326(String P326) {
-         this.P326 = P326;
-    } 
+        this.P326 = P326;
+    }
     public String getP327(){
         return P327;
-    } 
+    }
     public void setP327(String P327) {
-         this.P327 = P327;
-    } 
+        this.P327 = P327;
+    }
     public String getP328(){
         return P328;
-    } 
+    }
     public void setP328(String P328) {
-         this.P328 = P328;
-    } 
+        this.P328 = P328;
+    }
     public String getP807(){
         return P807;
-    } 
+    }
     public void setP807(String P807) {
-         this.P807 = P807;
-    } 
+        this.P807 = P807;
+    }
     public String getP329(){
         return P329;
-    } 
+    }
     public void setP329(String P329) {
-         this.P329 = P329;
-    } 
+        this.P329 = P329;
+    }
     public String getP3291(){
         return P3291;
-    } 
+    }
     public void setP3291(String P3291) {
-         this.P3291 = P3291;
-    } 
+        this.P3291 = P3291;
+    }
     public String getP3292(){
         return P3292;
-    } 
+    }
     public void setP3292(String P3292) {
-         this.P3292 = P3292;
-    } 
+        this.P3292 = P3292;
+    }
     public String getP808(){
         return P808;
-    } 
+    }
     public void setP808(String P808) {
-         this.P808 = P808;
-    } 
+        this.P808 = P808;
+    }
     public String getP3293(){
         return P3293;
-    } 
+    }
     public void setP3293(String P3293) {
-         this.P3293 = P3293;
-    } 
+        this.P3293 = P3293;
+    }
     public String getP3294(){
         return P3294;
-    } 
+    }
     public void setP3294(String P3294) {
-         this.P3294 = P3294;
-    } 
+        this.P3294 = P3294;
+    }
     public String getP3295(){
         return P3295;
-    } 
+    }
     public void setP3295(String P3295) {
-         this.P3295 = P3295;
-    } 
+        this.P3295 = P3295;
+    }
     public String getP809(){
         return P809;
-    } 
+    }
     public void setP809(String P809) {
-         this.P809 = P809;
-    } 
+        this.P809 = P809;
+    }
     public String getP3296(){
         return P3296;
-    } 
+    }
     public void setP3296(String P3296) {
-         this.P3296 = P3296;
-    } 
+        this.P3296 = P3296;
+    }
     public String getP3297(){
         return P3297;
-    } 
+    }
     public void setP3297(String P3297) {
-         this.P3297 = P3297;
-    } 
+        this.P3297 = P3297;
+    }
     public String getP3298(){
         return P3298;
-    } 
+    }
     public void setP3298(String P3298) {
-         this.P3298 = P3298;
-    } 
+        this.P3298 = P3298;
+    }
     public String getP810(){
         return P810;
-    } 
+    }
     public void setP810(String P810) {
-         this.P810 = P810;
-    } 
+        this.P810 = P810;
+    }
     public String getP3299(){
         return P3299;
-    } 
+    }
     public void setP3299(String P3299) {
-         this.P3299 = P3299;
-    } 
+        this.P3299 = P3299;
+    }
     public String getP3281(){
         return P3281;
-    } 
+    }
     public void setP3281(String P3281) {
-         this.P3281 = P3281;
-    } 
+        this.P3281 = P3281;
+    }
     public String getP3282(){
         return P3282;
-    } 
+    }
     public void setP3282(String P3282) {
-         this.P3282 = P3282;
-    } 
+        this.P3282 = P3282;
+    }
     public String getP811(){
         return P811;
-    } 
+    }
     public void setP811(String P811) {
-         this.P811 = P811;
-    } 
+        this.P811 = P811;
+    }
     public String getP3283(){
         return P3283;
-    } 
+    }
     public void setP3283(String P3283) {
-         this.P3283 = P3283;
-    } 
+        this.P3283 = P3283;
+    }
     public String getP3284(){
         return P3284;
-    } 
+    }
     public void setP3284(String P3284) {
-         this.P3284 = P3284;
-    } 
+        this.P3284 = P3284;
+    }
     public String getP3285(){
         return P3285;
-    } 
+    }
     public void setP3285(String P3285) {
-         this.P3285 = P3285;
-    } 
+        this.P3285 = P3285;
+    }
     public String getP812(){
         return P812;
-    } 
+    }
     public void setP812(String P812) {
-         this.P812 = P812;
-    } 
+        this.P812 = P812;
+    }
     public String getP3286(){
         return P3286;
-    } 
+    }
     public void setP3286(String P3286) {
-         this.P3286 = P3286;
-    } 
+        this.P3286 = P3286;
+    }
     public String getP3287(){
         return P3287;
-    } 
+    }
     public void setP3287(String P3287) {
-         this.P3287 = P3287;
-    } 
+        this.P3287 = P3287;
+    }
     public String getP3288(){
         return P3288;
-    } 
+    }
     public void setP3288(String P3288) {
-         this.P3288 = P3288;
-    } 
+        this.P3288 = P3288;
+    }
     public String getP813(){
         return P813;
-    } 
+    }
     public void setP813(String P813) {
-         this.P813 = P813;
-    } 
+        this.P813 = P813;
+    }
     public String getP3289(){
         return P3289;
-    } 
+    }
     public void setP3289(String P3289) {
-         this.P3289 = P3289;
-    } 
+        this.P3289 = P3289;
+    }
     public String getP3271(){
         return P3271;
-    } 
+    }
     public void setP3271(String P3271) {
-         this.P3271 = P3271;
-    } 
+        this.P3271 = P3271;
+    }
     public String getP3272(){
         return P3272;
-    } 
+    }
     public void setP3272(String P3272) {
-         this.P3272 = P3272;
-    } 
+        this.P3272 = P3272;
+    }
     public String getP814(){
         return P814;
-    } 
+    }
     public void setP814(String P814) {
-         this.P814 = P814;
-    } 
+        this.P814 = P814;
+    }
     public String getP3273(){
         return P3273;
-    } 
+    }
     public void setP3273(String P3273) {
-         this.P3273 = P3273;
-    } 
+        this.P3273 = P3273;
+    }
     public String getP3274(){
         return P3274;
-    } 
+    }
     public void setP3274(String P3274) {
-         this.P3274 = P3274;
-    } 
+        this.P3274 = P3274;
+    }
     public String getP3275(){
         return P3275;
-    } 
+    }
     public void setP3275(String P3275) {
-         this.P3275 = P3275;
-    } 
+        this.P3275 = P3275;
+    }
     public String getP815(){
         return P815;
-    } 
+    }
     public void setP815(String P815) {
-         this.P815 = P815;
-    } 
+        this.P815 = P815;
+    }
     public String getP3276(){
         return P3276;
-    } 
+    }
     public void setP3276(String P3276) {
-         this.P3276 = P3276;
-    } 
+        this.P3276 = P3276;
+    }
     public String getP351(){
         return P351;
-    } 
+    }
     public void setP351(String P351) {
-         this.P351 = P351;
-    } 
+        this.P351 = P351;
+    }
     public String getP352(){
         return P352;
-    } 
+    }
     public void setP352(String P352) {
-         this.P352 = P352;
-    } 
+        this.P352 = P352;
+    }
     public String getP816(){
         return P816;
-    } 
+    }
     public void setP816(String P816) {
-         this.P816 = P816;
-    } 
+        this.P816 = P816;
+    }
     public String getP353(){
         return P353;
-    } 
+    }
     public void setP353(String P353) {
-         this.P353 = P353;
-    } 
+        this.P353 = P353;
+    }
     public String getP354(){
         return P354;
-    } 
+    }
     public void setP354(String P354) {
-         this.P354 = P354;
-    } 
+        this.P354 = P354;
+    }
     public String getP817(){
         return P817;
-    } 
+    }
     public void setP817(String P817) {
-         this.P817 = P817;
-    } 
+        this.P817 = P817;
+    }
     public String getP355(){
         return P355;
-    } 
+    }
     public void setP355(String P355) {
-         this.P355 = P355;
-    } 
+        this.P355 = P355;
+    }
     public String getP356(){
         return P356;
-    } 
+    }
     public void setP356(String P356) {
-         this.P356 = P356;
-    } 
+        this.P356 = P356;
+    }
     public String getP818(){
         return P818;
-    } 
+    }
     public void setP818(String P818) {
-         this.P818 = P818;
-    } 
+        this.P818 = P818;
+    }
     public String getP361(){
         return P361;
-    } 
+    }
     public void setP361(String P361) {
-         this.P361 = P361;
-    } 
+        this.P361 = P361;
+    }
     public String getP362(){
         return P362;
-    } 
+    }
     public void setP362(String P362) {
-         this.P362 = P362;
-    } 
+        this.P362 = P362;
+    }
     public String getP363(){
         return P363;
-    } 
+    }
     public void setP363(String P363) {
-         this.P363 = P363;
-    } 
+        this.P363 = P363;
+    }
     public String getP364(){
         return P364;
-    } 
+    }
     public void setP364(String P364) {
-         this.P364 = P364;
-    } 
+        this.P364 = P364;
+    }
     public String getP365(){
         return P365;
-    } 
+    }
     public void setP365(String P365) {
-         this.P365 = P365;
-    } 
+        this.P365 = P365;
+    }
     public String getP366(){
         return P366;
-    } 
+    }
     public void setP366(String P366) {
-         this.P366 = P366;
-    } 
+        this.P366 = P366;
+    }
     public String getP411(){
         return P411;
-    } 
+    }
     public void setP411(String P411) {
-         this.P411 = P411;
-    } 
+        this.P411 = P411;
+    }
     public String getP412(){
         return P412;
-    } 
+    }
     public void setP412(String P412) {
-         this.P412 = P412;
-    } 
+        this.P412 = P412;
+    }
     public String getP413(){
         return P413;
-    } 
+    }
     public void setP413(String P413) {
-         this.P413 = P413;
-    } 
+        this.P413 = P413;
+    }
     public String getP414(){
         return P414;
-    } 
+    }
     public void setP414(String P414) {
-         this.P414 = P414;
-    } 
+        this.P414 = P414;
+    }
     public String getP415(){
         return P415;
-    } 
+    }
     public void setP415(String P415) {
-         this.P415 = P415;
-    } 
+        this.P415 = P415;
+    }
     public String getDATA_VERSION(){
         return DATA_VERSION;
-    } 
+    }
     public void setDATA_VERSION(String DATA_VERSION) {
-         this.DATA_VERSION = DATA_VERSION;
-    } 
+        this.DATA_VERSION = DATA_VERSION;
+    }
     public String getDATA_DB_SOURCE(){
         return DATA_DB_SOURCE;
-    } 
+    }
     public void setDATA_DB_SOURCE(String DATA_DB_SOURCE) {
-         this.DATA_DB_SOURCE = DATA_DB_SOURCE;
-    } 
+        this.DATA_DB_SOURCE = DATA_DB_SOURCE;
+    }
     public String getDATA_TABLE_SOURCE(){
         return DATA_TABLE_SOURCE;
-    } 
+    }
     public void setDATA_TABLE_SOURCE(String DATA_TABLE_SOURCE) {
-         this.DATA_TABLE_SOURCE = DATA_TABLE_SOURCE;
-    } 
+        this.DATA_TABLE_SOURCE = DATA_TABLE_SOURCE;
+    }
     public String getDATA_FIELD_SOURCE(){
         return DATA_FIELD_SOURCE;
-    } 
+    }
     public void setDATA_FIELD_SOURCE(String DATA_FIELD_SOURCE) {
-         this.DATA_FIELD_SOURCE = DATA_FIELD_SOURCE;
-    } 
+        this.DATA_FIELD_SOURCE = DATA_FIELD_SOURCE;
+    }
     public Date getCREATED_AT(){
         return CREATED_AT;
-    } 
+    }
     public void setCREATED_AT(Date CREATED_AT) {
-         this.CREATED_AT = CREATED_AT;
-    } 
+        this.CREATED_AT = CREATED_AT;
+    }
     public String getCREATOR(){
         return CREATOR;
-    } 
+    }
     public void setCREATOR(String CREATOR) {
-         this.CREATOR = CREATOR;
-    } 
+        this.CREATOR = CREATOR;
+    }
     public Date getUPDATED_AT(){
         return UPDATED_AT;
-    } 
+    }
     public void setUPDATED_AT(Date UPDATED_AT) {
-         this.UPDATED_AT = UPDATED_AT;
-    } 
+        this.UPDATED_AT = UPDATED_AT;
+    }
     public String getUPDATOR(){
         return UPDATOR;
-    } 
+    }
     public void setUPDATOR(String UPDATOR) {
-         this.UPDATOR = UPDATOR;
-    } 
+        this.UPDATOR = UPDATOR;
+    }
     public String getUPDATED_NOTE(){
         return UPDATED_NOTE;
-    } 
+    }
     public void setUPDATED_NOTE(String UPDATED_NOTE) {
-         this.UPDATED_NOTE = UPDATED_NOTE;
-    } 
+        this.UPDATED_NOTE = UPDATED_NOTE;
+    }
     public String getDATA_STATE(){
         return DATA_STATE;
-    } 
+    }
     public void setDATA_STATE(String DATA_STATE) {
-         this.DATA_STATE = DATA_STATE;
-    } 
+        this.DATA_STATE = DATA_STATE;
+    }
     public Date getDISABLE_TIME(){
         return DISABLE_TIME;
-    } 
+    }
     public void setDISABLE_TIME(Date DISABLE_TIME) {
-         this.DISABLE_TIME = DISABLE_TIME;
-    } 
+        this.DISABLE_TIME = DISABLE_TIME;
+    }
     public String getDISABLE_OPERATOR(){
         return DISABLE_OPERATOR;
-    } 
+    }
     public void setDISABLE_OPERATOR(String DISABLE_OPERATOR) {
-         this.DISABLE_OPERATOR = DISABLE_OPERATOR;
-    } 
+        this.DISABLE_OPERATOR = DISABLE_OPERATOR;
+    }
     public String getDISABLE_NOTE(){
         return DISABLE_NOTE;
-    } 
+    }
     public void setDISABLE_NOTE(String DISABLE_NOTE) {
-         this.DISABLE_NOTE = DISABLE_NOTE;
-    } 
+        this.DISABLE_NOTE = DISABLE_NOTE;
+    }
     public String getDATA_CHECK(){
         return DATA_CHECK;
-    } 
+    }
     public void setDATA_CHECK(String DATA_CHECK) {
-         this.DATA_CHECK = DATA_CHECK;
-    } 
+        this.DATA_CHECK = DATA_CHECK;
+    }
     public Integer getDEL_FLAG(){
         return DEL_FLAG;
-    } 
+    }
     public void setDEL_FLAG(Integer DEL_FLAG) {
-         this.DEL_FLAG = DEL_FLAG;
-    } 
+        this.DEL_FLAG = DEL_FLAG;
+    }
     public String getBATCH_NUMBER(){
         return BATCH_NUMBER;
-    } 
+    }
     public void setBATCH_NUMBER(String BATCH_NUMBER) {
-         this.BATCH_NUMBER = BATCH_NUMBER;
-    } 
+        this.BATCH_NUMBER = BATCH_NUMBER;
+    }
     public String getMD5(){
         return MD5;
-    } 
+    }
     public void setMD5(String MD5) {
-         this.MD5 = MD5;
-    } 
-    public String getP322_ICD10_ID1(){
-        return P322_ICD10_ID1;
-    } 
-    public void setP322_ICD10_ID1(String P322_ICD10_ID1) {
-         this.P322_ICD10_ID1 = P322_ICD10_ID1;
-    } 
-    public String getP322_ICD10_NAME1(){
-        return P322_ICD10_NAME1;
-    } 
-    public void setP322_ICD10_NAME1(String P322_ICD10_NAME1) {
-         this.P322_ICD10_NAME1 = P322_ICD10_NAME1;
-    } 
-    public String getP322_ICD10_ID2(){
-        return P322_ICD10_ID2;
-    } 
-    public void setP322_ICD10_ID2(String P322_ICD10_ID2) {
-         this.P322_ICD10_ID2 = P322_ICD10_ID2;
-    } 
-    public String getP322_ICD10_NAME2(){
-        return P322_ICD10_NAME2;
-    } 
-    public void setP322_ICD10_NAME2(String P322_ICD10_NAME2) {
-         this.P322_ICD10_NAME2 = P322_ICD10_NAME2;
-    } 
-    public String getP322_ICD10_ID3(){
-        return P322_ICD10_ID3;
-    } 
-    public void setP322_ICD10_ID3(String P322_ICD10_ID3) {
-         this.P322_ICD10_ID3 = P322_ICD10_ID3;
-    } 
-    public String getP322_ICD10_NAME3(){
-        return P322_ICD10_NAME3;
-    } 
-    public void setP322_ICD10_NAME3(String P322_ICD10_NAME3) {
-         this.P322_ICD10_NAME3 = P322_ICD10_NAME3;
-    } 
-    public String getP322_ICD10_ID4(){
-        return P322_ICD10_ID4;
-    } 
-    public void setP322_ICD10_ID4(String P322_ICD10_ID4) {
-         this.P322_ICD10_ID4 = P322_ICD10_ID4;
-    } 
-    public String getP322_ICD10_NAME4(){
-        return P322_ICD10_NAME4;
-    } 
-    public void setP322_ICD10_NAME4(String P322_ICD10_NAME4) {
-         this.P322_ICD10_NAME4 = P322_ICD10_NAME4;
-    } 
-    public String getP322_ICD10_ID5(){
-        return P322_ICD10_ID5;
-    } 
-    public void setP322_ICD10_ID5(String P322_ICD10_ID5) {
-         this.P322_ICD10_ID5 = P322_ICD10_ID5;
-    } 
-    public String getP322_ICD10_NAME5(){
-        return P322_ICD10_NAME5;
-    } 
-    public void setP322_ICD10_NAME5(String P322_ICD10_NAME5) {
-         this.P322_ICD10_NAME5 = P322_ICD10_NAME5;
-    } 
-    public String getP322_ICD10_ID6(){
-        return P322_ICD10_ID6;
-    } 
-    public void setP322_ICD10_ID6(String P322_ICD10_ID6) {
-         this.P322_ICD10_ID6 = P322_ICD10_ID6;
-    } 
-    public String getP322_ICD10_NAME6(){
-        return P322_ICD10_NAME6;
-    } 
-    public void setP322_ICD10_NAME6(String P322_ICD10_NAME6) {
-         this.P322_ICD10_NAME6 = P322_ICD10_NAME6;
-    } 
-    public String getP322_ICD10_ID7(){
-        return P322_ICD10_ID7;
-    } 
-    public void setP322_ICD10_ID7(String P322_ICD10_ID7) {
-         this.P322_ICD10_ID7 = P322_ICD10_ID7;
-    } 
-    public String getP322_ICD10_NAME7(){
-        return P322_ICD10_NAME7;
-    } 
-    public void setP322_ICD10_NAME7(String P322_ICD10_NAME7) {
-         this.P322_ICD10_NAME7 = P322_ICD10_NAME7;
-    } 
-    public String getP325_ICD10_ID1(){
-        return P325_ICD10_ID1;
-    } 
-    public void setP325_ICD10_ID1(String P325_ICD10_ID1) {
-         this.P325_ICD10_ID1 = P325_ICD10_ID1;
-    } 
-    public String getP325_ICD10_NAME1(){
-        return P325_ICD10_NAME1;
-    } 
-    public void setP325_ICD10_NAME1(String P325_ICD10_NAME1) {
-         this.P325_ICD10_NAME1 = P325_ICD10_NAME1;
-    } 
-    public String getP325_ICD10_ID2(){
-        return P325_ICD10_ID2;
-    } 
-    public void setP325_ICD10_ID2(String P325_ICD10_ID2) {
-         this.P325_ICD10_ID2 = P325_ICD10_ID2;
-    } 
-    public String getP325_ICD10_NAME2(){
-        return P325_ICD10_NAME2;
-    } 
-    public void setP325_ICD10_NAME2(String P325_ICD10_NAME2) {
-         this.P325_ICD10_NAME2 = P325_ICD10_NAME2;
-    } 
-    public String getP325_ICD10_ID3(){
-        return P325_ICD10_ID3;
-    } 
-    public void setP325_ICD10_ID3(String P325_ICD10_ID3) {
-         this.P325_ICD10_ID3 = P325_ICD10_ID3;
-    } 
-    public String getP325_ICD10_NAME3(){
-        return P325_ICD10_NAME3;
-    } 
-    public void setP325_ICD10_NAME3(String P325_ICD10_NAME3) {
-         this.P325_ICD10_NAME3 = P325_ICD10_NAME3;
-    } 
-    public String getP325_ICD10_ID4(){
-        return P325_ICD10_ID4;
-    } 
-    public void setP325_ICD10_ID4(String P325_ICD10_ID4) {
-         this.P325_ICD10_ID4 = P325_ICD10_ID4;
-    } 
-    public String getP325_ICD10_NAME4(){
-        return P325_ICD10_NAME4;
-    } 
-    public void setP325_ICD10_NAME4(String P325_ICD10_NAME4) {
-         this.P325_ICD10_NAME4 = P325_ICD10_NAME4;
-    } 
-    public String getP325_ICD10_ID5(){
-        return P325_ICD10_ID5;
-    } 
-    public void setP325_ICD10_ID5(String P325_ICD10_ID5) {
-         this.P325_ICD10_ID5 = P325_ICD10_ID5;
-    } 
-    public String getP325_ICD10_NAME5(){
-        return P325_ICD10_NAME5;
-    } 
-    public void setP325_ICD10_NAME5(String P325_ICD10_NAME5) {
-         this.P325_ICD10_NAME5 = P325_ICD10_NAME5;
-    } 
-    public String getP325_ICD10_ID6(){
-        return P325_ICD10_ID6;
-    } 
-    public void setP325_ICD10_ID6(String P325_ICD10_ID6) {
-         this.P325_ICD10_ID6 = P325_ICD10_ID6;
-    } 
-    public String getP325_ICD10_NAME6(){
-        return P325_ICD10_NAME6;
-    } 
-    public void setP325_ICD10_NAME6(String P325_ICD10_NAME6) {
-         this.P325_ICD10_NAME6 = P325_ICD10_NAME6;
-    } 
-    public String getP325_ICD10_ID7(){
-        return P325_ICD10_ID7;
-    } 
-    public void setP325_ICD10_ID7(String P325_ICD10_ID7) {
-         this.P325_ICD10_ID7 = P325_ICD10_ID7;
-    } 
-    public String getP325_ICD10_NAME7(){
-        return P325_ICD10_NAME7;
-    } 
-    public void setP325_ICD10_NAME7(String P325_ICD10_NAME7) {
-         this.P325_ICD10_NAME7 = P325_ICD10_NAME7;
-    } 
-    public String getP328_ICD10_ID1(){
-        return P328_ICD10_ID1;
-    } 
-    public void setP328_ICD10_ID1(String P328_ICD10_ID1) {
-         this.P328_ICD10_ID1 = P328_ICD10_ID1;
-    } 
-    public String getP328_ICD10_NAME1(){
-        return P328_ICD10_NAME1;
-    } 
-    public void setP328_ICD10_NAME1(String P328_ICD10_NAME1) {
-         this.P328_ICD10_NAME1 = P328_ICD10_NAME1;
-    } 
-    public String getP328_ICD10_ID2(){
-        return P328_ICD10_ID2;
-    } 
-    public void setP328_ICD10_ID2(String P328_ICD10_ID2) {
-         this.P328_ICD10_ID2 = P328_ICD10_ID2;
-    } 
-    public String getP328_ICD10_NAME2(){
-        return P328_ICD10_NAME2;
-    } 
-    public void setP328_ICD10_NAME2(String P328_ICD10_NAME2) {
-         this.P328_ICD10_NAME2 = P328_ICD10_NAME2;
-    } 
-    public String getP328_ICD10_ID3(){
-        return P328_ICD10_ID3;
-    } 
-    public void setP328_ICD10_ID3(String P328_ICD10_ID3) {
-         this.P328_ICD10_ID3 = P328_ICD10_ID3;
-    } 
-    public String getP328_ICD10_NAME3(){
-        return P328_ICD10_NAME3;
-    } 
-    public void setP328_ICD10_NAME3(String P328_ICD10_NAME3) {
-         this.P328_ICD10_NAME3 = P328_ICD10_NAME3;
-    } 
-    public String getP328_ICD10_ID4(){
-        return P328_ICD10_ID4;
-    } 
-    public void setP328_ICD10_ID4(String P328_ICD10_ID4) {
-         this.P328_ICD10_ID4 = P328_ICD10_ID4;
-    } 
-    public String getP328_ICD10_NAME4(){
-        return P328_ICD10_NAME4;
-    } 
-    public void setP328_ICD10_NAME4(String P328_ICD10_NAME4) {
-         this.P328_ICD10_NAME4 = P328_ICD10_NAME4;
-    } 
-    public String getP328_ICD10_ID5(){
-        return P328_ICD10_ID5;
-    } 
-    public void setP328_ICD10_ID5(String P328_ICD10_ID5) {
-         this.P328_ICD10_ID5 = P328_ICD10_ID5;
-    } 
-    public String getP328_ICD10_NAME5(){
-        return P328_ICD10_NAME5;
-    } 
-    public void setP328_ICD10_NAME5(String P328_ICD10_NAME5) {
-         this.P328_ICD10_NAME5 = P328_ICD10_NAME5;
-    } 
-    public String getP328_ICD10_ID6(){
-        return P328_ICD10_ID6;
-    } 
-    public void setP328_ICD10_ID6(String P328_ICD10_ID6) {
-         this.P328_ICD10_ID6 = P328_ICD10_ID6;
-    } 
-    public String getP328_ICD10_NAME6(){
-        return P328_ICD10_NAME6;
-    } 
-    public void setP328_ICD10_NAME6(String P328_ICD10_NAME6) {
-         this.P328_ICD10_NAME6 = P328_ICD10_NAME6;
-    } 
-    public String getP328_ICD10_ID7(){
-        return P328_ICD10_ID7;
-    } 
-    public void setP328_ICD10_ID7(String P328_ICD10_ID7) {
-         this.P328_ICD10_ID7 = P328_ICD10_ID7;
-    } 
-    public String getP328_ICD10_NAME7(){
-        return P328_ICD10_NAME7;
-    } 
-    public void setP328_ICD10_NAME7(String P328_ICD10_NAME7) {
-         this.P328_ICD10_NAME7 = P328_ICD10_NAME7;
-    } 
-    public String getP3292_ICD10_ID1(){
-        return P3292_ICD10_ID1;
-    } 
-    public void setP3292_ICD10_ID1(String P3292_ICD10_ID1) {
-         this.P3292_ICD10_ID1 = P3292_ICD10_ID1;
-    } 
-    public String getP3292_ICD10_NAME1(){
-        return P3292_ICD10_NAME1;
-    } 
-    public void setP3292_ICD10_NAME1(String P3292_ICD10_NAME1) {
-         this.P3292_ICD10_NAME1 = P3292_ICD10_NAME1;
-    } 
-    public String getP3292_ICD10_ID2(){
-        return P3292_ICD10_ID2;
-    } 
-    public void setP3292_ICD10_ID2(String P3292_ICD10_ID2) {
-         this.P3292_ICD10_ID2 = P3292_ICD10_ID2;
-    } 
-    public String getP3292_ICD10_NAME2(){
-        return P3292_ICD10_NAME2;
-    } 
-    public void setP3292_ICD10_NAME2(String P3292_ICD10_NAME2) {
-         this.P3292_ICD10_NAME2 = P3292_ICD10_NAME2;
-    } 
-    public String getP3292_ICD10_ID3(){
-        return P3292_ICD10_ID3;
-    } 
-    public void setP3292_ICD10_ID3(String P3292_ICD10_ID3) {
-         this.P3292_ICD10_ID3 = P3292_ICD10_ID3;
-    } 
-    public String getP3292_ICD10_NAME3(){
-        return P3292_ICD10_NAME3;
-    } 
-    public void setP3292_ICD10_NAME3(String P3292_ICD10_NAME3) {
-         this.P3292_ICD10_NAME3 = P3292_ICD10_NAME3;
-    } 
-    public String getP3292_ICD10_ID4(){
-        return P3292_ICD10_ID4;
-    } 
-    public void setP3292_ICD10_ID4(String P3292_ICD10_ID4) {
-         this.P3292_ICD10_ID4 = P3292_ICD10_ID4;
-    } 
-    public String getP3292_ICD10_NAME4(){
-        return P3292_ICD10_NAME4;
-    } 
-    public void setP3292_ICD10_NAME4(String P3292_ICD10_NAME4) {
-         this.P3292_ICD10_NAME4 = P3292_ICD10_NAME4;
-    } 
-    public String getP3292_ICD10_ID5(){
-        return P3292_ICD10_ID5;
-    } 
-    public void setP3292_ICD10_ID5(String P3292_ICD10_ID5) {
-         this.P3292_ICD10_ID5 = P3292_ICD10_ID5;
-    } 
-    public String getP3292_ICD10_NAME5(){
-        return P3292_ICD10_NAME5;
-    } 
-    public void setP3292_ICD10_NAME5(String P3292_ICD10_NAME5) {
-         this.P3292_ICD10_NAME5 = P3292_ICD10_NAME5;
-    } 
-    public String getP3292_ICD10_ID6(){
-        return P3292_ICD10_ID6;
-    } 
-    public void setP3292_ICD10_ID6(String P3292_ICD10_ID6) {
-         this.P3292_ICD10_ID6 = P3292_ICD10_ID6;
-    } 
-    public String getP3292_ICD10_NAME6(){
-        return P3292_ICD10_NAME6;
-    } 
-    public void setP3292_ICD10_NAME6(String P3292_ICD10_NAME6) {
-         this.P3292_ICD10_NAME6 = P3292_ICD10_NAME6;
-    } 
-    public String getP3292_ICD10_ID7(){
-        return P3292_ICD10_ID7;
-    } 
-    public void setP3292_ICD10_ID7(String P3292_ICD10_ID7) {
-         this.P3292_ICD10_ID7 = P3292_ICD10_ID7;
-    } 
-    public String getP3292_ICD10_NAME7(){
-        return P3292_ICD10_NAME7;
-    } 
-    public void setP3292_ICD10_NAME7(String P3292_ICD10_NAME7) {
-         this.P3292_ICD10_NAME7 = P3292_ICD10_NAME7;
-    } 
-    public String getP3295_ICD10_ID1(){
-        return P3295_ICD10_ID1;
-    } 
-    public void setP3295_ICD10_ID1(String P3295_ICD10_ID1) {
-         this.P3295_ICD10_ID1 = P3295_ICD10_ID1;
-    } 
-    public String getP3295_ICD10_NAME1(){
-        return P3295_ICD10_NAME1;
-    } 
-    public void setP3295_ICD10_NAME1(String P3295_ICD10_NAME1) {
-         this.P3295_ICD10_NAME1 = P3295_ICD10_NAME1;
-    } 
-    public String getP3295_ICD10_ID2(){
-        return P3295_ICD10_ID2;
-    } 
-    public void setP3295_ICD10_ID2(String P3295_ICD10_ID2) {
-         this.P3295_ICD10_ID2 = P3295_ICD10_ID2;
-    } 
-    public String getP3295_ICD10_NAME2(){
-        return P3295_ICD10_NAME2;
-    } 
-    public void setP3295_ICD10_NAME2(String P3295_ICD10_NAME2) {
-         this.P3295_ICD10_NAME2 = P3295_ICD10_NAME2;
-    } 
-    public String getP3295_ICD10_ID3(){
-        return P3295_ICD10_ID3;
-    } 
-    public void setP3295_ICD10_ID3(String P3295_ICD10_ID3) {
-         this.P3295_ICD10_ID3 = P3295_ICD10_ID3;
-    } 
-    public String getP3295_ICD10_NAME3(){
-        return P3295_ICD10_NAME3;
-    } 
-    public void setP3295_ICD10_NAME3(String P3295_ICD10_NAME3) {
-         this.P3295_ICD10_NAME3 = P3295_ICD10_NAME3;
-    } 
-    public String getP3295_ICD10_ID4(){
-        return P3295_ICD10_ID4;
-    } 
-    public void setP3295_ICD10_ID4(String P3295_ICD10_ID4) {
-         this.P3295_ICD10_ID4 = P3295_ICD10_ID4;
-    } 
-    public String getP3295_ICD10_NAME4(){
-        return P3295_ICD10_NAME4;
-    } 
-    public void setP3295_ICD10_NAME4(String P3295_ICD10_NAME4) {
-         this.P3295_ICD10_NAME4 = P3295_ICD10_NAME4;
-    } 
-    public String getP3295_ICD10_ID5(){
-        return P3295_ICD10_ID5;
-    } 
-    public void setP3295_ICD10_ID5(String P3295_ICD10_ID5) {
-         this.P3295_ICD10_ID5 = P3295_ICD10_ID5;
-    } 
-    public String getP3295_ICD10_NAME5(){
-        return P3295_ICD10_NAME5;
-    } 
-    public void setP3295_ICD10_NAME5(String P3295_ICD10_NAME5) {
-         this.P3295_ICD10_NAME5 = P3295_ICD10_NAME5;
-    } 
-    public String getP3295_ICD10_ID6(){
-        return P3295_ICD10_ID6;
-    } 
-    public void setP3295_ICD10_ID6(String P3295_ICD10_ID6) {
-         this.P3295_ICD10_ID6 = P3295_ICD10_ID6;
-    } 
-    public String getP3295_ICD10_NAME6(){
-        return P3295_ICD10_NAME6;
-    } 
-    public void setP3295_ICD10_NAME6(String P3295_ICD10_NAME6) {
-         this.P3295_ICD10_NAME6 = P3295_ICD10_NAME6;
-    } 
-    public String getP3295_ICD10_ID7(){
-        return P3295_ICD10_ID7;
-    } 
-    public void setP3295_ICD10_ID7(String P3295_ICD10_ID7) {
-         this.P3295_ICD10_ID7 = P3295_ICD10_ID7;
-    } 
-    public String getP3295_ICD10_NAME7(){
-        return P3295_ICD10_NAME7;
-    } 
-    public void setP3295_ICD10_NAME7(String P3295_ICD10_NAME7) {
-         this.P3295_ICD10_NAME7 = P3295_ICD10_NAME7;
-    } 
-    public String getP3298_ICD10_ID1(){
-        return P3298_ICD10_ID1;
-    } 
-    public void setP3298_ICD10_ID1(String P3298_ICD10_ID1) {
-         this.P3298_ICD10_ID1 = P3298_ICD10_ID1;
-    } 
-    public String getP3298_ICD10_NAME1(){
-        return P3298_ICD10_NAME1;
-    } 
-    public void setP3298_ICD10_NAME1(String P3298_ICD10_NAME1) {
-         this.P3298_ICD10_NAME1 = P3298_ICD10_NAME1;
-    } 
-    public String getP3298_ICD10_ID2(){
-        return P3298_ICD10_ID2;
-    } 
-    public void setP3298_ICD10_ID2(String P3298_ICD10_ID2) {
-         this.P3298_ICD10_ID2 = P3298_ICD10_ID2;
-    } 
-    public String getP3298_ICD10_NAME2(){
-        return P3298_ICD10_NAME2;
-    } 
-    public void setP3298_ICD10_NAME2(String P3298_ICD10_NAME2) {
-         this.P3298_ICD10_NAME2 = P3298_ICD10_NAME2;
-    } 
-    public String getP3298_ICD10_ID3(){
-        return P3298_ICD10_ID3;
-    } 
-    public void setP3298_ICD10_ID3(String P3298_ICD10_ID3) {
-         this.P3298_ICD10_ID3 = P3298_ICD10_ID3;
-    } 
-    public String getP3298_ICD10_NAME3(){
-        return P3298_ICD10_NAME3;
-    } 
-    public void setP3298_ICD10_NAME3(String P3298_ICD10_NAME3) {
-         this.P3298_ICD10_NAME3 = P3298_ICD10_NAME3;
-    } 
-    public String getP3298_ICD10_ID4(){
-        return P3298_ICD10_ID4;
-    } 
-    public void setP3298_ICD10_ID4(String P3298_ICD10_ID4) {
-         this.P3298_ICD10_ID4 = P3298_ICD10_ID4;
-    } 
-    public String getP3298_ICD10_NAME4(){
-        return P3298_ICD10_NAME4;
-    } 
-    public void setP3298_ICD10_NAME4(String P3298_ICD10_NAME4) {
-         this.P3298_ICD10_NAME4 = P3298_ICD10_NAME4;
-    } 
-    public String getP3298_ICD10_ID5(){
-        return P3298_ICD10_ID5;
-    } 
-    public void setP3298_ICD10_ID5(String P3298_ICD10_ID5) {
-         this.P3298_ICD10_ID5 = P3298_ICD10_ID5;
-    } 
-    public String getP3298_ICD10_NAME5(){
-        return P3298_ICD10_NAME5;
-    } 
-    public void setP3298_ICD10_NAME5(String P3298_ICD10_NAME5) {
-         this.P3298_ICD10_NAME5 = P3298_ICD10_NAME5;
-    } 
-    public String getP3298_ICD10_ID6(){
-        return P3298_ICD10_ID6;
-    } 
-    public void setP3298_ICD10_ID6(String P3298_ICD10_ID6) {
-         this.P3298_ICD10_ID6 = P3298_ICD10_ID6;
-    } 
-    public String getP3298_ICD10_NAME6(){
-        return P3298_ICD10_NAME6;
-    } 
-    public void setP3298_ICD10_NAME6(String P3298_ICD10_NAME6) {
-         this.P3298_ICD10_NAME6 = P3298_ICD10_NAME6;
-    } 
-    public String getP3298_ICD10_ID7(){
-        return P3298_ICD10_ID7;
-    } 
-    public void setP3298_ICD10_ID7(String P3298_ICD10_ID7) {
-         this.P3298_ICD10_ID7 = P3298_ICD10_ID7;
-    } 
-    public String getP3298_ICD10_NAME7(){
-        return P3298_ICD10_NAME7;
-    } 
-    public void setP3298_ICD10_NAME7(String P3298_ICD10_NAME7) {
-         this.P3298_ICD10_NAME7 = P3298_ICD10_NAME7;
-    } 
-    public String getP3282_ICD10_ID1(){
-        return P3282_ICD10_ID1;
-    } 
-    public void setP3282_ICD10_ID1(String P3282_ICD10_ID1) {
-         this.P3282_ICD10_ID1 = P3282_ICD10_ID1;
-    } 
-    public String getP3282_ICD10_NAME1(){
-        return P3282_ICD10_NAME1;
-    } 
-    public void setP3282_ICD10_NAME1(String P3282_ICD10_NAME1) {
-         this.P3282_ICD10_NAME1 = P3282_ICD10_NAME1;
-    } 
-    public String getP3282_ICD10_ID2(){
-        return P3282_ICD10_ID2;
-    } 
-    public void setP3282_ICD10_ID2(String P3282_ICD10_ID2) {
-         this.P3282_ICD10_ID2 = P3282_ICD10_ID2;
-    } 
-    public String getP3282_ICD10_NAME2(){
-        return P3282_ICD10_NAME2;
-    } 
-    public void setP3282_ICD10_NAME2(String P3282_ICD10_NAME2) {
-         this.P3282_ICD10_NAME2 = P3282_ICD10_NAME2;
-    } 
-    public String getP3282_ICD10_ID3(){
-        return P3282_ICD10_ID3;
-    } 
-    public void setP3282_ICD10_ID3(String P3282_ICD10_ID3) {
-         this.P3282_ICD10_ID3 = P3282_ICD10_ID3;
-    } 
-    public String getP3282_ICD10_NAME3(){
-        return P3282_ICD10_NAME3;
-    } 
-    public void setP3282_ICD10_NAME3(String P3282_ICD10_NAME3) {
-         this.P3282_ICD10_NAME3 = P3282_ICD10_NAME3;
-    } 
-    public String getP3282_ICD10_ID4(){
-        return P3282_ICD10_ID4;
-    } 
-    public void setP3282_ICD10_ID4(String P3282_ICD10_ID4) {
-         this.P3282_ICD10_ID4 = P3282_ICD10_ID4;
-    } 
-    public String getP3282_ICD10_NAME4(){
-        return P3282_ICD10_NAME4;
-    } 
-    public void setP3282_ICD10_NAME4(String P3282_ICD10_NAME4) {
-         this.P3282_ICD10_NAME4 = P3282_ICD10_NAME4;
-    } 
-    public String getP3282_ICD10_ID5(){
-        return P3282_ICD10_ID5;
-    } 
-    public void setP3282_ICD10_ID5(String P3282_ICD10_ID5) {
-         this.P3282_ICD10_ID5 = P3282_ICD10_ID5;
-    } 
-    public String getP3282_ICD10_NAME5(){
-        return P3282_ICD10_NAME5;
-    } 
-    public void setP3282_ICD10_NAME5(String P3282_ICD10_NAME5) {
-         this.P3282_ICD10_NAME5 = P3282_ICD10_NAME5;
-    } 
-    public String getP3282_ICD10_ID6(){
-        return P3282_ICD10_ID6;
-    } 
-    public void setP3282_ICD10_ID6(String P3282_ICD10_ID6) {
-         this.P3282_ICD10_ID6 = P3282_ICD10_ID6;
-    } 
-    public String getP3282_ICD10_NAME6(){
-        return P3282_ICD10_NAME6;
-    } 
-    public void setP3282_ICD10_NAME6(String P3282_ICD10_NAME6) {
-         this.P3282_ICD10_NAME6 = P3282_ICD10_NAME6;
-    } 
-    public String getP3282_ICD10_ID7(){
-        return P3282_ICD10_ID7;
-    } 
-    public void setP3282_ICD10_ID7(String P3282_ICD10_ID7) {
-         this.P3282_ICD10_ID7 = P3282_ICD10_ID7;
-    } 
-    public String getP3282_ICD10_NAME7(){
-        return P3282_ICD10_NAME7;
-    } 
-    public void setP3282_ICD10_NAME7(String P3282_ICD10_NAME7) {
-         this.P3282_ICD10_NAME7 = P3282_ICD10_NAME7;
-    } 
-    public String getP3285_ICD10_ID1(){
-        return P3285_ICD10_ID1;
-    } 
-    public void setP3285_ICD10_ID1(String P3285_ICD10_ID1) {
-         this.P3285_ICD10_ID1 = P3285_ICD10_ID1;
-    } 
-    public String getP3285_ICD10_NAME1(){
-        return P3285_ICD10_NAME1;
-    } 
-    public void setP3285_ICD10_NAME1(String P3285_ICD10_NAME1) {
-         this.P3285_ICD10_NAME1 = P3285_ICD10_NAME1;
-    } 
-    public String getP3285_ICD10_ID2(){
-        return P3285_ICD10_ID2;
-    } 
-    public void setP3285_ICD10_ID2(String P3285_ICD10_ID2) {
-         this.P3285_ICD10_ID2 = P3285_ICD10_ID2;
-    } 
-    public String getP3285_ICD10_NAME2(){
-        return P3285_ICD10_NAME2;
-    } 
-    public void setP3285_ICD10_NAME2(String P3285_ICD10_NAME2) {
-         this.P3285_ICD10_NAME2 = P3285_ICD10_NAME2;
-    } 
-    public String getP3285_ICD10_ID3(){
-        return P3285_ICD10_ID3;
-    } 
-    public void setP3285_ICD10_ID3(String P3285_ICD10_ID3) {
-         this.P3285_ICD10_ID3 = P3285_ICD10_ID3;
-    } 
-    public String getP3285_ICD10_NAME3(){
-        return P3285_ICD10_NAME3;
-    } 
-    public void setP3285_ICD10_NAME3(String P3285_ICD10_NAME3) {
-         this.P3285_ICD10_NAME3 = P3285_ICD10_NAME3;
-    } 
-    public String getP3285_ICD10_ID4(){
-        return P3285_ICD10_ID4;
-    } 
-    public void setP3285_ICD10_ID4(String P3285_ICD10_ID4) {
-         this.P3285_ICD10_ID4 = P3285_ICD10_ID4;
-    } 
-    public String getP3285_ICD10_NAME4(){
-        return P3285_ICD10_NAME4;
-    } 
-    public void setP3285_ICD10_NAME4(String P3285_ICD10_NAME4) {
-         this.P3285_ICD10_NAME4 = P3285_ICD10_NAME4;
-    } 
-    public String getP3285_ICD10_ID5(){
-        return P3285_ICD10_ID5;
-    } 
-    public void setP3285_ICD10_ID5(String P3285_ICD10_ID5) {
-         this.P3285_ICD10_ID5 = P3285_ICD10_ID5;
-    } 
-    public String getP3285_ICD10_NAME5(){
-        return P3285_ICD10_NAME5;
-    } 
-    public void setP3285_ICD10_NAME5(String P3285_ICD10_NAME5) {
-         this.P3285_ICD10_NAME5 = P3285_ICD10_NAME5;
-    } 
-    public String getP3285_ICD10_ID6(){
-        return P3285_ICD10_ID6;
-    } 
-    public void setP3285_ICD10_ID6(String P3285_ICD10_ID6) {
-         this.P3285_ICD10_ID6 = P3285_ICD10_ID6;
-    } 
-    public String getP3285_ICD10_NAME6(){
-        return P3285_ICD10_NAME6;
-    } 
-    public void setP3285_ICD10_NAME6(String P3285_ICD10_NAME6) {
-         this.P3285_ICD10_NAME6 = P3285_ICD10_NAME6;
-    } 
-    public String getP3285_ICD10_ID7(){
-        return P3285_ICD10_ID7;
-    } 
-    public void setP3285_ICD10_ID7(String P3285_ICD10_ID7) {
-         this.P3285_ICD10_ID7 = P3285_ICD10_ID7;
-    } 
-    public String getP3285_ICD10_NAME7(){
-        return P3285_ICD10_NAME7;
-    } 
-    public void setP3285_ICD10_NAME7(String P3285_ICD10_NAME7) {
-         this.P3285_ICD10_NAME7 = P3285_ICD10_NAME7;
-    } 
-    public String getP3288_ICD10_ID1(){
-        return P3288_ICD10_ID1;
-    } 
-    public void setP3288_ICD10_ID1(String P3288_ICD10_ID1) {
-         this.P3288_ICD10_ID1 = P3288_ICD10_ID1;
-    } 
-    public String getP3288_ICD10_NAME1(){
-        return P3288_ICD10_NAME1;
-    } 
-    public void setP3288_ICD10_NAME1(String P3288_ICD10_NAME1) {
-         this.P3288_ICD10_NAME1 = P3288_ICD10_NAME1;
-    } 
-    public String getP3288_ICD10_ID2(){
-        return P3288_ICD10_ID2;
-    } 
-    public void setP3288_ICD10_ID2(String P3288_ICD10_ID2) {
-         this.P3288_ICD10_ID2 = P3288_ICD10_ID2;
-    } 
-    public String getP3288_ICD10_NAME2(){
-        return P3288_ICD10_NAME2;
-    } 
-    public void setP3288_ICD10_NAME2(String P3288_ICD10_NAME2) {
-         this.P3288_ICD10_NAME2 = P3288_ICD10_NAME2;
-    } 
-    public String getP3288_ICD10_ID3(){
-        return P3288_ICD10_ID3;
-    } 
-    public void setP3288_ICD10_ID3(String P3288_ICD10_ID3) {
-         this.P3288_ICD10_ID3 = P3288_ICD10_ID3;
-    } 
-    public String getP3288_ICD10_NAME3(){
-        return P3288_ICD10_NAME3;
-    } 
-    public void setP3288_ICD10_NAME3(String P3288_ICD10_NAME3) {
-         this.P3288_ICD10_NAME3 = P3288_ICD10_NAME3;
-    } 
-    public String getP3288_ICD10_ID4(){
-        return P3288_ICD10_ID4;
-    } 
-    public void setP3288_ICD10_ID4(String P3288_ICD10_ID4) {
-         this.P3288_ICD10_ID4 = P3288_ICD10_ID4;
-    } 
-    public String getP3288_ICD10_NAME4(){
-        return P3288_ICD10_NAME4;
-    } 
-    public void setP3288_ICD10_NAME4(String P3288_ICD10_NAME4) {
-         this.P3288_ICD10_NAME4 = P3288_ICD10_NAME4;
-    } 
-    public String getP3288_ICD10_ID5(){
-        return P3288_ICD10_ID5;
-    } 
-    public void setP3288_ICD10_ID5(String P3288_ICD10_ID5) {
-         this.P3288_ICD10_ID5 = P3288_ICD10_ID5;
-    } 
-    public String getP3288_ICD10_NAME5(){
-        return P3288_ICD10_NAME5;
-    } 
-    public void setP3288_ICD10_NAME5(String P3288_ICD10_NAME5) {
-         this.P3288_ICD10_NAME5 = P3288_ICD10_NAME5;
-    } 
-    public String getP3288_ICD10_ID6(){
-        return P3288_ICD10_ID6;
-    } 
-    public void setP3288_ICD10_ID6(String P3288_ICD10_ID6) {
-         this.P3288_ICD10_ID6 = P3288_ICD10_ID6;
-    } 
-    public String getP3288_ICD10_NAME6(){
-        return P3288_ICD10_NAME6;
-    } 
-    public void setP3288_ICD10_NAME6(String P3288_ICD10_NAME6) {
-         this.P3288_ICD10_NAME6 = P3288_ICD10_NAME6;
-    } 
-    public String getP3288_ICD10_ID7(){
-        return P3288_ICD10_ID7;
-    } 
-    public void setP3288_ICD10_ID7(String P3288_ICD10_ID7) {
-         this.P3288_ICD10_ID7 = P3288_ICD10_ID7;
-    } 
-    public String getP3288_ICD10_NAME7(){
-        return P3288_ICD10_NAME7;
-    } 
-    public void setP3288_ICD10_NAME7(String P3288_ICD10_NAME7) {
-         this.P3288_ICD10_NAME7 = P3288_ICD10_NAME7;
-    } 
-    public String getP3272_ICD10_ID1(){
-        return P3272_ICD10_ID1;
-    } 
-    public void setP3272_ICD10_ID1(String P3272_ICD10_ID1) {
-         this.P3272_ICD10_ID1 = P3272_ICD10_ID1;
-    } 
-    public String getP3272_ICD10_NAME1(){
-        return P3272_ICD10_NAME1;
-    } 
-    public void setP3272_ICD10_NAME1(String P3272_ICD10_NAME1) {
-         this.P3272_ICD10_NAME1 = P3272_ICD10_NAME1;
-    } 
-    public String getP3272_ICD10_ID2(){
-        return P3272_ICD10_ID2;
-    } 
-    public void setP3272_ICD10_ID2(String P3272_ICD10_ID2) {
-         this.P3272_ICD10_ID2 = P3272_ICD10_ID2;
-    } 
-    public String getP3272_ICD10_NAME2(){
-        return P3272_ICD10_NAME2;
-    } 
-    public void setP3272_ICD10_NAME2(String P3272_ICD10_NAME2) {
-         this.P3272_ICD10_NAME2 = P3272_ICD10_NAME2;
-    } 
-    public String getP3272_ICD10_ID3(){
-        return P3272_ICD10_ID3;
-    } 
-    public void setP3272_ICD10_ID3(String P3272_ICD10_ID3) {
-         this.P3272_ICD10_ID3 = P3272_ICD10_ID3;
-    } 
-    public String getP3272_ICD10_NAME3(){
-        return P3272_ICD10_NAME3;
-    } 
-    public void setP3272_ICD10_NAME3(String P3272_ICD10_NAME3) {
-         this.P3272_ICD10_NAME3 = P3272_ICD10_NAME3;
-    } 
-    public String getP3272_ICD10_ID4(){
-        return P3272_ICD10_ID4;
-    } 
-    public void setP3272_ICD10_ID4(String P3272_ICD10_ID4) {
-         this.P3272_ICD10_ID4 = P3272_ICD10_ID4;
-    } 
-    public String getP3272_ICD10_NAME4(){
-        return P3272_ICD10_NAME4;
-    } 
-    public void setP3272_ICD10_NAME4(String P3272_ICD10_NAME4) {
-         this.P3272_ICD10_NAME4 = P3272_ICD10_NAME4;
-    } 
-    public String getP3272_ICD10_ID5(){
-        return P3272_ICD10_ID5;
-    } 
-    public void setP3272_ICD10_ID5(String P3272_ICD10_ID5) {
-         this.P3272_ICD10_ID5 = P3272_ICD10_ID5;
-    } 
-    public String getP3272_ICD10_NAME5(){
-        return P3272_ICD10_NAME5;
-    } 
-    public void setP3272_ICD10_NAME5(String P3272_ICD10_NAME5) {
-         this.P3272_ICD10_NAME5 = P3272_ICD10_NAME5;
-    } 
-    public String getP3272_ICD10_ID6(){
-        return P3272_ICD10_ID6;
-    } 
-    public void setP3272_ICD10_ID6(String P3272_ICD10_ID6) {
-         this.P3272_ICD10_ID6 = P3272_ICD10_ID6;
-    } 
-    public String getP3272_ICD10_NAME6(){
-        return P3272_ICD10_NAME6;
-    } 
-    public void setP3272_ICD10_NAME6(String P3272_ICD10_NAME6) {
-         this.P3272_ICD10_NAME6 = P3272_ICD10_NAME6;
-    } 
-    public String getP3272_ICD10_ID7(){
-        return P3272_ICD10_ID7;
-    } 
-    public void setP3272_ICD10_ID7(String P3272_ICD10_ID7) {
-         this.P3272_ICD10_ID7 = P3272_ICD10_ID7;
-    } 
-    public String getP3272_ICD10_NAME7(){
-        return P3272_ICD10_NAME7;
-    } 
-    public void setP3272_ICD10_NAME7(String P3272_ICD10_NAME7) {
-         this.P3272_ICD10_NAME7 = P3272_ICD10_NAME7;
-    } 
-    public String getP3275_ICD10_ID1(){
-        return P3275_ICD10_ID1;
-    } 
-    public void setP3275_ICD10_ID1(String P3275_ICD10_ID1) {
-         this.P3275_ICD10_ID1 = P3275_ICD10_ID1;
-    } 
-    public String getP3275_ICD10_NAME1(){
-        return P3275_ICD10_NAME1;
-    } 
-    public void setP3275_ICD10_NAME1(String P3275_ICD10_NAME1) {
-         this.P3275_ICD10_NAME1 = P3275_ICD10_NAME1;
-    } 
-    public String getP3275_ICD10_ID2(){
-        return P3275_ICD10_ID2;
-    } 
-    public void setP3275_ICD10_ID2(String P3275_ICD10_ID2) {
-         this.P3275_ICD10_ID2 = P3275_ICD10_ID2;
-    } 
-    public String getP3275_ICD10_NAME2(){
-        return P3275_ICD10_NAME2;
-    } 
-    public void setP3275_ICD10_NAME2(String P3275_ICD10_NAME2) {
-         this.P3275_ICD10_NAME2 = P3275_ICD10_NAME2;
-    } 
-    public String getP3275_ICD10_ID3(){
-        return P3275_ICD10_ID3;
-    } 
-    public void setP3275_ICD10_ID3(String P3275_ICD10_ID3) {
-         this.P3275_ICD10_ID3 = P3275_ICD10_ID3;
-    } 
-    public String getP3275_ICD10_NAME3(){
-        return P3275_ICD10_NAME3;
-    } 
-    public void setP3275_ICD10_NAME3(String P3275_ICD10_NAME3) {
-         this.P3275_ICD10_NAME3 = P3275_ICD10_NAME3;
-    } 
-    public String getP3275_ICD10_ID4(){
-        return P3275_ICD10_ID4;
-    } 
-    public void setP3275_ICD10_ID4(String P3275_ICD10_ID4) {
-         this.P3275_ICD10_ID4 = P3275_ICD10_ID4;
-    } 
-    public String getP3275_ICD10_NAME4(){
-        return P3275_ICD10_NAME4;
-    } 
-    public void setP3275_ICD10_NAME4(String P3275_ICD10_NAME4) {
-         this.P3275_ICD10_NAME4 = P3275_ICD10_NAME4;
-    } 
-    public String getP3275_ICD10_ID5(){
-        return P3275_ICD10_ID5;
-    } 
-    public void setP3275_ICD10_ID5(String P3275_ICD10_ID5) {
-         this.P3275_ICD10_ID5 = P3275_ICD10_ID5;
-    } 
-    public String getP3275_ICD10_NAME5(){
-        return P3275_ICD10_NAME5;
-    } 
-    public void setP3275_ICD10_NAME5(String P3275_ICD10_NAME5) {
-         this.P3275_ICD10_NAME5 = P3275_ICD10_NAME5;
-    } 
-    public String getP3275_ICD10_ID6(){
-        return P3275_ICD10_ID6;
-    } 
-    public void setP3275_ICD10_ID6(String P3275_ICD10_ID6) {
-         this.P3275_ICD10_ID6 = P3275_ICD10_ID6;
-    } 
-    public String getP3275_ICD10_NAME6(){
-        return P3275_ICD10_NAME6;
-    } 
-    public void setP3275_ICD10_NAME6(String P3275_ICD10_NAME6) {
-         this.P3275_ICD10_NAME6 = P3275_ICD10_NAME6;
-    } 
-    public String getP3275_ICD10_ID7(){
-        return P3275_ICD10_ID7;
-    } 
-    public void setP3275_ICD10_ID7(String P3275_ICD10_ID7) {
-         this.P3275_ICD10_ID7 = P3275_ICD10_ID7;
-    } 
-    public String getP3275_ICD10_NAME7(){
-        return P3275_ICD10_NAME7;
-    } 
-    public void setP3275_ICD10_NAME7(String P3275_ICD10_NAME7) {
-         this.P3275_ICD10_NAME7 = P3275_ICD10_NAME7;
-    } 
-    public String getP281_ICD10_ID1(){
-        return P281_ICD10_ID1;
-    } 
-    public void setP281_ICD10_ID1(String P281_ICD10_ID1) {
-         this.P281_ICD10_ID1 = P281_ICD10_ID1;
-    } 
-    public String getP281_ICD10_NAME1(){
-        return P281_ICD10_NAME1;
-    } 
-    public void setP281_ICD10_NAME1(String P281_ICD10_NAME1) {
-         this.P281_ICD10_NAME1 = P281_ICD10_NAME1;
-    } 
-    public String getP281_ICD10_ID2(){
-        return P281_ICD10_ID2;
-    } 
-    public void setP281_ICD10_ID2(String P281_ICD10_ID2) {
-         this.P281_ICD10_ID2 = P281_ICD10_ID2;
-    } 
-    public String getP281_ICD10_NAME2(){
-        return P281_ICD10_NAME2;
-    } 
-    public void setP281_ICD10_NAME2(String P281_ICD10_NAME2) {
-         this.P281_ICD10_NAME2 = P281_ICD10_NAME2;
-    } 
-    public String getP281_ICD10_ID3(){
-        return P281_ICD10_ID3;
-    } 
-    public void setP281_ICD10_ID3(String P281_ICD10_ID3) {
-         this.P281_ICD10_ID3 = P281_ICD10_ID3;
-    } 
-    public String getP281_ICD10_NAME3(){
-        return P281_ICD10_NAME3;
-    } 
-    public void setP281_ICD10_NAME3(String P281_ICD10_NAME3) {
-         this.P281_ICD10_NAME3 = P281_ICD10_NAME3;
-    } 
-    public String getP281_ICD10_ID4(){
-        return P281_ICD10_ID4;
-    } 
-    public void setP281_ICD10_ID4(String P281_ICD10_ID4) {
-         this.P281_ICD10_ID4 = P281_ICD10_ID4;
-    } 
-    public String getP281_ICD10_NAME4(){
-        return P281_ICD10_NAME4;
-    } 
-    public void setP281_ICD10_NAME4(String P281_ICD10_NAME4) {
-         this.P281_ICD10_NAME4 = P281_ICD10_NAME4;
-    } 
-    public String getP281_ICD10_ID5(){
-        return P281_ICD10_ID5;
-    } 
-    public void setP281_ICD10_ID5(String P281_ICD10_ID5) {
-         this.P281_ICD10_ID5 = P281_ICD10_ID5;
-    } 
-    public String getP281_ICD10_NAME5(){
-        return P281_ICD10_NAME5;
-    } 
-    public void setP281_ICD10_NAME5(String P281_ICD10_NAME5) {
-         this.P281_ICD10_NAME5 = P281_ICD10_NAME5;
-    } 
-    public String getP281_ICD10_ID6(){
-        return P281_ICD10_ID6;
-    } 
-    public void setP281_ICD10_ID6(String P281_ICD10_ID6) {
-         this.P281_ICD10_ID6 = P281_ICD10_ID6;
-    } 
-    public String getP281_ICD10_NAME6(){
-        return P281_ICD10_NAME6;
-    } 
-    public void setP281_ICD10_NAME6(String P281_ICD10_NAME6) {
-         this.P281_ICD10_NAME6 = P281_ICD10_NAME6;
-    } 
-    public String getP281_ICD10_ID7(){
-        return P281_ICD10_ID7;
-    } 
-    public void setP281_ICD10_ID7(String P281_ICD10_ID7) {
-         this.P281_ICD10_ID7 = P281_ICD10_ID7;
-    } 
-    public String getP281_ICD10_NAME7(){
-        return P281_ICD10_NAME7;
-    } 
-    public void setP281_ICD10_NAME7(String P281_ICD10_NAME7) {
-         this.P281_ICD10_NAME7 = P281_ICD10_NAME7;
-    } 
-    public String getP301_ICD10_ID1(){
-        return P301_ICD10_ID1;
-    } 
-    public void setP301_ICD10_ID1(String P301_ICD10_ID1) {
-         this.P301_ICD10_ID1 = P301_ICD10_ID1;
-    } 
-    public String getP301_ICD10_NAME1(){
-        return P301_ICD10_NAME1;
-    } 
-    public void setP301_ICD10_NAME1(String P301_ICD10_NAME1) {
-         this.P301_ICD10_NAME1 = P301_ICD10_NAME1;
-    } 
-    public String getP301_ICD10_ID2(){
-        return P301_ICD10_ID2;
-    } 
-    public void setP301_ICD10_ID2(String P301_ICD10_ID2) {
-         this.P301_ICD10_ID2 = P301_ICD10_ID2;
-    } 
-    public String getP301_ICD10_NAME2(){
-        return P301_ICD10_NAME2;
-    } 
-    public void setP301_ICD10_NAME2(String P301_ICD10_NAME2) {
-         this.P301_ICD10_NAME2 = P301_ICD10_NAME2;
-    } 
-    public String getP301_ICD10_ID3(){
-        return P301_ICD10_ID3;
-    } 
-    public void setP301_ICD10_ID3(String P301_ICD10_ID3) {
-         this.P301_ICD10_ID3 = P301_ICD10_ID3;
-    } 
-    public String getP301_ICD10_NAME3(){
-        return P301_ICD10_NAME3;
-    } 
-    public void setP301_ICD10_NAME3(String P301_ICD10_NAME3) {
-         this.P301_ICD10_NAME3 = P301_ICD10_NAME3;
-    } 
-    public String getP301_ICD10_ID4(){
-        return P301_ICD10_ID4;
-    } 
-    public void setP301_ICD10_ID4(String P301_ICD10_ID4) {
-         this.P301_ICD10_ID4 = P301_ICD10_ID4;
-    } 
-    public String getP301_ICD10_NAME4(){
-        return P301_ICD10_NAME4;
-    } 
-    public void setP301_ICD10_NAME4(String P301_ICD10_NAME4) {
-         this.P301_ICD10_NAME4 = P301_ICD10_NAME4;
-    } 
-    public String getP301_ICD10_ID5(){
-        return P301_ICD10_ID5;
-    } 
-    public void setP301_ICD10_ID5(String P301_ICD10_ID5) {
-         this.P301_ICD10_ID5 = P301_ICD10_ID5;
-    } 
-    public String getP301_ICD10_NAME5(){
-        return P301_ICD10_NAME5;
-    } 
-    public void setP301_ICD10_NAME5(String P301_ICD10_NAME5) {
-         this.P301_ICD10_NAME5 = P301_ICD10_NAME5;
-    } 
-    public String getP301_ICD10_ID6(){
-        return P301_ICD10_ID6;
-    } 
-    public void setP301_ICD10_ID6(String P301_ICD10_ID6) {
-         this.P301_ICD10_ID6 = P301_ICD10_ID6;
-    } 
-    public String getP301_ICD10_NAME6(){
-        return P301_ICD10_NAME6;
-    } 
-    public void setP301_ICD10_NAME6(String P301_ICD10_NAME6) {
-         this.P301_ICD10_NAME6 = P301_ICD10_NAME6;
-    } 
-    public String getP301_ICD10_ID7(){
-        return P301_ICD10_ID7;
-    } 
-    public void setP301_ICD10_ID7(String P301_ICD10_ID7) {
-         this.P301_ICD10_ID7 = P301_ICD10_ID7;
-    } 
-    public String getP301_ICD10_NAME7(){
-        return P301_ICD10_NAME7;
-    } 
-    public void setP301_ICD10_NAME7(String P301_ICD10_NAME7) {
-         this.P301_ICD10_NAME7 = P301_ICD10_NAME7;
-    } 
-    public String getP352_ICD10_ID1(){
-        return P352_ICD10_ID1;
-    } 
-    public void setP352_ICD10_ID1(String P352_ICD10_ID1) {
-         this.P352_ICD10_ID1 = P352_ICD10_ID1;
-    } 
-    public String getP352_ICD10_NAME1(){
-        return P352_ICD10_NAME1;
-    } 
-    public void setP352_ICD10_NAME1(String P352_ICD10_NAME1) {
-         this.P352_ICD10_NAME1 = P352_ICD10_NAME1;
-    } 
-    public String getP352_ICD10_ID2(){
-        return P352_ICD10_ID2;
-    } 
-    public void setP352_ICD10_ID2(String P352_ICD10_ID2) {
-         this.P352_ICD10_ID2 = P352_ICD10_ID2;
-    } 
-    public String getP352_ICD10_NAME2(){
-        return P352_ICD10_NAME2;
-    } 
-    public void setP352_ICD10_NAME2(String P352_ICD10_NAME2) {
-         this.P352_ICD10_NAME2 = P352_ICD10_NAME2;
-    } 
-    public String getP352_ICD10_ID3(){
-        return P352_ICD10_ID3;
-    } 
-    public void setP352_ICD10_ID3(String P352_ICD10_ID3) {
-         this.P352_ICD10_ID3 = P352_ICD10_ID3;
-    } 
-    public String getP352_ICD10_NAME3(){
-        return P352_ICD10_NAME3;
-    } 
-    public void setP352_ICD10_NAME3(String P352_ICD10_NAME3) {
-         this.P352_ICD10_NAME3 = P352_ICD10_NAME3;
-    } 
-    public String getP352_ICD10_ID4(){
-        return P352_ICD10_ID4;
-    } 
-    public void setP352_ICD10_ID4(String P352_ICD10_ID4) {
-         this.P352_ICD10_ID4 = P352_ICD10_ID4;
-    } 
-    public String getP352_ICD10_NAME4(){
-        return P352_ICD10_NAME4;
-    } 
-    public void setP352_ICD10_NAME4(String P352_ICD10_NAME4) {
-         this.P352_ICD10_NAME4 = P352_ICD10_NAME4;
-    } 
-    public String getP352_ICD10_ID5(){
-        return P352_ICD10_ID5;
-    } 
-    public void setP352_ICD10_ID5(String P352_ICD10_ID5) {
-         this.P352_ICD10_ID5 = P352_ICD10_ID5;
-    } 
-    public String getP352_ICD10_NAME5(){
-        return P352_ICD10_NAME5;
-    } 
-    public void setP352_ICD10_NAME5(String P352_ICD10_NAME5) {
-         this.P352_ICD10_NAME5 = P352_ICD10_NAME5;
-    } 
-    public String getP352_ICD10_ID6(){
-        return P352_ICD10_ID6;
-    } 
-    public void setP352_ICD10_ID6(String P352_ICD10_ID6) {
-         this.P352_ICD10_ID6 = P352_ICD10_ID6;
-    } 
-    public String getP352_ICD10_NAME6(){
-        return P352_ICD10_NAME6;
-    } 
-    public void setP352_ICD10_NAME6(String P352_ICD10_NAME6) {
-         this.P352_ICD10_NAME6 = P352_ICD10_NAME6;
-    } 
-    public String getP352_ICD10_ID7(){
-        return P352_ICD10_ID7;
-    } 
-    public void setP352_ICD10_ID7(String P352_ICD10_ID7) {
-         this.P352_ICD10_ID7 = P352_ICD10_ID7;
-    } 
-    public String getP352_ICD10_NAME7(){
-        return P352_ICD10_NAME7;
-    } 
-    public void setP352_ICD10_NAME7(String P352_ICD10_NAME7) {
-         this.P352_ICD10_NAME7 = P352_ICD10_NAME7;
-    } 
-    public String getP354_ICD10_ID1(){
-        return P354_ICD10_ID1;
-    } 
-    public void setP354_ICD10_ID1(String P354_ICD10_ID1) {
-         this.P354_ICD10_ID1 = P354_ICD10_ID1;
-    } 
-    public String getP354_ICD10_NAME1(){
-        return P354_ICD10_NAME1;
-    } 
-    public void setP354_ICD10_NAME1(String P354_ICD10_NAME1) {
-         this.P354_ICD10_NAME1 = P354_ICD10_NAME1;
-    } 
-    public String getP354_ICD10_ID2(){
-        return P354_ICD10_ID2;
-    } 
-    public void setP354_ICD10_ID2(String P354_ICD10_ID2) {
-         this.P354_ICD10_ID2 = P354_ICD10_ID2;
-    } 
-    public String getP354_ICD10_NAME2(){
-        return P354_ICD10_NAME2;
-    } 
-    public void setP354_ICD10_NAME2(String P354_ICD10_NAME2) {
-         this.P354_ICD10_NAME2 = P354_ICD10_NAME2;
-    } 
-    public String getP354_ICD10_ID3(){
-        return P354_ICD10_ID3;
-    } 
-    public void setP354_ICD10_ID3(String P354_ICD10_ID3) {
-         this.P354_ICD10_ID3 = P354_ICD10_ID3;
-    } 
-    public String getP354_ICD10_NAME3(){
-        return P354_ICD10_NAME3;
-    } 
-    public void setP354_ICD10_NAME3(String P354_ICD10_NAME3) {
-         this.P354_ICD10_NAME3 = P354_ICD10_NAME3;
-    } 
-    public String getP354_ICD10_ID4(){
-        return P354_ICD10_ID4;
-    } 
-    public void setP354_ICD10_ID4(String P354_ICD10_ID4) {
-         this.P354_ICD10_ID4 = P354_ICD10_ID4;
-    } 
-    public String getP354_ICD10_NAME4(){
-        return P354_ICD10_NAME4;
-    } 
-    public void setP354_ICD10_NAME4(String P354_ICD10_NAME4) {
-         this.P354_ICD10_NAME4 = P354_ICD10_NAME4;
-    } 
-    public String getP354_ICD10_ID5(){
-        return P354_ICD10_ID5;
-    } 
-    public void setP354_ICD10_ID5(String P354_ICD10_ID5) {
-         this.P354_ICD10_ID5 = P354_ICD10_ID5;
-    } 
-    public String getP354_ICD10_NAME5(){
-        return P354_ICD10_NAME5;
-    } 
-    public void setP354_ICD10_NAME5(String P354_ICD10_NAME5) {
-         this.P354_ICD10_NAME5 = P354_ICD10_NAME5;
-    } 
-    public String getP354_ICD10_ID6(){
-        return P354_ICD10_ID6;
-    } 
-    public void setP354_ICD10_ID6(String P354_ICD10_ID6) {
-         this.P354_ICD10_ID6 = P354_ICD10_ID6;
-    } 
-    public String getP354_ICD10_NAME6(){
-        return P354_ICD10_NAME6;
-    } 
-    public void setP354_ICD10_NAME6(String P354_ICD10_NAME6) {
-         this.P354_ICD10_NAME6 = P354_ICD10_NAME6;
-    } 
-    public String getP354_ICD10_ID7(){
-        return P354_ICD10_ID7;
-    } 
-    public void setP354_ICD10_ID7(String P354_ICD10_ID7) {
-         this.P354_ICD10_ID7 = P354_ICD10_ID7;
-    } 
-    public String getP354_ICD10_NAME7(){
-        return P354_ICD10_NAME7;
-    } 
-    public void setP354_ICD10_NAME7(String P354_ICD10_NAME7) {
-         this.P354_ICD10_NAME7 = P354_ICD10_NAME7;
-    } 
-    public String getP356_ICD10_ID1(){
-        return P356_ICD10_ID1;
-    } 
-    public void setP356_ICD10_ID1(String P356_ICD10_ID1) {
-         this.P356_ICD10_ID1 = P356_ICD10_ID1;
-    } 
-    public String getP356_ICD10_NAME1(){
-        return P356_ICD10_NAME1;
-    } 
-    public void setP356_ICD10_NAME1(String P356_ICD10_NAME1) {
-         this.P356_ICD10_NAME1 = P356_ICD10_NAME1;
-    } 
-    public String getP356_ICD10_ID2(){
-        return P356_ICD10_ID2;
-    } 
-    public void setP356_ICD10_ID2(String P356_ICD10_ID2) {
-         this.P356_ICD10_ID2 = P356_ICD10_ID2;
-    } 
-    public String getP356_ICD10_NAME2(){
-        return P356_ICD10_NAME2;
-    } 
-    public void setP356_ICD10_NAME2(String P356_ICD10_NAME2) {
-         this.P356_ICD10_NAME2 = P356_ICD10_NAME2;
-    } 
-    public String getP356_ICD10_ID3(){
-        return P356_ICD10_ID3;
-    } 
-    public void setP356_ICD10_ID3(String P356_ICD10_ID3) {
-         this.P356_ICD10_ID3 = P356_ICD10_ID3;
-    } 
-    public String getP356_ICD10_NAME3(){
-        return P356_ICD10_NAME3;
-    } 
-    public void setP356_ICD10_NAME3(String P356_ICD10_NAME3) {
-         this.P356_ICD10_NAME3 = P356_ICD10_NAME3;
-    } 
-    public String getP356_ICD10_ID4(){
-        return P356_ICD10_ID4;
-    } 
-    public void setP356_ICD10_ID4(String P356_ICD10_ID4) {
-         this.P356_ICD10_ID4 = P356_ICD10_ID4;
-    } 
-    public String getP356_ICD10_NAME4(){
-        return P356_ICD10_NAME4;
-    } 
-    public void setP356_ICD10_NAME4(String P356_ICD10_NAME4) {
-         this.P356_ICD10_NAME4 = P356_ICD10_NAME4;
-    } 
-    public String getP356_ICD10_ID5(){
-        return P356_ICD10_ID5;
-    } 
-    public void setP356_ICD10_ID5(String P356_ICD10_ID5) {
-         this.P356_ICD10_ID5 = P356_ICD10_ID5;
-    } 
-    public String getP356_ICD10_NAME5(){
-        return P356_ICD10_NAME5;
-    } 
-    public void setP356_ICD10_NAME5(String P356_ICD10_NAME5) {
-         this.P356_ICD10_NAME5 = P356_ICD10_NAME5;
-    } 
-    public String getP356_ICD10_ID6(){
-        return P356_ICD10_ID6;
-    } 
-    public void setP356_ICD10_ID6(String P356_ICD10_ID6) {
-         this.P356_ICD10_ID6 = P356_ICD10_ID6;
-    } 
-    public String getP356_ICD10_NAME6(){
-        return P356_ICD10_NAME6;
-    } 
-    public void setP356_ICD10_NAME6(String P356_ICD10_NAME6) {
-         this.P356_ICD10_NAME6 = P356_ICD10_NAME6;
-    } 
-    public String getP356_ICD10_ID7(){
-        return P356_ICD10_ID7;
-    } 
-    public void setP356_ICD10_ID7(String P356_ICD10_ID7) {
-         this.P356_ICD10_ID7 = P356_ICD10_ID7;
-    } 
-    public String getP356_ICD10_NAME7(){
-        return P356_ICD10_NAME7;
-    } 
-    public void setP356_ICD10_NAME7(String P356_ICD10_NAME7) {
-         this.P356_ICD10_NAME7 = P356_ICD10_NAME7;
-    } 
+        this.MD5 = MD5;
+    }
+    public String getP322_ICD10_ID1_STD(){
+        return P322_ICD10_ID1_STD;
+    }
+    public void setP322_ICD10_ID1_STD(String P322_ICD10_ID1_STD) {
+        if("无效".equals(P322_ICD10_ID1_STD)){
+            this.P322_ICD10_ID1_STD ="";
+        }else{
+            this.P322_ICD10_ID1_STD = P322_ICD10_ID1_STD;
+        }
+    }
+    public String getP322_ICD10_NAME1_STD(){
+        return P322_ICD10_NAME1_STD;
+    }
+    public void setP322_ICD10_NAME1_STD(String P322_ICD10_NAME1_STD) {
+        if("无效".equals(P322_ICD10_NAME1_STD)){
+            this.P322_ICD10_NAME1_STD ="";
+        }else{
+            this.P322_ICD10_NAME1_STD = P322_ICD10_NAME1_STD;
+        }
+    }
+    public String getP322_ICD10_ID2_STD(){
+        return P322_ICD10_ID2_STD;
+    }
+    public void setP322_ICD10_ID2_STD(String P322_ICD10_ID2_STD) {
+        if("无效".equals(P322_ICD10_ID2_STD)){
+            this.P322_ICD10_ID2_STD ="";
+        }else{
+            this.P322_ICD10_ID2_STD = P322_ICD10_ID2_STD;
+        }
+    }
+    public String getP322_ICD10_NAME2_STD(){
+        return P322_ICD10_NAME2_STD;
+    }
+    public void setP322_ICD10_NAME2_STD(String P322_ICD10_NAME2_STD) {
+        if("无效".equals(P322_ICD10_NAME2_STD)){
+            this.P322_ICD10_NAME2_STD ="";
+        }else{
+            this.P322_ICD10_NAME2_STD = P322_ICD10_NAME2_STD;
+        }
+    }
+    public String getP322_ICD10_ID3_STD(){
+        return P322_ICD10_ID3_STD;
+    }
+    public void setP322_ICD10_ID3_STD(String P322_ICD10_ID3_STD) {
+        if("无效".equals(P322_ICD10_ID3_STD)){
+            this.P322_ICD10_ID3_STD ="";
+        }else{
+            this.P322_ICD10_ID3_STD = P322_ICD10_ID3_STD;
+        }
+    }
+    public String getP322_ICD10_NAME3_STD(){
+        return P322_ICD10_NAME3_STD;
+    }
+    public void setP322_ICD10_NAME3_STD(String P322_ICD10_NAME3_STD) {
+        if("无效".equals(P322_ICD10_NAME3_STD)){
+            this.P322_ICD10_NAME3_STD ="";
+        }else{
+            this.P322_ICD10_NAME3_STD = P322_ICD10_NAME3_STD;
+        }
+    }
+    public String getP322_ICD10_ID4_STD(){
+        return P322_ICD10_ID4_STD;
+    }
+    public void setP322_ICD10_ID4_STD(String P322_ICD10_ID4_STD) {
+        if("无效".equals(P322_ICD10_ID4_STD)){
+            this.P322_ICD10_ID4_STD ="";
+        }else{
+            this.P322_ICD10_ID4_STD = P322_ICD10_ID4_STD;
+        }
+    }
+    public String getP322_ICD10_NAME4_STD(){
+        return P322_ICD10_NAME4_STD;
+    }
+    public void setP322_ICD10_NAME4_STD(String P322_ICD10_NAME4_STD) {
+        if("无效".equals(P322_ICD10_NAME4_STD)){
+            this.P322_ICD10_NAME4_STD ="";
+        }else{
+            this.P322_ICD10_NAME4_STD = P322_ICD10_NAME4_STD;
+        }
+    }
+    public String getP322_ICD10_ID5_STD(){
+        return P322_ICD10_ID5_STD;
+    }
+    public void setP322_ICD10_ID5_STD(String P322_ICD10_ID5_STD) {
+        if("无效".equals(P322_ICD10_ID5_STD)){
+            this.P322_ICD10_ID5_STD ="";
+        }else{
+            this.P322_ICD10_ID5_STD = P322_ICD10_ID5_STD;
+        }
+    }
+    public String getP322_ICD10_NAME5_STD(){
+        return P322_ICD10_NAME5_STD;
+    }
+    public void setP322_ICD10_NAME5_STD(String P322_ICD10_NAME5_STD) {
+        if("无效".equals(P322_ICD10_NAME5_STD)){
+            this.P322_ICD10_NAME5_STD ="";
+        }else{
+            this.P322_ICD10_NAME5_STD = P322_ICD10_NAME5_STD;
+        }
+    }
+    public String getP322_ICD10_ID6_STD(){
+        return P322_ICD10_ID6_STD;
+    }
+    public void setP322_ICD10_ID6_STD(String P322_ICD10_ID6_STD) {
+        if("无效".equals(P322_ICD10_ID6_STD)){
+            this.P322_ICD10_ID6_STD ="";
+        }else{
+            this.P322_ICD10_ID6_STD = P322_ICD10_ID6_STD;
+        }
+    }
+    public String getP322_ICD10_NAME6_STD(){
+        return P322_ICD10_NAME6_STD;
+    }
+    public void setP322_ICD10_NAME6_STD(String P322_ICD10_NAME6_STD) {
+        if("无效".equals(P322_ICD10_NAME6_STD)){
+            this.P322_ICD10_NAME6_STD ="";
+        }else{
+            this.P322_ICD10_NAME6_STD = P322_ICD10_NAME6_STD;
+        }
+    }
+    public String getP322_ICD10_ID7_STD(){
+        return P322_ICD10_ID7_STD;
+    }
+    public void setP322_ICD10_ID7_STD(String P322_ICD10_ID7_STD) {
+        if("无效".equals(P322_ICD10_ID7_STD)){
+            this.P322_ICD10_ID7_STD ="";
+        }else{
+            this.P322_ICD10_ID7_STD = P322_ICD10_ID7_STD;
+        }
+    }
+    public String getP322_ICD10_NAME7_STD(){
+        return P322_ICD10_NAME7_STD;
+    }
+    public void setP322_ICD10_NAME7_STD(String P322_ICD10_NAME7_STD) {
+        if("无效".equals(P322_ICD10_NAME7_STD)){
+            this.P322_ICD10_NAME7_STD ="";
+        }else{
+            this.P322_ICD10_NAME7_STD = P322_ICD10_NAME7_STD;
+        }
+    }
+    public String getP325_ICD10_ID1_STD(){
+        return P325_ICD10_ID1_STD;
+    }
+    public void setP325_ICD10_ID1_STD(String P325_ICD10_ID1_STD) {
+        if("无效".equals(P325_ICD10_ID1_STD)){
+            this.P325_ICD10_ID1_STD ="";
+        }else{
+            this.P325_ICD10_ID1_STD = P325_ICD10_ID1_STD;
+        }
+    }
+    public String getP325_ICD10_NAME1_STD(){
+        return P325_ICD10_NAME1_STD;
+    }
+    public void setP325_ICD10_NAME1_STD(String P325_ICD10_NAME1_STD) {
+        if("无效".equals(P325_ICD10_NAME1_STD)){
+            this.P325_ICD10_NAME1_STD ="";
+        }else{
+            this.P325_ICD10_NAME1_STD = P325_ICD10_NAME1_STD;
+        }
+    }
+    public String getP325_ICD10_ID2_STD(){
+        return P325_ICD10_ID2_STD;
+    }
+    public void setP325_ICD10_ID2_STD(String P325_ICD10_ID2_STD) {
+        if("无效".equals(P325_ICD10_ID2_STD)){
+            this.P325_ICD10_ID2_STD ="";
+        }else{
+            this.P325_ICD10_ID2_STD = P325_ICD10_ID2_STD;
+        }
+    }
+    public String getP325_ICD10_NAME2_STD(){
+        return P325_ICD10_NAME2_STD;
+    }
+    public void setP325_ICD10_NAME2_STD(String P325_ICD10_NAME2_STD) {
+        if("无效".equals(P325_ICD10_NAME2_STD)){
+            this.P325_ICD10_NAME2_STD ="";
+        }else{
+            this.P325_ICD10_NAME2_STD = P325_ICD10_NAME2_STD;
+        }
+    }
+    public String getP325_ICD10_ID3_STD(){
+        return P325_ICD10_ID3_STD;
+    }
+    public void setP325_ICD10_ID3_STD(String P325_ICD10_ID3_STD) {
+        if("无效".equals(P325_ICD10_ID3_STD)){
+            this.P325_ICD10_ID3_STD ="";
+        }else{
+            this.P325_ICD10_ID3_STD = P325_ICD10_ID3_STD;
+        }
+    }
+    public String getP325_ICD10_NAME3_STD(){
+        return P325_ICD10_NAME3_STD;
+    }
+    public void setP325_ICD10_NAME3_STD(String P325_ICD10_NAME3_STD) {
+        if("无效".equals(P325_ICD10_NAME3_STD)){
+            this.P325_ICD10_NAME3_STD ="";
+        }else{
+            this.P325_ICD10_NAME3_STD = P325_ICD10_NAME3_STD;
+        }
+    }
+    public String getP325_ICD10_ID4_STD(){
+        return P325_ICD10_ID4_STD;
+    }
+    public void setP325_ICD10_ID4_STD(String P325_ICD10_ID4_STD) {
+        if("无效".equals(P325_ICD10_ID4_STD)){
+            this.P325_ICD10_ID4_STD ="";
+        }else{
+            this.P325_ICD10_ID4_STD = P325_ICD10_ID4_STD;
+        }
+    }
+    public String getP325_ICD10_NAME4_STD(){
+        return P325_ICD10_NAME4_STD;
+    }
+    public void setP325_ICD10_NAME4_STD(String P325_ICD10_NAME4_STD) {
+        if("无效".equals(P325_ICD10_NAME4_STD)){
+            this.P325_ICD10_NAME4_STD ="";
+        }else{
+            this.P325_ICD10_NAME4_STD = P325_ICD10_NAME4_STD;
+        }
+    }
+    public String getP325_ICD10_ID5_STD(){
+        return P325_ICD10_ID5_STD;
+    }
+    public void setP325_ICD10_ID5_STD(String P325_ICD10_ID5_STD) {
+        if("无效".equals(P325_ICD10_ID5_STD)){
+            this.P325_ICD10_ID5_STD ="";
+        }else{
+            this.P325_ICD10_ID5_STD = P325_ICD10_ID5_STD;
+        }
+    }
+    public String getP325_ICD10_NAME5_STD(){
+        return P325_ICD10_NAME5_STD;
+    }
+    public void setP325_ICD10_NAME5_STD(String P325_ICD10_NAME5_STD) {
+        if("无效".equals(P325_ICD10_NAME5_STD)){
+            this.P325_ICD10_NAME5_STD ="";
+        }else{
+            this.P325_ICD10_NAME5_STD = P325_ICD10_NAME5_STD;
+        }
+    }
+    public String getP325_ICD10_ID6_STD(){
+        return P325_ICD10_ID6_STD;
+    }
+    public void setP325_ICD10_ID6_STD(String P325_ICD10_ID6_STD) {
+        if("无效".equals(P325_ICD10_ID6_STD)){
+            this.P325_ICD10_ID6_STD ="";
+        }else{
+            this.P325_ICD10_ID6_STD = P325_ICD10_ID6_STD;
+        }
+    }
+    public String getP325_ICD10_NAME6_STD(){
+        return P325_ICD10_NAME6_STD;
+    }
+    public void setP325_ICD10_NAME6_STD(String P325_ICD10_NAME6_STD) {
+        if("无效".equals(P325_ICD10_NAME6_STD)){
+            this.P325_ICD10_NAME6_STD ="";
+        }else{
+            this.P325_ICD10_NAME6_STD = P325_ICD10_NAME6_STD;
+        }
+    }
+    public String getP325_ICD10_ID7_STD(){
+        return P325_ICD10_ID7_STD;
+    }
+    public void setP325_ICD10_ID7_STD(String P325_ICD10_ID7_STD) {
+        if("无效".equals(P325_ICD10_ID7_STD)){
+            this.P325_ICD10_ID7_STD ="";
+        }else{
+            this.P325_ICD10_ID7_STD = P325_ICD10_ID7_STD;
+        }
+    }
+    public String getP325_ICD10_NAME7_STD(){
+        return P325_ICD10_NAME7_STD;
+    }
+    public void setP325_ICD10_NAME7_STD(String P325_ICD10_NAME7_STD) {
+        if("无效".equals(P325_ICD10_NAME7_STD)){
+            this.P325_ICD10_NAME7_STD ="";
+        }else{
+            this.P325_ICD10_NAME7_STD = P325_ICD10_NAME7_STD;
+        }
+    }
+    public String getP328_ICD10_ID1_STD(){
+        return P328_ICD10_ID1_STD;
+    }
+    public void setP328_ICD10_ID1_STD(String P328_ICD10_ID1_STD) {
+        if("无效".equals(P328_ICD10_ID1_STD)){
+            this.P328_ICD10_ID1_STD ="";
+        }else{
+            this.P328_ICD10_ID1_STD = P328_ICD10_ID1_STD;
+        }
+    }
+    public String getP328_ICD10_NAME1_STD(){
+        return P328_ICD10_NAME1_STD;
+    }
+    public void setP328_ICD10_NAME1_STD(String P328_ICD10_NAME1_STD) {
+        if("无效".equals(P328_ICD10_NAME1_STD)){
+            this.P328_ICD10_NAME1_STD ="";
+        }else{
+            this.P328_ICD10_NAME1_STD = P328_ICD10_NAME1_STD;
+        }
+    }
+    public String getP328_ICD10_ID2_STD(){
+        return P328_ICD10_ID2_STD;
+    }
+    public void setP328_ICD10_ID2_STD(String P328_ICD10_ID2_STD) {
+        if("无效".equals(P328_ICD10_ID2_STD)){
+            this.P328_ICD10_ID2_STD ="";
+        }else{
+            this.P328_ICD10_ID2_STD = P328_ICD10_ID2_STD;
+        }
+    }
+    public String getP328_ICD10_NAME2_STD(){
+        return P328_ICD10_NAME2_STD;
+    }
+    public void setP328_ICD10_NAME2_STD(String P328_ICD10_NAME2_STD) {
+        if("无效".equals(P328_ICD10_NAME2_STD)){
+            this.P328_ICD10_NAME2_STD ="";
+        }else{
+            this.P328_ICD10_NAME2_STD = P328_ICD10_NAME2_STD;
+        }
+    }
+    public String getP328_ICD10_ID3_STD(){
+        return P328_ICD10_ID3_STD;
+    }
+    public void setP328_ICD10_ID3_STD(String P328_ICD10_ID3_STD) {
+        if("无效".equals(P328_ICD10_ID3_STD)){
+            this.P328_ICD10_ID3_STD ="";
+        }else{
+            this.P328_ICD10_ID3_STD = P328_ICD10_ID3_STD;
+        }
+    }
+    public String getP328_ICD10_NAME3_STD(){
+        return P328_ICD10_NAME3_STD;
+    }
+    public void setP328_ICD10_NAME3_STD(String P328_ICD10_NAME3_STD) {
+        if("无效".equals(P328_ICD10_NAME3_STD)){
+            this.P328_ICD10_NAME3_STD ="";
+        }else{
+            this.P328_ICD10_NAME3_STD = P328_ICD10_NAME3_STD;
+        }
+    }
+    public String getP328_ICD10_ID4_STD(){
+        return P328_ICD10_ID4_STD;
+    }
+    public void setP328_ICD10_ID4_STD(String P328_ICD10_ID4_STD) {
+        if("无效".equals(P328_ICD10_ID4_STD)){
+            this.P328_ICD10_ID4_STD ="";
+        }else{
+            this.P328_ICD10_ID4_STD = P328_ICD10_ID4_STD;
+        }
+    }
+    public String getP328_ICD10_NAME4_STD(){
+        return P328_ICD10_NAME4_STD;
+    }
+    public void setP328_ICD10_NAME4_STD(String P328_ICD10_NAME4_STD) {
+        if("无效".equals(P328_ICD10_NAME4_STD)){
+            this.P328_ICD10_NAME4_STD ="";
+        }else{
+            this.P328_ICD10_NAME4_STD = P328_ICD10_NAME4_STD;
+        }
+    }
+    public String getP328_ICD10_ID5_STD(){
+        return P328_ICD10_ID5_STD;
+    }
+    public void setP328_ICD10_ID5_STD(String P328_ICD10_ID5_STD) {
+        if("无效".equals(P328_ICD10_ID5_STD)){
+            this.P328_ICD10_ID5_STD ="";
+        }else{
+            this.P328_ICD10_ID5_STD = P328_ICD10_ID5_STD;
+        }
+    }
+    public String getP328_ICD10_NAME5_STD(){
+        return P328_ICD10_NAME5_STD;
+    }
+    public void setP328_ICD10_NAME5_STD(String P328_ICD10_NAME5_STD) {
+        if("无效".equals(P328_ICD10_NAME5_STD)){
+            this.P328_ICD10_NAME5_STD ="";
+        }else{
+            this.P328_ICD10_NAME5_STD = P328_ICD10_NAME5_STD;
+        }
+    }
+    public String getP328_ICD10_ID6_STD(){
+        return P328_ICD10_ID6_STD;
+    }
+    public void setP328_ICD10_ID6_STD(String P328_ICD10_ID6_STD) {
+        if("无效".equals(P328_ICD10_ID6_STD)){
+            this.P328_ICD10_ID6_STD ="";
+        }else{
+            this.P328_ICD10_ID6_STD = P328_ICD10_ID6_STD;
+        }
+    }
+    public String getP328_ICD10_NAME6_STD(){
+        return P328_ICD10_NAME6_STD;
+    }
+    public void setP328_ICD10_NAME6_STD(String P328_ICD10_NAME6_STD) {
+        if("无效".equals(P328_ICD10_NAME6_STD)){
+            this.P328_ICD10_NAME6_STD ="";
+        }else{
+            this.P328_ICD10_NAME6_STD = P328_ICD10_NAME6_STD;
+        }
+    }
+    public String getP328_ICD10_ID7_STD(){
+        return P328_ICD10_ID7_STD;
+    }
+    public void setP328_ICD10_ID7_STD(String P328_ICD10_ID7_STD) {
+        if("无效".equals(P328_ICD10_ID7_STD)){
+            this.P328_ICD10_ID7_STD ="";
+        }else{
+            this.P328_ICD10_ID7_STD = P328_ICD10_ID7_STD;
+        }
+    }
+    public String getP328_ICD10_NAME7_STD(){
+        return P328_ICD10_NAME7_STD;
+    }
+    public void setP328_ICD10_NAME7_STD(String P328_ICD10_NAME7_STD) {
+        if("无效".equals(P328_ICD10_NAME7_STD)){
+            this.P328_ICD10_NAME7_STD ="";
+        }else{
+            this.P328_ICD10_NAME7_STD = P328_ICD10_NAME7_STD;
+        }
+    }
+    public String getP3292_ICD10_ID1_STD(){
+        return P3292_ICD10_ID1_STD;
+    }
+    public void setP3292_ICD10_ID1_STD(String P3292_ICD10_ID1_STD) {
+        if("无效".equals(P3292_ICD10_ID1_STD)){
+            this.P3292_ICD10_ID1_STD ="";
+        }else{
+            this.P3292_ICD10_ID1_STD = P3292_ICD10_ID1_STD;
+        }
+    }
+    public String getP3292_ICD10_NAME1_STD(){
+        return P3292_ICD10_NAME1_STD;
+    }
+    public void setP3292_ICD10_NAME1_STD(String P3292_ICD10_NAME1_STD) {
+        if("无效".equals(P3292_ICD10_NAME1_STD)){
+            this.P3292_ICD10_NAME1_STD ="";
+        }else{
+            this.P3292_ICD10_NAME1_STD = P3292_ICD10_NAME1_STD;
+        }
+    }
+    public String getP3292_ICD10_ID2_STD(){
+        return P3292_ICD10_ID2_STD;
+    }
+    public void setP3292_ICD10_ID2_STD(String P3292_ICD10_ID2_STD) {
+        if("无效".equals(P3292_ICD10_ID2_STD)){
+            this.P3292_ICD10_ID2_STD ="";
+        }else{
+            this.P3292_ICD10_ID2_STD = P3292_ICD10_ID2_STD;
+        }
+    }
+    public String getP3292_ICD10_NAME2_STD(){
+        return P3292_ICD10_NAME2_STD;
+    }
+    public void setP3292_ICD10_NAME2_STD(String P3292_ICD10_NAME2_STD) {
+        if("无效".equals(P3292_ICD10_NAME2_STD)){
+            this.P3292_ICD10_NAME2_STD ="";
+        }else{
+            this.P3292_ICD10_NAME2_STD = P3292_ICD10_NAME2_STD;
+        }
+    }
+    public String getP3292_ICD10_ID3_STD(){
+        return P3292_ICD10_ID3_STD;
+    }
+    public void setP3292_ICD10_ID3_STD(String P3292_ICD10_ID3_STD) {
+        if("无效".equals(P3292_ICD10_ID3_STD)){
+            this.P3292_ICD10_ID3_STD ="";
+        }else{
+            this.P3292_ICD10_ID3_STD = P3292_ICD10_ID3_STD;
+        }
+    }
+    public String getP3292_ICD10_NAME3_STD(){
+        return P3292_ICD10_NAME3_STD;
+    }
+    public void setP3292_ICD10_NAME3_STD(String P3292_ICD10_NAME3_STD) {
+        if("无效".equals(P3292_ICD10_NAME3_STD)){
+            this.P3292_ICD10_NAME3_STD ="";
+        }else{
+            this.P3292_ICD10_NAME3_STD = P3292_ICD10_NAME3_STD;
+        }
+    }
+    public String getP3292_ICD10_ID4_STD(){
+        return P3292_ICD10_ID4_STD;
+    }
+    public void setP3292_ICD10_ID4_STD(String P3292_ICD10_ID4_STD) {
+        if("无效".equals(P3292_ICD10_ID4_STD)){
+            this.P3292_ICD10_ID4_STD ="";
+        }else{
+            this.P3292_ICD10_ID4_STD = P3292_ICD10_ID4_STD;
+        }
+    }
+    public String getP3292_ICD10_NAME4_STD(){
+        return P3292_ICD10_NAME4_STD;
+    }
+    public void setP3292_ICD10_NAME4_STD(String P3292_ICD10_NAME4_STD) {
+        if("无效".equals(P3292_ICD10_NAME4_STD)){
+            this.P3292_ICD10_NAME4_STD ="";
+        }else{
+            this.P3292_ICD10_NAME4_STD = P3292_ICD10_NAME4_STD;
+        }
+    }
+    public String getP3292_ICD10_ID5_STD(){
+        return P3292_ICD10_ID5_STD;
+    }
+    public void setP3292_ICD10_ID5_STD(String P3292_ICD10_ID5_STD) {
+        if("无效".equals(P3292_ICD10_ID5_STD)){
+            this.P3292_ICD10_ID5_STD ="";
+        }else{
+            this.P3292_ICD10_ID5_STD = P3292_ICD10_ID5_STD;
+        }
+    }
+    public String getP3292_ICD10_NAME5_STD(){
+        return P3292_ICD10_NAME5_STD;
+    }
+    public void setP3292_ICD10_NAME5_STD(String P3292_ICD10_NAME5_STD) {
+        if("无效".equals(P3292_ICD10_NAME5_STD)){
+            this.P3292_ICD10_NAME5_STD ="";
+        }else{
+            this.P3292_ICD10_NAME5_STD = P3292_ICD10_NAME5_STD;
+        }
+    }
+    public String getP3292_ICD10_ID6_STD(){
+        return P3292_ICD10_ID6_STD;
+    }
+    public void setP3292_ICD10_ID6_STD(String P3292_ICD10_ID6_STD) {
+        if("无效".equals(P3292_ICD10_ID6_STD)){
+            this.P3292_ICD10_ID6_STD ="";
+        }else{
+            this.P3292_ICD10_ID6_STD = P3292_ICD10_ID6_STD;
+        }
+    }
+    public String getP3292_ICD10_NAME6_STD(){
+        return P3292_ICD10_NAME6_STD;
+    }
+    public void setP3292_ICD10_NAME6_STD(String P3292_ICD10_NAME6_STD) {
+        if("无效".equals(P3292_ICD10_NAME6_STD)){
+            this.P3292_ICD10_NAME6_STD ="";
+        }else{
+            this.P3292_ICD10_NAME6_STD = P3292_ICD10_NAME6_STD;
+        }
+    }
+    public String getP3292_ICD10_ID7_STD(){
+        return P3292_ICD10_ID7_STD;
+    }
+    public void setP3292_ICD10_ID7_STD(String P3292_ICD10_ID7_STD) {
+        if("无效".equals(P3292_ICD10_ID7_STD)){
+            this.P3292_ICD10_ID7_STD ="";
+        }else{
+            this.P3292_ICD10_ID7_STD = P3292_ICD10_ID7_STD;
+        }
+    }
+    public String getP3292_ICD10_NAME7_STD(){
+        return P3292_ICD10_NAME7_STD;
+    }
+    public void setP3292_ICD10_NAME7_STD(String P3292_ICD10_NAME7_STD) {
+        if("无效".equals(P3292_ICD10_NAME7_STD)){
+            this.P3292_ICD10_NAME7_STD ="";
+        }else{
+            this.P3292_ICD10_NAME7_STD = P3292_ICD10_NAME7_STD;
+        }
+    }
+    public String getP3295_ICD10_ID1_STD(){
+        return P3295_ICD10_ID1_STD;
+    }
+    public void setP3295_ICD10_ID1_STD(String P3295_ICD10_ID1_STD) {
+        if("无效".equals(P3295_ICD10_ID1_STD)){
+            this.P3295_ICD10_ID1_STD ="";
+        }else{
+            this.P3295_ICD10_ID1_STD = P3295_ICD10_ID1_STD;
+        }
+    }
+    public String getP3295_ICD10_NAME1_STD(){
+        return P3295_ICD10_NAME1_STD;
+    }
+    public void setP3295_ICD10_NAME1_STD(String P3295_ICD10_NAME1_STD) {
+        if("无效".equals(P3295_ICD10_NAME1_STD)){
+            this.P3295_ICD10_NAME1_STD ="";
+        }else{
+            this.P3295_ICD10_NAME1_STD = P3295_ICD10_NAME1_STD;
+        }
+    }
+    public String getP3295_ICD10_ID2_STD(){
+        return P3295_ICD10_ID2_STD;
+    }
+    public void setP3295_ICD10_ID2_STD(String P3295_ICD10_ID2_STD) {
+        if("无效".equals(P3295_ICD10_ID2_STD)){
+            this.P3295_ICD10_ID2_STD ="";
+        }else{
+            this.P3295_ICD10_ID2_STD = P3295_ICD10_ID2_STD;
+        }
+    }
+    public String getP3295_ICD10_NAME2_STD(){
+        return P3295_ICD10_NAME2_STD;
+    }
+    public void setP3295_ICD10_NAME2_STD(String P3295_ICD10_NAME2_STD) {
+        if("无效".equals(P3295_ICD10_NAME2_STD)){
+            this.P3295_ICD10_NAME2_STD ="";
+        }else{
+            this.P3295_ICD10_NAME2_STD = P3295_ICD10_NAME2_STD;
+        }
+    }
+    public String getP3295_ICD10_ID3_STD(){
+        return P3295_ICD10_ID3_STD;
+    }
+    public void setP3295_ICD10_ID3_STD(String P3295_ICD10_ID3_STD) {
+        if("无效".equals(P3295_ICD10_ID3_STD)){
+            this.P3295_ICD10_ID3_STD ="";
+        }else{
+            this.P3295_ICD10_ID3_STD = P3295_ICD10_ID3_STD;
+        }
+    }
+    public String getP3295_ICD10_NAME3_STD(){
+        return P3295_ICD10_NAME3_STD;
+    }
+    public void setP3295_ICD10_NAME3_STD(String P3295_ICD10_NAME3_STD) {
+        if("无效".equals(P3295_ICD10_NAME3_STD)){
+            this.P3295_ICD10_NAME3_STD ="";
+        }else{
+            this.P3295_ICD10_NAME3_STD = P3295_ICD10_NAME3_STD;
+        }
+    }
+    public String getP3295_ICD10_ID4_STD(){
+        return P3295_ICD10_ID4_STD;
+    }
+    public void setP3295_ICD10_ID4_STD(String P3295_ICD10_ID4_STD) {
+        if("无效".equals(P3295_ICD10_ID4_STD)){
+            this.P3295_ICD10_ID4_STD ="";
+        }else{
+            this.P3295_ICD10_ID4_STD = P3295_ICD10_ID4_STD;
+        }
+    }
+    public String getP3295_ICD10_NAME4_STD(){
+        return P3295_ICD10_NAME4_STD;
+    }
+    public void setP3295_ICD10_NAME4_STD(String P3295_ICD10_NAME4_STD) {
+        if("无效".equals(P3295_ICD10_NAME4_STD)){
+            this.P3295_ICD10_NAME4_STD ="";
+        }else{
+            this.P3295_ICD10_NAME4_STD = P3295_ICD10_NAME4_STD;
+        }
+    }
+    public String getP3295_ICD10_ID5_STD(){
+        return P3295_ICD10_ID5_STD;
+    }
+    public void setP3295_ICD10_ID5_STD(String P3295_ICD10_ID5_STD) {
+        if("无效".equals(P3295_ICD10_ID5_STD)){
+            this.P3295_ICD10_ID5_STD ="";
+        }else{
+            this.P3295_ICD10_ID5_STD = P3295_ICD10_ID5_STD;
+        }
+    }
+    public String getP3295_ICD10_NAME5_STD(){
+        return P3295_ICD10_NAME5_STD;
+    }
+    public void setP3295_ICD10_NAME5_STD(String P3295_ICD10_NAME5_STD) {
+        if("无效".equals(P3295_ICD10_NAME5_STD)){
+            this.P3295_ICD10_NAME5_STD ="";
+        }else{
+            this.P3295_ICD10_NAME5_STD = P3295_ICD10_NAME5_STD;
+        }
+    }
+    public String getP3295_ICD10_ID6_STD(){
+        return P3295_ICD10_ID6_STD;
+    }
+    public void setP3295_ICD10_ID6_STD(String P3295_ICD10_ID6_STD) {
+        if("无效".equals(P3295_ICD10_ID6_STD)){
+            this.P3295_ICD10_ID6_STD ="";
+        }else{
+            this.P3295_ICD10_ID6_STD = P3295_ICD10_ID6_STD;
+        }
+    }
+    public String getP3295_ICD10_NAME6_STD(){
+        return P3295_ICD10_NAME6_STD;
+    }
+    public void setP3295_ICD10_NAME6_STD(String P3295_ICD10_NAME6_STD) {
+        if("无效".equals(P3295_ICD10_NAME6_STD)){
+            this.P3295_ICD10_NAME6_STD ="";
+        }else{
+            this.P3295_ICD10_NAME6_STD = P3295_ICD10_NAME6_STD;
+        }
+    }
+    public String getP3295_ICD10_ID7_STD(){
+        return P3295_ICD10_ID7_STD;
+    }
+    public void setP3295_ICD10_ID7_STD(String P3295_ICD10_ID7_STD) {
+        if("无效".equals(P3295_ICD10_ID7_STD)){
+            this.P3295_ICD10_ID7_STD ="";
+        }else{
+            this.P3295_ICD10_ID7_STD = P3295_ICD10_ID7_STD;
+        }
+    }
+    public String getP3295_ICD10_NAME7_STD(){
+        return P3295_ICD10_NAME7_STD;
+    }
+    public void setP3295_ICD10_NAME7_STD(String P3295_ICD10_NAME7_STD) {
+        if("无效".equals(P3295_ICD10_NAME7_STD)){
+            this.P3295_ICD10_NAME7_STD ="";
+        }else{
+            this.P3295_ICD10_NAME7_STD = P3295_ICD10_NAME7_STD;
+        }
+    }
+    public String getP3298_ICD10_ID1_STD(){
+        return P3298_ICD10_ID1_STD;
+    }
+    public void setP3298_ICD10_ID1_STD(String P3298_ICD10_ID1_STD) {
+        if("无效".equals(P3298_ICD10_ID1_STD)){
+            this.P3298_ICD10_ID1_STD ="";
+        }else{
+            this.P3298_ICD10_ID1_STD = P3298_ICD10_ID1_STD;
+        }
+    }
+    public String getP3298_ICD10_NAME1_STD(){
+        return P3298_ICD10_NAME1_STD;
+    }
+    public void setP3298_ICD10_NAME1_STD(String P3298_ICD10_NAME1_STD) {
+        if("无效".equals(P3298_ICD10_NAME1_STD)){
+            this.P3298_ICD10_NAME1_STD ="";
+        }else{
+            this.P3298_ICD10_NAME1_STD = P3298_ICD10_NAME1_STD;
+        }
+    }
+    public String getP3298_ICD10_ID2_STD(){
+        return P3298_ICD10_ID2_STD;
+    }
+    public void setP3298_ICD10_ID2_STD(String P3298_ICD10_ID2_STD) {
+        if("无效".equals(P3298_ICD10_ID2_STD)){
+            this.P3298_ICD10_ID2_STD ="";
+        }else{
+            this.P3298_ICD10_ID2_STD = P3298_ICD10_ID2_STD;
+        }
+    }
+    public String getP3298_ICD10_NAME2_STD(){
+        return P3298_ICD10_NAME2_STD;
+    }
+    public void setP3298_ICD10_NAME2_STD(String P3298_ICD10_NAME2_STD) {
+        if("无效".equals(P3298_ICD10_NAME2_STD)){
+            this.P3298_ICD10_NAME2_STD ="";
+        }else{
+            this.P3298_ICD10_NAME2_STD = P3298_ICD10_NAME2_STD;
+        }
+    }
+    public String getP3298_ICD10_ID3_STD(){
+        return P3298_ICD10_ID3_STD;
+    }
+    public void setP3298_ICD10_ID3_STD(String P3298_ICD10_ID3_STD) {
+        if("无效".equals(P3298_ICD10_ID3_STD)){
+            this.P3298_ICD10_ID3_STD ="";
+        }else{
+            this.P3298_ICD10_ID3_STD = P3298_ICD10_ID3_STD;
+        }
+    }
+    public String getP3298_ICD10_NAME3_STD(){
+        return P3298_ICD10_NAME3_STD;
+    }
+    public void setP3298_ICD10_NAME3_STD(String P3298_ICD10_NAME3_STD) {
+        if("无效".equals(P3298_ICD10_NAME3_STD)){
+            this.P3298_ICD10_NAME3_STD ="";
+        }else{
+            this.P3298_ICD10_NAME3_STD = P3298_ICD10_NAME3_STD;
+        }
+    }
+    public String getP3298_ICD10_ID4_STD(){
+        return P3298_ICD10_ID4_STD;
+    }
+    public void setP3298_ICD10_ID4_STD(String P3298_ICD10_ID4_STD) {
+        if("无效".equals(P3298_ICD10_ID4_STD)){
+            this.P3298_ICD10_ID4_STD ="";
+        }else{
+            this.P3298_ICD10_ID4_STD = P3298_ICD10_ID4_STD;
+        }
+    }
+    public String getP3298_ICD10_NAME4_STD(){
+        return P3298_ICD10_NAME4_STD;
+    }
+    public void setP3298_ICD10_NAME4_STD(String P3298_ICD10_NAME4_STD) {
+        if("无效".equals(P3298_ICD10_NAME4_STD)){
+            this.P3298_ICD10_NAME4_STD ="";
+        }else{
+            this.P3298_ICD10_NAME4_STD = P3298_ICD10_NAME4_STD;
+        }
+    }
+    public String getP3298_ICD10_ID5_STD(){
+        return P3298_ICD10_ID5_STD;
+    }
+    public void setP3298_ICD10_ID5_STD(String P3298_ICD10_ID5_STD) {
+        if("无效".equals(P3298_ICD10_ID5_STD)){
+            this.P3298_ICD10_ID5_STD ="";
+        }else{
+            this.P3298_ICD10_ID5_STD = P3298_ICD10_ID5_STD;
+        }
+    }
+    public String getP3298_ICD10_NAME5_STD(){
+        return P3298_ICD10_NAME5_STD;
+    }
+    public void setP3298_ICD10_NAME5_STD(String P3298_ICD10_NAME5_STD) {
+        if("无效".equals(P3298_ICD10_NAME5_STD)){
+            this.P3298_ICD10_NAME5_STD ="";
+        }else{
+            this.P3298_ICD10_NAME5_STD = P3298_ICD10_NAME5_STD;
+        }
+    }
+    public String getP3298_ICD10_ID6_STD(){
+        return P3298_ICD10_ID6_STD;
+    }
+    public void setP3298_ICD10_ID6_STD(String P3298_ICD10_ID6_STD) {
+        if("无效".equals(P3298_ICD10_ID6_STD)){
+            this.P3298_ICD10_ID6_STD ="";
+        }else{
+            this.P3298_ICD10_ID6_STD = P3298_ICD10_ID6_STD;
+        }
+    }
+    public String getP3298_ICD10_NAME6_STD(){
+        return P3298_ICD10_NAME6_STD;
+    }
+    public void setP3298_ICD10_NAME6_STD(String P3298_ICD10_NAME6_STD) {
+        if("无效".equals(P3298_ICD10_NAME6_STD)){
+            this.P3298_ICD10_NAME6_STD ="";
+        }else{
+            this.P3298_ICD10_NAME6_STD = P3298_ICD10_NAME6_STD;
+        }
+    }
+    public String getP3298_ICD10_ID7_STD(){
+        return P3298_ICD10_ID7_STD;
+    }
+    public void setP3298_ICD10_ID7_STD(String P3298_ICD10_ID7_STD) {
+        if("无效".equals(P3298_ICD10_ID7_STD)){
+            this.P3298_ICD10_ID7_STD ="";
+        }else{
+            this.P3298_ICD10_ID7_STD = P3298_ICD10_ID7_STD;
+        }
+    }
+    public String getP3298_ICD10_NAME7_STD(){
+        return P3298_ICD10_NAME7_STD;
+    }
+    public void setP3298_ICD10_NAME7_STD(String P3298_ICD10_NAME7_STD) {
+        if("无效".equals(P3298_ICD10_NAME7_STD)){
+            this.P3298_ICD10_NAME7_STD ="";
+        }else{
+            this.P3298_ICD10_NAME7_STD = P3298_ICD10_NAME7_STD;
+        }
+    }
+    public String getP3282_ICD10_ID1_STD(){
+        return P3282_ICD10_ID1_STD;
+    }
+    public void setP3282_ICD10_ID1_STD(String P3282_ICD10_ID1_STD) {
+        if("无效".equals(P3282_ICD10_ID1_STD)){
+            this.P3282_ICD10_ID1_STD ="";
+        }else{
+            this.P3282_ICD10_ID1_STD = P3282_ICD10_ID1_STD;
+        }
+    }
+    public String getP3282_ICD10_NAME1_STD(){
+        return P3282_ICD10_NAME1_STD;
+    }
+    public void setP3282_ICD10_NAME1_STD(String P3282_ICD10_NAME1_STD) {
+        if("无效".equals(P3282_ICD10_NAME1_STD)){
+            this.P3282_ICD10_NAME1_STD ="";
+        }else{
+            this.P3282_ICD10_NAME1_STD = P3282_ICD10_NAME1_STD;
+        }
+    }
+    public String getP3282_ICD10_ID2_STD(){
+        return P3282_ICD10_ID2_STD;
+    }
+    public void setP3282_ICD10_ID2_STD(String P3282_ICD10_ID2_STD) {
+        if("无效".equals(P3282_ICD10_ID2_STD)){
+            this.P3282_ICD10_ID2_STD ="";
+        }else{
+            this.P3282_ICD10_ID2_STD = P3282_ICD10_ID2_STD;
+        }
+    }
+    public String getP3282_ICD10_NAME2_STD(){
+        return P3282_ICD10_NAME2_STD;
+    }
+    public void setP3282_ICD10_NAME2_STD(String P3282_ICD10_NAME2_STD) {
+        if("无效".equals(P3282_ICD10_NAME2_STD)){
+            this.P3282_ICD10_NAME2_STD ="";
+        }else{
+            this.P3282_ICD10_NAME2_STD = P3282_ICD10_NAME2_STD;
+        }
+    }
+    public String getP3282_ICD10_ID3_STD(){
+        return P3282_ICD10_ID3_STD;
+    }
+    public void setP3282_ICD10_ID3_STD(String P3282_ICD10_ID3_STD) {
+        if("无效".equals(P3282_ICD10_ID3_STD)){
+            this.P3282_ICD10_ID3_STD ="";
+        }else{
+            this.P3282_ICD10_ID3_STD = P3282_ICD10_ID3_STD;
+        }
+    }
+    public String getP3282_ICD10_NAME3_STD(){
+        return P3282_ICD10_NAME3_STD;
+    }
+    public void setP3282_ICD10_NAME3_STD(String P3282_ICD10_NAME3_STD) {
+        if("无效".equals(P3282_ICD10_NAME3_STD)){
+            this.P3282_ICD10_NAME3_STD ="";
+        }else{
+            this.P3282_ICD10_NAME3_STD = P3282_ICD10_NAME3_STD;
+        }
+    }
+    public String getP3282_ICD10_ID4_STD(){
+        return P3282_ICD10_ID4_STD;
+    }
+    public void setP3282_ICD10_ID4_STD(String P3282_ICD10_ID4_STD) {
+        if("无效".equals(P3282_ICD10_ID4_STD)){
+            this.P3282_ICD10_ID4_STD ="";
+        }else{
+            this.P3282_ICD10_ID4_STD = P3282_ICD10_ID4_STD;
+        }
+    }
+    public String getP3282_ICD10_NAME4_STD(){
+        return P3282_ICD10_NAME4_STD;
+    }
+    public void setP3282_ICD10_NAME4_STD(String P3282_ICD10_NAME4_STD) {
+        if("无效".equals(P3282_ICD10_NAME4_STD)){
+            this.P3282_ICD10_NAME4_STD ="";
+        }else{
+            this.P3282_ICD10_NAME4_STD = P3282_ICD10_NAME4_STD;
+        }
+    }
+    public String getP3282_ICD10_ID5_STD(){
+        return P3282_ICD10_ID5_STD;
+    }
+    public void setP3282_ICD10_ID5_STD(String P3282_ICD10_ID5_STD) {
+        if("无效".equals(P3282_ICD10_ID5_STD)){
+            this.P3282_ICD10_ID5_STD ="";
+        }else{
+            this.P3282_ICD10_ID5_STD = P3282_ICD10_ID5_STD;
+        }
+    }
+    public String getP3282_ICD10_NAME5_STD(){
+        return P3282_ICD10_NAME5_STD;
+    }
+    public void setP3282_ICD10_NAME5_STD(String P3282_ICD10_NAME5_STD) {
+        if("无效".equals(P3282_ICD10_NAME5_STD)){
+            this.P3282_ICD10_NAME5_STD ="";
+        }else{
+            this.P3282_ICD10_NAME5_STD = P3282_ICD10_NAME5_STD;
+        }
+    }
+    public String getP3282_ICD10_ID6_STD(){
+        return P3282_ICD10_ID6_STD;
+    }
+    public void setP3282_ICD10_ID6_STD(String P3282_ICD10_ID6_STD) {
+        if("无效".equals(P3282_ICD10_ID6_STD)){
+            this.P3282_ICD10_ID6_STD ="";
+        }else{
+            this.P3282_ICD10_ID6_STD = P3282_ICD10_ID6_STD;
+        }
+    }
+    public String getP3282_ICD10_NAME6_STD(){
+        return P3282_ICD10_NAME6_STD;
+    }
+    public void setP3282_ICD10_NAME6_STD(String P3282_ICD10_NAME6_STD) {
+        if("无效".equals(P3282_ICD10_NAME6_STD)){
+            this.P3282_ICD10_NAME6_STD ="";
+        }else{
+            this.P3282_ICD10_NAME6_STD = P3282_ICD10_NAME6_STD;
+        }
+    }
+    public String getP3282_ICD10_ID7_STD(){
+        return P3282_ICD10_ID7_STD;
+    }
+    public void setP3282_ICD10_ID7_STD(String P3282_ICD10_ID7_STD) {
+        if("无效".equals(P3282_ICD10_ID7_STD)){
+            this.P3282_ICD10_ID7_STD ="";
+        }else{
+            this.P3282_ICD10_ID7_STD = P3282_ICD10_ID7_STD;
+        }
+    }
+    public String getP3282_ICD10_NAME7_STD(){
+        return P3282_ICD10_NAME7_STD;
+    }
+    public void setP3282_ICD10_NAME7_STD(String P3282_ICD10_NAME7_STD) {
+        if("无效".equals(P3282_ICD10_NAME7_STD)){
+            this.P3282_ICD10_NAME7_STD ="";
+        }else{
+            this.P3282_ICD10_NAME7_STD = P3282_ICD10_NAME7_STD;
+        }
+    }
+    public String getP3285_ICD10_ID1_STD(){
+        return P3285_ICD10_ID1_STD;
+    }
+    public void setP3285_ICD10_ID1_STD(String P3285_ICD10_ID1_STD) {
+        if("无效".equals(P3285_ICD10_ID1_STD)){
+            this.P3285_ICD10_ID1_STD ="";
+        }else{
+            this.P3285_ICD10_ID1_STD = P3285_ICD10_ID1_STD;
+        }
+    }
+    public String getP3285_ICD10_NAME1_STD(){
+        return P3285_ICD10_NAME1_STD;
+    }
+    public void setP3285_ICD10_NAME1_STD(String P3285_ICD10_NAME1_STD) {
+        if("无效".equals(P3285_ICD10_NAME1_STD)){
+            this.P3285_ICD10_NAME1_STD ="";
+        }else{
+            this.P3285_ICD10_NAME1_STD = P3285_ICD10_NAME1_STD;
+        }
+    }
+    public String getP3285_ICD10_ID2_STD(){
+        return P3285_ICD10_ID2_STD;
+    }
+    public void setP3285_ICD10_ID2_STD(String P3285_ICD10_ID2_STD) {
+        if("无效".equals(P3285_ICD10_ID2_STD)){
+            this.P3285_ICD10_ID2_STD ="";
+        }else{
+            this.P3285_ICD10_ID2_STD = P3285_ICD10_ID2_STD;
+        }
+    }
+    public String getP3285_ICD10_NAME2_STD(){
+        return P3285_ICD10_NAME2_STD;
+    }
+    public void setP3285_ICD10_NAME2_STD(String P3285_ICD10_NAME2_STD) {
+        if("无效".equals(P3285_ICD10_NAME2_STD)){
+            this.P3285_ICD10_NAME2_STD ="";
+        }else{
+            this.P3285_ICD10_NAME2_STD = P3285_ICD10_NAME2_STD;
+        }
+    }
+    public String getP3285_ICD10_ID3_STD(){
+        return P3285_ICD10_ID3_STD;
+    }
+    public void setP3285_ICD10_ID3_STD(String P3285_ICD10_ID3_STD) {
+        if("无效".equals(P3285_ICD10_ID3_STD)){
+            this.P3285_ICD10_ID3_STD ="";
+        }else{
+            this.P3285_ICD10_ID3_STD = P3285_ICD10_ID3_STD;
+        }
+    }
+    public String getP3285_ICD10_NAME3_STD(){
+        return P3285_ICD10_NAME3_STD;
+    }
+    public void setP3285_ICD10_NAME3_STD(String P3285_ICD10_NAME3_STD) {
+        if("无效".equals(P3285_ICD10_NAME3_STD)){
+            this.P3285_ICD10_NAME3_STD ="";
+        }else{
+            this.P3285_ICD10_NAME3_STD = P3285_ICD10_NAME3_STD;
+        }
+    }
+    public String getP3285_ICD10_ID4_STD(){
+        return P3285_ICD10_ID4_STD;
+    }
+    public void setP3285_ICD10_ID4_STD(String P3285_ICD10_ID4_STD) {
+        if("无效".equals(P3285_ICD10_ID4_STD)){
+            this.P3285_ICD10_ID4_STD ="";
+        }else{
+            this.P3285_ICD10_ID4_STD = P3285_ICD10_ID4_STD;
+        }
+    }
+    public String getP3285_ICD10_NAME4_STD(){
+        return P3285_ICD10_NAME4_STD;
+    }
+    public void setP3285_ICD10_NAME4_STD(String P3285_ICD10_NAME4_STD) {
+        if("无效".equals(P3285_ICD10_NAME4_STD)){
+            this.P3285_ICD10_NAME4_STD ="";
+        }else{
+            this.P3285_ICD10_NAME4_STD = P3285_ICD10_NAME4_STD;
+        }
+    }
+    public String getP3285_ICD10_ID5_STD(){
+        return P3285_ICD10_ID5_STD;
+    }
+    public void setP3285_ICD10_ID5_STD(String P3285_ICD10_ID5_STD) {
+        if("无效".equals(P3285_ICD10_ID5_STD)){
+            this.P3285_ICD10_ID5_STD ="";
+        }else{
+            this.P3285_ICD10_ID5_STD = P3285_ICD10_ID5_STD;
+        }
+    }
+    public String getP3285_ICD10_NAME5_STD(){
+        return P3285_ICD10_NAME5_STD;
+    }
+    public void setP3285_ICD10_NAME5_STD(String P3285_ICD10_NAME5_STD) {
+        if("无效".equals(P3285_ICD10_NAME5_STD)){
+            this.P3285_ICD10_NAME5_STD ="";
+        }else{
+            this.P3285_ICD10_NAME5_STD = P3285_ICD10_NAME5_STD;
+        }
+    }
+    public String getP3285_ICD10_ID6_STD(){
+        return P3285_ICD10_ID6_STD;
+    }
+    public void setP3285_ICD10_ID6_STD(String P3285_ICD10_ID6_STD) {
+        if("无效".equals(P3285_ICD10_ID6_STD)){
+            this.P3285_ICD10_ID6_STD ="";
+        }else{
+            this.P3285_ICD10_ID6_STD = P3285_ICD10_ID6_STD;
+        }
+    }
+    public String getP3285_ICD10_NAME6_STD(){
+        return P3285_ICD10_NAME6_STD;
+    }
+    public void setP3285_ICD10_NAME6_STD(String P3285_ICD10_NAME6_STD) {
+        if("无效".equals(P3285_ICD10_NAME6_STD)){
+            this.P3285_ICD10_NAME6_STD ="";
+        }else{
+            this.P3285_ICD10_NAME6_STD = P3285_ICD10_NAME6_STD;
+        }
+    }
+    public String getP3285_ICD10_ID7_STD(){
+        return P3285_ICD10_ID7_STD;
+    }
+    public void setP3285_ICD10_ID7_STD(String P3285_ICD10_ID7_STD) {
+        if("无效".equals(P3285_ICD10_ID7_STD)){
+            this.P3285_ICD10_ID7_STD ="";
+        }else{
+            this.P3285_ICD10_ID7_STD = P3285_ICD10_ID7_STD;
+        }
+    }
+    public String getP3285_ICD10_NAME7_STD(){
+        return P3285_ICD10_NAME7_STD;
+    }
+    public void setP3285_ICD10_NAME7_STD(String P3285_ICD10_NAME7_STD) {
+        if("无效".equals(P3285_ICD10_NAME7_STD)){
+            this.P3285_ICD10_NAME7_STD ="";
+        }else{
+            this.P3285_ICD10_NAME7_STD = P3285_ICD10_NAME7_STD;
+        }
+    }
+    public String getP3288_ICD10_ID1_STD(){
+        return P3288_ICD10_ID1_STD;
+    }
+    public void setP3288_ICD10_ID1_STD(String P3288_ICD10_ID1_STD) {
+        if("无效".equals(P3288_ICD10_ID1_STD)){
+            this.P3288_ICD10_ID1_STD ="";
+        }else{
+            this.P3288_ICD10_ID1_STD = P3288_ICD10_ID1_STD;
+        }
+    }
+    public String getP3288_ICD10_NAME1_STD(){
+        return P3288_ICD10_NAME1_STD;
+    }
+    public void setP3288_ICD10_NAME1_STD(String P3288_ICD10_NAME1_STD) {
+        if("无效".equals(P3288_ICD10_NAME1_STD)){
+            this.P3288_ICD10_NAME1_STD ="";
+        }else{
+            this.P3288_ICD10_NAME1_STD = P3288_ICD10_NAME1_STD;
+        }
+    }
+    public String getP3288_ICD10_ID2_STD(){
+        return P3288_ICD10_ID2_STD;
+    }
+    public void setP3288_ICD10_ID2_STD(String P3288_ICD10_ID2_STD) {
+        if("无效".equals(P3288_ICD10_ID2_STD)){
+            this.P3288_ICD10_ID2_STD ="";
+        }else{
+            this.P3288_ICD10_ID2_STD = P3288_ICD10_ID2_STD;
+        }
+    }
+    public String getP3288_ICD10_NAME2_STD(){
+        return P3288_ICD10_NAME2_STD;
+    }
+    public void setP3288_ICD10_NAME2_STD(String P3288_ICD10_NAME2_STD) {
+        if("无效".equals(P3288_ICD10_NAME2_STD)){
+            this.P3288_ICD10_NAME2_STD ="";
+        }else{
+            this.P3288_ICD10_NAME2_STD = P3288_ICD10_NAME2_STD;
+        }
+    }
+    public String getP3288_ICD10_ID3_STD(){
+        return P3288_ICD10_ID3_STD;
+    }
+    public void setP3288_ICD10_ID3_STD(String P3288_ICD10_ID3_STD) {
+        if("无效".equals(P3288_ICD10_ID3_STD)){
+            this.P3288_ICD10_ID3_STD ="";
+        }else{
+            this.P3288_ICD10_ID3_STD = P3288_ICD10_ID3_STD;
+        }
+    }
+    public String getP3288_ICD10_NAME3_STD(){
+        return P3288_ICD10_NAME3_STD;
+    }
+    public void setP3288_ICD10_NAME3_STD(String P3288_ICD10_NAME3_STD) {
+        if("无效".equals(P3288_ICD10_NAME3_STD)){
+            this.P3288_ICD10_NAME3_STD ="";
+        }else{
+            this.P3288_ICD10_NAME3_STD = P3288_ICD10_NAME3_STD;
+        }
+    }
+    public String getP3288_ICD10_ID4_STD(){
+        return P3288_ICD10_ID4_STD;
+    }
+    public void setP3288_ICD10_ID4_STD(String P3288_ICD10_ID4_STD) {
+        if("无效".equals(P3288_ICD10_ID4_STD)){
+            this.P3288_ICD10_ID4_STD ="";
+        }else{
+            this.P3288_ICD10_ID4_STD = P3288_ICD10_ID4_STD;
+        }
+    }
+    public String getP3288_ICD10_NAME4_STD(){
+        return P3288_ICD10_NAME4_STD;
+    }
+    public void setP3288_ICD10_NAME4_STD(String P3288_ICD10_NAME4_STD) {
+        if("无效".equals(P3288_ICD10_NAME4_STD)){
+            this.P3288_ICD10_NAME4_STD ="";
+        }else{
+            this.P3288_ICD10_NAME4_STD = P3288_ICD10_NAME4_STD;
+        }
+    }
+    public String getP3288_ICD10_ID5_STD(){
+        return P3288_ICD10_ID5_STD;
+    }
+    public void setP3288_ICD10_ID5_STD(String P3288_ICD10_ID5_STD) {
+        if("无效".equals(P3288_ICD10_ID5_STD)){
+            this.P3288_ICD10_ID5_STD ="";
+        }else{
+            this.P3288_ICD10_ID5_STD = P3288_ICD10_ID5_STD;
+        }
+    }
+    public String getP3288_ICD10_NAME5_STD(){
+        return P3288_ICD10_NAME5_STD;
+    }
+    public void setP3288_ICD10_NAME5_STD(String P3288_ICD10_NAME5_STD) {
+        if("无效".equals(P3288_ICD10_NAME5_STD)){
+            this.P3288_ICD10_NAME5_STD ="";
+        }else{
+            this.P3288_ICD10_NAME5_STD = P3288_ICD10_NAME5_STD;
+        }
+    }
+    public String getP3288_ICD10_ID6_STD(){
+        return P3288_ICD10_ID6_STD;
+    }
+    public void setP3288_ICD10_ID6_STD(String P3288_ICD10_ID6_STD) {
+        if("无效".equals(P3288_ICD10_ID6_STD)){
+            this.P3288_ICD10_ID6_STD ="";
+        }else{
+            this.P3288_ICD10_ID6_STD = P3288_ICD10_ID6_STD;
+        }
+    }
+    public String getP3288_ICD10_NAME6_STD(){
+        return P3288_ICD10_NAME6_STD;
+    }
+    public void setP3288_ICD10_NAME6_STD(String P3288_ICD10_NAME6_STD) {
+        if("无效".equals(P3288_ICD10_NAME6_STD)){
+            this.P3288_ICD10_NAME6_STD ="";
+        }else{
+            this.P3288_ICD10_NAME6_STD = P3288_ICD10_NAME6_STD;
+        }
+    }
+    public String getP3288_ICD10_ID7_STD(){
+        return P3288_ICD10_ID7_STD;
+    }
+    public void setP3288_ICD10_ID7_STD(String P3288_ICD10_ID7_STD) {
+        if("无效".equals(P3288_ICD10_ID7_STD)){
+            this.P3288_ICD10_ID7_STD ="";
+        }else{
+            this.P3288_ICD10_ID7_STD = P3288_ICD10_ID7_STD;
+        }
+    }
+    public String getP3288_ICD10_NAME7_STD(){
+        return P3288_ICD10_NAME7_STD;
+    }
+    public void setP3288_ICD10_NAME7_STD(String P3288_ICD10_NAME7_STD) {
+        if("无效".equals(P3288_ICD10_NAME7_STD)){
+            this.P3288_ICD10_NAME7_STD ="";
+        }else{
+            this.P3288_ICD10_NAME7_STD = P3288_ICD10_NAME7_STD;
+        }
+    }
+    public String getP3272_ICD10_ID1_STD(){
+        return P3272_ICD10_ID1_STD;
+    }
+    public void setP3272_ICD10_ID1_STD(String P3272_ICD10_ID1_STD) {
+        if("无效".equals(P3272_ICD10_ID1_STD)){
+            this.P3272_ICD10_ID1_STD ="";
+        }else{
+            this.P3272_ICD10_ID1_STD = P3272_ICD10_ID1_STD;
+        }
+    }
+    public String getP3272_ICD10_NAME1_STD(){
+        return P3272_ICD10_NAME1_STD;
+    }
+    public void setP3272_ICD10_NAME1_STD(String P3272_ICD10_NAME1_STD) {
+        if("无效".equals(P3272_ICD10_NAME1_STD)){
+            this.P3272_ICD10_NAME1_STD ="";
+        }else{
+            this.P3272_ICD10_NAME1_STD = P3272_ICD10_NAME1_STD;
+        }
+    }
+    public String getP3272_ICD10_ID2_STD(){
+        return P3272_ICD10_ID2_STD;
+    }
+    public void setP3272_ICD10_ID2_STD(String P3272_ICD10_ID2_STD) {
+        if("无效".equals(P3272_ICD10_ID2_STD)){
+            this.P3272_ICD10_ID2_STD ="";
+        }else{
+            this.P3272_ICD10_ID2_STD = P3272_ICD10_ID2_STD;
+        }
+    }
+    public String getP3272_ICD10_NAME2_STD(){
+        return P3272_ICD10_NAME2_STD;
+    }
+    public void setP3272_ICD10_NAME2_STD(String P3272_ICD10_NAME2_STD) {
+        if("无效".equals(P3272_ICD10_NAME2_STD)){
+            this.P3272_ICD10_NAME2_STD ="";
+        }else{
+            this.P3272_ICD10_NAME2_STD = P3272_ICD10_NAME2_STD;
+        }
+    }
+    public String getP3272_ICD10_ID3_STD(){
+        return P3272_ICD10_ID3_STD;
+    }
+    public void setP3272_ICD10_ID3_STD(String P3272_ICD10_ID3_STD) {
+        if("无效".equals(P3272_ICD10_ID3_STD)){
+            this.P3272_ICD10_ID3_STD ="";
+        }else{
+            this.P3272_ICD10_ID3_STD = P3272_ICD10_ID3_STD;
+        }
+    }
+    public String getP3272_ICD10_NAME3_STD(){
+        return P3272_ICD10_NAME3_STD;
+    }
+    public void setP3272_ICD10_NAME3_STD(String P3272_ICD10_NAME3_STD) {
+        if("无效".equals(P3272_ICD10_NAME3_STD)){
+            this.P3272_ICD10_NAME3_STD ="";
+        }else{
+            this.P3272_ICD10_NAME3_STD = P3272_ICD10_NAME3_STD;
+        }
+    }
+    public String getP3272_ICD10_ID4_STD(){
+        return P3272_ICD10_ID4_STD;
+    }
+    public void setP3272_ICD10_ID4_STD(String P3272_ICD10_ID4_STD) {
+        if("无效".equals(P3272_ICD10_ID4_STD)){
+            this.P3272_ICD10_ID4_STD ="";
+        }else{
+            this.P3272_ICD10_ID4_STD = P3272_ICD10_ID4_STD;
+        }
+    }
+    public String getP3272_ICD10_NAME4_STD(){
+        return P3272_ICD10_NAME4_STD;
+    }
+    public void setP3272_ICD10_NAME4_STD(String P3272_ICD10_NAME4_STD) {
+        if("无效".equals(P3272_ICD10_NAME4_STD)){
+            this.P3272_ICD10_NAME4_STD ="";
+        }else{
+            this.P3272_ICD10_NAME4_STD = P3272_ICD10_NAME4_STD;
+        }
+    }
+    public String getP3272_ICD10_ID5_STD(){
+        return P3272_ICD10_ID5_STD;
+    }
+    public void setP3272_ICD10_ID5_STD(String P3272_ICD10_ID5_STD) {
+        if("无效".equals(P3272_ICD10_ID5_STD)){
+            this.P3272_ICD10_ID5_STD ="";
+        }else{
+            this.P3272_ICD10_ID5_STD = P3272_ICD10_ID5_STD;
+        }
+    }
+    public String getP3272_ICD10_NAME5_STD(){
+        return P3272_ICD10_NAME5_STD;
+    }
+    public void setP3272_ICD10_NAME5_STD(String P3272_ICD10_NAME5_STD) {
+        if("无效".equals(P3272_ICD10_NAME5_STD)){
+            this.P3272_ICD10_NAME5_STD ="";
+        }else{
+            this.P3272_ICD10_NAME5_STD = P3272_ICD10_NAME5_STD;
+        }
+    }
+    public String getP3272_ICD10_ID6_STD(){
+        return P3272_ICD10_ID6_STD;
+    }
+    public void setP3272_ICD10_ID6_STD(String P3272_ICD10_ID6_STD) {
+        if("无效".equals(P3272_ICD10_ID6_STD)){
+            this.P3272_ICD10_ID6_STD ="";
+        }else{
+            this.P3272_ICD10_ID6_STD = P3272_ICD10_ID6_STD;
+        }
+    }
+    public String getP3272_ICD10_NAME6_STD(){
+        return P3272_ICD10_NAME6_STD;
+    }
+    public void setP3272_ICD10_NAME6_STD(String P3272_ICD10_NAME6_STD) {
+        if("无效".equals(P3272_ICD10_NAME6_STD)){
+            this.P3272_ICD10_NAME6_STD ="";
+        }else{
+            this.P3272_ICD10_NAME6_STD = P3272_ICD10_NAME6_STD;
+        }
+    }
+    public String getP3272_ICD10_ID7_STD(){
+        return P3272_ICD10_ID7_STD;
+    }
+    public void setP3272_ICD10_ID7_STD(String P3272_ICD10_ID7_STD) {
+        if("无效".equals(P3272_ICD10_ID7_STD)){
+            this.P3272_ICD10_ID7_STD ="";
+        }else{
+            this.P3272_ICD10_ID7_STD = P3272_ICD10_ID7_STD;
+        }
+    }
+    public String getP3272_ICD10_NAME7_STD(){
+        return P3272_ICD10_NAME7_STD;
+    }
+    public void setP3272_ICD10_NAME7_STD(String P3272_ICD10_NAME7_STD) {
+        if("无效".equals(P3272_ICD10_NAME7_STD)){
+            this.P3272_ICD10_NAME7_STD ="";
+        }else{
+            this.P3272_ICD10_NAME7_STD = P3272_ICD10_NAME7_STD;
+        }
+    }
+    public String getP3275_ICD10_ID1_STD(){
+        return P3275_ICD10_ID1_STD;
+    }
+    public void setP3275_ICD10_ID1_STD(String P3275_ICD10_ID1_STD) {
+        if("无效".equals(P3275_ICD10_ID1_STD)){
+            this.P3275_ICD10_ID1_STD ="";
+        }else{
+            this.P3275_ICD10_ID1_STD = P3275_ICD10_ID1_STD;
+        }
+    }
+    public String getP3275_ICD10_NAME1_STD(){
+        return P3275_ICD10_NAME1_STD;
+    }
+    public void setP3275_ICD10_NAME1_STD(String P3275_ICD10_NAME1_STD) {
+        if("无效".equals(P3275_ICD10_NAME1_STD)){
+            this.P3275_ICD10_NAME1_STD ="";
+        }else{
+            this.P3275_ICD10_NAME1_STD = P3275_ICD10_NAME1_STD;
+        }
+    }
+    public String getP3275_ICD10_ID2_STD(){
+        return P3275_ICD10_ID2_STD;
+    }
+    public void setP3275_ICD10_ID2_STD(String P3275_ICD10_ID2_STD) {
+        if("无效".equals(P3275_ICD10_ID2_STD)){
+            this.P3275_ICD10_ID2_STD ="";
+        }else{
+            this.P3275_ICD10_ID2_STD = P3275_ICD10_ID2_STD;
+        }
+    }
+    public String getP3275_ICD10_NAME2_STD(){
+        return P3275_ICD10_NAME2_STD;
+    }
+    public void setP3275_ICD10_NAME2_STD(String P3275_ICD10_NAME2_STD) {
+        if("无效".equals(P3275_ICD10_NAME2_STD)){
+            this.P3275_ICD10_NAME2_STD ="";
+        }else{
+            this.P3275_ICD10_NAME2_STD = P3275_ICD10_NAME2_STD;
+        }
+    }
+    public String getP3275_ICD10_ID3_STD(){
+        return P3275_ICD10_ID3_STD;
+    }
+    public void setP3275_ICD10_ID3_STD(String P3275_ICD10_ID3_STD) {
+        if("无效".equals(P3275_ICD10_ID3_STD)){
+            this.P3275_ICD10_ID3_STD ="";
+        }else{
+            this.P3275_ICD10_ID3_STD = P3275_ICD10_ID3_STD;
+        }
+    }
+    public String getP3275_ICD10_NAME3_STD(){
+        return P3275_ICD10_NAME3_STD;
+    }
+    public void setP3275_ICD10_NAME3_STD(String P3275_ICD10_NAME3_STD) {
+        if("无效".equals(P3275_ICD10_NAME3_STD)){
+            this.P3275_ICD10_NAME3_STD ="";
+        }else{
+            this.P3275_ICD10_NAME3_STD = P3275_ICD10_NAME3_STD;
+        }
+    }
+    public String getP3275_ICD10_ID4_STD(){
+        return P3275_ICD10_ID4_STD;
+    }
+    public void setP3275_ICD10_ID4_STD(String P3275_ICD10_ID4_STD) {
+        if("无效".equals(P3275_ICD10_ID4_STD)){
+            this.P3275_ICD10_ID4_STD ="";
+        }else{
+            this.P3275_ICD10_ID4_STD = P3275_ICD10_ID4_STD;
+        }
+    }
+    public String getP3275_ICD10_NAME4_STD(){
+        return P3275_ICD10_NAME4_STD;
+    }
+    public void setP3275_ICD10_NAME4_STD(String P3275_ICD10_NAME4_STD) {
+        if("无效".equals(P3275_ICD10_NAME4_STD)){
+            this.P3275_ICD10_NAME4_STD ="";
+        }else{
+            this.P3275_ICD10_NAME4_STD = P3275_ICD10_NAME4_STD;
+        }
+    }
+    public String getP3275_ICD10_ID5_STD(){
+        return P3275_ICD10_ID5_STD;
+    }
+    public void setP3275_ICD10_ID5_STD(String P3275_ICD10_ID5_STD) {
+        if("无效".equals(P3275_ICD10_ID5_STD)){
+            this.P3275_ICD10_ID5_STD ="";
+        }else{
+            this.P3275_ICD10_ID5_STD = P3275_ICD10_ID5_STD;
+        }
+    }
+    public String getP3275_ICD10_NAME5_STD(){
+        return P3275_ICD10_NAME5_STD;
+    }
+    public void setP3275_ICD10_NAME5_STD(String P3275_ICD10_NAME5_STD) {
+        if("无效".equals(P3275_ICD10_NAME5_STD)){
+            this.P3275_ICD10_NAME5_STD ="";
+        }else{
+            this.P3275_ICD10_NAME5_STD = P3275_ICD10_NAME5_STD;
+        }
+    }
+    public String getP3275_ICD10_ID6_STD(){
+        return P3275_ICD10_ID6_STD;
+    }
+    public void setP3275_ICD10_ID6_STD(String P3275_ICD10_ID6_STD) {
+        if("无效".equals(P3275_ICD10_ID6_STD)){
+            this.P3275_ICD10_ID6_STD ="";
+        }else{
+            this.P3275_ICD10_ID6_STD = P3275_ICD10_ID6_STD;
+        }
+    }
+    public String getP3275_ICD10_NAME6_STD(){
+        return P3275_ICD10_NAME6_STD;
+    }
+    public void setP3275_ICD10_NAME6_STD(String P3275_ICD10_NAME6_STD) {
+        if("无效".equals(P3275_ICD10_NAME6_STD)){
+            this.P3275_ICD10_NAME6_STD ="";
+        }else{
+            this.P3275_ICD10_NAME6_STD = P3275_ICD10_NAME6_STD;
+        }
+    }
+    public String getP3275_ICD10_ID7_STD(){
+        return P3275_ICD10_ID7_STD;
+    }
+    public void setP3275_ICD10_ID7_STD(String P3275_ICD10_ID7_STD) {
+        if("无效".equals(P3275_ICD10_ID7_STD)){
+            this.P3275_ICD10_ID7_STD ="";
+        }else{
+            this.P3275_ICD10_ID7_STD = P3275_ICD10_ID7_STD;
+        }
+    }
+    public String getP3275_ICD10_NAME7_STD(){
+        return P3275_ICD10_NAME7_STD;
+    }
+    public void setP3275_ICD10_NAME7_STD(String P3275_ICD10_NAME7_STD) {
+        if("无效".equals(P3275_ICD10_NAME7_STD)){
+            this.P3275_ICD10_NAME7_STD ="";
+        }else{
+            this.P3275_ICD10_NAME7_STD = P3275_ICD10_NAME7_STD;
+        }
+    }
+    public String getP281_ICD10_ID1_STD(){
+        return P281_ICD10_ID1_STD;
+    }
+    public void setP281_ICD10_ID1_STD(String P281_ICD10_ID1_STD) {
+        if("无效".equals(P281_ICD10_ID1_STD)){
+            this.P281_ICD10_ID1_STD ="";
+        }else{
+            this.P281_ICD10_ID1_STD = P281_ICD10_ID1_STD;
+        }
+    }
+    public String getP281_ICD10_NAME1_STD(){
+        return P281_ICD10_NAME1_STD;
+    }
+    public void setP281_ICD10_NAME1_STD(String P281_ICD10_NAME1_STD) {
+        if("无效".equals(P281_ICD10_NAME1_STD)){
+            this.P281_ICD10_NAME1_STD ="";
+        }else{
+            this.P281_ICD10_NAME1_STD = P281_ICD10_NAME1_STD;
+        }
+    }
+    public String getP281_ICD10_ID2_STD(){
+        return P281_ICD10_ID2_STD;
+    }
+    public void setP281_ICD10_ID2_STD(String P281_ICD10_ID2_STD) {
+        if("无效".equals(P281_ICD10_ID2_STD)){
+            this.P281_ICD10_ID2_STD ="";
+        }else{
+            this.P281_ICD10_ID2_STD = P281_ICD10_ID2_STD;
+        }
+    }
+    public String getP281_ICD10_NAME2_STD(){
+        return P281_ICD10_NAME2_STD;
+    }
+    public void setP281_ICD10_NAME2_STD(String P281_ICD10_NAME2_STD) {
+        if("无效".equals(P281_ICD10_NAME2_STD)){
+            this.P281_ICD10_NAME2_STD ="";
+        }else{
+            this.P281_ICD10_NAME2_STD = P281_ICD10_NAME2_STD;
+        }
+    }
+    public String getP281_ICD10_ID3_STD(){
+        return P281_ICD10_ID3_STD;
+    }
+    public void setP281_ICD10_ID3_STD(String P281_ICD10_ID3_STD) {
+        if("无效".equals(P281_ICD10_ID3_STD)){
+            this.P281_ICD10_ID3_STD ="";
+        }else{
+            this.P281_ICD10_ID3_STD = P281_ICD10_ID3_STD;
+        }
+    }
+    public String getP281_ICD10_NAME3_STD(){
+        return P281_ICD10_NAME3_STD;
+    }
+    public void setP281_ICD10_NAME3_STD(String P281_ICD10_NAME3_STD) {
+        if("无效".equals(P281_ICD10_NAME3_STD)){
+            this.P281_ICD10_NAME3_STD ="";
+        }else{
+            this.P281_ICD10_NAME3_STD = P281_ICD10_NAME3_STD;
+        }
+    }
+    public String getP281_ICD10_ID4_STD(){
+        return P281_ICD10_ID4_STD;
+    }
+    public void setP281_ICD10_ID4_STD(String P281_ICD10_ID4_STD) {
+        if("无效".equals(P281_ICD10_ID4_STD)){
+            this.P281_ICD10_ID4_STD ="";
+        }else{
+            this.P281_ICD10_ID4_STD = P281_ICD10_ID4_STD;
+        }
+    }
+    public String getP281_ICD10_NAME4_STD(){
+        return P281_ICD10_NAME4_STD;
+    }
+    public void setP281_ICD10_NAME4_STD(String P281_ICD10_NAME4_STD) {
+        if("无效".equals(P281_ICD10_NAME4_STD)){
+            this.P281_ICD10_NAME4_STD ="";
+        }else{
+            this.P281_ICD10_NAME4_STD = P281_ICD10_NAME4_STD;
+        }
+    }
+    public String getP281_ICD10_ID5_STD(){
+        return P281_ICD10_ID5_STD;
+    }
+    public void setP281_ICD10_ID5_STD(String P281_ICD10_ID5_STD) {
+        if("无效".equals(P281_ICD10_ID5_STD)){
+            this.P281_ICD10_ID5_STD ="";
+        }else{
+            this.P281_ICD10_ID5_STD = P281_ICD10_ID5_STD;
+        }
+    }
+    public String getP281_ICD10_NAME5_STD(){
+        return P281_ICD10_NAME5_STD;
+    }
+    public void setP281_ICD10_NAME5_STD(String P281_ICD10_NAME5_STD) {
+        if("无效".equals(P281_ICD10_NAME5_STD)){
+            this.P281_ICD10_NAME5_STD ="";
+        }else{
+            this.P281_ICD10_NAME5_STD = P281_ICD10_NAME5_STD;
+        }
+    }
+    public String getP281_ICD10_ID6_STD(){
+        return P281_ICD10_ID6_STD;
+    }
+    public void setP281_ICD10_ID6_STD(String P281_ICD10_ID6_STD) {
+        if("无效".equals(P281_ICD10_ID6_STD)){
+            this.P281_ICD10_ID6_STD ="";
+        }else{
+            this.P281_ICD10_ID6_STD = P281_ICD10_ID6_STD;
+        }
+    }
+    public String getP281_ICD10_NAME6_STD(){
+        return P281_ICD10_NAME6_STD;
+    }
+    public void setP281_ICD10_NAME6_STD(String P281_ICD10_NAME6_STD) {
+        if("无效".equals(P281_ICD10_NAME6_STD)){
+            this.P281_ICD10_NAME6_STD ="";
+        }else{
+            this.P281_ICD10_NAME6_STD = P281_ICD10_NAME6_STD;
+        }
+    }
+    public String getP281_ICD10_ID7_STD(){
+        return P281_ICD10_ID7_STD;
+    }
+    public void setP281_ICD10_ID7_STD(String P281_ICD10_ID7_STD) {
+        if("无效".equals(P281_ICD10_ID7_STD)){
+            this.P281_ICD10_ID7_STD ="";
+        }else{
+            this.P281_ICD10_ID7_STD = P281_ICD10_ID7_STD;
+        }
+    }
+    public String getP281_ICD10_NAME7_STD(){
+        return P281_ICD10_NAME7_STD;
+    }
+    public void setP281_ICD10_NAME7_STD(String P281_ICD10_NAME7_STD) {
+        if("无效".equals(P281_ICD10_NAME7_STD)){
+            this.P281_ICD10_NAME7_STD ="";
+        }else{
+            this.P281_ICD10_NAME7_STD = P281_ICD10_NAME7_STD;
+        }
+    }
+    public String getP301_ICD10_ID1_STD(){
+        return P301_ICD10_ID1_STD;
+    }
+    public void setP301_ICD10_ID1_STD(String P301_ICD10_ID1_STD) {
+        if("无效".equals(P301_ICD10_ID1_STD)){
+            this.P301_ICD10_ID1_STD ="";
+        }else{
+            this.P301_ICD10_ID1_STD = P301_ICD10_ID1_STD;
+        }
+    }
+    public String getP301_ICD10_NAME1_STD(){
+        return P301_ICD10_NAME1_STD;
+    }
+    public void setP301_ICD10_NAME1_STD(String P301_ICD10_NAME1_STD) {
+        if("无效".equals(P301_ICD10_NAME1_STD)){
+            this.P301_ICD10_NAME1_STD ="";
+        }else{
+            this.P301_ICD10_NAME1_STD = P301_ICD10_NAME1_STD;
+        }
+    }
+    public String getP301_ICD10_ID2_STD(){
+        return P301_ICD10_ID2_STD;
+    }
+    public void setP301_ICD10_ID2_STD(String P301_ICD10_ID2_STD) {
+        if("无效".equals(P301_ICD10_ID2_STD)){
+            this.P301_ICD10_ID2_STD ="";
+        }else{
+            this.P301_ICD10_ID2_STD = P301_ICD10_ID2_STD;
+        }
+    }
+    public String getP301_ICD10_NAME2_STD(){
+        return P301_ICD10_NAME2_STD;
+    }
+    public void setP301_ICD10_NAME2_STD(String P301_ICD10_NAME2_STD) {
+        if("无效".equals(P301_ICD10_NAME2_STD)){
+            this.P301_ICD10_NAME2_STD ="";
+        }else{
+            this.P301_ICD10_NAME2_STD = P301_ICD10_NAME2_STD;
+        }
+    }
+    public String getP301_ICD10_ID3_STD(){
+        return P301_ICD10_ID3_STD;
+    }
+    public void setP301_ICD10_ID3_STD(String P301_ICD10_ID3_STD) {
+        if("无效".equals(P301_ICD10_ID3_STD)){
+            this.P301_ICD10_ID3_STD ="";
+        }else{
+            this.P301_ICD10_ID3_STD = P301_ICD10_ID3_STD;
+        }
+    }
+    public String getP301_ICD10_NAME3_STD(){
+        return P301_ICD10_NAME3_STD;
+    }
+    public void setP301_ICD10_NAME3_STD(String P301_ICD10_NAME3_STD) {
+        if("无效".equals(P301_ICD10_NAME3_STD)){
+            this.P301_ICD10_NAME3_STD ="";
+        }else{
+            this.P301_ICD10_NAME3_STD = P301_ICD10_NAME3_STD;
+        }
+    }
+    public String getP301_ICD10_ID4_STD(){
+        return P301_ICD10_ID4_STD;
+    }
+    public void setP301_ICD10_ID4_STD(String P301_ICD10_ID4_STD) {
+        if("无效".equals(P301_ICD10_ID4_STD)){
+            this.P301_ICD10_ID4_STD ="";
+        }else{
+            this.P301_ICD10_ID4_STD = P301_ICD10_ID4_STD;
+        }
+    }
+    public String getP301_ICD10_NAME4_STD(){
+        return P301_ICD10_NAME4_STD;
+    }
+    public void setP301_ICD10_NAME4_STD(String P301_ICD10_NAME4_STD) {
+        if("无效".equals(P301_ICD10_NAME4_STD)){
+            this.P301_ICD10_NAME4_STD ="";
+        }else{
+            this.P301_ICD10_NAME4_STD = P301_ICD10_NAME4_STD;
+        }
+    }
+    public String getP301_ICD10_ID5_STD(){
+        return P301_ICD10_ID5_STD;
+    }
+    public void setP301_ICD10_ID5_STD(String P301_ICD10_ID5_STD) {
+        if("无效".equals(P301_ICD10_ID5_STD)){
+            this.P301_ICD10_ID5_STD ="";
+        }else{
+            this.P301_ICD10_ID5_STD = P301_ICD10_ID5_STD;
+        }
+    }
+    public String getP301_ICD10_NAME5_STD(){
+        return P301_ICD10_NAME5_STD;
+    }
+    public void setP301_ICD10_NAME5_STD(String P301_ICD10_NAME5_STD) {
+        if("无效".equals(P301_ICD10_NAME5_STD)){
+            this.P301_ICD10_NAME5_STD ="";
+        }else{
+            this.P301_ICD10_NAME5_STD = P301_ICD10_NAME5_STD;
+        }
+    }
+    public String getP301_ICD10_ID6_STD(){
+        return P301_ICD10_ID6_STD;
+    }
+    public void setP301_ICD10_ID6_STD(String P301_ICD10_ID6_STD) {
+        if("无效".equals(P301_ICD10_ID6_STD)){
+            this.P301_ICD10_ID6_STD ="";
+        }else{
+            this.P301_ICD10_ID6_STD = P301_ICD10_ID6_STD;
+        }
+    }
+    public String getP301_ICD10_NAME6_STD(){
+        return P301_ICD10_NAME6_STD;
+    }
+    public void setP301_ICD10_NAME6_STD(String P301_ICD10_NAME6_STD) {
+        if("无效".equals(P301_ICD10_NAME6_STD)){
+            this.P301_ICD10_NAME6_STD ="";
+        }else{
+            this.P301_ICD10_NAME6_STD = P301_ICD10_NAME6_STD;
+        }
+    }
+    public String getP301_ICD10_ID7_STD(){
+        return P301_ICD10_ID7_STD;
+    }
+    public void setP301_ICD10_ID7_STD(String P301_ICD10_ID7_STD) {
+        if("无效".equals(P301_ICD10_ID7_STD)){
+            this.P301_ICD10_ID7_STD ="";
+        }else{
+            this.P301_ICD10_ID7_STD = P301_ICD10_ID7_STD;
+        }
+    }
+    public String getP301_ICD10_NAME7_STD(){
+        return P301_ICD10_NAME7_STD;
+    }
+    public void setP301_ICD10_NAME7_STD(String P301_ICD10_NAME7_STD) {
+        if("无效".equals(P301_ICD10_NAME7_STD)){
+            this.P301_ICD10_NAME7_STD ="";
+        }else{
+            this.P301_ICD10_NAME7_STD = P301_ICD10_NAME7_STD;
+        }
+    }
+    public String getP352_ICD10_ID1_STD(){
+        return P352_ICD10_ID1_STD;
+    }
+    public void setP352_ICD10_ID1_STD(String P352_ICD10_ID1_STD) {
+        if("无效".equals(P352_ICD10_ID1_STD)){
+            this.P352_ICD10_ID1_STD ="";
+        }else{
+            this.P352_ICD10_ID1_STD = P352_ICD10_ID1_STD;
+        }
+    }
+    public String getP352_ICD10_NAME1_STD(){
+        return P352_ICD10_NAME1_STD;
+    }
+    public void setP352_ICD10_NAME1_STD(String P352_ICD10_NAME1_STD) {
+        if("无效".equals(P352_ICD10_NAME1_STD)){
+            this.P352_ICD10_NAME1_STD ="";
+        }else{
+            this.P352_ICD10_NAME1_STD = P352_ICD10_NAME1_STD;
+        }
+    }
+    public String getP352_ICD10_ID2_STD(){
+        return P352_ICD10_ID2_STD;
+    }
+    public void setP352_ICD10_ID2_STD(String P352_ICD10_ID2_STD) {
+        if("无效".equals(P352_ICD10_ID2_STD)){
+            this.P352_ICD10_ID2_STD ="";
+        }else{
+            this.P352_ICD10_ID2_STD = P352_ICD10_ID2_STD;
+        }
+    }
+    public String getP352_ICD10_NAME2_STD(){
+        return P352_ICD10_NAME2_STD;
+    }
+    public void setP352_ICD10_NAME2_STD(String P352_ICD10_NAME2_STD) {
+        if("无效".equals(P352_ICD10_NAME2_STD)){
+            this.P352_ICD10_NAME2_STD ="";
+        }else{
+            this.P352_ICD10_NAME2_STD = P352_ICD10_NAME2_STD;
+        }
+    }
+    public String getP352_ICD10_ID3_STD(){
+        return P352_ICD10_ID3_STD;
+    }
+    public void setP352_ICD10_ID3_STD(String P352_ICD10_ID3_STD) {
+        if("无效".equals(P352_ICD10_ID3_STD)){
+            this.P352_ICD10_ID3_STD ="";
+        }else{
+            this.P352_ICD10_ID3_STD = P352_ICD10_ID3_STD;
+        }
+    }
+    public String getP352_ICD10_NAME3_STD(){
+        return P352_ICD10_NAME3_STD;
+    }
+    public void setP352_ICD10_NAME3_STD(String P352_ICD10_NAME3_STD) {
+        if("无效".equals(P352_ICD10_NAME3_STD)){
+            this.P352_ICD10_NAME3_STD ="";
+        }else{
+            this.P352_ICD10_NAME3_STD = P352_ICD10_NAME3_STD;
+        }
+    }
+    public String getP352_ICD10_ID4_STD(){
+        return P352_ICD10_ID4_STD;
+    }
+    public void setP352_ICD10_ID4_STD(String P352_ICD10_ID4_STD) {
+        if("无效".equals(P352_ICD10_ID4_STD)){
+            this.P352_ICD10_ID4_STD ="";
+        }else{
+            this.P352_ICD10_ID4_STD = P352_ICD10_ID4_STD;
+        }
+    }
+    public String getP352_ICD10_NAME4_STD(){
+        return P352_ICD10_NAME4_STD;
+    }
+    public void setP352_ICD10_NAME4_STD(String P352_ICD10_NAME4_STD) {
+        if("无效".equals(P352_ICD10_NAME4_STD)){
+            this.P352_ICD10_NAME4_STD ="";
+        }else{
+            this.P352_ICD10_NAME4_STD = P352_ICD10_NAME4_STD;
+        }
+    }
+    public String getP352_ICD10_ID5_STD(){
+        return P352_ICD10_ID5_STD;
+    }
+    public void setP352_ICD10_ID5_STD(String P352_ICD10_ID5_STD) {
+        if("无效".equals(P352_ICD10_ID5_STD)){
+            this.P352_ICD10_ID5_STD ="";
+        }else{
+            this.P352_ICD10_ID5_STD = P352_ICD10_ID5_STD;
+        }
+    }
+    public String getP352_ICD10_NAME5_STD(){
+        return P352_ICD10_NAME5_STD;
+    }
+    public void setP352_ICD10_NAME5_STD(String P352_ICD10_NAME5_STD) {
+        if("无效".equals(P352_ICD10_NAME5_STD)){
+            this.P352_ICD10_NAME5_STD ="";
+        }else{
+            this.P352_ICD10_NAME5_STD = P352_ICD10_NAME5_STD;
+        }
+    }
+    public String getP352_ICD10_ID6_STD(){
+        return P352_ICD10_ID6_STD;
+    }
+    public void setP352_ICD10_ID6_STD(String P352_ICD10_ID6_STD) {
+        if("无效".equals(P352_ICD10_ID6_STD)){
+            this.P352_ICD10_ID6_STD ="";
+        }else{
+            this.P352_ICD10_ID6_STD = P352_ICD10_ID6_STD;
+        }
+    }
+    public String getP352_ICD10_NAME6_STD(){
+        return P352_ICD10_NAME6_STD;
+    }
+    public void setP352_ICD10_NAME6_STD(String P352_ICD10_NAME6_STD) {
+        if("无效".equals(P352_ICD10_NAME6_STD)){
+            this.P352_ICD10_NAME6_STD ="";
+        }else{
+            this.P352_ICD10_NAME6_STD = P352_ICD10_NAME6_STD;
+        }
+    }
+    public String getP352_ICD10_ID7_STD(){
+        return P352_ICD10_ID7_STD;
+    }
+    public void setP352_ICD10_ID7_STD(String P352_ICD10_ID7_STD) {
+        if("无效".equals(P352_ICD10_ID7_STD)){
+            this.P352_ICD10_ID7_STD ="";
+        }else{
+            this.P352_ICD10_ID7_STD = P352_ICD10_ID7_STD;
+        }
+    }
+    public String getP352_ICD10_NAME7_STD(){
+        return P352_ICD10_NAME7_STD;
+    }
+    public void setP352_ICD10_NAME7_STD(String P352_ICD10_NAME7_STD) {
+        if("无效".equals(P352_ICD10_NAME7_STD)){
+            this.P352_ICD10_NAME7_STD ="";
+        }else{
+            this.P352_ICD10_NAME7_STD = P352_ICD10_NAME7_STD;
+        }
+    }
+    public String getP354_ICD10_ID1_STD(){
+        return P354_ICD10_ID1_STD;
+    }
+    public void setP354_ICD10_ID1_STD(String P354_ICD10_ID1_STD) {
+        if("无效".equals(P354_ICD10_ID1_STD)){
+            this.P354_ICD10_ID1_STD ="";
+        }else{
+            this.P354_ICD10_ID1_STD = P354_ICD10_ID1_STD;
+        }
+    }
+    public String getP354_ICD10_NAME1_STD(){
+        return P354_ICD10_NAME1_STD;
+    }
+    public void setP354_ICD10_NAME1_STD(String P354_ICD10_NAME1_STD) {
+        if("无效".equals(P354_ICD10_NAME1_STD)){
+            this.P354_ICD10_NAME1_STD ="";
+        }else{
+            this.P354_ICD10_NAME1_STD = P354_ICD10_NAME1_STD;
+        }
+    }
+    public String getP354_ICD10_ID2_STD(){
+        return P354_ICD10_ID2_STD;
+    }
+    public void setP354_ICD10_ID2_STD(String P354_ICD10_ID2_STD) {
+        if("无效".equals(P354_ICD10_ID2_STD)){
+            this.P354_ICD10_ID2_STD ="";
+        }else{
+            this.P354_ICD10_ID2_STD = P354_ICD10_ID2_STD;
+        }
+    }
+    public String getP354_ICD10_NAME2_STD(){
+        return P354_ICD10_NAME2_STD;
+    }
+    public void setP354_ICD10_NAME2_STD(String P354_ICD10_NAME2_STD) {
+        if("无效".equals(P354_ICD10_NAME2_STD)){
+            this.P354_ICD10_NAME2_STD ="";
+        }else{
+            this.P354_ICD10_NAME2_STD = P354_ICD10_NAME2_STD;
+        }
+    }
+    public String getP354_ICD10_ID3_STD(){
+        return P354_ICD10_ID3_STD;
+    }
+    public void setP354_ICD10_ID3_STD(String P354_ICD10_ID3_STD) {
+        if("无效".equals(P354_ICD10_ID3_STD)){
+            this.P354_ICD10_ID3_STD ="";
+        }else{
+            this.P354_ICD10_ID3_STD = P354_ICD10_ID3_STD;
+        }
+    }
+    public String getP354_ICD10_NAME3_STD(){
+        return P354_ICD10_NAME3_STD;
+    }
+    public void setP354_ICD10_NAME3_STD(String P354_ICD10_NAME3_STD) {
+        if("无效".equals(P354_ICD10_NAME3_STD)){
+            this.P354_ICD10_NAME3_STD ="";
+        }else{
+            this.P354_ICD10_NAME3_STD = P354_ICD10_NAME3_STD;
+        }
+    }
+    public String getP354_ICD10_ID4_STD(){
+        return P354_ICD10_ID4_STD;
+    }
+    public void setP354_ICD10_ID4_STD(String P354_ICD10_ID4_STD) {
+        if("无效".equals(P354_ICD10_ID4_STD)){
+            this.P354_ICD10_ID4_STD ="";
+        }else{
+            this.P354_ICD10_ID4_STD = P354_ICD10_ID4_STD;
+        }
+    }
+    public String getP354_ICD10_NAME4_STD(){
+        return P354_ICD10_NAME4_STD;
+    }
+    public void setP354_ICD10_NAME4_STD(String P354_ICD10_NAME4_STD) {
+        if("无效".equals(P354_ICD10_NAME4_STD)){
+            this.P354_ICD10_NAME4_STD ="";
+        }else{
+            this.P354_ICD10_NAME4_STD = P354_ICD10_NAME4_STD;
+        }
+    }
+    public String getP354_ICD10_ID5_STD(){
+        return P354_ICD10_ID5_STD;
+    }
+    public void setP354_ICD10_ID5_STD(String P354_ICD10_ID5_STD) {
+        if("无效".equals(P354_ICD10_ID5_STD)){
+            this.P354_ICD10_ID5_STD ="";
+        }else{
+            this.P354_ICD10_ID5_STD = P354_ICD10_ID5_STD;
+        }
+    }
+    public String getP354_ICD10_NAME5_STD(){
+        return P354_ICD10_NAME5_STD;
+    }
+    public void setP354_ICD10_NAME5_STD(String P354_ICD10_NAME5_STD) {
+        if("无效".equals(P354_ICD10_NAME5_STD)){
+            this.P354_ICD10_NAME5_STD ="";
+        }else{
+            this.P354_ICD10_NAME5_STD = P354_ICD10_NAME5_STD;
+        }
+    }
+    public String getP354_ICD10_ID6_STD(){
+        return P354_ICD10_ID6_STD;
+    }
+    public void setP354_ICD10_ID6_STD(String P354_ICD10_ID6_STD) {
+        if("无效".equals(P354_ICD10_ID6_STD)){
+            this.P354_ICD10_ID6_STD ="";
+        }else{
+            this.P354_ICD10_ID6_STD = P354_ICD10_ID6_STD;
+        }
+    }
+    public String getP354_ICD10_NAME6_STD(){
+        return P354_ICD10_NAME6_STD;
+    }
+    public void setP354_ICD10_NAME6_STD(String P354_ICD10_NAME6_STD) {
+        if("无效".equals(P354_ICD10_NAME6_STD)){
+            this.P354_ICD10_NAME6_STD ="";
+        }else{
+            this.P354_ICD10_NAME6_STD = P354_ICD10_NAME6_STD;
+        }
+    }
+    public String getP354_ICD10_ID7_STD(){
+        return P354_ICD10_ID7_STD;
+    }
+    public void setP354_ICD10_ID7_STD(String P354_ICD10_ID7_STD) {
+        if("无效".equals(P354_ICD10_ID7_STD)){
+            this.P354_ICD10_ID7_STD ="";
+        }else{
+            this.P354_ICD10_ID7_STD = P354_ICD10_ID7_STD;
+        }
+    }
+    public String getP354_ICD10_NAME7_STD(){
+        return P354_ICD10_NAME7_STD;
+    }
+    public void setP354_ICD10_NAME7_STD(String P354_ICD10_NAME7_STD) {
+        if("无效".equals(P354_ICD10_NAME7_STD)){
+            this.P354_ICD10_NAME7_STD ="";
+        }else{
+            this.P354_ICD10_NAME7_STD = P354_ICD10_NAME7_STD;
+        }
+    }
+    public String getP356_ICD10_ID1_STD(){
+        return P356_ICD10_ID1_STD;
+    }
+    public void setP356_ICD10_ID1_STD(String P356_ICD10_ID1_STD) {
+        if("无效".equals(P356_ICD10_ID1_STD)){
+            this.P356_ICD10_ID1_STD ="";
+        }else{
+            this.P356_ICD10_ID1_STD = P356_ICD10_ID1_STD;
+        }
+    }
+    public String getP356_ICD10_NAME1_STD(){
+        return P356_ICD10_NAME1_STD;
+    }
+    public void setP356_ICD10_NAME1_STD(String P356_ICD10_NAME1_STD) {
+        if("无效".equals(P356_ICD10_NAME1_STD)){
+            this.P356_ICD10_NAME1_STD ="";
+        }else{
+            this.P356_ICD10_NAME1_STD = P356_ICD10_NAME1_STD;
+        }
+    }
+    public String getP356_ICD10_ID2_STD(){
+        return P356_ICD10_ID2_STD;
+    }
+    public void setP356_ICD10_ID2_STD(String P356_ICD10_ID2_STD) {
+        if("无效".equals(P356_ICD10_ID2_STD)){
+            this.P356_ICD10_ID2_STD ="";
+        }else{
+            this.P356_ICD10_ID2_STD = P356_ICD10_ID2_STD;
+        }
+    }
+    public String getP356_ICD10_NAME2_STD(){
+        return P356_ICD10_NAME2_STD;
+    }
+    public void setP356_ICD10_NAME2_STD(String P356_ICD10_NAME2_STD) {
+        if("无效".equals(P356_ICD10_NAME2_STD)){
+            this.P356_ICD10_NAME2_STD ="";
+        }else{
+            this.P356_ICD10_NAME2_STD = P356_ICD10_NAME2_STD;
+        }
+    }
+    public String getP356_ICD10_ID3_STD(){
+        return P356_ICD10_ID3_STD;
+    }
+    public void setP356_ICD10_ID3_STD(String P356_ICD10_ID3_STD) {
+        if("无效".equals(P356_ICD10_ID3_STD)){
+            this.P356_ICD10_ID3_STD ="";
+        }else{
+            this.P356_ICD10_ID3_STD = P356_ICD10_ID3_STD;
+        }
+    }
+    public String getP356_ICD10_NAME3_STD(){
+        return P356_ICD10_NAME3_STD;
+    }
+    public void setP356_ICD10_NAME3_STD(String P356_ICD10_NAME3_STD) {
+        if("无效".equals(P356_ICD10_NAME3_STD)){
+            this.P356_ICD10_NAME3_STD ="";
+        }else{
+            this.P356_ICD10_NAME3_STD = P356_ICD10_NAME3_STD;
+        }
+    }
+    public String getP356_ICD10_ID4_STD(){
+        return P356_ICD10_ID4_STD;
+    }
+    public void setP356_ICD10_ID4_STD(String P356_ICD10_ID4_STD) {
+        if("无效".equals(P356_ICD10_ID4_STD)){
+            this.P356_ICD10_ID4_STD ="";
+        }else{
+            this.P356_ICD10_ID4_STD = P356_ICD10_ID4_STD;
+        }
+    }
+    public String getP356_ICD10_NAME4_STD(){
+        return P356_ICD10_NAME4_STD;
+    }
+    public void setP356_ICD10_NAME4_STD(String P356_ICD10_NAME4_STD) {
+        if("无效".equals(P356_ICD10_NAME4_STD)){
+            this.P356_ICD10_NAME4_STD ="";
+        }else{
+            this.P356_ICD10_NAME4_STD = P356_ICD10_NAME4_STD;
+        }
+    }
+    public String getP356_ICD10_ID5_STD(){
+        return P356_ICD10_ID5_STD;
+    }
+    public void setP356_ICD10_ID5_STD(String P356_ICD10_ID5_STD) {
+        if("无效".equals(P356_ICD10_ID5_STD)){
+            this.P356_ICD10_ID5_STD ="";
+        }else{
+            this.P356_ICD10_ID5_STD = P356_ICD10_ID5_STD;
+        }
+    }
+    public String getP356_ICD10_NAME5_STD(){
+        return P356_ICD10_NAME5_STD;
+    }
+    public void setP356_ICD10_NAME5_STD(String P356_ICD10_NAME5_STD) {
+        if("无效".equals(P356_ICD10_NAME5_STD)){
+            this.P356_ICD10_NAME5_STD ="";
+        }else{
+            this.P356_ICD10_NAME5_STD = P356_ICD10_NAME5_STD;
+        }
+    }
+    public String getP356_ICD10_ID6_STD(){
+        return P356_ICD10_ID6_STD;
+    }
+    public void setP356_ICD10_ID6_STD(String P356_ICD10_ID6_STD) {
+        if("无效".equals(P356_ICD10_ID6_STD)){
+            this.P356_ICD10_ID6_STD ="";
+        }else{
+            this.P356_ICD10_ID6_STD = P356_ICD10_ID6_STD;
+        }
+    }
+    public String getP356_ICD10_NAME6_STD(){
+        return P356_ICD10_NAME6_STD;
+    }
+    public void setP356_ICD10_NAME6_STD(String P356_ICD10_NAME6_STD) {
+        if("无效".equals(P356_ICD10_NAME6_STD)){
+            this.P356_ICD10_NAME6_STD ="";
+        }else{
+            this.P356_ICD10_NAME6_STD = P356_ICD10_NAME6_STD;
+        }
+    }
+    public String getP356_ICD10_ID7_STD(){
+        return P356_ICD10_ID7_STD;
+    }
+    public void setP356_ICD10_ID7_STD(String P356_ICD10_ID7_STD) {
+        if("无效".equals(P356_ICD10_ID7_STD)){
+            this.P356_ICD10_ID7_STD ="";
+        }else{
+            this.P356_ICD10_ID7_STD = P356_ICD10_ID7_STD;
+        }
+    }
+    public String getP356_ICD10_NAME7_STD(){
+        return P356_ICD10_NAME7_STD;
+    }
+    public void setP356_ICD10_NAME7_STD(String P356_ICD10_NAME7_STD) {
+        if("无效".equals(P356_ICD10_NAME7_STD)){
+            this.P356_ICD10_NAME7_STD ="";
+        }else{
+            this.P356_ICD10_NAME7_STD = P356_ICD10_NAME7_STD;
+        }
+    }
 }

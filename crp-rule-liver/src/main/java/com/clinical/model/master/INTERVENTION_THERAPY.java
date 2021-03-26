@@ -66,180 +66,180 @@ public class INTERVENTION_THERAPY{
         return seq_id;
     } 
     public void setseq_id(Integer seq_id) {
-         this.seq_id = seq_id;
+             this.seq_id = seq_id;
     } 
     public String getunique_id(){
         return unique_id;
     } 
     public void setunique_id(String unique_id) {
-         this.unique_id = unique_id;
+             this.unique_id = unique_id;
     } 
     public String getunique_id_lv1(){
         return unique_id_lv1;
     } 
     public void setunique_id_lv1(String unique_id_lv1) {
-         this.unique_id_lv1 = unique_id_lv1;
+             this.unique_id_lv1 = unique_id_lv1;
     } 
     public String getunique_id_lv2(){
         return unique_id_lv2;
     } 
     public void setunique_id_lv2(String unique_id_lv2) {
-         this.unique_id_lv2 = unique_id_lv2;
+             this.unique_id_lv2 = unique_id_lv2;
     } 
     public String getp900(){
         return p900;
     } 
     public void setp900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getpatient_id(){
         return patient_id;
     } 
     public void setpatient_id(String patient_id) {
-         this.patient_id = patient_id;
+             this.patient_id = patient_id;
     } 
     public String gettpatno(){
         return tpatno;
     } 
     public void settpatno(String tpatno) {
-         this.tpatno = tpatno;
+             this.tpatno = tpatno;
     } 
     public Integer getvisit_type(){
         return visit_type;
     } 
     public void setvisit_type(Integer visit_type) {
-         this.visit_type = visit_type;
+             this.visit_type = visit_type;
     } 
     public String getrecord_status(){
         return record_status;
     } 
     public void setrecord_status(String record_status) {
-         this.record_status = record_status;
+             this.record_status = record_status;
     } 
     public String getvisit_id(){
         return visit_id;
     } 
     public void setvisit_id(String visit_id) {
-         this.visit_id = visit_id;
+             this.visit_id = visit_id;
     } 
     public Integer getadmission_number(){
         return admission_number;
     } 
     public void setadmission_number(Integer admission_number) {
-         this.admission_number = admission_number;
+             this.admission_number = admission_number;
     } 
     public Date getadmission_date_time(){
         return admission_date_time;
     } 
     public void setadmission_date_time(Date admission_date_time) {
-         this.admission_date_time = admission_date_time;
+             this.admission_date_time = admission_date_time;
     } 
     public String getstructure(){
         return structure;
     } 
     public void setstructure(String structure) {
-         this.structure = structure;
+             this.structure = structure;
     } 
     public String getlesion(){
         return lesion;
     } 
     public void setlesion(String lesion) {
-         this.lesion = lesion;
+             this.lesion = lesion;
     } 
     public String getquantity(){
         return quantity;
     } 
     public void setquantity(String quantity) {
-         this.quantity = quantity;
+             this.quantity = quantity;
     } 
     public String getdrug(){
         return drug;
     } 
     public void setdrug(String drug) {
-         this.drug = drug;
+             this.drug = drug;
     } 
     public String gettreatment(){
         return treatment;
     } 
     public void settreatment(String treatment) {
-         this.treatment = treatment;
+             this.treatment = treatment;
     } 
     public String getfs_nlp(){
         return fs_nlp;
     } 
     public void setfs_nlp(String fs_nlp) {
-         this.fs_nlp = fs_nlp;
+             this.fs_nlp = fs_nlp;
     } 
     public String getfs_nlp_cn(){
         return fs_nlp_cn;
     } 
     public void setfs_nlp_cn(String fs_nlp_cn) {
-         this.fs_nlp_cn = fs_nlp_cn;
+             this.fs_nlp_cn = fs_nlp_cn;
     } 
     public Integer getfs_serial_number(){
         return fs_serial_number;
     } 
     public void setfs_serial_number(Integer fs_serial_number) {
-         this.fs_serial_number = fs_serial_number;
+             this.fs_serial_number = fs_serial_number;
     } 
     public Integer getfs_location(){
         return fs_location;
     } 
     public void setfs_location(Integer fs_location) {
-         this.fs_location = fs_location;
+             this.fs_location = fs_location;
     } 
     public String getdata_version(){
         return data_version;
     } 
     public void setdata_version(String data_version) {
-         this.data_version = data_version;
+             this.data_version = data_version;
     } 
     public String getdata_db_source(){
         return data_db_source;
     } 
     public void setdata_db_source(String data_db_source) {
-         this.data_db_source = data_db_source;
+             this.data_db_source = data_db_source;
     } 
     public String getdata_table_source(){
         return data_table_source;
     } 
     public void setdata_table_source(String data_table_source) {
-         this.data_table_source = data_table_source;
+             this.data_table_source = data_table_source;
     } 
     public String getdata_table_source_cn(){
         return data_table_source_cn;
     } 
     public void setdata_table_source_cn(String data_table_source_cn) {
-         this.data_table_source_cn = data_table_source_cn;
+             this.data_table_source_cn = data_table_source_cn;
     } 
     public String getdata_field_source(){
         return data_field_source;
     } 
     public void setdata_field_source(String data_field_source) {
-         this.data_field_source = data_field_source;
+             this.data_field_source = data_field_source;
     } 
     public Date getcreate_time(){
         return create_time;
     } 
     public void setcreate_time(Date create_time) {
-         this.create_time = create_time;
+             this.create_time = create_time;
     } 
     public String getcreator(){
         return creator;
     } 
     public void setcreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getrecord_time(){
         return record_time;
     } 
     public void setrecord_time(Date record_time) {
-         this.record_time = record_time;
+             this.record_time = record_time;
     } 
     public String getbatch_number(){
         return batch_number;
     } 
     public void setbatch_number(String batch_number) {
-         this.batch_number = batch_number;
+             this.batch_number = batch_number;
     } 
 }

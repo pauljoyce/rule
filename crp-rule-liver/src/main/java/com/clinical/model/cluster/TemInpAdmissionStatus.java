@@ -138,396 +138,396 @@ public class TemInpAdmissionStatus{
         return id;
     } 
     public void setId(Integer id) {
-         this.id = id;
+             this.id = id;
     } 
     public String getUniqueId(){
         return uniqueId;
     } 
     public void setUniqueId(String uniqueId) {
-         this.uniqueId = uniqueId;
+             this.uniqueId = uniqueId;
     } 
     public String getUniqueIdLv1(){
         return uniqueIdLv1;
     } 
     public void setUniqueIdLv1(String uniqueIdLv1) {
-         this.uniqueIdLv1 = uniqueIdLv1;
+             this.uniqueIdLv1 = uniqueIdLv1;
     } 
     public String getUniqueIdLv2(){
         return uniqueIdLv2;
     } 
     public void setUniqueIdLv2(String uniqueIdLv2) {
-         this.uniqueIdLv2 = uniqueIdLv2;
+             this.uniqueIdLv2 = uniqueIdLv2;
     } 
     public String getP900(){
         return p900;
     } 
     public void setP900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getPatientId(){
         return patientId;
     } 
     public void setPatientId(String patientId) {
-         this.patientId = patientId;
+             this.patientId = patientId;
     } 
     public String getVisitId(){
         return visitId;
     } 
     public void setVisitId(String visitId) {
-         this.visitId = visitId;
+             this.visitId = visitId;
     } 
     public String getRoomNo(){
         return roomNo;
     } 
     public void setRoomNo(String roomNo) {
-         this.roomNo = roomNo;
+             this.roomNo = roomNo;
     } 
     public String getBedNo(){
         return bedNo;
     } 
     public void setBedNo(String bedNo) {
-         this.bedNo = bedNo;
+             this.bedNo = bedNo;
     } 
     public String getRecordStatus(){
         return recordStatus;
     } 
     public void setRecordStatus(String recordStatus) {
-         this.recordStatus = recordStatus;
+             this.recordStatus = recordStatus;
     } 
     public Integer getVisitType(){
         return visitType;
     } 
     public void setVisitType(Integer visitType) {
-         this.visitType = visitType;
+             this.visitType = visitType;
     } 
     public String getDepartmentName(){
         return departmentName;
     } 
     public void setDepartmentName(String departmentName) {
-         this.departmentName = departmentName;
+             this.departmentName = departmentName;
     } 
     public String getInpatientArea(){
         return inpatientArea;
     } 
     public void setInpatientArea(String inpatientArea) {
-         this.inpatientArea = inpatientArea;
+             this.inpatientArea = inpatientArea;
     } 
     public String getTpatname(){
         return tpatname;
     } 
     public void setTpatname(String tpatname) {
-         this.tpatname = tpatname;
+             this.tpatname = tpatname;
     } 
     public Date getAdmissionDateTime(){
         return admissionDateTime;
     } 
     public void setAdmissionDateTime(Date admissionDateTime) {
-         this.admissionDateTime = admissionDateTime;
+             this.admissionDateTime = admissionDateTime;
     } 
     public Integer getAdmissionNumber(){
         return admissionNumber;
     } 
     public void setAdmissionNumber(Integer admissionNumber) {
-         this.admissionNumber = admissionNumber;
+             this.admissionNumber = admissionNumber;
     } 
     public String getTpatno(){
         return tpatno;
     } 
     public void setTpatno(String tpatno) {
-         this.tpatno = tpatno;
+             this.tpatno = tpatno;
     } 
     public String getPreliminaryClinicalDiagnosis(){
         return preliminaryClinicalDiagnosis;
     } 
     public void setPreliminaryClinicalDiagnosis(String preliminaryClinicalDiagnosis) {
-         this.preliminaryClinicalDiagnosis = preliminaryClinicalDiagnosis;
+             this.preliminaryClinicalDiagnosis = preliminaryClinicalDiagnosis;
     } 
     public Date getPreliminaryDiagnosisDate(){
         return preliminaryDiagnosisDate;
     } 
     public void setPreliminaryDiagnosisDate(Date preliminaryDiagnosisDate) {
-         this.preliminaryDiagnosisDate = preliminaryDiagnosisDate;
+             this.preliminaryDiagnosisDate = preliminaryDiagnosisDate;
     } 
     public String getDoctorPreliminaryDiagnosis(){
         return doctorPreliminaryDiagnosis;
     } 
     public void setDoctorPreliminaryDiagnosis(String doctorPreliminaryDiagnosis) {
-         this.doctorPreliminaryDiagnosis = doctorPreliminaryDiagnosis;
+             this.doctorPreliminaryDiagnosis = doctorPreliminaryDiagnosis;
     } 
     public String getClinicalDefiniteDiagnosis(){
         return clinicalDefiniteDiagnosis;
     } 
     public void setClinicalDefiniteDiagnosis(String clinicalDefiniteDiagnosis) {
-         this.clinicalDefiniteDiagnosis = clinicalDefiniteDiagnosis;
+             this.clinicalDefiniteDiagnosis = clinicalDefiniteDiagnosis;
     } 
     public Date getDefiniteDiagnosisDate(){
         return definiteDiagnosisDate;
     } 
     public void setDefiniteDiagnosisDate(Date definiteDiagnosisDate) {
-         this.definiteDiagnosisDate = definiteDiagnosisDate;
+             this.definiteDiagnosisDate = definiteDiagnosisDate;
     } 
     public String getDoctorDefiniteDiagnosis(){
         return doctorDefiniteDiagnosis;
     } 
     public void setDoctorDefiniteDiagnosis(String doctorDefiniteDiagnosis) {
-         this.doctorDefiniteDiagnosis = doctorDefiniteDiagnosis;
+             this.doctorDefiniteDiagnosis = doctorDefiniteDiagnosis;
     } 
     public String getHyPresent(){
         return hyPresent;
     } 
     public void setHyPresent(String hyPresent) {
-         this.hyPresent = hyPresent;
+             this.hyPresent = hyPresent;
     } 
     public String getHyPats(){
         return hyPats;
     } 
     public void setHyPats(String hyPats) {
-         this.hyPats = hyPats;
+             this.hyPats = hyPats;
     } 
     public String getHyIndividual(){
         return hyIndividual;
     } 
     public void setHyIndividual(String hyIndividual) {
-         this.hyIndividual = hyIndividual;
+             this.hyIndividual = hyIndividual;
     } 
     public String getMenstrualHistorySta(){
         return menstrualHistorySta;
     } 
     public void setMenstrualHistorySta(String menstrualHistorySta) {
-         this.menstrualHistorySta = menstrualHistorySta;
+             this.menstrualHistorySta = menstrualHistorySta;
     } 
     public String getByHeight(){
         return byHeight;
     } 
     public void setByHeight(String byHeight) {
-         this.byHeight = byHeight;
+             this.byHeight = byHeight;
     } 
     public String getByWeight(){
         return byWeight;
     } 
     public void setByWeight(String byWeight) {
-         this.byWeight = byWeight;
+             this.byWeight = byWeight;
     } 
     public String getFat(){
         return fat;
     } 
     public void setFat(String fat) {
-         this.fat = fat;
+             this.fat = fat;
     } 
     public String getBySurfaceArea(){
         return bySurfaceArea;
     } 
     public void setBySurfaceArea(String bySurfaceArea) {
-         this.bySurfaceArea = bySurfaceArea;
+             this.bySurfaceArea = bySurfaceArea;
     } 
     public String getTEcogWhops(){
         return tEcogWhops;
     } 
     public void setTEcogWhops(String tEcogWhops) {
-         this.tEcogWhops = tEcogWhops;
+             this.tEcogWhops = tEcogWhops;
     } 
     public String getTKps(){
         return tKps;
     } 
     public void setTKps(String tKps) {
-         this.tKps = tKps;
+             this.tKps = tKps;
     } 
     public String getTNrs(){
         return tNrs;
     } 
     public void setTNrs(String tNrs) {
-         this.tNrs = tNrs;
+             this.tNrs = tNrs;
     } 
     public String getHyFamily(){
         return hyFamily;
     } 
     public void setHyFamily(String hyFamily) {
-         this.hyFamily = hyFamily;
+             this.hyFamily = hyFamily;
     } 
     public String getPhysicalExam(){
         return physicalExam;
     } 
     public void setPhysicalExam(String physicalExam) {
-         this.physicalExam = physicalExam;
+             this.physicalExam = physicalExam;
     } 
     public String getChiefComplaint(){
         return chiefComplaint;
     } 
     public void setChiefComplaint(String chiefComplaint) {
-         this.chiefComplaint = chiefComplaint;
+             this.chiefComplaint = chiefComplaint;
     } 
     public String getSpecialityExam(){
         return specialityExam;
     } 
     public void setSpecialityExam(String specialityExam) {
-         this.specialityExam = specialityExam;
+             this.specialityExam = specialityExam;
     } 
     public String getSupplementaryExam(){
         return supplementaryExam;
     } 
     public void setSupplementaryExam(String supplementaryExam) {
-         this.supplementaryExam = supplementaryExam;
+             this.supplementaryExam = supplementaryExam;
     } 
     public String getMarriage(){
         return marriage;
     } 
     public void setMarriage(String marriage) {
-         this.marriage = marriage;
+             this.marriage = marriage;
     } 
     public String getSex(){
         return sex;
     } 
     public void setSex(String sex) {
-         this.sex = sex;
+             this.sex = sex;
     } 
     public Integer getAge(){
         return age;
     } 
     public void setAge(Integer age) {
-         this.age = age;
+             this.age = age;
     } 
     public String getNation(){
         return nation;
     } 
     public void setNation(String nation) {
-         this.nation = nation;
+             this.nation = nation;
     } 
     public String getOccupation(){
         return occupation;
     } 
     public void setOccupation(String occupation) {
-         this.occupation = occupation;
+             this.occupation = occupation;
     } 
     public Date getRecordTime(){
         return recordTime;
     } 
     public void setRecordTime(Date recordTime) {
-         this.recordTime = recordTime;
+             this.recordTime = recordTime;
     } 
     public String getMedicalHistoryNarrator(){
         return medicalHistoryNarrator;
     } 
     public void setMedicalHistoryNarrator(String medicalHistoryNarrator) {
-         this.medicalHistoryNarrator = medicalHistoryNarrator;
+             this.medicalHistoryNarrator = medicalHistoryNarrator;
     } 
     public String getRelationshipBetweenPatient(){
         return relationshipBetweenPatient;
     } 
     public void setRelationshipBetweenPatient(String relationshipBetweenPatient) {
-         this.relationshipBetweenPatient = relationshipBetweenPatient;
+             this.relationshipBetweenPatient = relationshipBetweenPatient;
     } 
     public String getHistoryOfMarrChild(){
         return historyOfMarrChild;
     } 
     public void setHistoryOfMarrChild(String historyOfMarrChild) {
-         this.historyOfMarrChild = historyOfMarrChild;
+             this.historyOfMarrChild = historyOfMarrChild;
     } 
     public String getReproductiveHistory(){
         return reproductiveHistory;
     } 
     public void setReproductiveHistory(String reproductiveHistory) {
-         this.reproductiveHistory = reproductiveHistory;
+             this.reproductiveHistory = reproductiveHistory;
     } 
     public String getAllergyHistory(){
         return allergyHistory;
     } 
     public void setAllergyHistory(String allergyHistory) {
-         this.allergyHistory = allergyHistory;
+             this.allergyHistory = allergyHistory;
     } 
     public String getExposureHistory(){
         return exposureHistory;
     } 
     public void setExposureHistory(String exposureHistory) {
-         this.exposureHistory = exposureHistory;
+             this.exposureHistory = exposureHistory;
     } 
     public String getMotherFertileHistory(){
         return motherFertileHistory;
     } 
     public void setMotherFertileHistory(String motherFertileHistory) {
-         this.motherFertileHistory = motherFertileHistory;
+             this.motherFertileHistory = motherFertileHistory;
     } 
     public String getCorrectDiagnosis(){
         return correctDiagnosis;
     } 
     public void setCorrectDiagnosis(String correctDiagnosis) {
-         this.correctDiagnosis = correctDiagnosis;
+             this.correctDiagnosis = correctDiagnosis;
     } 
     public String getCorrectDiagnosisTime(){
         return correctDiagnosisTime;
     } 
     public void setCorrectDiagnosisTime(String correctDiagnosisTime) {
-         this.correctDiagnosisTime = correctDiagnosisTime;
+             this.correctDiagnosisTime = correctDiagnosisTime;
     } 
     public String getCorrectDiagnosisDoctor(){
         return correctDiagnosisDoctor;
     } 
     public void setCorrectDiagnosisDoctor(String correctDiagnosisDoctor) {
-         this.correctDiagnosisDoctor = correctDiagnosisDoctor;
+             this.correctDiagnosisDoctor = correctDiagnosisDoctor;
     } 
     public String getSupDiagnosis(){
         return supDiagnosis;
     } 
     public void setSupDiagnosis(String supDiagnosis) {
-         this.supDiagnosis = supDiagnosis;
+             this.supDiagnosis = supDiagnosis;
     } 
     public String getSupDiagnosisTime(){
         return supDiagnosisTime;
     } 
     public void setSupDiagnosisTime(String supDiagnosisTime) {
-         this.supDiagnosisTime = supDiagnosisTime;
+             this.supDiagnosisTime = supDiagnosisTime;
     } 
     public String getSupDiagnosisDoctor(){
         return supDiagnosisDoctor;
     } 
     public void setSupDiagnosisDoctor(String supDiagnosisDoctor) {
-         this.supDiagnosisDoctor = supDiagnosisDoctor;
+             this.supDiagnosisDoctor = supDiagnosisDoctor;
     } 
     public String getRecordSummary(){
         return recordSummary;
     } 
     public void setRecordSummary(String recordSummary) {
-         this.recordSummary = recordSummary;
+             this.recordSummary = recordSummary;
     } 
     public String getDataVersion(){
         return dataVersion;
     } 
     public void setDataVersion(String dataVersion) {
-         this.dataVersion = dataVersion;
+             this.dataVersion = dataVersion;
     } 
     public String getDataDbSource(){
         return dataDbSource;
     } 
     public void setDataDbSource(String dataDbSource) {
-         this.dataDbSource = dataDbSource;
+             this.dataDbSource = dataDbSource;
     } 
     public String getDataTableSource(){
         return dataTableSource;
     } 
     public void setDataTableSource(String dataTableSource) {
-         this.dataTableSource = dataTableSource;
+             this.dataTableSource = dataTableSource;
     } 
     public String getDataFieldSource(){
         return dataFieldSource;
     } 
     public void setDataFieldSource(String dataFieldSource) {
-         this.dataFieldSource = dataFieldSource;
+             this.dataFieldSource = dataFieldSource;
     } 
     public Date getCreatedAt(){
         return createdAt;
     } 
     public void setCreatedAt(Date createdAt) {
-         this.createdAt = createdAt;
+             this.createdAt = createdAt;
     } 
     public String getCreator(){
         return creator;
     } 
     public void setCreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getUpdatedAt(){
         return updatedAt;
     } 
     public void setUpdatedAt(Date updatedAt) {
-         this.updatedAt = updatedAt;
+             this.updatedAt = updatedAt;
     } 
 }

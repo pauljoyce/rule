@@ -4,6 +4,8 @@ import com.clinical.model.cluster.PersonGeneral;
 import org.springframework.beans.factory.annotation.Autowired;import com.clinical.service.PersonGeneralService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PersonGeneralServiceImpl implements PersonGeneralService {
 
@@ -15,6 +17,12 @@ public class PersonGeneralServiceImpl implements PersonGeneralService {
     @Override
     public  void savePersonGeneral(PersonGeneral personGeneral) {
          personGeneralMapper.savePersonGeneral(personGeneral);
+
+     }
+
+    @Override
+    public  void deletePersonGeneral(List<String> uniqueId) {
+         personGeneralMapper.deletePersonGeneral(uniqueId);
 
      }
 }

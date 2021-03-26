@@ -6,4 +6,9 @@
        SELECT * FROM INTERVENTION_THERAPY WHERE unique_id_lv2 = #{unique_id_lv2}
 </select>
 
+<select id="findZjInterventionTherapyByIncr"  resultType="java.lang.String">
+       select distinct(unique_id_lv2) FROM INTERVENTION_THERAPY where date(created_at) = date_sub(curdate(),interval 1 day) 
+</select>
+
+
 </mapper>

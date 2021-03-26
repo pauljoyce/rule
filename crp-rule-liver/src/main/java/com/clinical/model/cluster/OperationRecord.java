@@ -64,174 +64,174 @@ public class OperationRecord{
         return id;
     } 
     public void setId(Integer id) {
-         this.id = id;
+             this.id = id;
     } 
     public String getUniqueId(){
         return uniqueId;
     } 
     public void setUniqueId(String uniqueId) {
-         this.uniqueId = uniqueId;
+             this.uniqueId = uniqueId;
     } 
     public String getUniqueIdLv1(){
         return uniqueIdLv1;
     } 
     public void setUniqueIdLv1(String uniqueIdLv1) {
-         this.uniqueIdLv1 = uniqueIdLv1;
+             this.uniqueIdLv1 = uniqueIdLv1;
     } 
     public String getUniqueIdLv2(){
         return uniqueIdLv2;
     } 
     public void setUniqueIdLv2(String uniqueIdLv2) {
-         this.uniqueIdLv2 = uniqueIdLv2;
+             this.uniqueIdLv2 = uniqueIdLv2;
     } 
     public String getP900(){
         return p900;
     } 
     public void setP900(String p900) {
-         this.p900 = p900;
+             this.p900 = p900;
     } 
     public String getPatientId(){
         return patientId;
     } 
     public void setPatientId(String patientId) {
-         this.patientId = patientId;
+             this.patientId = patientId;
     } 
     public String getVisitId(){
         return visitId;
     } 
     public void setVisitId(String visitId) {
-         this.visitId = visitId;
+             this.visitId = visitId;
     } 
     public String getSurgicalProcess(){
         return surgicalProcess;
     } 
     public void setSurgicalProcess(String surgicalProcess) {
-         this.surgicalProcess = surgicalProcess;
+             this.surgicalProcess = surgicalProcess;
     } 
     public String getRote(){
         return rote;
     } 
     public void setRote(String rote) {
-         this.rote = rote;
+             this.rote = rote;
     } 
     public String getRcptName(){
         return rcptName;
     } 
     public void setRcptName(String rcptName) {
-         this.rcptName = rcptName;
+             this.rcptName = rcptName;
     } 
     public String getRobot(){
         return robot;
     } 
     public void setRobot(String robot) {
-         this.robot = robot;
+             this.robot = robot;
     } 
     public String getCrossclamp(){
         return crossclamp;
     } 
     public void setCrossclamp(String crossclamp) {
-         this.crossclamp = crossclamp;
+             this.crossclamp = crossclamp;
     } 
     public String getCrossclampTime(){
         return crossclampTime;
     } 
     public void setCrossclampTime(String crossclampTime) {
-         this.crossclampTime = crossclampTime;
+             this.crossclampTime = crossclampTime;
     } 
     public String getRcptType(){
         return rcptType;
     } 
     public void setRcptType(String rcptType) {
-         this.rcptType = rcptType;
+             this.rcptType = rcptType;
     } 
     public String getLymphadenectomy(){
         return lymphadenectomy;
     } 
     public void setLymphadenectomy(String lymphadenectomy) {
-         this.lymphadenectomy = lymphadenectomy;
+             this.lymphadenectomy = lymphadenectomy;
     } 
     public String getBleedingVolume(){
         return bleedingVolume;
     } 
     public void setBleedingVolume(String bleedingVolume) {
-         this.bleedingVolume = bleedingVolume;
+             this.bleedingVolume = bleedingVolume;
     } 
     public Date getItemBeginDate(){
         return itemBeginDate;
     } 
     public void setItemBeginDate(Date itemBeginDate) {
-         this.itemBeginDate = itemBeginDate;
+             this.itemBeginDate = itemBeginDate;
     } 
     public Date getItemEndDate(){
         return itemEndDate;
     } 
     public void setItemEndDate(Date itemEndDate) {
-         this.itemEndDate = itemEndDate;
+             this.itemEndDate = itemEndDate;
     } 
     public String getBloodTransfusion(){
         return bloodTransfusion;
     } 
     public void setBloodTransfusion(String bloodTransfusion) {
-         this.bloodTransfusion = bloodTransfusion;
+             this.bloodTransfusion = bloodTransfusion;
     } 
     public String getBloodTransfusionVolume(){
         return bloodTransfusionVolume;
     } 
     public void setBloodTransfusionVolume(String bloodTransfusionVolume) {
-         this.bloodTransfusionVolume = bloodTransfusionVolume;
+             this.bloodTransfusionVolume = bloodTransfusionVolume;
     } 
     public String getInputComponents(){
         return inputComponents;
     } 
     public void setInputComponents(String inputComponents) {
-         this.inputComponents = inputComponents;
+             this.inputComponents = inputComponents;
     } 
     public String getInputComponentsVolume(){
         return inputComponentsVolume;
     } 
     public void setInputComponentsVolume(String inputComponentsVolume) {
-         this.inputComponentsVolume = inputComponentsVolume;
+             this.inputComponentsVolume = inputComponentsVolume;
     } 
     public String getDataVersion(){
         return dataVersion;
     } 
     public void setDataVersion(String dataVersion) {
-         this.dataVersion = dataVersion;
+             this.dataVersion = dataVersion;
     } 
     public String getDataDbSource(){
         return dataDbSource;
     } 
     public void setDataDbSource(String dataDbSource) {
-         this.dataDbSource = dataDbSource;
+             this.dataDbSource = dataDbSource;
     } 
     public String getDataTableSource(){
         return dataTableSource;
     } 
     public void setDataTableSource(String dataTableSource) {
-         this.dataTableSource = dataTableSource;
+             this.dataTableSource = dataTableSource;
     } 
     public String getDataFieldSource(){
         return dataFieldSource;
     } 
     public void setDataFieldSource(String dataFieldSource) {
-         this.dataFieldSource = dataFieldSource;
+             this.dataFieldSource = dataFieldSource;
     } 
     public Date getCreatedAt(){
         return createdAt;
     } 
     public void setCreatedAt(Date createdAt) {
-         this.createdAt = createdAt;
+             this.createdAt = createdAt;
     } 
     public String getCreator(){
         return creator;
     } 
     public void setCreator(String creator) {
-         this.creator = creator;
+             this.creator = creator;
     } 
     public Date getUpdatedAt(){
         return updatedAt;
     } 
     public void setUpdatedAt(Date updatedAt) {
-         this.updatedAt = updatedAt;
+             this.updatedAt = updatedAt;
     } 
 }

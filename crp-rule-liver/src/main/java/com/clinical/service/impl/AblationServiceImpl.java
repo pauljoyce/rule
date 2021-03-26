@@ -4,6 +4,8 @@ import com.clinical.model.cluster.Ablation;
 import org.springframework.beans.factory.annotation.Autowired;import com.clinical.service.AblationService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AblationServiceImpl implements AblationService {
 
@@ -15,6 +17,12 @@ public class AblationServiceImpl implements AblationService {
     @Override
     public  void saveAblation(Ablation ablation) {
          ablationMapper.saveAblation(ablation);
+
+     }
+
+    @Override
+    public  void deleteAblation(List<String> uniqueId) {
+         ablationMapper.deleteAblation(uniqueId);
 
      }
 }
